@@ -1,0 +1,42 @@
+import { Injectable } from '@angular/core';
+import { Subject, BehaviorSubject, Observable, combineLatest } from 'rxjs';
+import { map, filter, switchMap } from 'rxjs/operators'; 
+import { SearchService } from './search.service';
+import { AuthService } from './auth.service';
+
+@Injectable({
+	providedIn: 'root'
+})
+export class CommentsService {
+
+	constructor(private searchService: SearchService,
+              private authService: AuthService) {
+	}
+
+	getPage(which: string, page: number): Observable<any> {
+		return this.searchService.getPage(page);
+	}
+
+	voteUp(id: number): Observable<any> {
+		let url = 'comments/vote_up';
+		let body = { id: id };
+		return this.authService.post(url, body);
+	}
+
+	voteDown(id: number): Observable<any> {
+		let url = 'comments/vote_down';
+		let body = { id: id };
+		return this.authService.post(url, body);
+	}
+
+	create(parent_id: number, which: string, description: string): Observable<any> {
+		let url = 'comments';
+		let body;
+		if (parent_id == 0) {
+			body = { which: which, description: description };
+		} else {
+			body = { parent_id: parent_id, which: which, description: description };
+		}
+		return this.authService.post(url, body);
+	}
+}

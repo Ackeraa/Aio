@@ -1,0 +1,119 @@
+<div class="d-flex justify-content-center row">
+	<div class="d-flex flex-column col-md-12">
+		<br/>
+		<app-search
+			[uri]="uri"
+			[addition]="which"
+			(itemsEvent)="setComments($event)" 
+			(loadingEvent)="setLoading($event)" >
+		</app-search>
+		<div class="mt-2 mb-2 text-right">
+			<button class="btn btn-primary" data-toggle="collapse" data-target="#collapse-0"
+				aria-expanded="true" aria-controls="collapse-0" (click)="initDescription(0)">
+				Comment
+			</button>
+		</div>
+		<div class="collapse" id="collapse-0">
+			<markdown [data]="descriptions[0]" katex></markdown>
+			<textarea style="overflow-y:auto; height: 13vh" class="form-control"
+						[(ngModel)]="descriptions[0]">
+			</textarea>
+
+			<div class="mt-2 text-right">
+				<button class="btn btn-primary btn-sm shadow-none"
+					    (click)="addComment()">
+					Submit
+				</button>
+				<button class="btn btn-primary btn-sm ml-2" data-toggle="collapse"
+						data-target="#collapse-0" aria-expanded="false" aria-controls="collapse-0"
+						(click)="initDescription(0)">
+					Cancel
+				</button>
+			</div>
+		</div>
+		<ng-template #nodeTemplateRef let-node="node">
+			<div class="node">
+				<div class="card commented-section mt-2">
+					<div class="d-flex flex-row align-items-center commented-user">
+						<h6 class="mb-1"> 
+							{{node.comment.creator}}
+						</h6>
+						<span class="mb-1 ml-2">4 hours ago</span>
+					</div>
+					<div class="comment-text-sm">
+						<span>{{node.comment.description}}</span>
+					</div>
+					<div class="reply-section mt-2">
+						<div class="d-flex flex-row align-items-center">
+							<i class="fa fa-thumbs-up hit-link"
+								(click)="voteUp(node.comment)"></i>
+							<span class="ml-1">{{node.comment.likes.votes}}</span>
+
+							<i class="fa fa-thumbs-down ml-2 hit-link"
+								(click)="voteDown(node.comment)"></i>
+							<span class="ml-1">{{node.comment.dislikes.votes}}</span>
+
+							<a class="hit-link ml-2" data-toggle="collapse"
+								 aria-expanded="false" [attr.aria-controls]="'collapse-' + node.comment.id"
+								 [attr.href]="'#collapse-' + node.comment.id"
+								 (onclick)="initDescription(node.comment.id)">
+								<i class="fas fa-comment-dots"></i>
+							</a>
+						</div>
+						<div class="d-flex flex-row align-items-center mt-1 mb-2">
+							<div *ngIf="node.children.length">
+								<a class="link link-view" (click)="setVisible(node.comment)">
+									View {{node.children.length}} replies
+								</a>
+							</div>
+						</div>
+						<div [attr.id]="'collapse-' + node.comment.id" class="collapse">
+							<markdown [data]="descriptions[node.comment.id]" katex></markdown>
+							<textarea style="overflow-y:auto; height: 13vh" class="form-control"
+										[(ngModel)]="descriptions[node.comment.id]">
+							</textarea>
+							<div class="mt-2 text-right">
+								<button class="btn btn-primary btn-sm shadow-none"
+									     (click)="reply(node)">
+									Submit
+								</button>
+								<button class="btn btn-primary btn-sm ml-1" data-toggle="collapse"
+										[attr.href]="'#collapse-' + node.comment.id"
+										(click)="initDescription(node.comment.id)">
+									Cancel
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="node.children.length && node.comment.is_visible" class="node__children">
+					<ng-template ngFor let-child [ngForOf]="node.children">
+						<ng-template
+							[ngTemplateOutlet]="nodeTemplateRef"
+							[ngTemplateOutletContext]="{ node: child }">
+						</ng-template>
+					</ng-template>
+				</div>
+			</div>
+		</ng-template>
+
+
+		<div class="mb-2" *ngFor="let comment of comments | paginate:
+				{itemsPerPage:10, currentPage:p, totalItems:total}">
+			<ng-template
+				[ngTemplateOutlet]="nodeTemplateRef"
+				[ngTemplateOutletContext]="{ node: comment }">
+			</ng-template>
+		</div>
+	</div>
+</div>
+
+<br/>
+<div class="row justify-content-center">
+	<pagination-controls class="paginator"
+		(pageChange)="getPage($event)"
+		auotHide="true"
+		previousLabel=""
+		nextLabel="" >
+	</pagination-controls>
+</div>

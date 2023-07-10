@@ -1,0 +1,84 @@
+<div class="row">
+	<div class="col-md-12">
+		<div id="content" class="content content-full-width">
+			<div class="profile">
+				<div class="profile-header">
+					<div class="profile-header-cover"></div>
+					<div class="profile-header-content">
+						<div class="profile-header-img">
+							<img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
+						</div>
+						<div class="profile-header-info">
+							<h4 class="m-t-10 m-b-5">Sean Ngu</h4>
+							<p class="m-b-10">UXUI + Frontend Developer</p>
+							<button class="btn btn-primary">Follow</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="p-5 bg-white rounded shadow">
+	<ul id="myTab2" role="tablist" class="nav nav-tabs nav-pills with-arrow lined
+		flex-column flex-sm-row text-center">
+		<li class="nav-item flex-sm-fill">
+			<a id="home-tab" data-toggle="tab" href="#home" role="tab"
+				aria-controls="home" aria-selected="true" class="nav-link
+				font-weight-bold mr-sm-3 rounded-0 active">
+				Home
+			</a>
+		</li>
+		<li class="nav-item flex-sm-fill">
+			<a id="groups-tab" data-toggle="tab" href="#members" role="tab"
+				aria-controls="members" aria-selected="false" class="nav-link
+				font-weight-bold mr-sm-3 rounded-0" (click)="getMembers()">
+				Members
+			</a>
+		</li>
+		<li class="nav-item flex-sm-fill">
+			<a id="contests-tab" data-toggle="tab" href="#contests" role="tab"
+				aria-controls="contests" aria-selected="false" class="nav-link
+				font-weight-bold mr-sm-3 rounded-0" (click)="getContests()">
+				Contests
+			</a>
+		</li>
+		<li class="nav-item flex-sm-fill">
+			<a id="problem-sets-tab" data-toggle="tab" href="#problem-sets" role="tab"
+				aria-controls="problem-sets" aria-selected="false" class="nav-link
+				font-weight-bold mr-sm-3 rounded-0" (click)="getProblemSets()">
+				Problem Sets
+			</a>
+		</li>
+		<li class="nav-item flex-sm-fill">
+			<a id="settings-tab" data-toggle="tab" href="#settings" role="tab"
+				aria-controls="settings" aria-selected="false" class="nav-link
+				font-weight-bold rounded-0">
+				Settings
+			</a>
+		</li>
+	</ul>
+	<div id="myTab2Content" class="tab-content">
+		<div id="home" role="tabpanel" aria-labelledby="home-tab" class="tab-pane
+			 fade px-4 py-5 show active">
+			<app-group-home></app-group-home>
+		</div>
+		<div id="members" role="tabpanel" aria-labelledby="members-tab" class="tab-pane
+			fade px-4 py-5">
+			<app-group-members></app-group-members>
+		</div>
+		<div id="contests" role="tabpanel" aria-labelledby="contests-tab" class="tab-pane
+			fade px-4 py-5">
+			<app-group-contests></app-group-contests>
+		</div>
+		<div id="problem-sets" role="tabpanel" aria-labelledby="problem-sets-tab" class="tab-pane
+			fade px-4 py-5">
+			<app-group-problem-sets></app-group-problem-sets>
+		</div>
+		<div id="settings" role="tabpanel" aria-labelledby="settings-tab" class="tab-pane
+			fade px-4 py-5">
+			<app-group-settings></app-group-settings>
+		</div>
+	</div>
+</div>

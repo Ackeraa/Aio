@@ -1,0 +1,33 @@
+<div class="card shadow-sm">
+	<div class="card-body">
+		<table class="table table-hover">
+			<thead>
+				<tr class="row">
+					<th class="col">
+						RANK
+					</th>
+					<th class="col-3">
+						USER
+					</th>
+					<th class="col">
+						SCORE
+					</th>
+					<th *ngFor="let problem of problems" class="col">
+						{{problem}}
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let rank of ranks let i = index" class="row">
+					<td class="col">{{i + 1}}</td>
+					<td class="col-3">{{rank.user_id}}</td>
+					<td class="col">{{rank.time}}</td>
+					<td *ngFor="let problem of problems let j = index" class="col">
+						{{rank.submission_info[j]?.result}}
+					</td>
+				</tr>
+			</tbody>
+
+		</table>
+	</div>
+</div>

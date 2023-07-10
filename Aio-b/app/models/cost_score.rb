@@ -1,0 +1,2 @@
+class CostScore < ApplicationRecord
+end

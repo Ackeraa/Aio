@@ -1,0 +1,2 @@
+class ContributeScore < ApplicationRecord
+end

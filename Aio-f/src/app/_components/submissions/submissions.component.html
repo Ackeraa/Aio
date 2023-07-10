@@ -1,0 +1,51 @@
+<div class="card shadow-sm">
+	<div class="card-body">
+		<app-search
+			[uri]="uri"
+			[addition]="addition"
+			(itemsEvent)="setSubmissions($event)" 
+			(loadingEvent)="setLoading($event)" >
+		</app-search>
+		<br/>
+		<div *ngIf="loading" class="row">
+			Loading...
+		</div>
+		<div class="row">
+			<th class="col"> ID </th>
+			<th class="col"> WHEN </th>
+			<th class="col"> WHO </th>
+			<th class="col"> PROBLEM </th>
+			<th class="col"> LANG </th>
+			<th class="col"> STATUS </th>
+			<th class="col"> TIME </th>
+			<th class="col"> MEMORY </th>
+		</div>
+		<hr class="title"/>
+		<div *ngIf="!loading">
+			<div class="table-content" *ngFor="let submission of submissions | paginate:
+						{itemsPerPage:20, currentPage:p, totalItems:total}">
+				<div class="row">
+					<div class="col"><a href="#">{{submission.id}}</a></div>
+					<div class="col">{{submission.created_at}}</div>
+					<div class="col">{{submission.user_id}}</div>
+					<div class="col">{{submission.problem_id}}</div>
+					<div class="col">C++</div>
+					<div class="col">{{submission.result}}</div>
+					<div class="col">{{submission.time_usage}}</div>
+					<div class="col">{{submission.memory_usage}} </div>
+				</div>
+				<hr class="content"/>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row justify-content-center">
+	<pagination-controls class="paginator"
+		(pageChange)="getPage($event)"
+		auotHide="true"
+		previousLabel=""
+		nextLabel="" >
+	</pagination-controls>
+</div>
+

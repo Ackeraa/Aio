@@ -1,0 +1,16 @@
+<div class="row justify-content-center">
+
+	<select #source class="custom-select col-2">
+		<option *ngFor="let source of sources let i = index" (value)="i">
+			{{source}}
+		</option>
+	</select>
+	&nbsp;
+	<input #query type="text" class="form-control col-4" placeholder="Search Problems">
+	<div class="col-auto">
+		<a class="btn col-auto" (click)="reSpideProblems()">
+			<i class="fas fa-spider"></i>
+		</a>
+	</div>
+</div>
+

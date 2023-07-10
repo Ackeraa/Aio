@@ -1,0 +1,86 @@
+<div class="row">
+	<div class="col-9">
+		<div class="card">
+			<div class="card-header">
+				Recent Contests
+			</div>
+			<div class="card-body">
+				<app-home-calendar></app-home-calendar>
+			</div>
+		</div>
+		<div class="card mt-4">
+			<div class="card-header">
+				Announcements
+			</div>
+			<div class="card-body">
+			</div>
+		</div>
+		<div class="card mt-4 shadow-sm">
+			<div class="card-header">
+				Recent Problems
+			</div>
+			<div class="card-body">
+				<div *ngFor="let problem of data?.recent_problems" class="row mb-2">
+					{{problem.name}}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-3">
+		<div class="card mb-4">
+			<div class="card-header">
+				Overview
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-8">
+						Total Contests
+					</div>
+					<div class="col-4">
+						{{data?.total_contests}}
+					</div>
+				</div>
+				<div class="row mt-2">
+					<div class="col-8">
+						Total Problems
+					</div>
+					<div class="col-4">
+						{{data?.total_problems}}
+					</div>
+				</div>
+				<div class="row mt-2">
+					<div class="col-8">
+						Total Users
+					</div>
+					<div class="col-4">
+						{{data?.total_users}}
+					</div>
+				</div>
+				<div class="row mt-2">
+					<div class="col-8">
+						Total Groups
+					</div>
+					<div class="col-4">
+						{{data?.total_groups}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="card-header">
+				Top Scored
+			</div>
+			<div class="card-body">
+				<div *ngFor="let user of data?.top_users" class="row mb-2">
+					<div class="col-8">
+						{{user.name}}
+					</div>
+					<div class="col-4">
+						{{user.score}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

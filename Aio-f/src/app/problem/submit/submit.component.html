@@ -1,0 +1,62 @@
+<br/>
+<div class="row justify-content-between">
+	<div class="col-md-8 col-12">
+		<div class="row justify-content-begin">
+			<label class="col-form-label col-auto text">
+				Language:
+			</label>
+			&nbsp;
+			<select class="custom-select col-4" (change)="selectLanguage($event.target.value)">
+				<option *ngFor="let language of languages let i=index" [value]="i">
+					{{language.value}}
+				</option>
+			</select>
+			&nbsp;
+			<button type="button" class="btn btn-light col-2 col-md-auto"
+					onclick="document.getElementById('loadcode').click();">
+				<i class="fas fa-cloud-upload-alt"></i>
+			</button>
+			&nbsp;
+			<button type="button" class="btn btn-light col-2 col-md-auto"
+					(click)="clearCode()">
+				<i class="fas fa-broom"></i>
+			</button>
+			<input type="file" id="loadcode" (change)="loadCode($event.target.files[0])"
+					style="display: none;"/>
+		</div>
+	</div>
+
+	<div class="col-md-4 col-12">
+		<div class="row justify-content-begin">
+			<label class="col-form-label col-auto text">
+				Theme:
+			</label>
+			&nbsp;
+			<select class="custom-select col-md-7 col-4" (change)="selectTheme($event.target.value)">
+				<option *ngFor="let theme of themes let i = index" [value]="i">
+					{{theme}}
+				</option>
+			</select>
+		</div>
+	</div>
+
+</div>
+
+<br/>
+<div class="row">
+	<div class="col-12">
+		<ngx-codemirror [(ngModel)]="code" [options]="options">
+		</ngx-codemirror>
+	</div>
+
+	<div *ngIf="!has_code" class="alert alert-danger" role="alert">
+		Please put your source code.
+	</div>
+</div>
+<br/>
+
+<div class="row justify-content-center">
+	<button type="button" (click)="submit()" class="btn btn-info col-sm-2">
+		<i class="fas fa-upload"></i> Submit
+	</button>
+</div>

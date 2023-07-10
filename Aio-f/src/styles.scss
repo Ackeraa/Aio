@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import 'node_modules/codemirror/lib/codemirror';
+@import 'node_modules/codemirror/theme/dracula';
+@import 'node_modules/codemirror/theme/idea';
+@import 'node_modules/codemirror/theme/eclipse';
+
+$fa-font-path: 'node_modules/fontawesome/fontawesome-free/webfonts';
+@import 'node_modules/@fortawesome/fontawesome-free/scss/fontawesome';
+//@import 'node_modules/@fortawesome/fontawesome-free/scss/brands';
+//@import 'node_modules/@fortawesome/fontawesome-free/scss/regular';
+//@import 'node_modules/@fortawesome/fontawesome-free/scss/solid';
+//@import 'node_modules/@fortawesome/fontawesome-free/scss/v4-shims';
+@import './app/_layouts/basic.scss';

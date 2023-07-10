@@ -1,0 +1,95 @@
+<div class="row">
+	<div class="col-md-12">
+		<div id="content" class="content content-full-width">
+			<div class="profile">
+				<div class="profile-header">
+					<div class="profile-header-cover"></div>
+					<div class="profile-header-content">
+						<div class="profile-header-img">
+							<img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
+						</div>
+						<div class="profile-header-info">
+							<h4 class="m-t-10 m-b-5">Sean Ngu</h4>
+							<p class="m-b-10">UXUI + Frontend Developer</p>
+							<button class="btn btn-primary">Follow</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="p-5 bg-white rounded shadow">
+	<ul id="myTab2" role="tablist" class="nav nav-tabs nav-pills with-arrow lined
+		flex-column flex-sm-row text-center">
+		<li class="nav-item flex-sm-fill">
+			<a id="home-tab" data-toggle="tab" href="#home" role="tab"
+				aria-controls="home" aria-selected="true" class="nav-link
+				font-weight-bold mr-sm-3 rounded-0 active">
+				Home
+			</a>
+		</li>
+		<li class="nav-item flex-sm-fill">
+			<a id="contests-tab" data-toggle="tab" href="#contests" role="tab"
+				aria-controls="contests" aria-selected="false" class="nav-link
+				font-weight-bold mr-sm-3 rounded-0" (click)="getContests()">
+				Contests
+			</a>
+		</li>
+		<li class="nav-item flex-sm-fill">
+			<a id="problems-tab" data-toggle="tab" href="#problems" role="tab"
+				aria-controls="problems" aria-selected="false" class="nav-link
+				font-weight-bold mr-sm-3 rounded-0" (click)="getProblems()">
+				Problems
+			</a>
+		</li>
+		<li class="nav-item flex-sm-fill">
+			<a id="groups-tab" data-toggle="tab" href="#groups" role="tab"
+				aria-controls="groups" aria-selected="false" class="nav-link
+				font-weight-bold mr-sm-3 rounded-0" (click)="getGroups()">
+				Groups
+			</a>
+		</li>
+		<li class="nav-item flex-sm-fill">
+			<a id="friends-tab" data-toggle="tab" href="#friends" role="tab"
+				aria-controls="friends" aria-selected="false" class="nav-link
+				font-weight-bold rounded-0" (click)="getFriends()">
+				Friends
+			</a>
+		</li>
+		<li class="nav-item flex-sm-fill">
+			<a id="settings-tab" data-toggle="tab" href="#settings" role="tab"
+				aria-controls="settings" aria-selected="false" class="nav-link
+				font-weight-bold rounded-0">
+				Settings
+			</a>
+		</li>
+	</ul>
+	<div id="myTab2Content" class="tab-content">
+		<div id="home" role="tabpanel" aria-labelledby="home-tab" class="tab-pane
+			 fade px-4 py-5 show active">
+			<app-user-home></app-user-home>
+		</div>
+		<div id="contests" role="tabpanel" aria-labelledby="contests-tab" class="tab-pane
+			fade px-4 py-5">
+			<app-user-contests></app-user-contests>
+		</div>
+		<div id="problems" role="tabpanel" aria-labelledby="problems-tab" class="tab-pane
+			fade px-4 py-5">
+			<app-user-problems></app-user-problems>
+		</div>
+		<div id="groups" role="tabpanel" aria-labelledby="groups-tab" class="tab-pane
+			fade px-4 py-5">
+			<app-user-groups></app-user-groups>
+		</div>
+		<div id="friends" role="tabpanel" aria-labelledby="friends-tab" class="tab-pane
+			fade px-4 py-5">
+			<app-user-friends></app-user-friends>
+		</div>
+		<div id="settings" role="tabpanel" aria-labelledby="settings-tab" class="tab-pane
+			fade px-4 py-5">
+			<app-user-settings></app-user-settings>
+		</div>
+	</div>
+</div>
