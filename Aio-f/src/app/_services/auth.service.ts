@@ -80,18 +80,17 @@ export class AuthService implements OnInit{
     let headers = new Headers();
     let token = this.tokenService.currentAuthData;
     if (token != null) {
-      headers.append('Authorization', token['access-token']);
-      headers.append('Client', token['client']);
-      headers.append('Expiry', token['expiry']);
-      headers.append('Token-Type', token['token-type']);
-      headers.append('Uid', token['uid']);
+      headers.append('access-token', token['accessToken']);
+      headers.append('client', token['client']);
+      headers.append('expiry', token['expiry']);
+      headers.append('token-Type', token['tokenType']);
+      headers.append('uid', token['uid']);
     }
 
 		if (params == null) {
-      return this.http.get(url, { headers: headers }).pipe(map((res: Response) => res.json()));
+      return this.http.get(url).pipe(map((res: Response) => res.json()));
 		} else {
-			let new_params = { search: params };
-      return this.http.get(url, { headers: headers, params: new_params }).pipe(map((res: Response) => res.json()));
+      return this.http.get(url, { headers: headers, params: params }).pipe(map((res: Response) => res.json()));
 		}
 	}
 
@@ -102,11 +101,11 @@ export class AuthService implements OnInit{
     let headers = new Headers();
     let token = this.tokenService.currentAuthData;
     if (token != null) {
-      headers.append('Authorization', token['access-token']);
-      headers.append('Client', token['client']);
-      headers.append('Expiry', token['expiry']);
-      headers.append('Token-Type', token['token-type']);
-      headers.append('Uid', token['uid']);
+      headers.append('access-token', token['accessToken']);
+      headers.append('client', token['client']);
+      headers.append('expiry', token['expiry']);
+      headers.append('token-Type', token['tokenType']);
+      headers.append('uid', token['uid']);
     }
 
     return this.http.post(url, body, { headers: headers }).pipe(map((res: Response) => res.json()));

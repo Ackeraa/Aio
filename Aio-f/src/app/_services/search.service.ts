@@ -22,14 +22,14 @@ export class SearchService {
 		this.addition = addition;
 
 		let url = uri + '/search';
-		let params = { search: { query: query, addition: addition } };
+		let params = { query: query, addition: addition };
 
 		return this.authService.get(url, params);
 	}
 
 	getPage(page: number): Observable<any> {
 		let url = this.uri + '/search';
-		let params = { search: { query: this.query, addition: this.addition, page: page } };
+		let params = { query: this.query, addition: this.addition, page: page };
 		return this.authService.get(url, params);
 	}
 }

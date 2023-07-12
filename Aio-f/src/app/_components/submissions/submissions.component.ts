@@ -28,12 +28,12 @@ export class SubmissionsComponent implements OnInit {
 		this.receiver = this.submissionsService.getSubmissionsChannel(this.addition)
 			.pipe(filter(x => x != null))
 			.subscribe(submission => {
-				let i = this.submissions.findIndex(x => x.id === submission.id);
-				if (i == -1) {
-					this.submissions.push(submission);
-				} else {
-					this.submissions[i] = submission;
-				}
+        let i = this.submissions.findIndex(x => x.id === submission.id);
+        if (i == -1) {
+          this.submissions.push(submission);
+        } else {
+          this.submissions[i] = submission;
+        }
 			});
 	}
 
@@ -42,7 +42,7 @@ export class SubmissionsComponent implements OnInit {
 	}
 
 	setSubmissions(data: any): void {
-		this.submissions = JSON.parse(data.submissions);
+		this.submissions = data.submissions;
 		this.total = data.total;
 	}
 

@@ -22,7 +22,9 @@ export class SearchComponent implements OnInit {
 	ngOnInit(): void {
 		this.loadingEvent.emit(false);
 		this.searchService.search(this.uri, '', this.addition)
-			.subscribe(data => this.itemsEvent.emit(data));
+			.subscribe(data => {
+        this.itemsEvent.emit(data);
+      });
 
 		//Observer of query change.
 		fromEvent(this.query.nativeElement, 'keyup')

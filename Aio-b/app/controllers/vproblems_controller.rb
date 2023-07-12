@@ -23,8 +23,9 @@ class VproblemsController < ApplicationController
   def search
     source = params[:source]
     query = params[:query]
-    if query.nil? 
+    if query.nil? or query.empty?
       total = Problem.where(source: source).count
+      puts "ddddd", total
       @problems = Problem.where(source: source).order(:id).limit(20).offset(@page * 20)
       if @problems.empty?
         puts "FUCK YOU SPIDE AGAIN, BUG APPEARS"
@@ -89,6 +90,7 @@ class VproblemsController < ApplicationController
     language = params[:language]
     contest_id = params[:contest_id] || 0
     user_id = params[:user_id]
+
     submission = Submission.create(
       problem_id: @problem.id,
       contest_id: contest_id,
@@ -142,9 +144,8 @@ class VproblemsController < ApplicationController
     end
 
     Thread.new do
-      #spider = get_spider(source)
-      #submission = spider.submit(vid, language, code)
-      new_submission = submission
+      spider = get_spider(source)
+      new_submission = spider.submit(vid, language, code)
       submission.update(new_submission)
       submission_broadcast submission
 
