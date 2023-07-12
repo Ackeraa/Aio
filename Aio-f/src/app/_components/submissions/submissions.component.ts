@@ -52,7 +52,6 @@ export class SubmissionsComponent implements OnInit {
 				this.submissions = data.submissions;
 				this.total = data.total;
 				this.p = page;
-				console.log(this.p);
 			});
 	}
 	ngOnDestroy(): void {
