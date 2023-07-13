@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { Response } from '@angular/http';
 import { map } from 'rxjs/operators'; 
+import {
+  faUser,
+  faSearch,
+} from '@fortawesome/free-solid-svg-icons';
+
 import { AuthService } from '../_services/auth.service';
 
 @Component({
@@ -10,6 +15,9 @@ import { AuthService } from '../_services/auth.service';
 	styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
+
+  myInfoIcon = faUser;
+  exploreIcon = faSearch;
 
 	constructor(private authService: AuthService) {
 		

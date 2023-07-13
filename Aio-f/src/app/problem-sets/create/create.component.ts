@@ -21,8 +21,8 @@ export class CreateComponent implements OnInit {
 	description: AbstractControl;
 
 	constructor(private router: Router,
-				private fb: FormBuilder,
-			    private problemSetsService: ProblemSetsService) {
+              private fb: FormBuilder,
+              private problemSetsService: ProblemSetsService) {
 	}
 
 	ngOnInit(): void {
@@ -36,7 +36,7 @@ export class CreateComponent implements OnInit {
 	}
 
 	onSubmit(form: any) {
-		this.problemSetsService.create(form);
+		console.log(this.problemSetsService.create(form));
 	}
 }
 

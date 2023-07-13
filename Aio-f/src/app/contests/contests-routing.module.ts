@@ -11,7 +11,7 @@ const routes: Routes = [
 	{
 		path: '', component: ContestsComponent,
 		children: [
-			{ path: '', redirectTo: 'recent' },
+			{ path: '', redirectTo: 'recent', pathMatch: 'full' },
 			{ path: 'create', component: CreateComponent },
 			{ path: 'recent', component: RecentComponent },
 			{ path: 'past', component: PastComponent },

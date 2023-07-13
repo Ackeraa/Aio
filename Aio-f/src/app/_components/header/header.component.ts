@@ -1,5 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import {
+  faHome,
+  faTrophy,
+  faBook,
+  faJournalWhills,
+  faListUl,
+  faComments,
+  faUsers,
+  faAddressCard,
+  faBookOpen,
+} from '@fortawesome/free-solid-svg-icons';
+
 import { AuthService } from '../../_services';
+
 
 @Component({
 	selector: 'app-header',
@@ -9,6 +22,16 @@ import { AuthService } from '../../_services';
 export class HeaderComponent implements OnInit {
 
     currentUser: any;
+
+    homeIcon = faHome;
+    contestsIcon = faTrophy;
+    problemsIcon = faBook;
+    problemSetsIcon = faJournalWhills;
+    submissionsIcon = faListUl;
+    discussionIcon = faComments;
+    groupsIcon = faUsers;
+    usersIcon = faAddressCard;
+    wikiIcon = faBookOpen;
 
     constructor(public authService: AuthService) {
     }

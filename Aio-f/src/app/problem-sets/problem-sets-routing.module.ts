@@ -11,7 +11,7 @@ const routes: Routes = [
 	{
 		path: '', component: ProblemSetsComponent,
 		children: [
-			{ path: '', redirectTo: 'public' },
+			{ path: '', redirectTo: 'public', pathMatch: 'full' },
 			{ path: 'create', component: CreateComponent },
 			{ path: 'private', component: PrivateComponent },
 			{ path: 'public', component: PublicComponent },

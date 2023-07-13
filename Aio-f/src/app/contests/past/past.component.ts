@@ -22,7 +22,7 @@ export class PastComponent implements OnInit {
 	}
 
 	setContests(data: any): void {
-		this.contests = JSON.parse(data.contests);
+		this.contests = data.contests;
 		this.contests.map(contest => {
 			let start_day = new Date(contest.start_time).getDay();
 			let end_day = new Date(contest.end_time).getDay();

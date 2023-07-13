@@ -29,7 +29,7 @@ export class CommentsService {
 		return this.authService.post(url, body);
 	}
 
-	create(parent_id: number, which: string, description: string): Observable<any> {
+	create(parent_id: number, which: string, description: string) {
 		let url = 'comments';
 		let body;
 		if (parent_id == 0) {
@@ -37,6 +37,11 @@ export class CommentsService {
 		} else {
 			body = { parent_id: parent_id, which: which, description: description };
 		}
-		return this.authService.post(url, body);
+    // need to be fixed
+    this.authService.post(url, body).subscribe(data => {
+      console.log(data);
+
+    });
+
 	}
 }

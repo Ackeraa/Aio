@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MarkdownModule} from 'ngx-markdown';
 import { FileUploadModule } from 'ng2-file-upload';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -60,6 +61,7 @@ import {
 		FileUploadModule,
 		AppRoutingModule,
 		NgxPaginationModule,
+    FontAwesomeModule,
 		ProblemSearchModule,
 		SearchModule,
 		CommentsModule,

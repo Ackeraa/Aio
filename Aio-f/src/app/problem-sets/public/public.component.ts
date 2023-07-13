@@ -22,7 +22,7 @@ export class PublicComponent implements OnInit {
 	}
 
 	setProblemSets(data: any): void {
-		this.problemSets = JSON.parse(data.problem_sets);
+		this.problemSets = data.problem_sets;
 		this.total = data.total;
 	}
 
