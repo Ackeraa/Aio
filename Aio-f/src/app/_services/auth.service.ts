@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { AngularTokenService } from 'angular-token';
 import { BehaviorSubject, Observable, AsyncSubject } from 'rxjs';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';  // maybe fix this, remove operators
 
 interface User {
@@ -16,7 +16,7 @@ export class AuthService implements OnInit{
   public errors$: BehaviorSubject<any> = new BehaviorSubject(null);
 
 	constructor(public tokenService: AngularTokenService,
-              private http: Http) {
+              private http: HttpClient) {
 		this.tokenService.validateToken()
       .subscribe(
         res => {
@@ -77,15 +77,14 @@ export class AuthService implements OnInit{
 	get(url: string, params: any = null): Observable<any> {
     url = 'http://localhost:3000/' + url;
 
-    let headers = new Headers();
     let token = this.tokenService.currentAuthData;
-    if (token != null) {
-      headers.append('access-token', token['accessToken']);
-      headers.append('client', token['client']);
-      headers.append('expiry', token['expiry']);
-      headers.append('token-Type', token['tokenType']);
-      headers.append('uid', token['uid']);
-    }
+    let headers = new HttpHeaders({
+      'access-token': token['accessToken'],
+      'client': token['client'],
+      'expiry': token['expiry'],
+      'token-Type': token['tokenType'],
+      'uid': token['uid']
+    });
 
 		if (params == null) {
       return this.http.get(url).pipe(map((res: Response) => res.json()));
@@ -97,16 +96,14 @@ export class AuthService implements OnInit{
 	post(url: string, body: any): Observable<any> {
     url = 'http://localhost:3000/' + url;
 
-
-    let headers = new Headers();
     let token = this.tokenService.currentAuthData;
-    if (token != null) {
-      headers.append('access-token', token['accessToken']);
-      headers.append('client', token['client']);
-      headers.append('expiry', token['expiry']);
-      headers.append('token-Type', token['tokenType']);
-      headers.append('uid', token['uid']);
-    }
+    let headers = new HttpHeaders({
+      'access-token': token['accessToken'],
+      'client': token['client'],
+      'expiry': token['expiry'],
+      'token-Type': token['tokenType'],
+      'uid': token['uid']
+    });
 
     return this.http.post(url, body, { headers: headers }).pipe(map((res: Response) => res.json()));
 	}

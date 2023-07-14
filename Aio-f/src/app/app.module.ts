@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -60,7 +59,10 @@ import {
 		ReactiveFormsModule,
 		FileUploadModule,
 		AppRoutingModule,
+		FormsModule,
+    HttpClientModule,
 		NgxPaginationModule,
+    NgbModule,
     FontAwesomeModule,
 		ProblemSearchModule,
 		SearchModule,
@@ -70,8 +72,6 @@ import {
 		GroupModule,
 		GroupsModule,
 		UserModule,
-		FormsModule,
-		HttpModule,
 	],
 	declarations: [
 		AppComponent,

@@ -1,8 +1,7 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
-import { Response } from '@angular/http';
 import { map } from 'rxjs/operators'; 
 import { MarkdownModule, MarkedOptions, MarkedRenderer } from 'ngx-markdown';
 import {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
-import { Response } from '@angular/http';
+import { HttpResponse } from '@angular/common/http';
 import { map } from 'rxjs/operators'; 
 import {
   faUser,
