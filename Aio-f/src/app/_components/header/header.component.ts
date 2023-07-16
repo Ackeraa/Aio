@@ -13,40 +13,42 @@ import {
 
 import { AuthService } from '../../_services';
 
-
 @Component({
-	selector: 'app-header',
-	templateUrl: './header.component.html',
-	styleUrls: ['./header.component.scss']
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
 
-    currentUser: any;
+  currentUser: any;
 
-    homeIcon = faHome;
-    contestsIcon = faTrophy;
-    problemsIcon = faBook;
-    problemSetsIcon = faJournalWhills;
-    submissionsIcon = faListUl;
-    discussionIcon = faComments;
-    groupsIcon = faUsers;
-    usersIcon = faAddressCard;
-    wikiIcon = faBookOpen;
+  homeIcon = faHome;
+  contestsIcon = faTrophy;
+  problemsIcon = faBook;
+  problemSetsIcon = faJournalWhills;
+  submissionsIcon = faListUl;
+  discussionIcon = faComments;
+  groupsIcon = faUsers;
+  usersIcon = faAddressCard;
+  wikiIcon = faBookOpen;
 
-    constructor(public authService: AuthService) {
-    }
+  isCollapsed = true;
 
-    logOut() {
-      this.authService.logOut();
-      this.currentUser = null;
-    }
+  constructor(public authService: AuthService) {
+  }
 
-	ngOnInit(): void {
-		this.authService.user$.subscribe(data => {
-			if (data) this.currentUser = data.user_name;
-			else this.currentUser = null;
-		});
-	}
-	ngOnDestroy(): void {
-	}
+  logOut() {
+    this.authService.logOut();
+    this.currentUser = null;
+  }
+
+  ngOnInit(): void {
+    this.authService.user$.subscribe(data => {
+      if (data) this.currentUser = data.user_name;
+      else this.currentUser = null;
+    });
+  }
+
+  ngOnDestroy(): void {
+  }
 }

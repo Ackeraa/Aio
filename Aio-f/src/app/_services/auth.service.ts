@@ -87,9 +87,9 @@ export class AuthService implements OnInit{
     });
 
 		if (params == null) {
-      return this.http.get(url).pipe(map((res: Response) => res.json()));
+      return this.http.get(url);
 		} else {
-      return this.http.get(url, { headers: headers, params: params }).pipe(map((res: Response) => res.json()));
+      return this.http.get(url, { headers: headers, params: params });
 		}
 	}
 
@@ -105,7 +105,7 @@ export class AuthService implements OnInit{
       'uid': token['uid']
     });
 
-    return this.http.post(url, body, { headers: headers }).pipe(map((res: Response) => res.json()));
+    return this.http.post(url, body, { headers: headers });
 	}
 
 	ngOnInit(): void {

@@ -1,67 +1,55 @@
-<nav class="navbar sticky-top navbar-expand-lg navbar-dark" style="background-color: #091313;">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
     <a class="navbar-brand" href="#">
-		  &nbsp;&nbsp; Aio
-		</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse"
-      data-target="#collapsibleNavbar">
+      &nbsp;&nbsp; Aio
+    </a>
+    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="collapsibleNavbar">
-    <div class="navbar-nav mr-auto">
-      <a class="nav-item nav-link" routerLinkActive="active"
-        routerLink="../home">
-        <fa-icon [icon]="homeIcon"></fa-icon> Home
-      </a>
-      <a class="nav-item nav-link" routerLinkActive="active"
-        routerLink="../contests">
-        <fa-icon [icon]="contestsIcon"></fa-icon> Contests
-      </a>
-      <a class="nav-item nav-link" routerLinkActive="active"
-        routerLink="../problems">
-        <fa-icon [icon]="problemsIcon"></fa-icon> Problems
-      </a>
-      <a class="nav-item nav-link" routerLinkActive="active"
-        routerLink="../problem-sets">
-        <fa-icon [icon]="problemSetsIcon"></fa-icon> Problem Sets
-      </a>
-      <a class="nav-item nav-link" routerLinkActive="active"
-        routerLink="../submissions">
-        <fa-icon [icon]="submissionsIcon"></fa-icon> Submissions
-      </a>
-      <a class="nav-item nav-link" routerLinkActive="active"
-        routerLink="../discussion">
-        <fa-icon [icon]="discussionIcon"></fa-icon> Discussion
-      </a>
-      <a class="nav-item nav-link" routerLinkActive="active"
-        routerLink="../groups">
-        <fa-icon [icon]="groupsIcon"></fa-icon> Groups
-      </a>
-      <a class="nav-item nav-link" routerLinkActive="active"
-        routerLink="../users">
-        <fa-icon [icon]="usersIcon"></fa-icon> Users
-      </a>
-      <a class="nav-item nav-link" routerLinkActive="active"
-        routerLink="../protected">
-        <fa-icon [icon]="wikiIcon"></fa-icon> Wiki
-      </a>
-    </div>
+    <div class="collapse navbar-collapse" [ngbCollapse]="isCollapsed">
+      <div class="navbar-nav me-auto">
+        <a class="nav-item nav-link" [routerLinkActive]="['active']" routerLink="../home" (click)="isCollapsed = true">
+          <fa-icon [icon]="homeIcon"></fa-icon> Home
+        </a>
+        <a class="nav-item nav-link" [routerLinkActive]="['active']" routerLink="../contests" (click)="isCollapsed = true">
+          <fa-icon [icon]="contestsIcon"></fa-icon> Contests
+        </a>
+        <a class="nav-item nav-link" [routerLinkActive]="['active']" routerLink="../problems" (click)="isCollapsed = true">
+          <fa-icon [icon]="problemsIcon"></fa-icon> Problems
+        </a>
+        <a class="nav-item nav-link" [routerLinkActive]="['active']" routerLink="../problem-sets" (click)="isCollapsed = true">
+          <fa-icon [icon]="problemSetsIcon"></fa-icon> Problem Sets
+        </a>
+        <a class="nav-item nav-link" [routerLinkActive]="['active']" routerLink="../submissions" (click)="isCollapsed = true">
+          <fa-icon [icon]="submissionsIcon"></fa-icon> Submissions
+        </a>
+        <a class="nav-item nav-link" [routerLinkActive]="['active']" routerLink="../discussion" (click)="isCollapsed = true">
+          <fa-icon [icon]="discussionIcon"></fa-icon> Discussion
+        </a>
+        <a class="nav-item nav-link" [routerLinkActive]="['active']" routerLink="../groups" (click)="isCollapsed = true">
+          <fa-icon [icon]="groupsIcon"></fa-icon> Groups
+        </a>
+        <a class="nav-item nav-link" [routerLinkActive]="['active']" routerLink="../users" (click)="isCollapsed = true">
+          <fa-icon [icon]="usersIcon"></fa-icon> Users
+        </a>
+        <a class="nav-item nav-link" [routerLinkActive]="['active']" routerLink="../protected" (click)="isCollapsed = true">
+          <fa-icon [icon]="wikiIcon"></fa-icon> Wiki
+        </a>
+      </div>
+      <div class="navbar-nav ml-auto">
+        <a class="nav-item nav-link" *ngIf="!currentUser" [routerLinkActive]="['active']" routerLink="/login">Login</a>
+        <a class="nav-item nav-link" *ngIf="!currentUser" [routerLinkActive]="['active']" routerLink="/register">Register</a>
 
-    <div class="navbar-nav ml-auto">
-      <a class="nav-item nav-link" *ngIf="!currentUser"
-         routerLinkActive="active" routerLink="/login">Login</a>
-      <a class="nav-item nav-link" *ngIf="!currentUser"
-         routerLinkActive="active" routerLink="/register">Register</a>
-
-      <div class="dropdown" *ngIf="currentUser">
-        <button class="btn nav-link dropdown-toggle" href="#" role="button"
-           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {{currentUser}}
-        </button>
-        <div class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#">Profile</a>
-          <a class="dropdown-item" href="#">Profile</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" (click)="logOut()">Logout</a>
+        <div ngbDropdown *ngIf="currentUser">
+          <button class="btn nav-link" id="user" ngbDropdownToggle>
+            {{ currentUser }}
+          </button>
+          <div ngbDropdownMenu class="dropdown-menu dropdown-menu-end" aria-labelledby="user">
+            <a class="dropdown-item" href="#">Action - 1</a>
+            <a class="dropdown-item" href="#">Another Action</a>
+            <a class="dropdown-item" href="#">Something else is here</a>
+            <div class="dropdown-divider"></div>
+          </div>
         </div>
       </div>
     </div>
