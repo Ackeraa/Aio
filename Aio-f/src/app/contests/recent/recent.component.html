@@ -3,7 +3,7 @@
 		<app-search
 			[uri]="uri"
 			[addition]="addition"
-			(itemsEvent)="setContests($event)" 
+			(itemsEvent)="setContests($event)"
 			(loadingEvent)="setLoading($event)" >
 		</app-search>
 		<br/>
@@ -30,9 +30,9 @@
 								</a>
 							</text>
 							<p class="card-text time">
-								<i class="fas fa-lock"></i>
+                <fa-icon [icon]="lock"></fa-icon> asdsa
 								&nbsp;
-								<i class="far fa-clock"></i>
+                <fa-icon [icon]="clock"></fa-icon>
 								{{contest.start_time | date: 'HH:mm'}}
 								-
 								{{contest.end_time | date: 'HH:mm'}}

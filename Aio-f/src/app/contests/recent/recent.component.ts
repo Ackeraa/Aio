@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import {
+  faLock,
+  faClock,
+  faHome
+} from '@fortawesome/free-solid-svg-icons';
+
 import { ContestsService } from '../contests.service';
 
 @Component({
@@ -14,6 +20,9 @@ export class RecentComponent implements OnInit {
 	contests: any;
 	p: number;
 	total: number;
+
+  lock = faHome;
+  clock = faClock;
 
 	constructor(private contestsService: ContestsService) {
 	}
