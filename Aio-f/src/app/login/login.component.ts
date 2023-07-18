@@ -21,10 +21,11 @@ export class LoginComponent implements OnInit {
   name_email: AbstractControl;
   password: AbstractControl;
 
-  loading = false;
-  submitted = false;
+  loading: boolean;
+  submitted: boolean;
   returnUrl: string;
-  errors: string;
+
+  error: string;
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
@@ -59,29 +60,22 @@ export class LoginComponent implements OnInit {
     }
 
     this.loading = true;
-    this.errors = "";
+    this.error = "";
 
     let data = {login: this.name_email.value, password: this.password.value};
 
-    this.authService.logIn(data);
-    this.authService.user$.subscribe(
-      user => {
-        if (user) {
-          this.router.navigate([this.returnUrl]);
-        } else {
-          this.authService.errors$.subscribe(
-            errors => {
-              if (errors && errors.join(" ").indexOf("Invalid") != -1) {
-                this.errors = "Invalid user name or password.";
-              } else {
-                this.errors = "Please confirm your email before login.";
-              }
-              this.loading = false;
-            }
-          );
+    this.authService.signIn(data);
+    if (this.authService.isSignedIn()) {
+      this.router.navigate([this.returnUrl]);
+    } else {
+      this.authService.errors$.subscribe(
+        data => {
+          console.log(data);
+          this.error = data[0];
+          this.loading = false;
         }
-      }
-    );
+      );
+    }
   }
 
   ngOnInit() {

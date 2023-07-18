@@ -18,13 +18,19 @@ import { AlertService, AuthService } from '../_services';
 })
 export class RegisterComponent implements OnInit {
   form: FormGroup;
-  email: AbstractControl; 
+  name: AbstractControl;
+  email: AbstractControl;
   password: AbstractControl;
   password_confirmation: AbstractControl;
 
-  loading = false;
-  submitted = false;
-  email_exists = false;
+  loading: boolean;
+  submitted: boolean;
+
+  // error received from server
+  name_error: string;
+  email_error: string;
+  password_error: string;
+  password_confirmation_error: string; // maybe not needed
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,21 +39,33 @@ export class RegisterComponent implements OnInit {
     private alertService: AlertService
   ) {
     // Redirect to home if already logged in.
-    if (localStorage.getItem('currentUser')) {
+    if (this.authService.isSignedIn()) {
       this.router.navigate(['/']);
     }
   }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      email: ['', Validators.compose([Validators.required, this.emailValidator])],
+      name: ['', [Validators.required, this.nameValidator,
+                  Validators.minLength(5), Validators.maxLength(10)]],
+      email: ['', [Validators.required, this.emailValidator]],
       password: ['', [Validators.required, Validators.minLength(6),
-        Validators.maxLength(16)]],
-        password_confirmation: ['', Validators.required],
+                      Validators.maxLength(16)]],
+      password_confirmation: ['', Validators.required],
     });
+    this.name = this.form.controls['name'];
     this.email = this.form.controls['email'];
     this.password = this.form.controls['password'];
     this.password_confirmation = this.form.controls['password_confirmation'];
+  }
+
+  // Validators for name.
+  nameValidator(name: FormControl): {[s: string]: boolean} {
+    // start with a letter, allow letters, numbers, and underscores.
+    let regex = new RegExp(/^[a-zA-Z][a-zA-Z0-9_]*$/);
+    if (!name.value.match(regex)){
+      return { invalidName: true };
+    }
   }
 
   // Validators for email.
@@ -57,15 +75,6 @@ export class RegisterComponent implements OnInit {
       return { invalidEmail: true };
     }
   }
-
-  // Validators for confirm_password.
-  confirmValidator(confirm_pwd: FormControl): {[s: string]: boolean} {
-    let pwd = this.form.get('password').value;
-    if (!confirm_pwd.value === pwd){
-      return { invalidConfirm: true };
-    }
-  }
-
 
   // Convenience getter for easy access to form fields
   get f() { return this.form.controls; }
@@ -82,42 +91,23 @@ export class RegisterComponent implements OnInit {
     }
 
     this.loading = true;
-    this.email_exists = false;
 
-    let data = {login: this.email.value, password: this.password.value, name: "test"};
+    let data = { name: this.name.value, login: this.email.value, password: this.password.value };
     this.authService.register(data);
-    this.authService.errors$
-      .pipe(
-        filter(errors => !!errors),
-        tap(errors => {
-          // FIXME: This is not working.
-          if (errors.email) {
-            this.email_exists = true;
-          }
-          this.loading = false;
-        })
-      )
-      .subscribe(() => {
-        this.alertService.success('Registration successful, Please confirm your\
-                                  emali before login.', true);
-        this.router.navigate(['/login']);
-      });
-
-    /*
     this.authService.errors$.subscribe(
-      errors => {
-        if (errors) {
-          if (errors.email) {
-            this.email_exists = true;
-          }
+      data => {
+        if (data) {
+          this.name_error = data.name ? "Username " + data.name[0] : '';
+          this.email_error = data.email ? "Email " + data.email[0] : '';
+          this.password_error = data.password ? "Password " + data.password[0] : '';
+          this.password_confirmation_error = data.password_confirmation ?
+              "Password confirmation " + data.password_confirmation[0] : '';
           this.loading = false;
         } else {
           this.alertService.success('Registration successful, Please confirm your\
-                                    emali before login.', true);
+                                    email before login.', true);
           this.router.navigate(['/login']);
         }
-      }
-    );
-    */
+    });
   }
 }

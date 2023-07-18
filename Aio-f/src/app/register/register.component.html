@@ -8,6 +8,31 @@
 				</div>
 			</div>
 			<form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group mb-3">
+          <input type="text" class="form-control" [formControl]="name"
+              [ngClass]="{ 'is-invalid': submitted && name.errors }"
+              placeholder="User name"/>
+          <div *ngIf="name.touched && name.errors" class="text-danger">
+            <small>
+              <div *ngIf="name.hasError('required')">
+                User name is required.
+              </div>
+              <div *ngIf="!name.hasError('required') && name.hasError('minlength')">
+                Name is too short (minimum is 5 characters).
+              </div>
+              <div *ngIf="!name.hasError('required') && name.hasError('maxlength')">
+                Name is too long (maximum is 10 characters).
+              </div>
+            </small>
+          </div>
+          <div *ngIf="submitted" class="text-danger">
+            <small>
+              <div *ngIf="name_error">
+                {{name_error}}
+              </div>
+            </small>
+          </div>
+        </div>
 				<div class="form-group mb-3">
 					<input type="email" class="form-control" [formControl]="email"
 							[ngClass]="{ 'is-invalid': submitted && email.errors }"
@@ -24,8 +49,8 @@
 					</div>
 					<div *ngIf="submitted" class="text-danger">
 						<small>
-							<div *ngIf="email_exists">
-								Email has already been taken.
+							<div *ngIf="email_error">
+                {{email_error}}
 							</div>
 						</small>
 					</div>
@@ -47,6 +72,13 @@
 							</div>
 						</small>
 					</div>
+          <div *ngIf="submitted" class="text-danger">
+            <small>
+              <div *ngIf="password_error">
+                {{password_error}}
+              </div>
+            </small>
+          </div>
 				</div>
 				<div class="form-group">
 					<input type="password" class="form-control" [formControl]="password_confirmation"
@@ -64,6 +96,13 @@
 							</div>
 						</small>
 					</div>
+          <div *ngIf="submitted" class="text-danger">
+            <small>
+              <div *ngIf="password_confirmation_error">
+                {{password_confirmation_error}}
+              </div>
+            </small>
+          </div>
 				</div>
 				<br/>
 				<div class="d-grid gap-2 mb-3">

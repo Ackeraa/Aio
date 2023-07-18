@@ -37,8 +37,8 @@ export class HeaderComponent implements OnInit {
   constructor(public authService: AuthService) {
   }
 
-  logOut() {
-    this.authService.logOut();
+  signOut() {
+    this.authService.signOut();
     this.currentUser = null;
   }
 

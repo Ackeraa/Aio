@@ -1,75 +1,92 @@
 import { Injectable, OnInit } from '@angular/core';
 import { AngularTokenService } from 'angular-token';
 import { BehaviorSubject, Observable, AsyncSubject } from 'rxjs';
+import { skipWhile } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs/operators';  // maybe fix this, remove operators
 
 interface User {
   user_id: string,
   user_name: string
 }
 
+interface Error {
+  name: Array<string>,
+  email: Array<string>,
+  password: Array<string>,
+  password_confirmation: Array<string>,
+  full_messages: Array<string>
+}
+
 @Injectable()
 export class AuthService implements OnInit{
 
-	public user$: BehaviorSubject<User> = new BehaviorSubject(null);
-  public errors$: BehaviorSubject<any> = new BehaviorSubject(null);
+	private user_$: BehaviorSubject<User | null | undefined> = new BehaviorSubject(undefined);
+  user$ = this.user_$.pipe(skipWhile(val => val === undefined)) as Observable<User | null>;
+
+  private errors_$: BehaviorSubject<Error | null | undefined> = new BehaviorSubject(undefined);
+  errors$ = this.errors_$.pipe(skipWhile(val => val === undefined)) as Observable<Error | null>;
+
+  public message$: BehaviorSubject<string | null> = new BehaviorSubject(null);
 
 	constructor(public tokenService: AngularTokenService,
               private http: HttpClient) {
 		this.tokenService.validateToken()
       .subscribe(
         res => {
-          let user = JSON.parse(JSON.stringify(res)).data;
-          this.user$.next({
+          let user = res.data;
+          this.user_$.next({
             user_id: user.id,
             user_name: user.name
           });
-          this.errors$.next(null);
+          this.errors_$.next(null);
         },
         err => {
-          this.user$.next(null);
-          let errors = JSON.parse(JSON.stringify(err)).error.errors;
-          this.errors$.next(errors);
+          this.user_$.next(null);
+          let errors = err.error.errors;
+          this.errors_$.next(errors);
         }
       );
 	}
 
+  isSignedIn() {
+    return this.tokenService.userSignedIn();
+  }
+
 	register(data) {
 		this.tokenService.registerAccount(data).subscribe(
       res => {
-        this.errors$.next(null);
+        this.errors_$.next(null);
       },
       err => {
         let errors = err.error.errors;
-        this.errors$.next(errors);
+        this.errors_$.next(errors);
       }
     );
 	}
 
-	logIn(data) {
+	signIn(data) {
     this.tokenService.signIn(data).subscribe(
-      res => { 
+      res => {
         let user = res.body.data;
-        this.user$.next({
+        this.user_$.next({
           user_id: user.id,
           user_name: user.name
         });
-        this.errors$.next(null);
+        this.errors_$.next(null);
       },
       err => {
-        this.user$.next(null);
+        this.user_$.next(null);
         let errors = err.error.errors;
-        this.errors$.next(errors);
+        this.errors_$.next(errors);
       }
     );
 	}
 
-	logOut() {
+	signOut() {
     this.tokenService.signOut().subscribe(
       res => {
-        this.user$.next(null);
-        this.errors$.next(null);
+        this.user_$.next(null);
+        this.errors_$.next(null);
       }
     );
 	}
@@ -77,14 +94,18 @@ export class AuthService implements OnInit{
 	get(url: string, params: any = null): Observable<any> {
     url = 'http://localhost:3000/' + url;
 
+    let headers = new HttpHeaders();
     let token = this.tokenService.currentAuthData;
-    let headers = new HttpHeaders({
-      'access-token': token['accessToken'],
-      'client': token['client'],
-      'expiry': token['expiry'],
-      'token-Type': token['tokenType'],
-      'uid': token['uid']
-    });
+    if (token != null) {
+      let newHeaders = new HttpHeaders({
+        'access-token': token['accessToken'],
+        'client': token['client'],
+        'expiry': token['expiry'],
+        'token-Type': token['tokenType'],
+        'uid': token['uid']
+      });
+      headers = newHeaders;
+    }
 
 		if (params == null) {
       return this.http.get(url);
@@ -96,14 +117,18 @@ export class AuthService implements OnInit{
 	post(url: string, body: any): Observable<any> {
     url = 'http://localhost:3000/' + url;
 
+    let headers = new HttpHeaders();
     let token = this.tokenService.currentAuthData;
-    let headers = new HttpHeaders({
-      'access-token': token['accessToken'],
-      'client': token['client'],
-      'expiry': token['expiry'],
-      'token-Type': token['tokenType'],
-      'uid': token['uid']
-    });
+    if (token != null) {
+      let newHeaders = new HttpHeaders({
+        'access-token': token['accessToken'],
+        'client': token['client'],
+        'expiry': token['expiry'],
+        'token-Type': token['tokenType'],
+        'uid': token['uid']
+      });
+      headers = newHeaders;
+    }
 
     return this.http.post(url, body, { headers: headers });
 	}
