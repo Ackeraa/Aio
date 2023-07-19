@@ -1,0 +1,61 @@
+{
+  "keywords": {
+    "login": "登录",
+    "register": "注册",
+    "logout": "登出",
+    "username": "用户名",
+    "email": "电子邮件",
+    "password": "密码",
+    "password_confirmation": "确认密码",
+    "password_reset": "重置密码",
+    "description": "描述",
+    "title": "标题"
+  },
+  "infos": {
+    "forgot_password": "忘记密码？",
+    "dont_have_account": "没有账号？",
+    "already_have_account": "已经有账号了？",
+    "remembered_password": "记得密码了？"
+  },
+  "errors": {
+    "too_short": "%s太短，至少 %d 个字符.",
+    "too_long": "%s太长，至多 %d 个字符.",
+    "required": "%s不能为空."
+  },
+  "welcome": "噢，你好啊，亲爱的！",
+  "header": {
+    "home": "首页",
+    "contests": "比赛",
+    "problems": "问题",
+    "problemset": "问题集",
+    "submissions": "提交",
+    "discussion": "讨论",
+    "groups": "群组",
+    "users": "用户",
+    "wiki": "百科"
+  },
+  "login": {
+
+  },
+  "register": {
+    "password_mismatch": "密码不匹配"
+  },
+  "home": {
+  },
+  "contests": {
+  },
+  "problems": {
+  },
+  "problemset": {
+  },
+  "submissions": {
+  },
+  "discussion": {
+  },
+  "groups": {
+  },
+  "users": {
+  },
+  "wiki": {
+  }
+}

@@ -13,29 +13,25 @@ import { filter } from 'rxjs/operators';
 import { AlertService, AuthService } from '../_services';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-password-reset',
+  templateUrl: './password-reset.component.html',
+  styleUrls: ['./password-reset.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class PasswordResetComponent implements OnInit {
   form: FormGroup;
-  name_email: AbstractControl;
-  password: AbstractControl;
+  email: AbstractControl;
 
   loading: boolean;
   submitted: boolean;
   returnUrl: string;
 
   login_k: string;
-  register_k: string;
-  username_k: string;
-  password_k: string;
+  email_k: string;
+  password_reset_k: string;
 
-  forgot_password: string;
-  dont_have_account: string;
+  remembered_password: string;
 
-  name_required: string;
-  password_required: string;
+  email_required: string;
 
   // error received from server
   error: string;
@@ -48,12 +44,10 @@ export class LoginComponent implements OnInit {
               private translate: TranslateService) {
 
     this.form = this.formBuilder.group({
-      name_email: ['', Validators.required],
-      password: ['', Validators.required]
+      email: ['', [Validators.required, this.emailValidator]],
     });
 
-    this.name_email = this.form.controls['name_email'];
-    this.password = this.form.controls['password'];
+    this.email = this.form.controls['email'];
 
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -61,21 +55,26 @@ export class LoginComponent implements OnInit {
     // translate
     this.translate.get(['keywords', 'errors', 'infos']).subscribe(data => {
       this.login_k = data.keywords.login;
-      this.register_k = data.keywords.register;
-      this.username_k = data.keywords.username;
-      this.password_k = data.keywords.password;
+      this.email_k = data.keywords.email;
+      this.password_reset_k = data.keywords.password_reset;
 
-      this.forgot_password = data.infos.forgot_password;
-      this.dont_have_account = data.infos.dont_have_account;
+      this.remembered_password = data.infos.remembered_password;
 
-      this.name_required = data.errors.required.replace('%s', this.username_k);
-      this.password_required = data.errors.required.replace('%s', this.password_k);
+      this.email_required = data.errors.required.replace('%s', this.email_k);
     });
 
   }
 
   // convenience getter for easy access to form fields
   get f() { return this.form.controls; }
+
+  // Validators for email.
+  emailValidator(email: FormControl): {[s: string]: boolean} {
+    let regex = new RegExp(/^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i);
+    if (!email.value.match(regex)){
+      return { invalidEmail: true };
+    }
+  }
 
   onSubmit() {
     this.submitted = true;
@@ -90,18 +89,6 @@ export class LoginComponent implements OnInit {
 
     this.loading = true;
     this.error = "";
-
-    let data = {login: this.name_email.value, password: this.password.value};
-
-    this.authService.login(data);
-    this.authService.errors$.subscribe(data => {
-      if (data === null) {
-        this.router.navigate([this.returnUrl]);
-      } else {
-        this.error = data[0];
-        this.loading = false;
-      }
-    });
   }
 
   ngOnInit() {

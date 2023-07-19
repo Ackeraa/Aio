@@ -1,10 +1,21 @@
 {
   "keywords": {
-    "username": "user name",
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "username": "Username",
+    "email": "Email",
     "password": "Password",
     "password_confirmation": "Password confirmation",
+    "password_reset": "Reset Password",
     "description": "Description",
     "title": "Title"
+  },
+  "infos": {
+    "forgot_password": "Forgot password?",
+    "dont_have_account": "Don't have an account?",
+    "already_have_account": "Already have an account?",
+    "remembered_password": "Remembered your password?"
   },
   "errors": {
     "too_short": "%s is too short (minimum is %d characters).",
@@ -23,10 +34,9 @@
     "users": "Users",
     "wiki": "Wiki"
   },
-  "signin": {
-
+  "login": {
   },
-  "signup": {
+  "register": {
     "password_mismatch": "Password mismatch"
   },
   "home": {

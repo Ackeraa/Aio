@@ -1,59 +1,62 @@
-<br/> <br/> <br/>
+<br/> <br/> <br/> <br/> <br/> <br/>
 <div class="container">
 	<div class="col-md-5 mx-auto">
-		<div id="first">
-			<div class="myform form ">
-				<div class="logo mb-3">
-					<div class="col-md-12 text-center">
-						<h1>Login</h1>
-					</div>
-				</div>
-				<form [formGroup]="form" (ngSubmit)="onSubmit()">
-					<div class="form-group mb-3">
-						<input type="email" [formControl]="name_email" class="form-control"
-								[ngClass]="{ 'is-invalid': submitted && name_email.errors }"
-								placeholder="User name / Email" />
-						<div *ngIf="name_email.touched && name_email.errors" class="text-danger">
-							<small>
-								<div *ngIf="name_email.hasError('required')">
-									User name / Email is required.
-								</div>
-							</small>
-						</div>
-					</div>
-					<div class="form-group">
-						<input type="password" [formControl]="password" class="form-control"
-								[ngClass]="{ 'is-invalid': submitted && password.errors }"
-								placeholder="Password" autocomplete="false"/>
-						<div *ngIf="password.touched && password.errors" class="text-danger">
-							<small>
-								<div *ngIf="password.hasError('required')">
-									Password is required.
-								</div>
-							</small>
-						</div>
-						<div *ngIf="submitted && error" class="text-danger">
-							<small>
-								{{error}}
-							</small>
-						</div>
-					</div>
-					<br/>
-          <div class="d-grid gap-2 mb-3">
-            <button [disabled]="loading" class="btn btn-outline-info">
-							<span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-							Login
-						</button>
-					</div>
-					<div class="col-md-12 ">
-						<div class="form-group">
-							<p class="text-center">Don't have account?
-								<a class="link-info" routerLink="/register">Register</a>
-							</p>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+    <div class="myform form ">
+      <div class="logo mb-3">
+        <div class="col-md-12 text-center">
+          <h1>{{login_k}}</h1>
+        </div>
+      </div>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group mb-3">
+          <input type="email" [formControl]="name_email" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && name_email.errors }"
+              placeholder="User name / Email" />
+          <div *ngIf="(name_email.touched || submitted) && name_email.errors" class="text-danger">
+            <small>
+              <div *ngIf="name_email.hasError('required')">
+                {{name_required}}
+              </div>
+            </small>
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="password" [formControl]="password" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && password.errors }"
+              placeholder="Password" autocomplete="false"/>
+          <small>
+            <a class="link-success" routerLink="/password-reset">{{forgot_password}}</a>
+          </small>
+          <div *ngIf="(password.touched || submitted) && password.errors" class="text-danger">
+            <small>
+              <div *ngIf="password.hasError('required')">
+                {{password_required}}
+              </div>
+            </small>
+          </div>
+          <div *ngIf="submitted && error" class="text-danger">
+            <small>
+              {{error}}
+            </small>
+          </div>
+        </div>
+        <br/>
+        <div class="d-grid gap-2 mb-3">
+          <button [disabled]="loading" class="btn btn-success">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            {{login_k}}
+          </button>
+        </div>
+        <div class="col-md-12 ">
+          <div class="form-group">
+            <small>
+              <p class="text-center">{{dont_have_account}}
+              <a class="link-success" routerLink="/register">{{register_k}}</a>
+              </p>
+            </small>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

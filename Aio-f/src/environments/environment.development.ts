@@ -4,7 +4,7 @@ export const environment = {
 		apiBase: 'http://127.0.0.1:3000',
 		registerAccountCallback: 'http://localhost:4200/login',
 	},
-  defaultLang: 'en',
+  defaultLang: 'zh-CN',
   unameMinLen: 5,
   unameMaxLen: 10,
   passwdMinLen: 6,

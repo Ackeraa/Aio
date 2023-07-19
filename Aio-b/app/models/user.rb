@@ -26,10 +26,6 @@ class User < ActiveRecord::Base
     format: { with: /\A[a-zA-Z]+[a-zA-Z0-9_]*\Z/,
               message: I18n.t("errors.messages.name_format")}
 
-  validates :password,
-    length: { minimum: 6, too_short: I18n.t("errors.messages.too_short", count: 6),
-              maximum: 16, too_long: I18n.t("errors.messages.too_long", count: 16) }
-
   devise :database_authenticatable,
          :registerable,
          :recoverable,

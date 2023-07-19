@@ -12,6 +12,7 @@ import { UsersComponent } from './users';
 import { WikiComponent } from './wiki';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
+import { PasswordResetComponent } from './password-reset';
 import { ProblemSetComponent } from './problem-set';
 import { GroupComponent } from './group';
 import { UserComponent } from './user';
@@ -27,7 +28,7 @@ const routes: Routes = [
 		loadChildren: () => import('./contests/contests.module').then(m => m.ContestsModule)
 	},
 	{
-		path: 'contest/:id', 
+		path: 'contest/:id',
 		data: { preload: true },
 		loadChildren: () => import('./contest/contest.module').then(m => m.ContestModule)
 	},
@@ -69,6 +70,7 @@ const routes: Routes = [
 	},
 	{ path: 'login', component: LoginComponent },
 	{ path: 'register', component: RegisterComponent },
+	{ path: 'password-reset', component: PasswordResetComponent },
     //{ path: '**', redirectTo: '' }
 ];
 

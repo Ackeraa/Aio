@@ -1,18 +1,18 @@
-<br/> <br/> <br/>
+<br/> <br/> <br/> <br/> <br/> <br/>
 <div class="container">
 	<div class="col-md-5 mx-auto">
 		<div class="myform form">
 			<div class="logo mb-3">
 				<div class="col-md-12 text-center">
-					<h1 >Register</h1>
+          <h1>{{register_k}}</h1>
 				</div>
 			</div>
 			<form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="form-group mb-3">
           <input type="text" class="form-control" [formControl]="name"
               [ngClass]="{ 'is-invalid': submitted && name.errors }"
-              placeholder="User name"/>
-          <div *ngIf="name.touched && name.errors" class="text-danger">
+              [placeholder]="username_k"/>
+          <div *ngIf="(name.touched || submitted) && name.errors" class="text-danger">
             <small>
               <div *ngIf="name.hasError('required')">
                 {{name_required}}
@@ -36,8 +36,8 @@
 				<div class="form-group mb-3">
 					<input type="email" class="form-control" [formControl]="email"
 							[ngClass]="{ 'is-invalid': submitted && email.errors }"
-							placeholder="Email"/>
-					<div *ngIf="email.touched && email.errors" class="text-danger">
+							[placeholder]="email_k"/>
+					<div *ngIf="(email.touched || submitted) && email.errors" class="text-danger">
 						<small>
 							<div *ngIf="email.hasError('required')">
                 {{email_required}}
@@ -58,8 +58,8 @@
 				<div class="form-group mb-3">
 					<input type="password" class="form-control" [formControl]="password"
 							[ngClass]="{ 'is-invalid': submitted && password.errors }"
-							placeholder="Password" autocomplete="false"/>
-					<div *ngIf="password.touched && password.errors" class="text-danger">
+							[placeholder]="password_k" autocomplete="false"/>
+					<div *ngIf="(password.touched || submitted) && password.errors" class="text-danger">
 						<small>
 							<div *ngIf="password.hasError('required')">
                 {{password_required}}
@@ -83,9 +83,8 @@
 				<div class="form-group">
 					<input type="password" class="form-control" [formControl]="password_confirmation"
 							[ngClass]="{ 'is-invalid': submitted && password_confirmation.errors }"
-					   pattern="{{password.value}}" placeholder="Confirm password" autocomplete="false"/>
-					<div *ngIf="password_confirmation.touched && password_confirmation.errors"
-								class="text-danger">
+					   pattern="{{password.value}}" [placeholder]=" password_confirmation_k" autocomplete="false"/>
+					<div *ngIf="(password_confirmation.touched || submitted) && password_confirmation.errors" class="text-danger">
 						<small>
 							<div *ngIf="password_confirmation.hasError('required')">
                 {{password_confirmation_required}}
@@ -106,16 +105,18 @@
 				</div>
 				<br/>
 				<div class="d-grid gap-2 mb-3">
-					<button [disabled]="loading" class="btn btn-outline-info">
+					<button [disabled]="loading" class="btn btn-success">
 						<span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-						Register
+            {{register_k}}
 					</button>
 				</div>
 				<div class="col-md-12">
 					<div class="form-group">
-						<p class="text-center"> Already have an account?
-							<a class="link-info" routerLink="/login"> Login </a>
-						</p>
+            <small>
+              <p class="text-center"> {{already_have_account}}
+              <a class="link-success" routerLink="/login">{{login_k}}</a>
+              </p>
+            </small>
 					</div>
 				</div>
 			</form>

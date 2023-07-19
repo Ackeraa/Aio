@@ -29,10 +29,14 @@ export class RegisterComponent implements OnInit {
   submitted: boolean;
 
   // keywords for translation
+  register_k: string;
+  login_k: string;
   username_k: string;
   email_k: string;
   password_k: string;
   password_confirmation_k: string;
+
+  already_have_account: string;
 
   // error received from client
   name_required: string;
@@ -58,19 +62,19 @@ export class RegisterComponent implements OnInit {
     private alertService: AlertService,
     private translate: TranslateService
   ) {
-    // Redirect to home if already logged in.
-    if (this.authService.isSignedIn()) {
-      this.router.navigate(['/']);
-    }
 
-    this.translate.get(['keywords', 'errors', 'signup']).subscribe(data => {
-      // Get keywords for translation.
+    this.translate.get(['keywords', 'errors', 'register', 'infos']).subscribe(data => {
+      // get keywords for translation.
+      this.register_k = data.keywords.register;
+      this.login_k = data.keywords.login;
       this.username_k = data.keywords.username;
       this.email_k = data.keywords.email;
       this.password_k = data.keywords.password;
       this.password_confirmation_k = data.keywords.password_confirmation;
 
-      // Get error messages for translation.
+      this.already_have_account = data.infos.already_have_account;
+
+      // get error messages for translation.
       this.name_required = data.errors.required
         .replace("%s", this.username_k);
       this.name_too_short = data.errors.too_short
@@ -94,7 +98,7 @@ export class RegisterComponent implements OnInit {
 
       this.password_confirmation_required = data.errors.required
         .replace("%s", this.password_confirmation_k);
-      this.password_mismatch = data.signup.password_mismatch;
+      this.password_mismatch = data.register.password_mismatch;
     });
 
   }
