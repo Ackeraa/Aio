@@ -13,6 +13,7 @@ import { WikiComponent } from './wiki';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import { PasswordResetComponent } from './password-reset';
+import { PasswordForgotComponent } from './password-forgot';
 import { ProblemSetComponent } from './problem-set';
 import { GroupComponent } from './group';
 import { UserComponent } from './user';
@@ -70,6 +71,7 @@ const routes: Routes = [
 	},
 	{ path: 'login', component: LoginComponent },
 	{ path: 'register', component: RegisterComponent },
+  { path: 'password-forgot', component: PasswordForgotComponent },
 	{ path: 'password-reset', component: PasswordResetComponent },
     //{ path: '**', redirectTo: '' }
 ];

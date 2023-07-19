@@ -25,7 +25,7 @@
               [ngClass]="{ 'is-invalid': submitted && password.errors }"
               placeholder="Password" autocomplete="false"/>
           <small>
-            <a class="link-success" routerLink="/password-reset">{{forgot_password}}</a>
+            <a class="link-success" routerLink="/password-forgot">{{forgot_password}}</a>
           </small>
           <div *ngIf="(password.touched || submitted) && password.errors" class="text-danger">
             <small>

@@ -6,7 +6,8 @@
     "username": "Username",
     "email": "Email",
     "password": "Password",
-    "password_confirmation": "Password confirmation",
+    "password_confirm": "Password confirmation",
+    "password_forgot": "Forgot password?",
     "password_reset": "Reset Password",
     "description": "Description",
     "title": "Title"

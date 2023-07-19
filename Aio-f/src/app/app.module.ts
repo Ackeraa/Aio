@@ -51,6 +51,7 @@ import {
 	FooterComponent
 } from './_components';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { PasswordForgotComponent } from './password-forgot/password-forgot.component';
 
 @NgModule({
 	imports: [
@@ -107,7 +108,8 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
 		ProblemSetComponent,
 		DiscussionComponent,
 		GroupsComponent,
-  PasswordResetComponent
+  PasswordResetComponent,
+  PasswordForgotComponent
 	],
 	providers: [
 		//{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

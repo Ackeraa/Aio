@@ -81,24 +81,24 @@
           </div>
 				</div>
 				<div class="form-group">
-					<input type="password" class="form-control" [formControl]="password_confirmation"
-							[ngClass]="{ 'is-invalid': submitted && password_confirmation.errors }"
-					   pattern="{{password.value}}" [placeholder]=" password_confirmation_k" autocomplete="false"/>
-					<div *ngIf="(password_confirmation.touched || submitted) && password_confirmation.errors" class="text-danger">
+					<input type="password" class="form-control" [formControl]="password_confirm"
+							[ngClass]="{ 'is-invalid': submitted && password_confirm.errors }"
+					   pattern="{{password.value}}" [placeholder]=" password_confirm_k" autocomplete="false"/>
+					<div *ngIf="(password_confirm.touched || submitted) && password_confirm.errors" class="text-danger">
 						<small>
-							<div *ngIf="password_confirmation.hasError('required')">
-                {{password_confirmation_required}}
+							<div *ngIf="password_confirm.hasError('required')">
+                {{password_confirm_required}}
 							</div>
-							<div *ngIf="!password_confirmation.hasError('required') &&
-										password_confirmation.errors.pattern">
+							<div *ngIf="!password_confirm.hasError('required') &&
+										password_confirm.errors.pattern">
                 {{password_missmatch}}
 							</div>
 						</small>
 					</div>
           <div *ngIf="submitted" class="text-danger">
             <small>
-              <div *ngIf="password_confirmation_error">
-                {{password_confirmation_error}}
+              <div *ngIf="password_confirm_error">
+                {{password_confirm_error}}
               </div>
             </small>
           </div>

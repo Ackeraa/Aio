@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { environment } from '../../environments/environment';
 import {
   FormBuilder,
   FormGroup,
@@ -14,15 +13,13 @@ import { filter } from 'rxjs/operators';
 import { AlertService, AuthService } from '../_services';
 
 @Component({
-  selector: 'app-password-reset',
-  templateUrl: './password-reset.component.html',
-  styleUrls: ['./password-reset.component.scss']
+  selector: 'app-password-forgot',
+  templateUrl: './password-forgot.component.html',
+  styleUrls: ['./password-forgot.component.scss']
 })
-export class PasswordResetComponent implements OnInit {
+export class PasswordForgotComponent {
   form: FormGroup;
   email: AbstractControl;
-  password: AbstractControl;
-  password_confirm: AbstractControl;
 
   loading: boolean;
   submitted: boolean;
@@ -30,9 +27,7 @@ export class PasswordResetComponent implements OnInit {
 
   login_k: string;
   email_k: string;
-  password_k: string;
-  password_confirm_k: string;
-  password_reset_k: string;
+  password_forgot_k: string;
 
   remembered_password: string;
 
@@ -50,15 +45,9 @@ export class PasswordResetComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       email: ['', [Validators.required, this.emailValidator]],
-      password: ['', [Validators.required,
-        Validators.minLength(environment.passwdMinLen),
-        Validators.maxLength(environment.passwdMaxLen)]],
-      password_confirm: ['', Validators.required],
     });
 
     this.email = this.form.controls['email'];
-    this.password = this.form.controls['password'];
-    this.password_confirm = this.form.controls['password_confirm'];
 
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -67,9 +56,9 @@ export class PasswordResetComponent implements OnInit {
     this.translate.get(['keywords', 'errors', 'infos']).subscribe(data => {
       this.login_k = data.keywords.login;
       this.email_k = data.keywords.email;
-      this.password_k = data.keywords.password;
-      this.password_confirm_k = data.keywords.password_confirm;
-      this.password_reset_k = data.keywords.password_reset;
+      this.password_forgot_k = data.keywords.password_forgot;
+
+      this.remembered_password = data.infos.remembered_password;
 
       this.email_required = data.errors.required.replace('%s', this.email_k);
     });

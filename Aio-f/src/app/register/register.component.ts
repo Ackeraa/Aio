@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
   name: AbstractControl;
   email: AbstractControl;
   password: AbstractControl;
-  password_confirmation: AbstractControl;
+  password_confirm: AbstractControl;
 
   loading: boolean;
   submitted: boolean;
@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
   username_k: string;
   email_k: string;
   password_k: string;
-  password_confirmation_k: string;
+  password_confirm_k: string;
 
   already_have_account: string;
 
@@ -46,14 +46,14 @@ export class RegisterComponent implements OnInit {
   password_required: string;
   password_too_short: string;
   password_too_long: string;
-  password_confirmation_required: string;
+  password_confirm_required: string;
   password_mismatch: string;
 
   // error received from server
   name_error: string;
   email_error: string;
   password_error: string;
-  password_confirmation_error: string; // maybe not needed
+  password_confirm_error: string; // maybe not needed
 
   constructor(
     private formBuilder: FormBuilder,
@@ -70,7 +70,7 @@ export class RegisterComponent implements OnInit {
       this.username_k = data.keywords.username;
       this.email_k = data.keywords.email;
       this.password_k = data.keywords.password;
-      this.password_confirmation_k = data.keywords.password_confirmation;
+      this.password_confirm_k = data.keywords.password_confirm;
 
       this.already_have_account = data.infos.already_have_account;
 
@@ -96,8 +96,8 @@ export class RegisterComponent implements OnInit {
         .replace("%s", this.password_k)
         .replace("%d", environment.passwdMaxLen);
 
-      this.password_confirmation_required = data.errors.required
-        .replace("%s", this.password_confirmation_k);
+      this.password_confirm_required = data.errors.required
+        .replace("%s", this.password_confirm_k);
       this.password_mismatch = data.register.password_mismatch;
     });
 
@@ -112,12 +112,12 @@ export class RegisterComponent implements OnInit {
       password: ['', [Validators.required,
         Validators.minLength(environment.passwdMinLen),
         Validators.maxLength(environment.passwdMaxLen)]],
-      password_confirmation: ['', Validators.required],
+      password_confirm: ['', Validators.required],
     });
     this.name = this.form.controls['name'];
     this.email = this.form.controls['email'];
     this.password = this.form.controls['password'];
-    this.password_confirmation = this.form.controls['password_confirmation'];
+    this.password_confirm = this.form.controls['password_confirm'];
 
   }
 
@@ -162,7 +162,7 @@ export class RegisterComponent implements OnInit {
           this.name_error = data.name ? data.name[0] : '';
           this.email_error = data.email ? data.email[0] : '';
           this.password_error = data.password ? data.password[0] : '';
-          this.password_confirmation_error = data.password_confirmation ?  data.password_confirmation[0] : '';
+          this.password_confirm_error = data.password_confirm ?  data.password_confirm[0] : '';
           this.loading = false;
         } else {
           this.alertService.success('Registration successful, Please confirm your\
