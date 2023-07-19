@@ -7,7 +7,7 @@ import {
   FormControl,
   AbstractControl
 } from '@angular/forms';
-import { first } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 
 import { AlertService, AuthService } from '../_services';
 
@@ -68,7 +68,9 @@ export class LoginComponent implements OnInit {
     if (this.authService.isSignedIn()) {
       this.router.navigate([this.returnUrl]);
     } else {
-      this.authService.errors$.subscribe(
+      this.authService.errors$
+      .pipe(filter(data => data !== null))
+      .subscribe(
         data => {
           console.log(data);
           this.error = data[0];

@@ -21,6 +21,7 @@ class VproblemsController < ApplicationController
   # GET /vproblems/search
   # Need to be fixed when source is nil.
   def search
+    puts "FFFFFFFFFFFFFFFFFFFFFFFFFF", current_user.local.to_sym
     source = params[:source]
     query = params[:query]
     if query.nil? or query.empty?

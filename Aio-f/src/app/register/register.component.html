@@ -15,13 +15,13 @@
           <div *ngIf="name.touched && name.errors" class="text-danger">
             <small>
               <div *ngIf="name.hasError('required')">
-                User name is required.
+                {{name_required}}
               </div>
               <div *ngIf="!name.hasError('required') && name.hasError('minlength')">
-                Name is too short (minimum is 5 characters).
+                {{name_too_short}}
               </div>
               <div *ngIf="!name.hasError('required') && name.hasError('maxlength')">
-                Name is too long (maximum is 10 characters).
+                {{name_too_long}}
               </div>
             </small>
           </div>
@@ -40,10 +40,10 @@
 					<div *ngIf="email.touched && email.errors" class="text-danger">
 						<small>
 							<div *ngIf="email.hasError('required')">
-								Email is required.
+                {{email_required}}
 							</div>
 							<div *ngIf="!email.hasError('required') && email.hasError('invalidEmail')">
-								Email is invalid.
+                {{email_invalid}}
 							</div>
 						</small>
 					</div>
@@ -62,13 +62,13 @@
 					<div *ngIf="password.touched && password.errors" class="text-danger">
 						<small>
 							<div *ngIf="password.hasError('required')">
-								Password is required.
+                {{password_required}}
 							</div>
 							<div *ngIf="password.hasError('minlength')">
-								Password is too short (minimum is 6 characters).
+                {{password_too_short}}
 							</div>
 							<div *ngIf="password.hasError('maxlength')">
-								Password is too long (maximum is 16 characters).
+                {{password_too_long}}
 							</div>
 						</small>
 					</div>
@@ -88,11 +88,11 @@
 								class="text-danger">
 						<small>
 							<div *ngIf="password_confirmation.hasError('required')">
-								Confirm password is required.
+                {{password_confirmation_required}}
 							</div>
 							<div *ngIf="!password_confirmation.hasError('required') &&
 										password_confirmation.errors.pattern">
-								Password must match.
+                {{password_missmatch}}
 							</div>
 						</small>
 					</div>

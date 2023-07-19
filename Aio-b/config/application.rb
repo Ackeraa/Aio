@@ -33,6 +33,8 @@ module AioB
       end
     end
     config.api_only = true
+    config.i18n.default_locale = :"zh-CN"
+    config.i18n.available_locales = [:"zh-CN", :en]
     #config.autoload_paths << Rails.root.join('lib')
     #config.middleware.use Rack::RubyProf, path: '/tmp/rails_profile'
     #config.middleware.insert_before Rack::RubyProf, GCDisabler

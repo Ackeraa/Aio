@@ -1,0 +1,50 @@
+{
+  "keywords": {
+    "username": "user name",
+    "password": "Password",
+    "password_confirmation": "Password confirmation",
+    "description": "Description",
+    "title": "Title"
+  },
+  "errors": {
+    "too_short": "%s is too short (minimum is %d characters).",
+    "too_long": "%s is too long (maximum is %d characters).",
+    "required": "%s can't be blank."
+  },
+  "welcome": "Oh, hello there, dear!",
+  "header": {
+    "home": "Home",
+    "contests": "Contests",
+    "problems": "Problems",
+    "problemset": "Problem sets",
+    "submissions": "Submissions",
+    "discussion": "Discussion",
+    "groups": "Groups",
+    "users": "Users",
+    "wiki": "Wiki"
+  },
+  "signin": {
+
+  },
+  "signup": {
+    "password_mismatch": "Password mismatch"
+  },
+  "home": {
+  },
+  "contests": {
+  },
+  "problems": {
+  },
+  "problemset": {
+  },
+  "submissions": {
+  },
+  "discussion": {
+  },
+  "groups": {
+  },
+  "users": {
+  },
+  "wiki": {
+  }
+}

@@ -9,22 +9,14 @@ interface User {
   user_name: string
 }
 
-interface Error {
-  name: Array<string>,
-  email: Array<string>,
-  password: Array<string>,
-  password_confirmation: Array<string>,
-  full_messages: Array<string>
-}
-
 @Injectable()
 export class AuthService implements OnInit{
 
 	private user_$: BehaviorSubject<User | null | undefined> = new BehaviorSubject(undefined);
   user$ = this.user_$.pipe(skipWhile(val => val === undefined)) as Observable<User | null>;
 
-  private errors_$: BehaviorSubject<Error | null | undefined> = new BehaviorSubject(undefined);
-  errors$ = this.errors_$.pipe(skipWhile(val => val === undefined)) as Observable<Error | null>;
+  private errors_$: BehaviorSubject<any> = new BehaviorSubject(null);
+  errors$ = this.errors_$ as Observable<any>;
 
   public message$: BehaviorSubject<string | null> = new BehaviorSubject(null);
 

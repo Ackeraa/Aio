@@ -7,18 +7,18 @@ import { AuthService } from '../_services';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-    constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return next.handle(request).pipe(catchError(err => {
-            if (err.status === 401) {
-                // auto logout if 401 response returned from api
-                this.authService.signOut();
-                location.reload();
-            }
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(request).pipe(catchError(err => {
+      if (err.status === 401) {
+        // auto logout if 401 response returned from api
+        this.authService.signOut();
+        location.reload();
+      }
 
-            const error = err.error.message || err.statusText;
-            return throwError(error);
-        }))
-    }
+      const error = err.error.message || err.statusText;
+      return throwError(error);
+    }))
+  }
 }

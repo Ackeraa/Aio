@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { Observable, fromEvent } from 'rxjs';
-import { map, filter, debounceTime, tap, switchAll } from 'rxjs/operators'; 
+import { map, filter, debounceTime, tap, switchAll } from 'rxjs/operators';
 import { SearchService } from '../../_services';
 
 @Component({
@@ -26,7 +26,7 @@ export class SearchComponent implements OnInit {
         this.itemsEvent.emit(data);
       });
 
-		//Observer of query change.
+		//Observer of query change, need to be fixed, should watch the text change
 		fromEvent(this.query.nativeElement, 'keyup')
 		.pipe(
 			map((e: any) => e.target.value),

@@ -18,13 +18,17 @@ class User < ActiveRecord::Base
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  validates :name, presence: true, uniqueness: { case_sensitive: false }, 
-            length: { minimum: 5, too_short: "is too short (minimum is 5 characters)",
-                      maximum: 10, too_long: "is too long (maximum is 10 characters)"},
-            format: { with: /\A[a-zA-Z]+[a-zA-Z0-9_]*\Z/,
-                      message: "must start with a letter and only contain [a-zA-Z0-9_]"}
+  validates :name,
+    presence: { message: I18n.t("errors.messages.required") },
+    uniqueness: { case_sensitive: false },
+    length: { minimum: 5, too_short: I18n.t("errors.messages.too_short", count: 5),
+              maximum: 10, too_long: I18n.t("errors.messages.too_long", count: 10) },
+    format: { with: /\A[a-zA-Z]+[a-zA-Z0-9_]*\Z/,
+              message: I18n.t("errors.messages.name_format")}
 
-  validates :password, length: { maximum: 16, too_long: "is too long (maximum is 16 characters)"}
+  validates :password,
+    length: { minimum: 6, too_short: I18n.t("errors.messages.too_short", count: 6),
+              maximum: 16, too_long: I18n.t("errors.messages.too_long", count: 16) }
 
   devise :database_authenticatable,
          :registerable,

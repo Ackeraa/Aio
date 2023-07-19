@@ -3,12 +3,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MarkdownModule} from 'ngx-markdown';
 import { FileUploadModule } from 'ng2-file-upload';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
 import { ProblemSearchModule } from './_components';
 import { SearchModule } from './_components';
 import { CommentsModule } from './_components';
@@ -40,19 +43,30 @@ import { AngularTokenModule } from 'angular-token';
 import { AuthService } from "./_services/auth.service";
 import { ActionCableService } from 'angular2-actioncable';
 
+import { environment } from "../environments/environment";
+
 import {
 	AlertComponent,
 	HeaderComponent,
-	FooterComponent 
+	FooterComponent
 } from './_components';
 
 @NgModule({
 	imports: [
 		MarkdownModule.forRoot(),
 		HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => new TranslateHttpLoader(http, './assets/i18n/', '.json'),
+        deps: [HttpClient]
+      },
+      defaultLanguage: environment.defaultLang
+    }),
+
     AngularTokenModule.forRoot({
-      apiBase: 'http://localhost:3000',
-      registerAccountCallback: 'http://127.0.0.1:4200/login',
+      apiBase: environment.token_auth_config.apiBase,
+      registerAccountCallback: environment.token_auth_config.registerAccountCallback
     }),
 		BrowserModule,
 		BrowserAnimationsModule,
@@ -99,7 +113,7 @@ import {
 		//AngularTokenService,
     AngularTokenModule,
 		AuthService,
-		ActionCableService 
+		ActionCableService
 	],
   exports: [
   ],

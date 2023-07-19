@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { environment } from "../environments/environment";
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 import { User } from './users';
 
@@ -11,7 +12,11 @@ import { User } from './users';
 export class AppComponent {
   currentUser: User;
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+              private translate: TranslateService) {
+
+    translate.setDefaultLang(environment.defaultLang);
+    translate.use(environment.defaultLang);
   }
 }
 
