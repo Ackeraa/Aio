@@ -8,25 +8,19 @@ import {
   FormControl,
   AbstractControl
 } from '@angular/forms';
-import { filter } from 'rxjs/operators';
 
-import { AlertService, AuthService } from '../_services';
+import { AlertService, AuthService } from '../../_services';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-auth-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
-  name_email: AbstractControl;
-  password: AbstractControl;
-
   loading: boolean;
   submitted: boolean;
   returnUrl: string;
-
-  // Server side messages
   errors: any;
 
   constructor(private formBuilder: FormBuilder,
@@ -43,27 +37,27 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required]
     });
 
-    // get return url from route parameters or default to '/'
+    // Get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  // convenience getter for easy access to form fields
+  // Convenience getter for easy access to form fields
   get f() { return this.form.controls; }
 
   onSubmit() {
     this.submitted = true;
 
-    // reset alerts on submit
+    // Reset alerts on submit
     this.alertService.clear();
 
-    // stop here if form is invalid
+    // Stop here if form is invalid
     if (this.form.invalid) {
       return;
     }
 
     this.loading = true;
 
-    let data: { login: string, password: string } = {
+    const data: { login: string, password: string } = {
       login: this.f.name_email.value,
       password: this.f.password.value
     };

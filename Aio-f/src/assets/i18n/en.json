@@ -31,7 +31,7 @@
     "passwordConfirm": "Password confirmation",
     "passwordMismatch": "Password mismatch",
     "resetPassword": "Reset Password",
-    "forgotPassword": "Forgot password?",
+    "forgotPassword": "Forgot password",
     "dontHaveAccount": "Don't have an account?",
     "alreadyHaveAccount": "Already have an account?",
     "rememberedPassword": "Remembered your password?"

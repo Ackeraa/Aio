@@ -1,50 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { environment } from '../../environments/environment';
 import {
   FormBuilder,
   FormGroup,
   Validators,
   FormControl,
-  AbstractControl,
 } from '@angular/forms';
-import { AuthService, AlertService } from '../_services';
+import { environment } from '../../../environments/environment';
+import { AuthService, AlertService } from '../../_services';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-auth-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
   form: FormGroup;
-  name: AbstractControl;
-  email: AbstractControl;
-  password: AbstractControl;
-  passwordConfirm: AbstractControl;
-
   loading: boolean;
   submitted: boolean;
-
-  consts: { [s: string]: number };
-
-  // Server side messages
   errors: any;
+
+  envs = environment;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private authService: AuthService,
     private alertService: AlertService,
-    private translate: TranslateService,
-  ) {
-    this.consts = {
-      unameMinLen: environment.unameMinLen,
-      unameMaxLen: environment.unameMaxLen,
-      passwdMinLen: environment.passwdMinLen,
-      passwdMaxLen: environment.passwdMaxLen,
-    };
-  }
+    private translate: TranslateService
+  ) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -53,8 +38,8 @@ export class RegisterComponent implements OnInit {
         [
           this.nameValidator,
           Validators.required,
-          Validators.minLength(this.consts.unameMinLen),
-          Validators.maxLength(this.consts.unameMaxLen),
+          Validators.minLength(this.envs.unameMinLen),
+          Validators.maxLength(this.envs.unameMaxLen),
         ],
       ],
       email: ['', [Validators.required, this.emailValidator]],
@@ -62,32 +47,28 @@ export class RegisterComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.minLength(this.consts.passwdMinLen),
-          Validators.maxLength(this.consts.passwdMaxLen),
+          Validators.minLength(this.envs.passwdMinLen),
+          Validators.maxLength(this.envs.passwdMaxLen),
         ],
       ],
       passwordConfirm: ['', Validators.required],
     });
-
   }
 
-  // Validators for name.
   nameValidator(name: FormControl): { [s: string]: boolean } {
-    let regex = new RegExp(/^[a-zA-Z][a-zA-Z0-9_]*$/);
+    const regex = new RegExp(/^[a-zA-Z][a-zA-Z0-9_]*$/);
     if (!name.value.match(regex)) {
       return { invalidName: true };
     }
   }
 
-  // Validators for email.
   emailValidator(email: FormControl): { [s: string]: boolean } {
-    let regex = new RegExp(/^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i);
+    const regex = new RegExp(/^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i);
     if (!email.value.match(regex)) {
       return { invalidEmail: true };
     }
   }
 
-  // Convenience getter for easy access to form fields
   get f() {
     return this.form.controls;
   }
@@ -105,7 +86,7 @@ export class RegisterComponent implements OnInit {
 
     this.loading = true;
 
-    let data: {
+    const data: {
       name: string;
       login: string;
       password: string;
@@ -116,6 +97,7 @@ export class RegisterComponent implements OnInit {
       password: this.f.password.value,
       passwordConfirmation: this.f.passwordConfirm.value,
     };
+
     this.authService.register(data);
     this.authService.errors$.subscribe((data) => {
       if (data) {

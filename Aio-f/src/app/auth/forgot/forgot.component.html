@@ -1,0 +1,39 @@
+<div class="logo mb-3">
+  <div class="col-md-12 text-center">
+    <h1>{{ 'auth.forgotPassword' | translate }}</h1>
+  </div>
+</div>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="form-group mb-3">
+    <input
+      type="email"
+      [formControl]="f.email"
+      class="form-control"
+      [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+      placeholder="{{ 'auth.email' | translate }}"
+    />
+    <div *ngIf="(f.email.touched || submitted) && f.email.errors" class="text-danger">
+      <small>
+        <div *ngIf="f.email.hasError('required')">
+          {{ 'errors.required' | translate: { v1: 'auth.email' | translate } }}
+        </div>
+      </small>
+    </div>
+  </div>
+  <br/>
+  <div class="d-grid gap-2 mb-3">
+    <button [disabled]="loading" class="btn btn-success">
+      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+      {{ 'auth.forgotPassword' | translate }}
+    </button>
+  </div>
+  <div class="col-md-12">
+    <div class="form-group">
+      <small>
+        <p class="text-center">{{ 'auth.rememberedPassword' | translate }}
+          <a class="link-success" routerLink="/auth/login">{{ 'keywords.login' | translate }}</a>
+        </p>
+      </small>
+    </div>
+  </div>
+</form>

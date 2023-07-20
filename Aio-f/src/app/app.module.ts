@@ -36,8 +36,6 @@ import { DiscussionComponent } from './discussion';
 import { UsersComponent } from './users';
 import { GroupsComponent } from './groups';
 import { WikiComponent } from './wiki';
-import { LoginComponent } from './login';
-import { RegisterComponent } from './register';
 //import { AngularTokenService } from 'angular-token';
 import { AngularTokenModule } from 'angular-token';
 import { AuthService } from "./_services/auth.service";
@@ -50,8 +48,6 @@ import {
 	HeaderComponent,
 	FooterComponent
 } from './_components';
-import { PasswordResetComponent } from './password-reset/password-reset.component';
-import { PasswordForgotComponent } from './password-forgot/password-forgot.component';
 
 @NgModule({
 	imports: [
@@ -92,8 +88,6 @@ import { PasswordForgotComponent } from './password-forgot/password-forgot.compo
 	declarations: [
 		AppComponent,
 		HomeComponent,
-		LoginComponent,
-		RegisterComponent,
 		ContestsComponent,
 		SubmissionsComponent,
 		ProblemsComponent,
@@ -108,8 +102,6 @@ import { PasswordForgotComponent } from './password-forgot/password-forgot.compo
 		ProblemSetComponent,
 		DiscussionComponent,
 		GroupsComponent,
-    PasswordResetComponent,
-    PasswordForgotComponent,
 	],
 	providers: [
 		//{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

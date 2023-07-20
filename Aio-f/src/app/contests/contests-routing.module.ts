@@ -8,6 +8,7 @@ import {
 } from '.';
 
 const routes: Routes = [
+  // Path: /contests
 	{
 		path: '', component: ContestsComponent,
 		children: [

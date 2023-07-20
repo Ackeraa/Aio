@@ -37,8 +37,8 @@
         </a>
       </div>
       <div class="navbar-nav ml-auto">
-        <a class="nav-item nav-link" *ngIf="!currentUser" [routerLinkActive]="['active']" routerLink="/login">Login</a>
-        <a class="nav-item nav-link" *ngIf="!currentUser" [routerLinkActive]="['active']" routerLink="/register">Register</a>
+        <a class="nav-item nav-link" *ngIf="!currentUser" [routerLinkActive]="['active']" routerLink="/auth/login">Login</a>
+        <a class="nav-item nav-link" *ngIf="!currentUser" [routerLinkActive]="['active']" routerLink="/auth/register">Register</a>
 
         <div ngbDropdown *ngIf="currentUser">
           <button class="btn nav-link" id="user" ngbDropdownToggle>

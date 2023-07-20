@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { AppComponent } from './app.component';
+import { AuthComponent } from './auth';
 import { HomeComponent } from './home';
 import { ContestsComponent } from './contests';
 import { ContestComponent } from './contest';
@@ -10,10 +11,6 @@ import { SubmissionsComponent } from './submissions';
 import { DiscussionComponent } from './discussion';
 import { UsersComponent } from './users';
 import { WikiComponent } from './wiki';
-import { LoginComponent } from './login';
-import { RegisterComponent } from './register';
-import { PasswordResetComponent } from './password-reset';
-import { PasswordForgotComponent } from './password-forgot';
 import { ProblemSetComponent } from './problem-set';
 import { GroupComponent } from './group';
 import { UserComponent } from './user';
@@ -22,6 +19,11 @@ import { AuthGuard } from './_helpers';
 const routes: Routes = [
     //{ path: '', component: HomeComponent, canActivate: [AuthGuard] },
 	{ path: '', redirectTo: 'home', pathMatch: 'full' },
+  {
+    path: 'auth',
+    data: { preload: true },
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+  },
 	{ path: 'home', component: HomeComponent },
 	{
 		path: 'contests',
@@ -69,10 +71,6 @@ const routes: Routes = [
 	{
 		path: 'user/:id', component: UserComponent
 	},
-	{ path: 'login', component: LoginComponent },
-	{ path: 'register', component: RegisterComponent },
-  { path: 'password-forgot', component: PasswordForgotComponent },
-	{ path: 'password-reset', component: PasswordResetComponent },
     //{ path: '**', redirectTo: '' }
 ];
 

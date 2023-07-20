@@ -30,7 +30,7 @@
     "password": "密码",
     "passwordConfirm": "确认密码",
     "passwordMismatch": "密码不匹配",
-    "forgotPassword": "忘记密码？",
+    "forgotPassword": "忘记密码",
     "resetPassword": "重置密码",
     "dontHaveAccount": "没有账号？",
     "alreadyHaveAccount": "已经有账号了？",
