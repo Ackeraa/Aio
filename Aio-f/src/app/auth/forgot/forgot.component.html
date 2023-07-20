@@ -9,21 +9,26 @@
       type="email"
       [formControl]="f.email"
       class="form-control"
-      [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+      [ngClass]="{ 'is-invalid': status == XStatus.Clicked && f.email.errors }"
       placeholder="{{ 'auth.email' | translate }}"
     />
-    <div *ngIf="(f.email.touched || submitted) && f.email.errors" class="text-danger">
+    <div *ngIf="(f.email.touched || status == XStatus.Clicked) && f.email.errors" class="text-danger">
       <small>
-        <div *ngIf="f.email.hasError('required')">
+        <div *ngIf="f.email.errors.required">
           {{ 'errors.required' | translate: { v1: 'auth.email' | translate } }}
         </div>
+      </small>
+    </div>
+    <div *ngIf="status === XStatus.Received && errors" class="text-danger">
+      <small>
+        <center> {{ errors[0] }} </center>
       </small>
     </div>
   </div>
   <br/>
   <div class="d-grid gap-2 mb-3">
-    <button [disabled]="loading" class="btn btn-success">
-      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+    <button [disabled]="status === XStatus.Sent" class="btn btn-success">
+      <span *ngIf="status === XStatus.Sent" class="spinner-border spinner-border-sm mr-1"></span>
       {{ 'auth.forgotPassword' | translate }}
     </button>
   </div>

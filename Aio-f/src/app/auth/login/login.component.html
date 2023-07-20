@@ -9,12 +9,12 @@
       type="email"
       [formControl]="f.name_email"
       class="form-control"
-      [ngClass]="{ 'is-invalid': submitted && f.name_email.errors }"
+      [ngClass]="{ 'is-invalid': status === XStatus.Clicked && f.name_email.errors }"
       placeholder="{{ 'auth.username' | translate }}"
     />
-    <div *ngIf="(f.name_email.touched || submitted) && f.name_email.errors" class="text-danger">
+    <div *ngIf="(f.name_email.touched || status === XStatus.Clicked) && f.name_email.errors" class="text-danger">
       <small>
-        <div *ngIf="f.name_email.hasError('required')">
+        <div *ngIf="f.name_email.errors.required">
           {{ 'errors.required' | translate: { v1: 'auth.username' | translate } }}
         </div>
       </small>
@@ -25,13 +25,13 @@
       type="password"
       [formControl]="f.password"
       class="form-control"
-      [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+      [ngClass]="{ 'is-invalid': status === XStatus.Clicked && f.password.errors }"
       placeholder="{{ 'auth.password' | translate }}"
       autocomplete="false"
     />
-    <div *ngIf="(f.password.touched || submitted) && f.password.errors" class="text-danger">
+    <div *ngIf="(f.password.touched || status === XStatus.Clicked) && f.password.errors" class="text-danger">
       <small>
-        <div *ngIf="f.password.hasError('required')">
+        <div *ngIf="f.password.errors.required">
           {{ 'errors.required' | translate: { v1: 'auth.password' | translate } }}
         </div>
       </small>
@@ -39,16 +39,16 @@
     <small>
       <a class="link-success" routerLink="/auth/forgot">{{ 'auth.forgotPassword' | translate }}?</a>
     </small>
-    <div *ngIf="submitted && errors" class="text-danger">
+    <div *ngIf="status === XStatus.Received && errors" class="text-danger">
       <small>
-        {{ errors[0] }}
+        <center> {{ errors[0] }} </center>
       </small>
     </div>
   </div>
   <br/>
   <div class="d-grid gap-2 mb-3">
-    <button [disabled]="loading" class="btn btn-success">
-      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+    <button [disabled]="status === XStatus.Sent" class="btn btn-success">
+      <span *ngIf="status === XStatus.Sent" class="spinner-border spinner-border-sm mr-1"></span>
       {{ 'keywords.login' | translate }}
     </button>
   </div>

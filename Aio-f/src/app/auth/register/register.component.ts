@@ -8,6 +8,7 @@ import {
   FormControl,
 } from '@angular/forms';
 import { environment } from '../../../environments/environment';
+import { XStatus } from '../../_models';
 import { AuthService, AlertService } from '../../_services';
 
 @Component({
@@ -17,10 +18,9 @@ import { AuthService, AlertService } from '../../_services';
 })
 export class RegisterComponent implements OnInit {
   form: FormGroup;
-  loading: boolean;
-  submitted: boolean;
   errors: any;
-
+  status: XStatus = XStatus.Ready;
+  XStatus = XStatus;
   envs = environment;
 
   constructor(
@@ -74,7 +74,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
+    this.status = XStatus.Clicked;
 
     // Reset alerts on submit
     this.alertService.clear();
@@ -83,8 +83,6 @@ export class RegisterComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-
-    this.loading = true;
 
     const data: {
       name: string;
@@ -99,16 +97,19 @@ export class RegisterComponent implements OnInit {
     };
 
     this.authService.register(data);
+
+    this.status = XStatus.Sent;
+
     this.authService.errors$.subscribe((data) => {
+      this.status = XStatus.Received;
       if (data) {
         this.errors = data;
-        this.loading = false;
       } else {
         this.alertService.success(
           'Registration successful, Please confirm your email before login.',
           true
         );
-        this.router.navigate(['/login']);
+        this.router.navigate(['/auth/login']);
       }
     });
   }

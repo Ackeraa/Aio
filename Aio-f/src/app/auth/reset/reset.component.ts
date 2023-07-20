@@ -10,6 +10,7 @@ import {
 } from '@angular/forms';
 import { AlertService, AuthService } from '../../_services';
 import { environment } from '../../../environments/environment';
+import { XStatus } from '../../_models';
 
 @Component({
   selector: 'app-auth-reset',
@@ -18,11 +19,10 @@ import { environment } from '../../../environments/environment';
 })
 export class ResetComponent implements OnInit {
   form: FormGroup;
-  loading: boolean;
-  submitted: boolean;
-  returnUrl: string;
   errors: any;
 
+  status: XStatus = XStatus.Ready;
+  XStatus = XStatus;
   envs = environment;
 
   constructor(private formBuilder: FormBuilder,
@@ -45,16 +45,13 @@ export class ResetComponent implements OnInit {
       ],
       passwordConfirm: ['', Validators.required],
     });
-
-    // Get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   // Convenience getter for easy access to form fields
   get f() { return this.form.controls; }
 
   onSubmit() {
-    this.submitted = true;
+    this.status = XStatus.Clicked;
 
     // Reset alerts on submit
     this.alertService.clear();
@@ -64,21 +61,29 @@ export class ResetComponent implements OnInit {
       return;
     }
 
-    this.loading = true;
-
-    const data: { login: string, password: string } = {
-      login: this.f.name_email.value,
-      password: this.f.password.value
+    const data: { password: string, passwordConfirmation: string } = {
+      password: this.f.password.value,
+      passwordConfirmation: this.f.passwordConfirm.value
+    };
+    const token = {
+      accessToken: this.route.snapshot.queryParams['access-token'],
+      client: this.route.snapshot.queryParams['client'],
+      uid: this.route.snapshot.queryParams['uid'],
+      expiry: this.route.snapshot.queryParams['expiry'],
     };
 
-    this.authService.login(data);
-    this.authService.errors$.subscribe(data => {
-      if (data === null) {
-        this.router.navigate([this.returnUrl]);
-      } else {
-        this.errors = data;
-        this.loading = false;
+    this.status = XStatus.Sent;
+
+    this.authService.reset(data, token).subscribe(
+      res => {
+        this.status = XStatus.Received;
+        this.router.navigate(['/auth/login']);
+      },
+      err => {
+        console.log(err);
+        this.errors = err;
+        this.status = XStatus.Received;
       }
-    });
+    );
   }
 }

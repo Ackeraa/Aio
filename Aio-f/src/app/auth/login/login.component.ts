@@ -10,6 +10,7 @@ import {
 } from '@angular/forms';
 
 import { AlertService, AuthService } from '../../_services';
+import { XStatus } from '../../_models';
 
 @Component({
   selector: 'app-auth-login',
@@ -18,10 +19,11 @@ import { AlertService, AuthService } from '../../_services';
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
-  loading: boolean;
-  submitted: boolean;
   returnUrl: string;
   errors: any;
+
+  status: XStatus = XStatus.Ready;
+  XStatus = XStatus;
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
@@ -45,7 +47,7 @@ export class LoginComponent implements OnInit {
   get f() { return this.form.controls; }
 
   onSubmit() {
-    this.submitted = true;
+    this.status = XStatus.Clicked;
 
     // Reset alerts on submit
     this.alertService.clear();
@@ -55,20 +57,21 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.loading = true;
-
     const data: { login: string, password: string } = {
       login: this.f.name_email.value,
       password: this.f.password.value
     };
 
     this.authService.login(data);
+
+    this.status = XStatus.Sent;
+
     this.authService.errors$.subscribe(data => {
+      this.status = XStatus.Received;
       if (data === null) {
         this.router.navigate([this.returnUrl]);
       } else {
         this.errors = data;
-        this.loading = false;
       }
     });
   }

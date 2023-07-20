@@ -9,6 +9,7 @@ import {
   AbstractControl
 } from '@angular/forms';
 import { AlertService, AuthService } from '../../_services';
+import { XStatus } from '../../_models';
 
 @Component({
   selector: 'app-auth-forgot',
@@ -17,13 +18,12 @@ import { AlertService, AuthService } from '../../_services';
 })
 export class ForgotComponent implements OnInit {
   form: FormGroup;
-  loading: boolean;
-  submitted: boolean;
-  returnUrl: string;
   errors: any;
 
+  status: XStatus = XStatus.Ready;
+  XStatus = XStatus;
+
   constructor(private formBuilder: FormBuilder,
-              private route: ActivatedRoute,
               private router: Router,
               private alertService: AlertService,
               private authService: AuthService,
@@ -34,16 +34,13 @@ export class ForgotComponent implements OnInit {
     this.form = this.formBuilder.group({
       email: ['', Validators.required]
     });
-
-    // Get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/'; // what is this used for????
   }
 
   // Convenience getter for easy access to form fields
   get f() { return this.form.controls; }
 
   onSubmit() {
-    this.submitted = true;
+    this.status = XStatus.Clicked;
 
     // Reset alerts on submit
     this.alertService.clear();
@@ -53,7 +50,20 @@ export class ForgotComponent implements OnInit {
       return;
     }
 
-    this.loading = true;
-  }
+    const data: { email: string } = { email: this.f.email.value };
 
+    this.status = XStatus.Sent;
+
+    this.authService.forgot(data).subscribe(
+      res => {
+        console.log("DDDDD", res);
+        this.status = XStatus.Received;
+      },
+      err => {
+        this.errors = err;
+        console.log("EEEEEE", err);
+        this.status = XStatus.Received;
+      }
+    );
+  }
 }

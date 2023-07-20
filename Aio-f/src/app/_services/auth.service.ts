@@ -2,7 +2,8 @@ import { Injectable, OnInit } from '@angular/core';
 import { AngularTokenService } from 'angular-token';
 import { Subject, BehaviorSubject, Observable, AsyncSubject } from 'rxjs';
 import { skipWhile } from 'rxjs/operators';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 interface User {
   user_id: string,
@@ -10,15 +11,18 @@ interface User {
 }
 
 @Injectable()
-export class AuthService implements OnInit{
+export class AuthService implements OnInit {
+
+  private baseUrl = environment.token_auth_config.apiBase;
 
 	private user_$: BehaviorSubject<User | null | undefined> = new BehaviorSubject(undefined);
   user$ = this.user_$.pipe(skipWhile(val => val === undefined)) as Observable<User | null>;
 
+  private res_$: Subject<any> = new Subject();
+  res$ = this.res_$ as Observable<any>;
+
   private errors_$: Subject<any> = new Subject();
   errors$ = this.errors_$ as Observable<any>;
-
-  public message$: BehaviorSubject<string | null> = new BehaviorSubject(null);
 
 	constructor(public tokenService: AngularTokenService,
               private http: HttpClient) {
@@ -40,7 +44,47 @@ export class AuthService implements OnInit{
       );
 	}
 
-  isLoggedIn() {
+  getHeaders(): HttpHeaders {
+    let token = this.tokenService.currentAuthData;
+    if (token === null) {
+      return new HttpHeaders();
+    }
+    return new HttpHeaders({
+      'access-token': token['accessToken'],
+      'client': token['client'],
+      'expiry': token['expiry'],
+      'token-Type': token['tokenType'],
+      'uid': token['uid']
+    });
+  }
+
+	get(url: string, params: any = null): Observable<any> {
+    const fullUrl = this.baseUrl + url;
+    const headers = this.getHeaders();
+    let queryParams: HttpParams;
+
+    if (params) {
+      queryParams = new HttpParams({ fromObject: params });
+    }
+
+    return this.http.get(fullUrl, { headers: headers, params: queryParams });
+	}
+
+	post(url: string, body: any): Observable<any> {
+    const fullUrl = this.baseUrl + url;
+    const headers = this.getHeaders();
+
+    return this.http.post(url, body, { headers: headers });
+	}
+
+  put(url: string, body: any): Observable<any> {
+    const fullUrl = this.baseUrl + url;
+    const headers = this.getHeaders();
+
+    return this.http.put(url, body, { headers: headers });
+  }
+
+  isLoggedIn(): boolean {
     return this.tokenService.userSignedIn();
   }
 
@@ -83,55 +127,31 @@ export class AuthService implements OnInit{
     );
 	}
 
-  // send email to reset password
+  // Send email to reset password
   forgot(data: { email: string }) {
+    const url = '/auth/password';
+    const newData = {
+      email: data.email,
+      redirect_url: environment.token_auth_config.resetPasswordCallback
+    };
+    return this.post(url, newData);
   }
 
-  // reset password
-  reset() {
+  // Reset password
+  reset(data: { password: string, passwordConfirmation: string }, token: any) {
+    const url = '/auth/password';
+    const newData = {
+      password: data.password,
+      password_confirmation: data.passwordConfirmation
+    };
+    const headers = new HttpHeaders({
+      'access-token': token['accessToken'],
+      'client': token['client'],
+      'expiry': token['expiry'],
+      'uid': token['uid']
+    });
+    return this.http.put(url, newData, { headers: headers });
   }
-
-	get(url: string, params: any = null): Observable<any> {
-    url = 'http://localhost:3000/' + url;
-
-    let headers = new HttpHeaders();
-    let token = this.tokenService.currentAuthData;
-    if (token != null) {
-      let newHeaders = new HttpHeaders({
-        'access-token': token['accessToken'],
-        'client': token['client'],
-        'expiry': token['expiry'],
-        'token-Type': token['tokenType'],
-        'uid': token['uid']
-      });
-      headers = newHeaders;
-    }
-
-		if (params == null) {
-      return this.http.get(url);
-		} else {
-      return this.http.get(url, { headers: headers, params: params });
-		}
-	}
-
-	post(url: string, body: any): Observable<any> {
-    url = 'http://localhost:3000/' + url;
-
-    let headers = new HttpHeaders();
-    let token = this.tokenService.currentAuthData;
-    if (token != null) {
-      let newHeaders = new HttpHeaders({
-        'access-token': token['accessToken'],
-        'client': token['client'],
-        'expiry': token['expiry'],
-        'token-Type': token['tokenType'],
-        'uid': token['uid']
-      });
-      headers = newHeaders;
-    }
-
-    return this.http.post(url, body, { headers: headers });
-	}
 
 	ngOnInit(): void {
 	}
