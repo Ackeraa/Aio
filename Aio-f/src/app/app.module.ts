@@ -108,8 +108,8 @@ import { PasswordForgotComponent } from './password-forgot/password-forgot.compo
 		ProblemSetComponent,
 		DiscussionComponent,
 		GroupsComponent,
-  PasswordResetComponent,
-  PasswordForgotComponent
+    PasswordResetComponent,
+    PasswordForgotComponent,
 	],
 	providers: [
 		//{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

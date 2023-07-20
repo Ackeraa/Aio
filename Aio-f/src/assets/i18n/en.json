@@ -3,59 +3,47 @@
     "login": "Login",
     "logout": "Logout",
     "register": "Register",
-    "username": "Username",
-    "email": "Email",
-    "password": "Password",
-    "password_confirm": "Password confirmation",
-    "password_forgot": "Forgot password?",
-    "password_reset": "Reset Password",
     "description": "Description",
     "title": "Title"
   },
-  "infos": {
-    "forgot_password": "Forgot password?",
-    "dont_have_account": "Don't have an account?",
-    "already_have_account": "Already have an account?",
-    "remembered_password": "Remembered your password?"
-  },
   "errors": {
-    "too_short": "%s is too short (minimum is %d characters).",
-    "too_long": "%s is too long (maximum is %d characters).",
-    "required": "%s can't be blank."
+    "tooShort": "{{v1}} is too short (minimum is {{v2}} characters).",
+    "tooLong": "{{v1}} is too long (maximum is {{v2}} characters).",
+    "required": "{{v1}} can't be blank.",
+    "invalid": "{{v1}} is invalid."
   },
   "welcome": "Oh, hello there, dear!",
   "header": {
     "home": "Home",
     "contests": "Contests",
     "problems": "Problems",
-    "problemset": "Problem sets",
+    "problemSet": "Problem sets",
     "submissions": "Submissions",
     "discussion": "Discussion",
     "groups": "Groups",
     "users": "Users",
     "wiki": "Wiki"
   },
-  "login": {
+  "auth": {
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "passwordConfirm": "Password confirmation",
+    "passwordMismatch": "Password mismatch",
+    "resetPassword": "Reset Password",
+    "forgotPassword": "Forgot password?",
+    "dontHaveAccount": "Don't have an account?",
+    "alreadyHaveAccount": "Already have an account?",
+    "rememberedPassword": "Remembered your password?"
   },
-  "register": {
-    "password_mismatch": "Password mismatch"
-  },
-  "home": {
-  },
-  "contests": {
-  },
-  "problems": {
-  },
-  "problemset": {
-  },
-  "submissions": {
-  },
-  "discussion": {
-  },
-  "groups": {
-  },
-  "users": {
-  },
-  "wiki": {
-  }
+  "home": {},
+  "contests": {},
+  "problems": {},
+  "problemSet": {},
+  "submissions": {},
+  "discussion": {},
+  "groups": {},
+  "users": {},
+  "wiki": {}
 }
+

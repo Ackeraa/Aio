@@ -44,7 +44,7 @@ export class AuthService implements OnInit{
     return this.tokenService.userSignedIn();
   }
 
-	register(data) {
+	register(data: { name: string, login: string, password: string, passwordConfirmation: string }) {
 		this.tokenService.registerAccount(data).subscribe(
       res => {
         this.errors_$.next(null);
@@ -56,7 +56,7 @@ export class AuthService implements OnInit{
     );
 	}
 
-  login(data) {
+  login(data: { login: string, password: string }) {
     this.tokenService.signIn(data).subscribe(
       res => {
         let user = res.body.data;
@@ -82,6 +82,14 @@ export class AuthService implements OnInit{
       }
     );
 	}
+
+  // send email to reset password
+  forgot(data: { email: string }) {
+  }
+
+  // reset password
+  reset() {
+  }
 
 	get(url: string, params: any = null): Observable<any> {
     url = 'http://localhost:3000/' + url;

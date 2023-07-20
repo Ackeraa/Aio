@@ -4,39 +4,39 @@
     <div class="myform form ">
       <div class="logo mb-3">
         <div class="col-md-12 text-center">
-          <h1>{{login_k}}</h1>
+          <h1>{{ 'keywords.login' | translate }}</h1>
         </div>
       </div>
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="form-group mb-3">
-          <input type="email" [formControl]="name_email" class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && name_email.errors }"
-              placeholder="User name / Email" />
-          <div *ngIf="(name_email.touched || submitted) && name_email.errors" class="text-danger">
+          <input type="email" [formControl]="f.name_email" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.name_email.errors }"
+                                                           placeholder="{{ 'auth.username' | translate }}" />
+          <div *ngIf="(f.name_email.touched || submitted) && f.name_email.errors" class="text-danger">
             <small>
-              <div *ngIf="name_email.hasError('required')">
-                {{name_required}}
+              <div *ngIf="f.name_email.hasError('required')">
+                {{ 'errors.required' | translate: { v1: 'auth.username' | translate } }}
               </div>
             </small>
           </div>
         </div>
         <div class="form-group">
-          <input type="password" [formControl]="password" class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && password.errors }"
-              placeholder="Password" autocomplete="false"/>
-          <small>
-            <a class="link-success" routerLink="/password-forgot">{{forgot_password}}</a>
-          </small>
-          <div *ngIf="(password.touched || submitted) && password.errors" class="text-danger">
+          <input type="password" [formControl]="f.password" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+                                                            placeholder="{{ 'auth.password' | translate }}" autocomplete="false"/>
+          <div *ngIf="(f.password.touched || submitted) && f.password.errors" class="text-danger">
             <small>
-              <div *ngIf="password.hasError('required')">
-                {{password_required}}
+              <div *ngIf="f.password.hasError('required')">
+                {{ 'errors.required' | translate: { v1: 'auth.password' | translate } }}
               </div>
             </small>
           </div>
-          <div *ngIf="submitted && error" class="text-danger">
+          <small>
+            <a class="link-success" routerLink="/password-forgot">{{ 'auth.forgotPassword' | translate }}</a>
+          </small>
+          <div *ngIf="submitted && errors" class="text-danger">
             <small>
-              {{error}}
+              {{ errors[0] }}
             </small>
           </div>
         </div>
@@ -44,14 +44,14 @@
         <div class="d-grid gap-2 mb-3">
           <button [disabled]="loading" class="btn btn-success">
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-            {{login_k}}
+            {{ 'keywords.login' | translate }}
           </button>
         </div>
         <div class="col-md-12 ">
           <div class="form-group">
             <small>
-              <p class="text-center">{{dont_have_account}}
-              <a class="link-success" routerLink="/register">{{register_k}}</a>
+              <p class="text-center">{{ 'auth.dontHaveAccount' | translate }}
+              <a class="link-success" routerLink="/register">{{ 'keywords.register' | translate }}</a>
               </p>
             </small>
           </div>
