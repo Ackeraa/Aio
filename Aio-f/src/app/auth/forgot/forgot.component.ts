@@ -54,9 +54,11 @@ export class ForgotComponent implements OnInit {
       .pipe(finalize(() => (this.status = XStatus.Received)))
       .subscribe({
         next: res => {
+          console.log('DDDD', res);
           this.alertService.success(res, true);
         },
         error: err => {
+          console.log('EEEE', err);
           this.errors = err;
         },
       });

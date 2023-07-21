@@ -151,18 +151,19 @@ export class AuthService implements OnInit {
     },
     token: any
   ): Observable<any> {
-    const url = '/auth/password';
+    const fullUrl = this.baseUrl + '/auth/password';
     const newData = {
       password: data.password,
       password_confirmation: data.passwordConfirmation,
     };
+
     const headers = new HttpHeaders({
       'access-token': token['accessToken'],
       client: token['client'],
       expiry: token['expiry'],
       uid: token['uid'],
     });
-    return this.http.put(url, newData, { headers: headers });
+    return this.http.put(fullUrl, newData, { headers: headers });
   }
 
   ngOnInit(): void {}

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { finalize } from 'rxjs';
 import { AlertService, AuthService } from '../../_services';
 import { environment } from '../../../environments/environment';
 import { XStatus } from '../../_models';
@@ -66,16 +67,17 @@ export class ResetComponent implements OnInit {
 
     this.status = XStatus.Sent;
 
-    this.authService.reset(data, token).subscribe({
-      next: res => {
-        this.status = XStatus.Received;
-        this.router.navigate(['/auth/login']);
-      },
-      error: err => {
-        console.log(err);
-        this.errors = err;
-        this.status = XStatus.Received;
-      },
-    });
+    this.authService
+      .reset(data, token)
+      .pipe(finalize(() => (this.status = XStatus.Received)))
+      .subscribe({
+        next: res => {
+          this.router.navigate(['/auth/login']);
+        },
+        error: err => {
+          console.log(err, 'asdsadds');
+          this.errors = err;
+        },
+      });
   }
 }
