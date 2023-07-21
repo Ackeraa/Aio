@@ -9,13 +9,23 @@
       type="email"
       [formControl]="f.name_email"
       class="form-control"
-      [ngClass]="{ 'is-invalid': status === XStatus.Clicked && f.name_email.errors }"
+      [ngClass]="{
+        'is-invalid': status === XStatus.Clicked && f.name_email.errors
+      }"
       placeholder="{{ 'auth.username' | translate }}"
     />
-    <div *ngIf="(f.name_email.touched || status === XStatus.Clicked) && f.name_email.errors" class="text-danger">
+    <div
+      *ngIf="
+        (f.name_email.touched || status === XStatus.Clicked) &&
+        f.name_email.errors
+      "
+      class="text-danger"
+    >
       <small>
         <div *ngIf="f.name_email.errors.required">
-          {{ 'errors.required' | translate: { v1: 'auth.username' | translate } }}
+          {{
+            'errors.required' | translate : { v1: 'auth.username' | translate }
+          }}
         </div>
       </small>
     </div>
@@ -25,38 +35,55 @@
       type="password"
       [formControl]="f.password"
       class="form-control"
-      [ngClass]="{ 'is-invalid': status === XStatus.Clicked && f.password.errors }"
+      [ngClass]="{
+        'is-invalid': status === XStatus.Clicked && f.password.errors
+      }"
       placeholder="{{ 'auth.password' | translate }}"
       autocomplete="false"
     />
-    <div *ngIf="(f.password.touched || status === XStatus.Clicked) && f.password.errors" class="text-danger">
+    <div
+      *ngIf="
+        (f.password.touched || status === XStatus.Clicked) && f.password.errors
+      "
+      class="text-danger"
+    >
       <small>
         <div *ngIf="f.password.errors.required">
-          {{ 'errors.required' | translate: { v1: 'auth.password' | translate } }}
+          {{
+            'errors.required' | translate : { v1: 'auth.password' | translate }
+          }}
         </div>
       </small>
     </div>
     <small>
-      <a class="link-success" routerLink="/auth/forgot">{{ 'auth.forgotPassword' | translate }}?</a>
+      <a class="link-success" routerLink="/auth/forgot"
+        >{{ 'auth.forgotPassword' | translate }}?</a
+      >
     </small>
     <div *ngIf="status === XStatus.Received && errors" class="text-danger">
       <small>
-        <center> {{ errors[0] }} </center>
+        <center>{{ errors[0] }}</center>
       </small>
     </div>
   </div>
-  <br/>
+  <br />
   <div class="d-grid gap-2 mb-3">
     <button [disabled]="status === XStatus.Sent" class="btn btn-success">
-      <span *ngIf="status === XStatus.Sent" class="spinner-border spinner-border-sm mr-1"></span>
+      <span
+        *ngIf="status === XStatus.Sent"
+        class="spinner-border spinner-border-sm mr-1"
+      ></span>
       {{ 'keywords.login' | translate }}
     </button>
   </div>
   <div class="col-md-12">
     <div class="form-group">
       <small>
-        <p class="text-center">{{ 'auth.dontHaveAccount' | translate }}
-          <a class="link-success" routerLink="/auth/register">{{ 'keywords.register' | translate }}</a>
+        <p class="text-center">
+          {{ 'auth.dontHaveAccount' | translate }}
+          <a class="link-success" routerLink="/auth/register">{{
+            'keywords.register' | translate
+          }}</a>
         </p>
       </small>
     </div>

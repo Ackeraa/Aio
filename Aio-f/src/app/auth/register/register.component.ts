@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
 import { XStatus } from '../../_models';
 import { AuthService, AlertService } from '../../_services';
 import { AuthValidators } from '../auth-valdators';
+import { th } from 'date-fns/locale';
 
 @Component({
   selector: 'app-auth-register',
