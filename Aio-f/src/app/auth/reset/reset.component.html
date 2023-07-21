@@ -56,7 +56,7 @@
       class="form-control"
       [formControl]="f.passwordConfirm"
       [ngClass]="{
-        'is-invalid': status == XStatus.Clicked && errors.passwordConfirm
+        'is-invalid': status == XStatus.Clicked && f.passwordConfirm.errors
       }"
       pattern="{{ f.password.value }}"
       placeholder="{{ 'auth.passwordConfirm' | translate }}"
@@ -86,7 +86,7 @@
         </div>
       </small>
     </div>
-    <div *ngIf="status == XStatus.Received" class="text-danger">
+    <div *ngIf="status == XStatus.Received && errors" class="text-danger">
       <small>
         <div *ngIf="errors.password_confirmation">
           {{ errors.password_confirmation[0] }}

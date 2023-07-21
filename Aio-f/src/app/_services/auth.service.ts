@@ -114,7 +114,6 @@ export class AuthService implements OnInit {
       }),
       catchError(err => {
         this.user_$.next(null);
-        console.log(err);
         let errors = err.error.errors;
         return throwError(() => errors);
       })
@@ -140,7 +139,12 @@ export class AuthService implements OnInit {
       email: data.email,
       redirect_url: environment.token_auth_config.resetPasswordCallback,
     };
-    return this.post(url, newData);
+    return this.post(url, newData).pipe(
+      catchError(err => {
+        let errors = err.error.errors;
+        return throwError(() => errors);
+      })
+    );
   }
 
   // Reset password

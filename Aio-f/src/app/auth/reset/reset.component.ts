@@ -75,7 +75,6 @@ export class ResetComponent implements OnInit {
           this.router.navigate(['/auth/login']);
         },
         error: err => {
-          console.log(err, 'asdsadds');
           this.errors = err;
         },
       });

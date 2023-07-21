@@ -2,55 +2,52 @@ zh-CN:
   devise_token_auth:
     sessions:
       not_confirmed: "一封确认邮件已发送至你的邮箱:'%{email}',请点击验证链接激活"
-      bad_credentials: "登录信息不正确，请重试"
-      not_supported: "请使用 POST /sign_in 进行登录. 不支持GET ."
-      user_not_found: "账号不存在"
+      bad_credentials: '登录信息不正确，请重试'
+      not_supported: '请使用 POST /sign_in 进行登录. 不支持GET .'
+      user_not_found: '账号不存在'
     token_validations:
-      invalid: "登录信息不正确"
+      invalid: '登录信息不正确'
     registrations:
       missing_confirm_success_url: "缺少数据 'confirm_success_url'"
       redirect_url_not_allowed: "不支持重定向到 '%{redirect_url}'"
       email_already_exists: "邮箱'%{email}'已被使用"
       account_with_uid_destroyed: "账号 '%{uid}' 已被移除。"
-      account_to_destroy_not_found: "无法找到目标帐号。"
-      user_not_found: "找不到帐号。"
+      account_to_destroy_not_found: '无法找到目标帐号。'
+      user_not_found: '找不到帐号。'
     omniauth:
       not_allowed_redirect_url: "不支持重定向到 '%{redirect_url}'"
     passwords:
-      missing_email: "必需提供邮箱。"
-      missing_redirect_url: "缺少 redirect URL."
+      missing_email: '必需提供邮箱。'
+      missing_redirect_url: '缺少 redirect URL.'
       not_allowed_redirect_url: "不支持重定向到 '%{redirect_url}'"
       sended: "你将在几分钟内收到一封电子邮件'%{email}，内含可重新设定密码的链接。"
       user_not_found: "找不到帐号 '%{email}'。"
       password_not_required: "非本平台帐号. 请使用 '%{provider}' 进行登入"
       missing_passwords: "必需填写'密码'与'确认密码'。"
-      successfully_updated: "你的密码已被修改。"
+      successfully_updated: '你的密码已被修改。'
   errors:
     messages:
-      validate_sign_up_params: "请在request body中填入有效的注册内容"
-      validate_account_update_params: "请在request body中填入有效的更新帐号资料"
-      not_email: "邮箱不正确。"
-      too_short: "太短，至少%{count}个字符."
-      too_long: "太长，至少%{count}个字符"
-      name_format: "必须以字母开头并且只包含大小写字母、数字和下划线"
-      required: "不能为空"
+      validate_sign_up_params: '请在request body中填入有效的注册内容'
+      validate_account_update_params: '请在request body中填入有效的更新帐号资料'
+      not_email: '邮箱不正确。'
+      too_short: '太短，至少%{count}个字符.'
+      too_long: '太长，至少%{count}个字符'
+      name_format: '必须以字母开头并且只包含大小写字母、数字和下划线'
+      required: '不能为空'
   devise:
     mailer:
       confirmation_instructions:
-        subject: "Aio 邮箱验证"
-        thanks_signup_msg: "感谢您注册Aio，非常欢迎您的加入！"
-        confirm_link_msg: "点击下面的链接验证你的邮箱"
-        confirm_account_link: "确认邮箱"
-        ignore_mail_msg: "如你没有注册，请忽略"
+        subject: 'Aio 邮箱验证'
+        thanks_signup_msg: '感谢您注册Aio，非常欢迎您的加入！'
+        confirm_link_msg: '点击下面的链接验证你的邮箱'
+        confirm_account_link: '确认邮箱'
+        ignore_mail_msg: '如你没有注册，请忽略'
       reset_password_instructions:
-        request_reset_link_msg: "已申请修改您的密码，你可以用下面的链接进入"
-        password_change_link: "修改我的密码"
-        ignore_mail_msg: "如你没有申请，请忽略"
-        no_changes_msg: "在你点击上面链接前，你的密码都没有改变"
+        request_reset_link_msg: '已申请修改您的密码，你可以用下面的链接进入'
+        password_change_link: '修改密码'
+        ignore_mail_msg: '如你没有申请，请忽略'
+        no_changes_msg: '在你点击上面链接前，你的密码都没有改变'
       unlock_instructions:
-        account_lock_msg: "由于多次登入失败，我们已锁定你的帐号"
-        unlock_link_msg: "可以使用下面的链接解锁你的帐号"
-        unlock_link: "解锁帐号"
-
-  hello: "你好"
-  thanks: "谢谢"
+        account_lock_msg: '由于多次登入失败，我们已锁定你的帐号'
+        unlock_link_msg: '可以使用下面的链接解锁你的帐号'
+        unlock_link: '解锁帐号'
