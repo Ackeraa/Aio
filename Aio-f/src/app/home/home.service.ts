@@ -11,7 +11,7 @@ export class HomeService {
 	constructor(private authService: AuthService) { }
 	
 	getInfo(): Observable<any> {
-		let url = 'homes';
+		let url = '/homes';
 		return this.authService.get(url);
 	}
 }

@@ -9,14 +9,37 @@
       type="password"
       [formControl]="f.password"
       class="form-control"
-      [ngClass]="{ 'is-invalid': status == XStatus.Clicked && f.password.errors }"
+      [ngClass]="{
+        'is-invalid': status == XStatus.Clicked && f.password.errors
+      }"
       placeholder="{{ 'auth.password' | translate }}"
       autocomplete="false"
     />
-    <div *ngIf="(f.password.touched || status == XStatus.Clicked) && f.password.errors" class="text-danger">
+    <div
+      *ngIf="
+        (f.password.touched || status == XStatus.Clicked) && f.password.errors
+      "
+      class="text-danger"
+    >
       <small>
         <div *ngIf="f.password.errors.required">
-          {{ 'errors.required' | translate: { v1: 'auth.password' | translate } }}
+          {{
+            'errors.required' | translate : { v1: 'auth.password' | translate }
+          }}
+        </div>
+        <div *ngIf="f.password.errors.tooShort">
+          {{
+            'errors.tooShort'
+              | translate
+                : { v1: 'auth.password' | translate, v2: envs.passwdMinLen }
+          }}
+        </div>
+        <div *ngIf="f.password.errors.tooLong">
+          {{
+            'errors.tooLong'
+              | translate
+                : { v1: 'auth.password' | translate, v2: envs.passwdMaxLen }
+          }}
         </div>
       </small>
     </div>
@@ -26,23 +49,39 @@
       </small>
     </div>
   </div>
-  <br/>
+  <br />
   <div class="form-group">
     <input
       type="password"
       class="form-control"
       [formControl]="f.passwordConfirm"
-      [ngClass]="{ 'is-invalid': status == XStatus.Clicked && errors.passwordConfirm }"
+      [ngClass]="{
+        'is-invalid': status == XStatus.Clicked && errors.passwordConfirm
+      }"
       pattern="{{ f.password.value }}"
       placeholder="{{ 'auth.passwordConfirm' | translate }}"
       autocomplete="false"
     />
-    <div *ngIf="(f.passwordConfirm.touched || status == XStatus.Clicked) && f.passwordConfirm.errors" class="text-danger">
+    <div
+      *ngIf="
+        (f.passwordConfirm.touched || status == XStatus.Clicked) &&
+        f.passwordConfirm.errors
+      "
+      class="text-danger"
+    >
       <small>
         <div *ngIf="f.passwordConfirm.errors.required">
-          {{ 'errors.required' | translate: { v1: 'auth.passwordConfirm' | translate } }}
+          {{
+            'errors.required'
+              | translate : { v1: 'auth.passwordConfirm' | translate }
+          }}
         </div>
-        <div *ngIf="!f.passwordConfirm.errors.required && f.passwordConfirm.errors.pattern">
+        <div
+          *ngIf="
+            !f.passwordConfirm.errors.required &&
+            f.passwordConfirm.errors.pattern
+          "
+        >
           {{ 'auth.passwordMismatch' | translate }}
         </div>
       </small>
@@ -55,10 +94,13 @@
       </small>
     </div>
   </div>
-  <br/>
+  <br />
   <div class="d-grid gap-2 mb-3">
     <button [disabled]="status === XStatus.Sent" class="btn btn-success">
-      <span *ngIf="status === XStatus.Sent" class="spinner-border spinner-border-sm mr-1"></span>
+      <span
+        *ngIf="status === XStatus.Sent"
+        class="spinner-border spinner-border-sm mr-1"
+      ></span>
       {{ 'auth.resetPassword' | translate }}
     </button>
   </div>

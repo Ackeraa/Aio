@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject, BehaviorSubject, Observable, combineLatest } from 'rxjs';
-import { map, filter, switchMap } from 'rxjs/operators'; 
+import { map, filter, switchMap } from 'rxjs/operators';
 import { AuthService } from '../_services/auth.service';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class UserService {
 	problems$: BehaviorSubject<any> = new BehaviorSubject(null);
 	groups$: BehaviorSubject<any> = new BehaviorSubject(null);
 	friends$: BehaviorSubject<any> = new BehaviorSubject(null);
-	
+
 	isSelf: boolean;
 
 	constructor(private authService: AuthService) {

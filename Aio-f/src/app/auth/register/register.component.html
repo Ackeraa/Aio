@@ -17,10 +17,10 @@
         <div *ngIf="f.name.errors.required">
           {{ 'errors.required' | translate: { v1: 'auth.username' | translate } }}
         </div>
-        <div *ngIf="!f.name.errors.required && f.name.errors.minlength">
+        <div *ngIf="f.name.errors.tooShort">
           {{ 'errors.tooShort' | translate: { v1: 'auth.username' | translate, v2: envs.unameMinLen } }}
         </div>
-        <div *ngIf="!f.name.errors.required && f.name.errors.maxlength">
+        <div *ngIf="f.name.errors.tooLong">
           {{ 'errors.tooLong' | translate: { v1: 'keywords.username' | translate, v2: envs.unameMaxLen } }}
         </div>
       </small>
@@ -46,7 +46,7 @@
         <div *ngIf="f.email.errors.required">
           {{ 'errors.required' | translate: { v1: 'auth.email' | translate } }}
         </div>
-        <div *ngIf="!f.email.errors.required && f.email.errors.invalidEmail">
+        <div *ngIf="f.email.errors.invalidEmail">
           {{ 'errors.invalid' | translate: { v1: 'auth.email' | translate } }}
         </div>
       </small>
@@ -73,10 +73,10 @@
         <div *ngIf="f.password.errors.required">
           {{ 'errors.required' | translate: { v1: 'auth.password' | translate } }}
         </div>
-        <div *ngIf="f.password.errors.minlength">
+        <div *ngIf="f.password.errors.tooShort">
           {{ 'errors.tooShort' | translate: { v1: 'auth.password' | translate, v2: envs.passwdMinLen } }}
         </div>
-        <div *ngIf="f.password.errors.maxlength">
+        <div *ngIf="f.password.errors.tooLong">
           {{ 'errors.tooLong' | translate: { v1: 'auth.password' | translate, v2: envs.passwdMaxLen } }}
         </div>
       </small>

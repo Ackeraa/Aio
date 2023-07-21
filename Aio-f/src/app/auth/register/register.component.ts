@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl,
-} from '@angular/forms';
+import { finalize } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { XStatus } from '../../_models';
 import { AuthService, AlertService } from '../../_services';
+import { AuthValidators } from '../auth-valdators';
 
 @Component({
   selector: 'app-auth-register',
@@ -27,8 +23,7 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private authService: AuthService,
-    private alertService: AlertService,
-    private translate: TranslateService
+    private alertService: AlertService
   ) {}
 
   ngOnInit() {
@@ -36,37 +31,18 @@ export class RegisterComponent implements OnInit {
       name: [
         '',
         [
-          this.nameValidator,
+          AuthValidators.nameValidator,
           Validators.required,
-          Validators.minLength(this.envs.unameMinLen),
-          Validators.maxLength(this.envs.unameMaxLen),
+          AuthValidators.nameLengthValidator,
         ],
       ],
-      email: ['', [Validators.required, this.emailValidator]],
+      email: ['', [Validators.required, AuthValidators.emailValidator]],
       password: [
         '',
-        [
-          Validators.required,
-          Validators.minLength(this.envs.passwdMinLen),
-          Validators.maxLength(this.envs.passwdMaxLen),
-        ],
+        [Validators.required, AuthValidators.passwordLengthValidator],
       ],
       passwordConfirm: ['', Validators.required],
     });
-  }
-
-  nameValidator(name: FormControl): { [s: string]: boolean } {
-    const regex = new RegExp(/^[a-zA-Z][a-zA-Z0-9_]*$/);
-    if (!name.value.match(regex)) {
-      return { invalidName: true };
-    }
-  }
-
-  emailValidator(email: FormControl): { [s: string]: boolean } {
-    const regex = new RegExp(/^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i);
-    if (!email.value.match(regex)) {
-      return { invalidEmail: true };
-    }
   }
 
   get f() {
@@ -96,22 +72,24 @@ export class RegisterComponent implements OnInit {
       passwordConfirmation: this.f.passwordConfirm.value,
     };
 
-    this.authService.register(data);
-
     this.status = XStatus.Sent;
 
-    this.authService.errors$.subscribe((data) => {
-      this.status = XStatus.Received;
-      if (data) {
-        this.errors = data;
-      } else {
-        this.alertService.success(
-          'Registration successful, Please confirm your email before login.',
-          true
-        );
-        this.router.navigate(['/auth/login']);
-      }
-    });
+    this.authService
+      .register(data)
+      .pipe(finalize(() => (this.status = XStatus.Received)))
+      .subscribe({
+        next: res => {
+          this.status = XStatus.Received;
+          this.alertService.success(
+            'Registration successful, Please confirm your email before login.',
+            true
+          );
+          this.router.navigate(['/auth/login']);
+        },
+        error: err => {
+          this.status = XStatus.Received;
+          this.errors = err;
+        },
+      });
   }
 }
-

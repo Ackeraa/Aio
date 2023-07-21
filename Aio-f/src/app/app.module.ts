@@ -3,10 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  HttpClientModule,
+  HttpClient,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { MarkdownModule} from 'ngx-markdown';
+import { MarkdownModule } from 'ngx-markdown';
 import { FileUploadModule } from 'ng2-file-upload';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -38,81 +42,82 @@ import { GroupsComponent } from './groups';
 import { WikiComponent } from './wiki';
 //import { AngularTokenService } from 'angular-token';
 import { AngularTokenModule } from 'angular-token';
-import { AuthService } from "./_services/auth.service";
+import { AuthService } from './_services/auth.service';
 import { ActionCableService } from 'angular2-actioncable';
 
-import { environment } from "../environments/environment";
+import { environment } from '../environments/environment';
 
 import {
-	AlertComponent,
-	HeaderComponent,
-	FooterComponent
+  AlertComponent,
+  HeaderComponent,
+  FooterComponent,
 } from './_components';
 
 @NgModule({
-	imports: [
-		MarkdownModule.forRoot(),
-		HttpClientModule,
+  imports: [
+    MarkdownModule.forRoot(),
+    HttpClientModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (http: HttpClient) => new TranslateHttpLoader(http, './assets/i18n/', '.json'),
-        deps: [HttpClient]
+        useFactory: (http: HttpClient) =>
+          new TranslateHttpLoader(http, './assets/i18n/', '.json'),
+        deps: [HttpClient],
       },
-      defaultLanguage: environment.defaultLang
+      defaultLanguage: environment.defaultLang,
     }),
 
     AngularTokenModule.forRoot({
       apiBase: environment.token_auth_config.apiBase,
-      registerAccountCallback: environment.token_auth_config.registerAccountCallback
+      registerAccountCallback:
+        environment.token_auth_config.registerAccountCallback,
     }),
-		BrowserModule,
-		BrowserAnimationsModule,
-		ReactiveFormsModule,
-		FileUploadModule,
-		AppRoutingModule,
-		FormsModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    FileUploadModule,
+    AppRoutingModule,
+    FormsModule,
     HttpClientModule,
-		NgxPaginationModule,
+    NgxPaginationModule,
     NgbModule,
     FontAwesomeModule,
-		ProblemSearchModule,
-		SearchModule,
-		CommentsModule,
-		SubmissionsModule,
-		HomeModule,
-		GroupModule,
-		GroupsModule,
-		UserModule,
-	],
-	declarations: [
-		AppComponent,
-		HomeComponent,
-		ContestsComponent,
-		SubmissionsComponent,
-		ProblemsComponent,
-		ProblemComponent,
-		UsersComponent,
-		WikiComponent,
-		ContestComponent,
-		AlertComponent,
-		HeaderComponent,
-		FooterComponent,
-		ProblemSetsComponent,
-		ProblemSetComponent,
-		DiscussionComponent,
-		GroupsComponent,
-	],
-	providers: [
-		//{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-
-		//AngularTokenService,
-    AngularTokenModule,
-		AuthService,
-		ActionCableService
-	],
-  exports: [
+    ProblemSearchModule,
+    SearchModule,
+    CommentsModule,
+    SubmissionsModule,
+    HomeModule,
+    GroupModule,
+    GroupsModule,
+    UserModule,
   ],
-	bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    ContestsComponent,
+    SubmissionsComponent,
+    ProblemsComponent,
+    ProblemComponent,
+    UsersComponent,
+    WikiComponent,
+    ContestComponent,
+    AlertComponent,
+    HeaderComponent,
+    FooterComponent,
+    ProblemSetsComponent,
+    ProblemSetComponent,
+    DiscussionComponent,
+    GroupsComponent,
+  ],
+  providers: [
+    //{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+
+    //AngularTokenService,
+    AngularTokenModule,
+    AuthService,
+    ActionCableService,
+  ],
+  exports: [],
+  bootstrap: [AppComponent],
 })
-export class AppModule { };
+export class AppModule {}

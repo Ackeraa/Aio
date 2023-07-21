@@ -12,31 +12,43 @@
       [ngClass]="{ 'is-invalid': status == XStatus.Clicked && f.email.errors }"
       placeholder="{{ 'auth.email' | translate }}"
     />
-    <div *ngIf="(f.email.touched || status == XStatus.Clicked) && f.email.errors" class="text-danger">
+    <div
+      *ngIf="(f.email.touched || status == XStatus.Clicked) && f.email.errors"
+      class="text-danger"
+    >
       <small>
         <div *ngIf="f.email.errors.required">
-          {{ 'errors.required' | translate: { v1: 'auth.email' | translate } }}
+          {{ 'errors.required' | translate : { v1: 'auth.email' | translate } }}
+        </div>
+        <div *ngIf="f.email.errors.invalidEmail">
+          {{ 'errors.invalid' | translate : { v1: 'auth.email' | translate } }}
         </div>
       </small>
     </div>
     <div *ngIf="status === XStatus.Received && errors" class="text-danger">
       <small>
-        <center> {{ errors[0] }} </center>
+        <center>{{ errors[0] }}</center>
       </small>
     </div>
   </div>
-  <br/>
+  <br />
   <div class="d-grid gap-2 mb-3">
     <button [disabled]="status === XStatus.Sent" class="btn btn-success">
-      <span *ngIf="status === XStatus.Sent" class="spinner-border spinner-border-sm mr-1"></span>
+      <span
+        *ngIf="status === XStatus.Sent"
+        class="spinner-border spinner-border-sm mr-1"
+      ></span>
       {{ 'auth.forgotPassword' | translate }}
     </button>
   </div>
   <div class="col-md-12">
     <div class="form-group">
       <small>
-        <p class="text-center">{{ 'auth.rememberedPassword' | translate }}
-          <a class="link-success" routerLink="/auth/login">{{ 'keywords.login' | translate }}</a>
+        <p class="text-center">
+          {{ 'auth.rememberedPassword' | translate }}
+          <a class="link-success" routerLink="/auth/login">{{
+            'keywords.login' | translate
+          }}</a>
         </p>
       </small>
     </div>

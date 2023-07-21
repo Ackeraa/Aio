@@ -35,6 +35,4 @@ class User < ActiveRecord::Base
          #:confirmable,
          :omniauthable,
          :authentication_keys => [:email, :name]
-
-
 end

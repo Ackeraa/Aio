@@ -1,20 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl,
-  AbstractControl
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { finalize } from 'rxjs';
 import { AlertService, AuthService } from '../../_services';
 import { XStatus } from '../../_models';
+import { AuthValidators } from '../auth-valdators';
 
 @Component({
   selector: 'app-auth-forgot',
   templateUrl: './forgot.component.html',
-  styleUrls: ['./forgot.component.scss']
+  styleUrls: ['./forgot.component.scss'],
 })
 export class ForgotComponent implements OnInit {
   form: FormGroup;
@@ -23,21 +17,22 @@ export class ForgotComponent implements OnInit {
   status: XStatus = XStatus.Ready;
   XStatus = XStatus;
 
-  constructor(private formBuilder: FormBuilder,
-              private router: Router,
-              private alertService: AlertService,
-              private authService: AuthService,
-              private translate: TranslateService
-  ) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private alertService: AlertService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      email: ['', Validators.required]
+      email: ['', [Validators.required, AuthValidators.emailValidator]],
     });
   }
 
   // Convenience getter for easy access to form fields
-  get f() { return this.form.controls; }
+  get f() {
+    return this.form.controls;
+  }
 
   onSubmit() {
     this.status = XStatus.Clicked;
@@ -54,16 +49,16 @@ export class ForgotComponent implements OnInit {
 
     this.status = XStatus.Sent;
 
-    this.authService.forgot(data).subscribe(
-      res => {
-        console.log("DDDDD", res);
-        this.status = XStatus.Received;
-      },
-      err => {
-        this.errors = err;
-        console.log("EEEEEE", err);
-        this.status = XStatus.Received;
-      }
-    );
+    this.authService
+      .forgot(data)
+      .pipe(finalize(() => (this.status = XStatus.Received)))
+      .subscribe({
+        next: res => {
+          this.alertService.success(res, true);
+        },
+        error: err => {
+          this.errors = err;
+        },
+      });
   }
 }

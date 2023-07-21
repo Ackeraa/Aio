@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { finalize } from 'rxjs';
 import {
   faHome,
   faTrophy,
@@ -16,10 +17,9 @@ import { AuthService } from '../../_services';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-
   currentUser: any;
 
   homeIcon = faHome;
@@ -34,12 +34,13 @@ export class HeaderComponent implements OnInit {
 
   isCollapsed = true;
 
-  constructor(public authService: AuthService) {
-  }
+  constructor(public authService: AuthService) {}
 
   logout() {
-    this.authService.logout();
-    this.currentUser = null;
+    this.authService
+      .logout()
+      .pipe(finalize(() => (this.currentUser = null)))
+      .subscribe();
   }
 
   ngOnInit(): void {
@@ -49,6 +50,5 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  ngOnDestroy(): void {
-  }
+  ngOnDestroy(): void {}
 }
