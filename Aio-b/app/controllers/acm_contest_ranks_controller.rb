@@ -45,13 +45,14 @@ class AcmContestRanksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_acm_contest_rank
-      @acm_contest_rank = AcmContestRank.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def acm_contest_rank_params
-      params.fetch(:acm_contest_rank, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_acm_contest_rank
+    @acm_contest_rank = AcmContestRank.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def acm_contest_rank_params
+    params.fetch(:acm_contest_rank, {})
+  end
 end
