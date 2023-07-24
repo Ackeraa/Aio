@@ -21,12 +21,11 @@ class VproblemsController < ApplicationController
   # GET /vproblems/search
   # Need to be fixed when source is nil.
   def search
-    puts "FFFFFFFFFFFFFFFFFFFFFFFFFF", current_user.local.to_sym
     source = params[:source]
     query = params[:query]
+
     if query.nil? or query.empty?
       total = Problem.where(source: source).count
-      puts "ddddd", total
       @problems = Problem.where(source: source).order(:id).limit(20).offset(@page * 20)
       if @problems.empty?
         puts "FUCK YOU SPIDE AGAIN, BUG APPEARS"
