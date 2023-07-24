@@ -7,6 +7,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
+import { faSpider } from '@fortawesome/free-solid-svg-icons';
 import { map, debounceTime, tap, switchMap } from 'rxjs/operators';
 import { ProblemSearchService } from '../../_services';
 import { AlertService } from '../../_services';
@@ -27,6 +28,8 @@ export class ProblemSearchComponent implements OnInit {
 
   private query$: Subscription;
   private source$: Subscription;
+
+  faSpider = faSpider;
 
   constructor(
     private searchService: ProblemSearchService,
