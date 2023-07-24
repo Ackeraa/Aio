@@ -11,7 +11,7 @@ import { AlertService } from '../../_services/alert.service';
 import { of, throwError } from 'rxjs';
 import { XStatus } from '../../_models';
 
-describe('LoginComponent', () => {
+fdescribe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let authService: AuthService;
@@ -91,7 +91,7 @@ describe('LoginComponent', () => {
     fixture.detectChanges();
 
     expect(authService.login).toHaveBeenCalledWith(formData);
-    expect(component.status).toBe(XStatus.Received);
+    expect(component.status).toBe(XStatus.Succeed);
   });
 
   it('should navigate to the returnUrl after successful login', () => {
@@ -116,7 +116,7 @@ describe('LoginComponent', () => {
     fixture.detectChanges();
 
     expect(router.navigate).toHaveBeenCalledWith([mockReturnUrl]);
-    expect(component.status).toBe(XStatus.Received);
+    expect(component.status).toBe(XStatus.Succeed);
   });
 
   it('should display error message when AuthService.login() returns an error', () => {
@@ -137,6 +137,6 @@ describe('LoginComponent', () => {
 
     const errorElement = fixture.nativeElement.querySelector('.text-danger');
     expect(errorElement.textContent).toContain(mockError[0]);
-    expect(component.status).toBe(XStatus.Received);
+    expect(component.status).toBe(XStatus.Failed);
   });
 });

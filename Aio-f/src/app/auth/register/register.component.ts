@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { XStatus } from '../../_models';
 import { AuthService, AlertService } from '../../_services';
 import { AuthValidators } from '../auth-valdators';
-import { th } from 'date-fns/locale';
 
 @Component({
   selector: 'app-auth-register',
@@ -75,22 +73,16 @@ export class RegisterComponent implements OnInit {
 
     this.status = XStatus.Sent;
 
-    this.authService
-      .register(data)
-      .pipe(finalize(() => (this.status = XStatus.Received)))
-      .subscribe({
-        next: res => {
-          this.status = XStatus.Received;
-          this.alertService.success(
-            'Registration successful, Please confirm your email before login.',
-            true
-          );
-          this.router.navigate(['/auth/login']);
-        },
-        error: err => {
-          this.status = XStatus.Received;
-          this.errors = err;
-        },
-      });
+    this.authService.register(data).subscribe({
+      next: res => {
+        this.status = XStatus.Succeed;
+        this.alertService.success(res.message, true);
+        this.router.navigate(['/auth/login']);
+      },
+      error: err => {
+        this.status = XStatus.Failed;
+        this.errors = err;
+      },
+    });
   }
 }

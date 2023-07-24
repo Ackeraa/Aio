@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ForgotComponent } from './forgot.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 import { AngularTokenModule } from 'angular-token';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../_services/auth.service';
@@ -9,7 +10,7 @@ import { AlertService } from '../../_services/alert.service';
 import { of, throwError } from 'rxjs';
 import { XStatus } from '../../_models';
 
-describe('ForgotComponent', () => {
+fdescribe('ForgotComponent', () => {
   let component: ForgotComponent;
   let fixture: ComponentFixture<ForgotComponent>;
   let authService: AuthService;
@@ -61,22 +62,28 @@ describe('ForgotComponent', () => {
     expect(authService.forgot).not.toHaveBeenCalled();
   });
 
-  it('should set status to Received and call authService.forgot if the form is valid', () => {
+  it('should call authService.forgot and redirected to /home if the form is valid', () => {
     const mockEmail = 'test@test.com';
     const mockFormData = { email: mockEmail };
     const mockResponse = 'Reset email sent';
+
     spyOn(authService, 'forgot').and.returnValue(of({ message: mockResponse }));
     spyOn(alertService, 'success');
+
+    const router = TestBed.inject(Router);
+    spyOn(router, 'navigate');
+
     component.status = XStatus.Ready;
     component.form.controls.email.setValue(mockEmail);
     component.onSubmit();
 
-    expect(component.status).toBe(XStatus.Received);
+    expect(component.status).toBe(XStatus.Succeed);
     expect(authService.forgot).toHaveBeenCalledWith(mockFormData);
     expect(alertService.success).toHaveBeenCalledWith(mockResponse, true);
+    expect(router.navigate).toHaveBeenCalledWith(['/home']);
   });
 
-  it('should set status to Received and display error message if email not exists', () => {
+  it('should set status to Failed and display error message if email not exists', () => {
     const mockEmail = 'not_exists@test.com';
     const mockError = ['Email not found'];
     spyOn(authService, 'forgot').and.returnValue(throwError(() => mockError));
@@ -85,7 +92,7 @@ describe('ForgotComponent', () => {
 
     expect(authService.forgot).toHaveBeenCalled();
     expect(component.errors).toEqual(mockError);
-    expect(component.status).toBe(XStatus.Received);
+    expect(component.status).toBe(XStatus.Failed);
   });
 
   it('should display loader and disable submit button during form submission', () => {
@@ -101,7 +108,7 @@ describe('ForgotComponent', () => {
 
   it('should display error message from server correctly', () => {
     const mockError = ['Invalid email'];
-    component.status = XStatus.Received;
+    component.status = XStatus.Failed;
     component.errors = mockError;
     fixture.detectChanges();
     const errorElement = fixture.nativeElement.querySelector('.text-danger');

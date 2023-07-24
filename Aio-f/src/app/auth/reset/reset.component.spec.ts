@@ -11,7 +11,7 @@ import { AlertService } from '../../_services/alert.service';
 import { of, throwError } from 'rxjs';
 import { XStatus } from '../../_models';
 
-describe('ResetComponent', () => {
+fdescribe('ResetComponent', () => {
   let component: ResetComponent;
   let fixture: ComponentFixture<ResetComponent>;
   let authService: AuthService;
@@ -96,6 +96,7 @@ describe('ResetComponent', () => {
   });
 
   it('should navigate to /auth/login after successful password reset', () => {
+    const mockRes = { message: 'reset successful' };
     const mockPassword = 'password123';
 
     const passwordInput = component.form.controls.password;
@@ -104,17 +105,19 @@ describe('ResetComponent', () => {
     const passwordConfirmInput = component.form.controls.passwordConfirm;
     passwordConfirmInput.setValue(mockPassword);
 
-    spyOn(authService, 'reset').and.returnValue(of(null));
+    spyOn(authService, 'reset').and.returnValue(of(mockRes));
+    spyOn(alertService, 'success');
 
     const router = TestBed.inject(Router);
-    spyOn(router, 'navigate');
+    const navigateSpy = spyOn(router, 'navigate');
 
     const form = fixture.nativeElement.querySelector('form');
     form.dispatchEvent(new Event('submit'));
     fixture.detectChanges();
 
-    expect(router.navigate).toHaveBeenCalledWith(['/auth/login']);
-    expect(component.status).toBe(XStatus.Received);
+    expect(alertService.success).toHaveBeenCalledWith(mockRes.message, true);
+    expect(navigateSpy).toHaveBeenCalledWith(['/auth/login']);
+    expect(component.status).toBe(XStatus.Succeed);
   });
 
   it('should display error message when AuthService.reset() returns an error', () => {
@@ -135,6 +138,6 @@ describe('ResetComponent', () => {
 
     const errorElement = fixture.nativeElement.querySelector('.text-danger');
     expect(errorElement.textContent).toContain(mockError.password_confirmation);
-    expect(component.status).toBe(XStatus.Received);
+    expect(component.status).toBe(XStatus.Failed);
   });
 });

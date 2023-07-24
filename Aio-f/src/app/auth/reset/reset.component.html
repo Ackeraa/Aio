@@ -86,7 +86,7 @@
         </div>
       </small>
     </div>
-    <div *ngIf="status == XStatus.Received && errors" class="text-danger">
+    <div *ngIf="status == XStatus.Failed" class="text-danger">
       <small>
         <div *ngIf="errors.password_confirmation">
           {{ errors.password_confirmation[0] }}

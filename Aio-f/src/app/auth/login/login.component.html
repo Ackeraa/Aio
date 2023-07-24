@@ -60,7 +60,7 @@
         >{{ 'auth.forgotPassword' | translate }}?</a
       >
     </small>
-    <div *ngIf="status === XStatus.Received && errors" class="text-danger">
+    <div *ngIf="status === XStatus.Failed" class="text-danger">
       <small>
         <center>{{ errors[0] }}</center>
       </small>

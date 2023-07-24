@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { finalize } from 'rxjs';
+import { Router } from '@angular/router';
 import { AlertService, AuthService } from '../../_services';
 import { XStatus } from '../../_models';
 import { AuthValidators } from '../auth-valdators';
@@ -18,6 +18,7 @@ export class ForgotComponent implements OnInit {
   XStatus = XStatus;
 
   constructor(
+    private router: Router,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private authService: AuthService
@@ -49,17 +50,16 @@ export class ForgotComponent implements OnInit {
 
     this.status = XStatus.Sent;
 
-    this.authService
-      .forgot(data)
-      .pipe(finalize(() => (this.status = XStatus.Received)))
-      .subscribe({
-        next: res => {
-          this.alertService.success(res.message, true);
-        },
-        error: err => {
-          console.log('EEEE', err);
-          this.errors = err;
-        },
-      });
+    this.authService.forgot(data).subscribe({
+      next: res => {
+        this.status = XStatus.Succeed;
+        this.alertService.success(res.message, true);
+        this.router.navigate(['/home']);
+      },
+      error: err => {
+        this.status = XStatus.Failed;
+        this.errors = err;
+      },
+    });
   }
 }

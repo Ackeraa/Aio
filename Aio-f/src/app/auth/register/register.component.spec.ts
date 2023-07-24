@@ -151,10 +151,12 @@ fdescribe('RegisterComponent', () => {
     expect(errors[1].textContent).toContain(mockError.email[0]);
     expect(errors[2].textContent).toContain(mockError.password[0]);
     expect(errors[3].textContent).toContain(mockError.password_confirmation[0]);
-    expect(component.status).toBe(XStatus.Received);
+    expect(component.status).toBe(XStatus.Failed);
   });
 
   it('should navigate to login page after successful registration', () => {
+    const mockRes = { message: 'registraion successful' };
+
     const nameInput = component.form.controls.name;
     nameInput.setValue('JohnDoe');
 
@@ -167,7 +169,7 @@ fdescribe('RegisterComponent', () => {
     const passwordConfirmInput = component.form.controls.passwordConfirm;
     passwordConfirmInput.setValue('123456');
 
-    spyOn(authService, 'register').and.returnValue(of(null));
+    spyOn(authService, 'register').and.returnValue(of(mockRes));
     spyOn(alertService, 'success');
 
     const router = TestBed.inject(Router);
@@ -178,7 +180,7 @@ fdescribe('RegisterComponent', () => {
     fixture.detectChanges();
 
     expect(navigateSpy).toHaveBeenCalledWith(['/auth/login']);
-    expect(component.status).toBe(XStatus.Received);
-    expect(alertService.success).toHaveBeenCalled();
+    expect(component.status).toBe(XStatus.Succeed);
+    expect(alertService.success).toHaveBeenCalledWith(mockRes.message, true);
   });
 });

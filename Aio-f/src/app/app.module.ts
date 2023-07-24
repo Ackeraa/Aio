@@ -52,6 +52,7 @@ import {
   HeaderComponent,
   FooterComponent,
 } from './_components';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   imports: [
@@ -108,6 +109,7 @@ import {
     ProblemSetComponent,
     DiscussionComponent,
     GroupsComponent,
+    ErrorComponent,
   ],
   providers: [
     //{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

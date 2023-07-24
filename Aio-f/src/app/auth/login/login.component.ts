@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { finalize } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AlertService, AuthService } from '../../_services';
@@ -60,16 +59,15 @@ export class LoginComponent implements OnInit {
 
     this.status = XStatus.Sent;
 
-    this.authService
-      .login(data)
-      .pipe(finalize(() => (this.status = XStatus.Received)))
-      .subscribe({
-        next: () => {
-          this.router.navigate([this.returnUrl]);
-        },
-        error: err => {
-          this.errors = err;
-        },
-      });
+    this.authService.login(data).subscribe({
+      next: () => {
+        this.status = XStatus.Succeed;
+        this.router.navigate([this.returnUrl]);
+      },
+      error: err => {
+        this.status = XStatus.Failed;
+        this.errors = err;
+      },
+    });
   }
 }
