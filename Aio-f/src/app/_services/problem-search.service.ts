@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { tap, catchError, Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
 interface ProblemSearchParams {
@@ -36,7 +36,7 @@ export class ProblemSearchService {
     return params;
   }
 
-  search(source: string, query: string): Observable<any> {
+  search(source: string, query?: string): Observable<any> {
     this.source = source;
     this.query = query;
 
@@ -58,5 +58,13 @@ export class ProblemSearchService {
       '/vproblems/respides',
       this.createParams(source)
     );
+  }
+
+  getSource(): string {
+    return this.source;
+  }
+
+  getQuery(): string {
+    return this.query;
   }
 }

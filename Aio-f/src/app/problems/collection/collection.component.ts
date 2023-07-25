@@ -1,55 +1,59 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Subject, Observable, fromEvent } from 'rxjs';
-import { map, filter, debounceTime, tap } from 'rxjs/operators'; 
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProblemsService } from '../problems.service';
+import { AlertService } from 'src/app/_services';
+import { ProblemBasic } from '../../_models/';
+
+interface ProblemsData {
+  total: number;
+  problems: ProblemBasic[];
+}
 
 @Component({
-	selector: 'app-problems-collection',
-	templateUrl: './collection.component.html',
-	styleUrls: ['./collection.component.scss']
+  selector: 'app-problems-collection',
+  templateUrl: './collection.component.html',
+  styleUrls: ['./collection.component.scss'],
 })
-
 export class CollectionComponent implements OnInit {
+  loading: boolean;
+  problems: ProblemBasic[];
+  p: number;
+  total: number;
 
-	loading: boolean;
-	problems: any;
-	p: number;
-	total: number;
+  constructor(
+    private router: Router,
+    private problemsService: ProblemsService,
+    private alertService: AlertService
+  ) {}
 
-	constructor(private router: Router,
-			    private problemsService: ProblemsService) {
-	}
+  ngOnInit(): void {}
 
-	ngOnInit(): void {
-	}
+  setProblems(data: ProblemsData): void {
+    this.problems = data.problems;
+    this.total = data.total;
+    this.p = 1;
+  }
 
-	setProblems(data: any): void {
-		this.problems = data.problems;
-		this.total = data.total;
-		this.p = 1;
-	}
+  getPage(page: number): void {
+    this.problemsService.getPage(page).subscribe({
+      next: (data: ProblemsData) => {
+        this.problems = data.problems;
+        this.total = data.total;
+        this.p = page;
+        this.alertService.clear();
+      },
+      error: err => {
+        this.alertService.error(err);
+      },
+    });
+  }
 
-	getPage(page: number): void {
-		this.problemsService.getPage(page)
-			.subscribe(data => {
-				this.problems = data.problems;
-				this.total = data.total;
-				this.p = page;
-			});
-	}
+  setLoading(loading: boolean): void {
+    this.loading = loading;
+  }
 
-	setLoading(loading: boolean): void {
-		this.loading = loading;
-	}
-
-	viewProblem(source: string, id: string): void {
-		let url: string;
-		if (source == "aio") {
-			url = "/problem/l/" + id;
-		} else {
-			url = "/problem/v/" + id;
-		}
-		this.router.navigate([url]);
-	}
+  viewProblem(source: string, id: string): void {
+    const url = source === 'aio' ? `/problem/l/${id}` : `/problem/v/${id}`;
+    this.router.navigate([url]);
+  }
 }

@@ -1,57 +1,67 @@
 <div class="card shadow-sm">
-	<div class="card-body">
-		<app-problem-search
-			(problemsEvent)="setProblems($event)" 
-			(loadingEvent)="setLoading($event)" >
-		</app-problem-search>
-		<br/>
-		<div *ngIf="loading" class="row">
-			Loading...
-		</div>
-		<div class="row">
-			<th class="col-1"> # </th>
-			<th class="col"> TITLE </th>
-			<th class="col"> SOURCE </th>
-			<th class="col"> STATUS </th>
-			<th class="col">
-				<div class="custom-control custom-switch">
-					<input type="checkbox" class="custom-control-input" id="tags">
-					<label class="custom-control-label" for="tags">TAGS</label>
-				</div>
-			</th>
-		</div>
-		<hr class="title"/>
-		<div *ngIf="!loading">
-			<div class="table-content" *ngFor="let problem of problems | paginate:
-						{itemsPerPage:20, currentPage:p, totalItems:total}">
-				<div class="row">
-					<div class="col-1">{{problem.id}}</div>
-					<div class="col">
-						<a class="link link-content" (click)="viewProblem(problem.source, problem.id)">
-							{{problem.name}}
-						</a>
-					</div>
-					<div class="col">
-						<a class="link link-content" (click)="viewProblem(problem.source, problem.id)">
-							{{problem.vid}}
-						</a>
-					</div>
-					<div class="col">22/45</div>
-					<div class="col">Hard</div>
-				</div>
-				<hr class="content"/>
-			</div>
-		</div>
-	</div>
+  <div class="card-body">
+    <app-problem-search
+      (problemsEvent)="setProblems($event)"
+      (loadingEvent)="setLoading($event)"
+    >
+    </app-problem-search>
+    <br />
+    <div *ngIf="loading" class="row">Loading...</div>
+    <div class="row">
+      <th class="col-1">#</th>
+      <th class="col">TITLE</th>
+      <th class="col">SOURCE</th>
+      <th class="col">STATUS</th>
+      <th class="col">
+        <div class="custom-control custom-switch">
+          <input type="checkbox" class="custom-control-input" id="tags" />
+          <label class="custom-control-label" for="tags">TAGS</label>
+        </div>
+      </th>
+    </div>
+    <hr class="title" />
+    <div *ngIf="!loading">
+      <div
+        class="table-content"
+        *ngFor="
+          let problem of problems
+            | paginate : { itemsPerPage: 20, currentPage: p, totalItems: total }
+        "
+      >
+        <div class="row">
+          <div class="col-1">{{ problem.id }}</div>
+          <div class="col">
+            <a
+              class="link link-content"
+              (click)="viewProblem(problem.source, problem.id)"
+            >
+              {{ problem.name }}
+            </a>
+          </div>
+          <div class="col">
+            <a
+              class="link link-content"
+              (click)="viewProblem(problem.source, problem.id)"
+            >
+              {{ problem.vid }}
+            </a>
+          </div>
+          <div class="col">22/45</div>
+          <div class="col">Hard</div>
+        </div>
+        <hr class="content" />
+      </div>
+    </div>
+  </div>
 </div>
-<br/>
+<br />
 <div class="row justify-content-center">
-	<pagination-controls class="paginator"
-		(pageChange)="getPage($event)"
-		auotHide="true"
-		previousLabel=""
-		nextLabel="" >
-	</pagination-controls>
+  <pagination-controls
+    class="paginator"
+    (pageChange)="getPage($event)"
+    auotHide="true"
+    previousLabel=""
+    nextLabel=""
+  >
+  </pagination-controls>
 </div>
-
-

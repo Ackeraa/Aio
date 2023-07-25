@@ -21,8 +21,8 @@ class VproblemsController < ApplicationController
   # GET /vproblems/search
   # Need to be fixed when source is nil.
   def search
-    source = params[:source]
-    query = params[:query]
+    source = params[:source].to_s.downcase
+    query = params[:query].to_s.downcase
 
     if query.nil? or query.empty?
       total = Problem.where(source: source).count

@@ -6,9 +6,7 @@ import { ProblemSearchService } from '../_services';
   providedIn: 'root',
 })
 export class ProblemsService {
-  constructor(
-    private ProblemSearchService: ProblemSearchService
-  ) {}
+  constructor(private ProblemSearchService: ProblemSearchService) {}
 
   getPage(page: number): Observable<any> {
     return this.ProblemSearchService.getPage(page);

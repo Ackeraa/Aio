@@ -5,6 +5,7 @@ import {
   ElementRef,
   Output,
   EventEmitter,
+  AfterViewInit,
 } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
 import { faSpider } from '@fortawesome/free-solid-svg-icons';
@@ -18,7 +19,7 @@ import { environment } from '../../../environments/environment';
   templateUrl: './problem-search.component.html',
   styleUrls: ['./problem-search.component.scss'],
 })
-export class ProblemSearchComponent implements OnInit {
+export class ProblemSearchComponent implements AfterViewInit {
   sources: Array<string>;
 
   @Output() problemsEvent = new EventEmitter<any>();
@@ -36,31 +37,37 @@ export class ProblemSearchComponent implements OnInit {
     private alertService: AlertService
   ) {}
 
+  ngAfterViewInit(): void {
+    const lastSource = this.searchService.getSource() || this.sources[0];
+    const lastQuery = this.searchService.getQuery() || '';
+    this.source.nativeElement.value = lastSource;
+    this.query.nativeElement.value = lastQuery;
+    this.searchService.search(lastSource, lastQuery).subscribe({
+      next: data => this.problemsEvent.emit(data),
+      error: err => this.alertService.error(err),
+    });
+  }
+
   ngOnInit(): void {
     this.onLoading(false);
-    this.sources = environment.vproblemsSource;
-    this.searchService
-      .search(this.sources[0].toLowerCase(), '')
-      .subscribe({
-        next: (data) => this.problemsEvent.emit(data),
-        error: (err) => this.alertService.error(err),
-      });
+    this.sources = environment.vproblemsSources;
 
     //Observer of source change.
     this.source$ = fromEvent(this.source.nativeElement, 'change')
       .pipe(
-        map((e: any) => e.target.value.toLowerCase()),
+        map((e: any) => e.target.value),
         tap(() => this.onLoading(true)),
         switchMap((source: string) =>
           this.searchService.search(source, this.query.nativeElement.value)
         )
       )
       .subscribe({
-        next: (data) => {
+        next: data => {
           this.problemsEvent.emit(data);
           this.onLoading(false);
+          this.alertService.clear();
         },
-        error: (err) => {
+        error: err => {
           this.onLoading(false);
           this.alertService.error(err);
         },
@@ -73,18 +80,16 @@ export class ProblemSearchComponent implements OnInit {
         debounceTime(300),
         tap(() => this.onLoading(true)),
         switchMap((query: string) =>
-          this.searchService.search(
-            this.source.nativeElement.value.toLowerCase(),
-            query
-          )
+          this.searchService.search(this.source.nativeElement.value, query)
         )
       )
       .subscribe({
-        next: (data) => {
+        next: data => {
           this.problemsEvent.emit(data);
           this.onLoading(false);
+          this.alertService.clear();
         },
-        error: (err) => {
+        error: err => {
           this.onLoading(false);
           this.alertService.error(err);
         },
@@ -97,12 +102,10 @@ export class ProblemSearchComponent implements OnInit {
 
   reSpide(): void {
     this.query.nativeElement.value = '';
-    this.searchService
-      .reSpide(this.source.nativeElement.value.toLowerCase)
-      .subscribe({
-        next: (data) => this.problemsEvent.emit(data),
-        error: (err) => this.alertService.error(err),
-      });
+    this.searchService.reSpide(this.source.nativeElement.value).subscribe({
+      next: data => this.problemsEvent.emit(data),
+      error: err => this.alertService.error(err),
+    });
   }
   ngOnDestroy(): void {
     this.query$.unsubscribe();
