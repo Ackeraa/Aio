@@ -9,7 +9,7 @@ import { AuthService } from '../../_services';
   styleUrls: ['./my-submissions.component.scss'],
 })
 export class MySubmissionsComponent {
-  addition: any = {};
+  addition: {} | undefined = undefined;
 
   constructor(
     private authService: AuthService,

@@ -24,7 +24,7 @@ import { SearchService } from '../';
 })
 export class SearchComponent {
   @Input() uri: string;
-  @Input() addition: any = {};
+  @Input() addition: any;
   @Output() itemsEvent = new EventEmitter<any>();
   @Output() loadingEvent = new EventEmitter<boolean>();
   @ViewChild('query', { static: true }) query: ElementRef;
@@ -37,6 +37,8 @@ export class SearchComponent {
   ) {}
 
   ngOnInit(): void {
+    console.log("search component", this.addition);
+
     this.onLoading(false);
     this.searchService.get({ addition: this.addition }, this.uri).subscribe({
       next: (data) => {
