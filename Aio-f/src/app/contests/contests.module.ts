@@ -6,10 +6,9 @@ import { ContestsRoutingModule } from './contests-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SearchModule } from '../_components/search/search.module';
 import {
-	ContestsComponent,
 	CreateComponent,
 	RecentComponent,
-	PastComponent 
+	PastComponent
 } from '.';
 
 @NgModule({

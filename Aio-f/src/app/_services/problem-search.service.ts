@@ -1,62 +1,62 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
-import { HttpResponse } from '@angular/common/http';
-import { map } from 'rxjs/operators'; 
+import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
+interface ProblemSearchParams {
+  source: string;
+  query?: string;
+  page?: number;
+}
+
 @Injectable({
-	providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProblemSearchService {
+  private source: string;
+  private query: string;
 
-	source: string;
-	query: string;
+  constructor(private authService: AuthService) {}
 
-	constructor(private authService: AuthService) {
-	}
+  private createURL(source: string): string {
+    return source === 'aio' ? '/problems/search' : '/vproblems/search';
+  }
 
-	search(source: string, query: string): Observable<any> {
-		this.source = source;
-		this.query = query;
+  private createParams(
+    source: string,
+    query?: string,
+    page?: number
+  ): ProblemSearchParams {
+    let params: ProblemSearchParams = { source: source };
+    if (query) {
+      params.query = query;
+    }
+    if (page) {
+      params.page = page;
+    }
+    return params;
+  }
 
-		let url: string;
-		let params: any;
+  search(source: string, query: string): Observable<any> {
+    this.source = source;
+    this.query = query;
 
-		if (query === "") {
-			params = { source: source };
-		} else {
-			params = { source: source, query: query };
-		}
-		if (source === 'aio'){
-			url = 'problems/search';
-		} else {
-			url = 'vproblems/search';
-		}
-		return this.authService.get(url, params);
-	}
+    return this.authService.get(
+      this.createURL(source),
+      this.createParams(source, query)
+    );
+  }
 
-	getPage(page: number): Observable<any> {
-		let url: string;
-		let params: any;
+  getPage(page: number): Observable<any> {
+    return this.authService.get(
+      this.createURL(this.source),
+      this.createParams(this.source, this.query, page)
+    );
+  }
 
-		if (this.query === "") {
-			params = { source: this.source, page: page };
-		} else {
-			params = { source: this.source, query: this.query, page: page };
-		}
-		if (this.source === 'aio'){
-			url = 'problems/search';
-		} else {
-			url = 'vproblems/search';
-		}
-		return this.authService.get(url, params);
-	}
-
-	reSpideProblems(source: string): Observable<any> {
-		let url = 'vproblems/respides';
-		return this.authService.get(
-			"vproblems/respides",
-			{ source: source }
-		);
-	}
+  reSpide(source: string): Observable<any> {
+    return this.authService.get(
+      '/vproblems/respides',
+      this.createParams(source)
+    );
+  }
 }

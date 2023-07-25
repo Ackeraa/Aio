@@ -9,7 +9,8 @@ import {
   HTTP_INTERCEPTORS,
 } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 import { MarkdownModule } from 'ngx-markdown';
 import { FileUploadModule } from 'ng2-file-upload';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -40,6 +41,7 @@ import { DiscussionComponent } from './discussion';
 import { UsersComponent } from './users';
 import { GroupsComponent } from './groups';
 import { WikiComponent } from './wiki';
+
 //import { AngularTokenService } from 'angular-token';
 import { AngularTokenModule } from 'angular-token';
 import { AuthService } from './_services/auth.service';
@@ -51,6 +53,8 @@ import {
   AlertComponent,
   HeaderComponent,
   FooterComponent,
+  SearchComponent,
+  ProblemSearchComponent,
 } from './_components';
 import { ErrorComponent } from './error/error.component';
 
@@ -122,4 +126,8 @@ import { ErrorComponent } from './error/error.component';
   exports: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(library: FaIconLibrary) {
+    library.addIconPacks(fas);
+  }
+}

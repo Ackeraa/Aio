@@ -5,7 +5,6 @@ import { ProblemSetsRoutingModule } from './problem-sets-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SearchModule } from '../_components/search/search.module';
 import {
-	ProblemSetsComponent,
 	CreateComponent,
 	PrivateComponent,
 	PublicComponent

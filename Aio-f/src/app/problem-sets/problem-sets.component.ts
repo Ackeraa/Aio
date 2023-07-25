@@ -1,9 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  faUserCheck,
-  faUserLock,
-  faUserPlus
-} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-problem-sets',
@@ -11,10 +6,6 @@ import {
   styleUrls: ['./problem-sets.component.scss']
 })
 export class ProblemSetsComponent implements OnInit {
-
-  privateIcon = faUserLock;
-  publicIcon = faUserCheck;
-  createIcon = faUserPlus;
 
   constructor() {
 

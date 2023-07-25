@@ -11,4 +11,5 @@ export const environment = {
   unameMaxLen: 10,
   passwdMinLen: 6,
   passwdMaxLen: 16,
+  vproblemsSource: ['Atcoder', 'Codeforces', 'UVA', 'POJ'],
 };

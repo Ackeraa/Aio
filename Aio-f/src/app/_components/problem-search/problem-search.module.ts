@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProblemSearchComponent } from './problem-search.component';
 
 @NgModule({
@@ -7,7 +8,8 @@ import { ProblemSearchComponent } from './problem-search.component';
 		ProblemSearchComponent
 	],
 	imports: [
-		CommonModule
+		CommonModule,
+    FontAwesomeModule
 	],
 	exports: [
 		ProblemSearchComponent

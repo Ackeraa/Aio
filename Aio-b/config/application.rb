@@ -33,6 +33,9 @@ module AioB
       end
     end
     config.api_only = true
+    config.session_store :cookie_store, key: '_interslice_session'
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore, config.session_options
     config.i18n.default_locale = :"en"
     config.i18n.available_locales = [:"zh-CN", :en]
     #config.autoload_paths << Rails.root.join('lib')

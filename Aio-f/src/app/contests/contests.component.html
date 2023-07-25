@@ -1,19 +1,29 @@
 <nav class="navbar navbar-expand-lg navbar-light">
-	<a class="navbar-brand" href="#">
-	</a>
-	<div class="collapse navbar-collapse">
-		<div class="navbar-nav mr-auto">
-			<a class="nav-item nav-link" routerLinkActive="active" routerLink="./recent">
-        <fa-icon [icon]="recentIcon"></fa-icon> Recent
-			</a>
-			<a class="nav-item nav-link" routerLinkActive="active" routerLink="./past">
-        <fa-icon [icon]="pastIcon"></fa-icon> Past
-			</a>
-			<a class="nav-item nav-link" routerLinkActive="active" routerLink="./create">
-        <fa-icon [icon]="createIcon"></fa-icon> Create
-			</a>
-		</div>
-	</div>
+  <a class="navbar-brand" href="#"> </a>
+  <div class="collapse navbar-collapse">
+    <div class="navbar-nav mr-auto">
+      <a
+        class="nav-item nav-link"
+        routerLinkActive="active"
+        routerLink="./recent"
+      >
+        <fa-icon [icon]="['fas', 'calendar-minus']"></fa-icon> Recent
+      </a>
+      <a
+        class="nav-item nav-link"
+        routerLinkActive="active"
+        routerLink="./past"
+      >
+        <fa-icon [icon]="['fas', 'clendar-plus']"></fa-icon> Past
+      </a>
+      <a
+        class="nav-item nav-link"
+        routerLinkActive="active"
+        routerLink="./create"
+      >
+        <fa-icon [icon]="['fas', 'folder-plus']"></fa-icon> Create
+      </a>
+    </div>
+  </div>
 </nav>
 <router-outlet></router-outlet>
-

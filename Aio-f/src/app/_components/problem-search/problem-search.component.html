@@ -1,18 +1,22 @@
 <div class="row justify-content-center">
   <div class="col-2">
     <select #source class="form-select">
-      <option *ngFor="let source of sources let i = index" (value)="i">
-        {{source}}
+      <option *ngFor="let source of sources; let i = index" (value)="(i)">
+        {{ source }}
       </option>
     </select>
   </div>
   <div class="col-4">
-    <input #query type="text" class="form-control" placeholder="Search Problems">
+    <input
+      #query
+      type="text"
+      class="form-control"
+      placeholder="Search Problems"
+    />
   </div>
-	<div class="col-auto">
-		<a class="btn col-auto" (click)="reSpideProblems()">
-			<i class="fas fa-spider"></i>
-		</a>
-	</div>
+  <div class="col-auto">
+    <a class="btn col-auto" (click)="reSpide()">
+      <fa-icon [icon]="faSpider"></fa-icon>
+    </a>
+  </div>
 </div>
-

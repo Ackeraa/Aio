@@ -1,19 +1,29 @@
-
 <nav class="navbar navbar-expand-lg navbar-light">
-	<a class="navbar-brand" href="#">
-	</a>
-	<div class="collapse navbar-collapse">
-		<div class="navbar-nav mr-auto">
-			<a class="nav-item nav-link" routerLinkActive="active" routerLink="./collection">
-        <fa-icon [icon]="collectionIcon"></fa-icon> Collection
-			</a>
-			<a class="nav-item nav-link" routerLinkActive="active" routerLink="./beta">
-        <fa-icon [icon]="betaIcon"></fa-icon> Beta
-			</a>
-			<a class="nav-item nav-link" routerLinkActive="active" routerLink="create">
-        <fa-icon [icon]="createIcon"></fa-icon> Create
-			</a>
-		</div>
-	</div>
+  <a class="navbar-brand" href="#"> </a>
+  <div class="collapse navbar-collapse">
+    <div class="navbar-nav mr-auto">
+      <a
+        class="nav-item nav-link"
+        routerLinkActive="active"
+        routerLink="./collection"
+      >
+        <fa-icon [icon]="['fas', 'spider']"></fa-icon> Collection
+      </a>
+      <a
+        class="nav-item nav-link"
+        routerLinkActive="active"
+        routerLink="./beta"
+      >
+        <fa-icon [icon]="['fas', 'flask']"></fa-icon> Beta
+      </a>
+      <a
+        class="nav-item nav-link"
+        routerLinkActive="active"
+        routerLink="create"
+      >
+        <fa-icon [icon]="['fas', 'folder-plus']"></fa-icon> Create
+      </a>
+    </div>
+  </div>
 </nav>
 <router-outlet></router-outlet>

@@ -11,9 +11,9 @@ import { SubmissionsModule } from '../_components';
 
 import {
 	MySubmissionsComponent,
-	ProblemsComponent, 
+	ProblemsComponent,
 	SubmissionsComponent,
-	SubmitComponent, 
+	SubmitComponent,
 	RanksComponent
 } from '.';
 
