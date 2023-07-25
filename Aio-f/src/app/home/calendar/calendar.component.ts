@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
 	ChangeDetectionStrategy,
 	ViewChild,
@@ -43,7 +43,7 @@ const colors: any = {
 	templateUrl: './calendar.component.html',
 	styleUrls: ['./calendar.component.scss']
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent {
 
 	@ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
 

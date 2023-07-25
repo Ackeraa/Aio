@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   faLock,
   faClock,
@@ -12,7 +12,7 @@ import { ContestsService } from '../contests.service';
 	templateUrl: './recent.component.html',
 	styleUrls: ['./recent.component.scss']
 })
-export class RecentComponent implements OnInit {
+export class RecentComponent {
 
 	uri: string = 'contests';
 	addition: string = 'recent';

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
-import { map } from 'rxjs/operators'; 
+import { map } from 'rxjs/operators';
 import {
   faUser,
   faSearch,
@@ -14,13 +14,13 @@ import { AuthService } from '../_services/auth.service';
 	templateUrl: './users.component.html',
 	styleUrls: ['./users.component.scss']
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent {
 
   myInfoIcon = faUser;
   exploreIcon = faSearch;
 
 	constructor(private authService: AuthService) {
-		
+
 	}
 	onSubmit():any {
 		this.authService.get('problems').subscribe(

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ContestsService } from '../contests.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { ContestsService } from '../contests.service';
 	templateUrl: './past.component.html',
 	styleUrls: ['./past.component.scss']
 })
-export class PastComponent implements OnInit {
+export class PastComponent {
 
 	uri: string = 'contests';
 	addition: string = 'recent';

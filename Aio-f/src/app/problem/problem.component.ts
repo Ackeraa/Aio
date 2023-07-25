@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { ProblemService } from './problem.service'; 
+import { ProblemService } from './problem.service';
 
 @Component({
 	selector: 'app-problem',
 	templateUrl: './problem.component.html',
 	styleUrls: ['./problem.component.scss']
 })
-export class ProblemComponent implements OnInit {
+export class ProblemComponent {
 
 	constructor(private route: ActivatedRoute,
 			    private problemService: ProblemService) {

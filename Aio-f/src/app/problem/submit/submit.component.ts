@@ -1,21 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProblemService } from '../problem.service';
-import { filter } from 'rxjs/operators'; 
+import { filter } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-problem-submit',
 	templateUrl: './submit.component.html',
 	styleUrls: ['./submit.component.scss']
 })
-export class SubmitComponent implements OnInit {
+export class SubmitComponent {
 
 	code: any;
 	has_code: boolean;
 	options: any;
 	modes: Array<string>;
 	languages: Array<any>;
-	language: any; 
+	language: any;
 	themes: Array<string>;
 	problem: any;
 
@@ -42,7 +42,7 @@ export class SubmitComponent implements OnInit {
 			mode: 'clike'
 		}
 		this.modes = ['clike', 'clike', 'javascript', 'python'];
-		this.themes = ['Dracula', 'Eclipse', 'Idea']; 
+		this.themes = ['Dracula', 'Eclipse', 'Idea'];
 		this.code = '';
 	}
 
@@ -52,7 +52,7 @@ export class SubmitComponent implements OnInit {
 		} else {
 			this.has_code = true;
 			this.problemService.submitProblem(this.language, this.code)
-				.subscribe(() => 
+				.subscribe(() =>
 					this.router.navigate(['../my-submissions'], { relativeTo: this.route })
 				);
 		}

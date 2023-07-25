@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { combineLatest } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { ContestService } from '../contest.service';
@@ -9,7 +9,7 @@ import { AuthService } from '../../_services';
   templateUrl: './my-submissions.component.html',
   styleUrls: ['./my-submissions.component.scss'],
 })
-export class MySubmissionsComponent implements OnInit {
+export class MySubmissionsComponent {
   addition: any;
 
   constructor(

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { ProblemSetsService } from '../problem-sets.service';
 import {
@@ -15,7 +15,7 @@ import {
 	templateUrl: './create.component.html',
 	styleUrls: ['./create.component.scss']
 })
-export class CreateComponent implements OnInit {
+export class CreateComponent {
 	form: FormGroup;
 	title: AbstractControl;
 	description: AbstractControl;
@@ -32,7 +32,7 @@ export class CreateComponent implements OnInit {
 		});
 
 		this.title = this.form.controls['title'];
-		this.description = this.form.controls['description']; 
+		this.description = this.form.controls['description'];
 	}
 
 	onSubmit(form: any) {

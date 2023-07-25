@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MarkdownModule, MarkedOptions, MarkedRenderer } from 'ngx-markdown';
-import { map, filter } from 'rxjs/operators'; 
+import { map, filter } from 'rxjs/operators';
 import { AuthService } from '../../_services/auth.service';
 import { CommentsService } from '../../_services';
 
@@ -9,7 +9,7 @@ import { CommentsService } from '../../_services';
 	templateUrl: './comments.component.html',
 	styleUrls: ['./comments.component.scss']
 })
-export class CommentsComponent implements OnInit {
+export class CommentsComponent {
 
 	// Define the comments location.
 	@Input() which: string;
@@ -59,7 +59,7 @@ export class CommentsComponent implements OnInit {
 	}
 
 	initDescription(id: number): void {
-		this.descriptions[id] = "";	
+		this.descriptions[id] = "";
 	}
 
 	voteUp(comment: any): void {
@@ -90,7 +90,7 @@ export class CommentsComponent implements OnInit {
 
 	addComment(): void {
 		this.comments.unshift({
-			comment: { 
+			comment: {
 				creator: this.user.user_name,
 				description: this.descriptions[0],
 				likes: { votes: 0, voters: [] },
@@ -104,7 +104,7 @@ export class CommentsComponent implements OnInit {
 	reply(node: any): void {
 		node.comment.is_visible = true;
 		node.children.unshift({
-			comment: { 
+			comment: {
 				creator: this.user.user_name,
 				description: this.descriptions[node.comment.id],
 				likes: { votes: 0, voters: [] },

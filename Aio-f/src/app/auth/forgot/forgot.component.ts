@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService, AuthService } from '../../_services';
@@ -10,7 +10,7 @@ import { AuthValidators } from '../auth-valdators';
   templateUrl: './forgot.component.html',
   styleUrls: ['./forgot.component.scss'],
 })
-export class ForgotComponent implements OnInit {
+export class ForgotComponent {
   form: FormGroup;
   errors: any;
 

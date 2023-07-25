@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MarkdownModule, MarkedOptions, MarkedRenderer } from 'ngx-markdown';
 import { ProblemService } from '../problem.service';
 
@@ -9,7 +9,7 @@ const BASE_URL = 'http://127.0.0.1:3000';
 	templateUrl: './description.component.html',
 	styleUrls: ['./description.component.scss']
 })
-export class DescriptionComponent implements OnInit {
+export class DescriptionComponent {
 
 	problem: any;
 

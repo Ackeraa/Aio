@@ -1,8 +1,8 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, Renderer2 } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators'; 
+import { map } from 'rxjs/operators';
 import { MarkdownModule, MarkedOptions, MarkedRenderer } from 'ngx-markdown';
 import {
 	FormBuilder,
@@ -20,7 +20,7 @@ const BASE_URL = 'http://127.0.0.1:3000';
 	templateUrl: './create.component.html',
 	styleUrls: ['./create.component.scss']
 })
-export class CreateComponent implements OnInit {
+export class CreateComponent {
 
 	form: FormGroup;
 	name: AbstractControl;
@@ -42,7 +42,7 @@ export class CreateComponent implements OnInit {
 	private routeSub:any;
 
 	constructor(private fb: FormBuilder, private renderer: Renderer2,
-				private router: Router, private http: HttpClient) { 
+				private router: Router, private http: HttpClient) {
 
 	}
 	ngOnInit(): void {
@@ -151,7 +151,7 @@ export class CreateComponent implements OnInit {
 
 	onSubmit(form: any): void {
 		if (this.token === '') {
-			
+
 		} else {
 			let data: any = form
 			data.allowed_languages = this.allowed_languages;

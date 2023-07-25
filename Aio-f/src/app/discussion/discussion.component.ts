@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
 	selector: 'app-discussion',
 	templateUrl: './discussion.component.html',
 	styleUrls: ['./discussion.component.scss']
 })
-export class DiscussionComponent implements OnInit {
+export class DiscussionComponent {
 
 	which: string = 'home';
 

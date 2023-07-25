@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { filter } from 'rxjs/operators'; 
+import { Component } from '@angular/core';
+import { filter } from 'rxjs/operators';
 import { GroupService } from '../group.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { GroupService } from '../group.service';
 	templateUrl: './home.component.html',
 	styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
 	data: any;
 

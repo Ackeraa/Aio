@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
-import { map, filter } from 'rxjs/operators'; 
+import { map, filter } from 'rxjs/operators';
 import { ContestService } from '../contest.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { ContestService } from '../contest.service';
 	templateUrl: './ranks.component.html',
 	styleUrls: ['./ranks.component.scss']
 })
-export class RanksComponent implements OnInit {
+export class RanksComponent {
 
 	receiver: Subscription;
 	ranks: Array<any>;

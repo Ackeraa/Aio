@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UsersService } from '../users.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { UsersService } from '../users.service';
 	templateUrl: './explore.component.html',
 	styleUrls: ['./explore.component.scss']
 })
-export class ExploreComponent implements OnInit {
+export class ExploreComponent {
 
 	uri: string = 'users';
 	users: Array<any>;

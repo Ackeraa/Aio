@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { GroupService } from './group.service';
 
@@ -7,7 +7,7 @@ import { GroupService } from './group.service';
 	templateUrl: './group.component.html',
 	styleUrls: ['./group.component.scss']
 })
-export class GroupComponent implements OnInit {
+export class GroupComponent {
 
 	constructor(private route: ActivatedRoute,
 			   	private groupService: GroupService){

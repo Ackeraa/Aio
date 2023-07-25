@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-wiki',
   templateUrl: './wiki.component.html',
   styleUrls: ['./wiki.component.scss']
 })
-export class WikiComponent implements OnInit {
+export class WikiComponent {
 
   constructor() { }
 

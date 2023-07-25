@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { filter } from 'rxjs/operators'; 
+import { Component } from '@angular/core';
+import { filter } from 'rxjs/operators';
 import { UserService } from '../user.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { UserService } from '../user.service';
 	templateUrl: './groups.component.html',
 	styleUrls: ['./groups.component.scss']
 })
-export class GroupsComponent implements OnInit {
+export class GroupsComponent {
 
 	groups: any;
 

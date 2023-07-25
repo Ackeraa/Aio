@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ProblemSetsService } from '../problem-sets.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { ProblemSetsService } from '../problem-sets.service';
 	templateUrl: './public.component.html',
 	styleUrls: ['./public.component.scss']
 })
-export class PublicComponent implements OnInit {
+export class PublicComponent {
 
 
 	uri: string = 'problem_sets';

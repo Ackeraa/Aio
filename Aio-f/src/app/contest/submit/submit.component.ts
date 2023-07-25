@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ContestService } from '../contest.service';
-import { filter } from 'rxjs/operators'; 
+import { filter } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-contest-submit',
 	templateUrl: './submit.component.html',
 	styleUrls: ['./submit.component.scss']
 })
-export class SubmitComponent implements OnInit {
+export class SubmitComponent {
 
 	code: any;
 	has_code: boolean;
@@ -16,7 +16,7 @@ export class SubmitComponent implements OnInit {
 	modes: Array<string>;
 	languages: Array<any>;
 	problems: Array<any>;
-	language: string; 
+	language: string;
 	themes: Array<string>;
 	problem: number;
 
@@ -47,7 +47,7 @@ export class SubmitComponent implements OnInit {
 			mode: 'clike'
 		}
 		this.modes = ['clike', 'clike', 'javascript', 'python'];
-		this.themes = ['Dracula', 'Eclipse', 'Idea']; 
+		this.themes = ['Dracula', 'Eclipse', 'Idea'];
 		this.code = '';
 	}
 
@@ -57,7 +57,7 @@ export class SubmitComponent implements OnInit {
 		} else {
 			this.has_code = true;
 			this.contestService.submitProblem(this.problem, this.language, this.code)
-				.subscribe(() => 
+				.subscribe(() =>
 					this.router.navigate(['../my-submissions'], { relativeTo: this.route })
 				);
 		}

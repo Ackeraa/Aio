@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Subject, Observable, fromEvent } from 'rxjs';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ProblemSetService } from './problem-set.service';
@@ -8,7 +8,7 @@ import { ProblemSetService } from './problem-set.service';
   templateUrl: './problem-set.component.html',
   styleUrls: ['./problem-set.component.scss'],
 })
-export class ProblemSetComponent implements OnInit {
+export class ProblemSetComponent {
   loading: boolean;
   allProblems: any;
   problems: Array<any>;

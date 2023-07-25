@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
   ViewChild,
   ElementRef,
   Output,
@@ -43,8 +42,8 @@ export class ProblemSearchComponent implements AfterViewInit {
     this.source.nativeElement.value = lastSource;
     this.query.nativeElement.value = lastQuery;
     this.searchService.search(lastSource, lastQuery).subscribe({
-      next: data => this.problemsEvent.emit(data),
-      error: err => this.alertService.error(err),
+      next: (data) => this.problemsEvent.emit(data),
+      error: (err) => this.alertService.error(err),
     });
   }
 
@@ -62,12 +61,12 @@ export class ProblemSearchComponent implements AfterViewInit {
         )
       )
       .subscribe({
-        next: data => {
+        next: (data) => {
           this.problemsEvent.emit(data);
           this.onLoading(false);
           this.alertService.clear();
         },
-        error: err => {
+        error: (err) => {
           this.onLoading(false);
           this.alertService.error(err);
         },
@@ -84,12 +83,12 @@ export class ProblemSearchComponent implements AfterViewInit {
         )
       )
       .subscribe({
-        next: data => {
+        next: (data) => {
           this.problemsEvent.emit(data);
           this.onLoading(false);
           this.alertService.clear();
         },
-        error: err => {
+        error: (err) => {
           this.onLoading(false);
           this.alertService.error(err);
         },
@@ -103,8 +102,8 @@ export class ProblemSearchComponent implements AfterViewInit {
   reSpide(): void {
     this.query.nativeElement.value = '';
     this.searchService.reSpide(this.source.nativeElement.value).subscribe({
-      next: data => this.problemsEvent.emit(data),
-      error: err => this.alertService.error(err),
+      next: (data) => this.problemsEvent.emit(data),
+      error: (err) => this.alertService.error(err),
     });
   }
   ngOnDestroy(): void {

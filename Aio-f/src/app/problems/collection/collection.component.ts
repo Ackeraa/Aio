@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProblemsService } from '../problems.service';
 import { AlertService } from 'src/app/_services';
@@ -14,7 +14,7 @@ interface ProblemsData {
   templateUrl: './collection.component.html',
   styleUrls: ['./collection.component.scss'],
 })
-export class CollectionComponent implements OnInit {
+export class CollectionComponent {
   loading: boolean;
   problems: ProblemBasic[];
   p: number;
@@ -34,7 +34,8 @@ export class CollectionComponent implements OnInit {
     this.p = 1;
   }
 
-  getPage(page: number): void {
+  get(event: { page: number } ): void {
+    const page = event.page;
     this.problemsService.getPage(page).subscribe({
       next: (data: ProblemsData) => {
         this.problems = data.problems;

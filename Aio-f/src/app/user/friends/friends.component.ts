@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { filter } from 'rxjs/operators'; 
+import { Component } from '@angular/core';
+import { filter } from 'rxjs/operators';
 import { UserService } from '../user.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { UserService } from '../user.service';
 	templateUrl: './friends.component.html',
 	styleUrls: ['./friends.component.scss']
 })
-export class FriendsComponent implements OnInit {
+export class FriendsComponent {
 
 	followers: any;
 	following: any;

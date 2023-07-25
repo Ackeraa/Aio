@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { GroupsService } from '../groups.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { GroupsService } from '../groups.service';
 	templateUrl: './explore.component.html',
 	styleUrls: ['./explore.component.scss']
 })
-export class ExploreComponent implements OnInit {
+export class ExploreComponent {
 
 	uri: string = 'groups';
 	groups: Array<any>;
@@ -24,7 +24,7 @@ export class ExploreComponent implements OnInit {
 		this.groups = data.groups;
 		this.total = data.total;
 	}
-	
+
 	setLoading(loading: boolean): void {
 		this.loading = loading;
 	}

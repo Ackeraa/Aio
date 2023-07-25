@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { ContestsService } from '../contests.service';
 import {
@@ -22,7 +22,7 @@ import {
 	templateUrl: './create.component.html',
 	styleUrls: ['./create.component.scss'],
 })
-export class CreateComponent implements OnInit {
+export class CreateComponent {
 
 	start_d: NgbDateStruct;
 	start_t: NgbTimeStruct;
@@ -53,7 +53,7 @@ export class CreateComponent implements OnInit {
 			password: ['', Validators.required],
 		});
 		this.name = this.form.controls['name'];
-		this.description = this.form.controls['description']; 
+		this.description = this.form.controls['description'];
 		this.password = this.form.controls['password'];
 		this.is_visible = false;
 		this.rule_type = "acm";

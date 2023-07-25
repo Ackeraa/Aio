@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FileUploader } from 'ng2-file-upload';
 
@@ -10,7 +10,7 @@ const BASE_URL = 'http://127.0.0.1:3000'
 	styleUrls: ['./upload.component.scss']
 })
 
-export class UploadComponent implements OnInit {
+export class UploadComponent {
 
 	@Output() uploadEvent = new EventEmitter<string>();
 	@ViewChild('templateInput', { static: true }) templateInput: ElementRef;

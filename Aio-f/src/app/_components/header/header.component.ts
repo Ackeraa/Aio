@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from '../../_services';
 
 @Component({
@@ -6,7 +6,7 @@ import { AuthService } from '../../_services';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   currentUser: string | null;
   isCollapsed = true;
 

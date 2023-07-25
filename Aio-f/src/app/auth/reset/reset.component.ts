@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService, AuthService } from '../../_services';
@@ -11,7 +11,7 @@ import { AuthValidators } from '../auth-valdators';
   templateUrl: './reset.component.html',
   styleUrls: ['./reset.component.scss'],
 })
-export class ResetComponent implements OnInit {
+export class ResetComponent {
   form: FormGroup;
   errors: any;
 

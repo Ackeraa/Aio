@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { filter } from 'rxjs/operators'; 
+import { Component } from '@angular/core';
+import { filter } from 'rxjs/operators';
 import { UserService } from '../user.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { UserService } from '../user.service';
 	templateUrl: './home.component.html',
 	styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
 	data: any;
 	loading: boolean = true;

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { filter } from 'rxjs/operators'; 
+import { Component } from '@angular/core';
+import { filter } from 'rxjs/operators';
 import { ProblemService } from '../problem.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { ProblemService } from '../problem.service';
 	templateUrl: './discussion.component.html',
 	styleUrls: ['./discussion.component.scss']
 })
-export class DiscussionComponent implements OnInit {
+export class DiscussionComponent {
 
 	which: string;
 

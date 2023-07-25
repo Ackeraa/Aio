@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { filter } from 'rxjs/operators';
 import { ProblemService } from '../problem.service';
 
@@ -7,7 +7,7 @@ import { ProblemService } from '../problem.service';
   templateUrl: './submissions.component.html',
   styleUrls: ['./submissions.component.scss'],
 })
-export class SubmissionsComponent implements OnInit {
+export class SubmissionsComponent {
   addition: any;
 
   constructor(private problemService: ProblemService) {}

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { UserService } from './user.service';
 
@@ -7,7 +7,7 @@ import { UserService } from './user.service';
 	templateUrl: './user.component.html',
 	styleUrls: ['./user.component.scss']
 })
-export class UserComponent implements OnInit {
+export class UserComponent {
 
 	constructor(private route: ActivatedRoute,
 				private userService: UserService) { }

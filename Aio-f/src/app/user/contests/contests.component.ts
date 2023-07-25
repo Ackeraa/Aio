@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { filter } from 'rxjs/operators'; 
+import { Component } from '@angular/core';
+import { filter } from 'rxjs/operators';
 import { UserService } from '../user.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { UserService } from '../user.service';
 	templateUrl: './contests.component.html',
 	styleUrls: ['./contests.component.scss']
 })
-export class ContestsComponent implements OnInit {
+export class ContestsComponent {
 
 	contests: any;
 

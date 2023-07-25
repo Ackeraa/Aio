@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { filter } from 'rxjs/operators'; 
+import { Component } from '@angular/core';
+import { filter } from 'rxjs/operators';
 import { ContestService } from '../contest.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { ContestService } from '../contest.service';
 	templateUrl: './submissions.component.html',
 	styleUrls: ['./submissions.component.scss']
 })
-export class SubmissionsComponent implements OnInit {
+export class SubmissionsComponent {
 
 	addition: any;
 

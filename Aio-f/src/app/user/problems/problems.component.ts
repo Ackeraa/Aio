@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { filter } from 'rxjs/operators'; 
+import { Component } from '@angular/core';
+import { filter } from 'rxjs/operators';
 import { UserService } from '../user.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { UserService } from '../user.service';
 	templateUrl: './problems.component.html',
 	styleUrls: ['./problems.component.scss']
 })
-export class ProblemsComponent implements OnInit {
+export class ProblemsComponent {
 
 	classifiedProblems: Array<any>;
 
