@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
-interface ProblemSearchParams {
+interface Params {
   source: string;
   query?: string;
   page?: number;
@@ -21,18 +21,12 @@ export class ProblemSearchService {
     return source === 'aio' ? '/problems/search' : '/vproblems/search';
   }
 
-  private createParams(
-    source: string,
-    query?: string,
-    page?: number
-  ): ProblemSearchParams {
-    let params: ProblemSearchParams = { source: source };
-    if (query) {
-      params.query = query;
-    }
-    if (page) {
-      params.page = page;
-    }
+  private createParams(source: string, query?: string, page?: number): Params {
+    const params = {
+      source,
+      ...(query && { query }),
+      ...(page && { page }),
+    };
     return params;
   }
 
