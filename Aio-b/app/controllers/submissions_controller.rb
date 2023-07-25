@@ -13,6 +13,7 @@ class SubmissionsController < ApplicationController
 
   # GET /submissions/search
   def search
+    puts "FFFFFFFF", params[:addition]
     if params[:addition] == '{}'
       total = Submission.count
       @submissions = Submission.limit(20).offset(@page * 20)

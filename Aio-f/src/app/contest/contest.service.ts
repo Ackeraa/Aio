@@ -3,7 +3,7 @@ import { Subject, BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { map, filter, switchMap } from 'rxjs/operators';
 import { ActionCableService, Channel } from 'angular2-actioncable';
 import { AuthService } from '../_services';
-import { ProblemSearchService } from '../_services';
+import { ProblemSearchService } from '../_modules';
 
 @Injectable({
   providedIn: 'root',

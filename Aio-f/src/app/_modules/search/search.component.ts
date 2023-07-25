@@ -6,9 +6,16 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { fromEvent } from 'rxjs';
-import { map, debounceTime, tap, switchMap } from 'rxjs/operators';
-import { AlertService, SearchService } from '../../_services';
+import {
+  fromEvent,
+  Subscription,
+  map,
+  debounceTime,
+  tap,
+  switchMap,
+} from 'rxjs';
+import { AlertService } from '../../_services';
+import { SearchService } from '../';
 
 @Component({
   selector: 'app-search',
@@ -22,6 +29,8 @@ export class SearchComponent {
   @Output() loadingEvent = new EventEmitter<boolean>();
   @ViewChild('query', { static: true }) query: ElementRef;
 
+  private query$: Subscription;
+
   constructor(
     private searchService: SearchService,
     private aleartService: AlertService
@@ -29,14 +38,17 @@ export class SearchComponent {
 
   ngOnInit(): void {
     this.onLoading(false);
-    this.searchService
-      .get({ addition: this.addition }, this.uri)
-      .subscribe((data) => {
+    this.searchService.get({ addition: this.addition }, this.uri).subscribe({
+      next: (data) => {
         this.itemsEvent.emit(data);
-      });
+      },
+      error: (err) => {
+        this.aleartService.error(err);
+      },
+    });
 
     //Observer of query change, need to be fixed, should watch the text change
-    fromEvent(this.query.nativeElement, 'keyup')
+    this.query$ = fromEvent(this.query.nativeElement, 'keyup')
       .pipe(
         map((e: any) => e.target.value),
         debounceTime(300),
@@ -65,5 +77,9 @@ export class SearchComponent {
 
   private onLoading(status: boolean): void {
     this.loadingEvent.emit(status);
+  }
+
+  ngOnDestroy(): void {
+    this.query$.unsubscribe();
   }
 }

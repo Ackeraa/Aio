@@ -1,14 +1,19 @@
-import { Injectable, OnInit } from '@angular/core';
-import { Subject, BehaviorSubject, Observable, combineLatest } from 'rxjs';
-import { map, filter, switchMap } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import {
+  BehaviorSubject,
+  Observable,
+  combineLatest,
+  filter,
+  switchMap,
+} from 'rxjs';
 import { ActionCableService, Channel } from 'angular2-actioncable';
 import { AuthService } from '../_services';
-import { SearchService } from '../_services';
+import { SearchService } from '../_modules';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProblemService implements OnInit {
+export class ProblemService {
   problem$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor(
@@ -28,6 +33,7 @@ export class ProblemService implements OnInit {
     }
     this.authService.get(url).subscribe((problem) => {
       this.problem$.next(problem);
+      console.log('problem service');
     });
   }
 

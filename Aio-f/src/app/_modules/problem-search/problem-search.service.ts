@@ -1,34 +1,42 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthService } from './auth.service';
+import { AuthService } from '../../_services';
 
 interface Params {
+  source?: string;
   query?: string;
-  addition?: any;
   page?: number;
 }
 
 @Injectable({
   providedIn: 'root',
 })
-export class SearchService {
+export class ProblemSearchService {
   private params: Params = {
+    source: 'aio',
     query: '',
-    addition: {},
     page: 1,
   };
-  private uri: string;
 
   constructor(private authService: AuthService) {}
 
-  get(params: Params, uri?: string): Observable<any> {
-    this.uri = uri || this.uri;
+
+  get(params: Params): Observable<any> {
+    this.params.source = params.source || this.params.source;
     this.params.query = params.query || this.params.query;
-    this.params.addition = params.addition || this.params.addition;
     this.params.page = params.page || this.params.page;
-    const url = `/${this.uri}/search`;
+    const url =
+      this.params.source === 'aio' ? '/problems/search' : '/vproblems/search';
 
     return this.authService.get(url, this.params);
+  }
+
+  reSpide(source: string): Observable<any> {
+    return this.authService.get('/vproblems/respides', { source });
+  }
+
+  getSource(): string {
+    return this.params.source;
   }
 
   getQuery(): string {

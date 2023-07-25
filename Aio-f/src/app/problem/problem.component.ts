@@ -14,6 +14,7 @@ export class ProblemComponent {
 	}
 
 	ngOnInit(): void {
+    console.log('ProblemComponent');
 		let source = this.route.snapshot.paramMap.get('source');
 		let id = this.route.snapshot.paramMap.get('id');
 		this.problemService.getProblem(source, id);
