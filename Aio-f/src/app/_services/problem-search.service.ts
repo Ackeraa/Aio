@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
 interface Params {
-  source: string;
+  source?: string;
   query?: string;
   page?: number;
 }
@@ -12,53 +12,38 @@ interface Params {
   providedIn: 'root',
 })
 export class ProblemSearchService {
-  private source: string;
-  private query: string;
+  private params: Params = {
+    source: 'aio',
+    query: '',
+    page: 1,
+  };
 
   constructor(private authService: AuthService) {}
 
-  private createURL(source: string): string {
-    return source === 'aio' ? '/problems/search' : '/vproblems/search';
-  }
 
-  private createParams(source: string, query?: string, page?: number): Params {
-    const params = {
-      source,
-      ...(query && { query }),
-      ...(page && { page }),
-    };
-    return params;
-  }
+  get(params: Params): Observable<any> {
+    this.params.source = params.source || this.params.source;
+    this.params.query = params.query || this.params.query;
+    this.params.page = params.page || this.params.page;
+    const url =
+      this.params.source === 'aio' ? '/problems/search' : '/vproblems/search';
 
-  search(source: string, query?: string): Observable<any> {
-    this.source = source;
-    this.query = query;
-
-    return this.authService.get(
-      this.createURL(source),
-      this.createParams(source, query)
-    );
-  }
-
-  getPage(page: number): Observable<any> {
-    return this.authService.get(
-      this.createURL(this.source),
-      this.createParams(this.source, this.query, page)
-    );
+    return this.authService.get(url, this.params);
   }
 
   reSpide(source: string): Observable<any> {
-    return this.authService.get(
-      '/vproblems/respides',
-      this.createParams(source)
-    );
+    return this.authService.get('/vproblems/respides', { source });
   }
 
   getSource(): string {
-    return this.source;
+    return this.params.source;
   }
 
   getQuery(): string {
-    return this.query;
+    return this.params.query;
+  }
+
+  getPage(): number {
+    return this.params.page;
   }
 }

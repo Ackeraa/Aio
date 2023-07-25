@@ -13,7 +13,7 @@ export class ContestsService {
   ) {}
 
   getPage(page: number): Observable<any> {
-    return this.searchService.getPage(page);
+    return this.searchService.get({ page });
   }
 
   create(data: any): Observable<any> {

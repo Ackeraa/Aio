@@ -31,12 +31,12 @@ export class CollectionComponent {
   setProblems(data: ProblemsData): void {
     this.problems = data.problems;
     this.total = data.total;
-    this.p = 1;
+    this.p = this.problemsService.getCollectionPage();
   }
 
-  get(event: { page: number } ): void {
+  getProblems(event: { page: number } ): void {
     const page = event.page;
-    this.problemsService.getPage(page).subscribe({
+    this.problemsService.getCollectionProblems(page).subscribe({
       next: (data: ProblemsData) => {
         this.problems = data.problems;
         this.total = data.total;

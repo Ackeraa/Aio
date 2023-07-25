@@ -22,6 +22,6 @@ export class SubmissionsService {
   }
 
   getSubmissionsPage(page: number): Observable<any> {
-    return this.searchService.getPage(page);
+    return this.searchService.get({ page });
   }
 }

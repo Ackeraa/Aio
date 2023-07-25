@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
 interface Params {
-  query: string;
-  addition: any;
+  query?: string;
+  addition?: any;
   page?: number;
 }
 
@@ -12,34 +12,30 @@ interface Params {
   providedIn: 'root',
 })
 export class SearchService {
-  query: string;
-  uri: string;
-  addition: any;
+  private params: Params = {
+    query: '',
+    addition: {},
+    page: 1,
+  };
+  private uri: string;
 
   constructor(private authService: AuthService) {}
 
-  createURL(): string {
-    return `${this.uri}/search`;
+  get(params: Params, uri?: string): Observable<any> {
+    this.uri = uri || this.uri;
+    this.params.query = params.query || this.params.query;
+    this.params.addition = params.addition || this.params.addition;
+    this.params.page = params.page || this.params.page;
+    const url = `/${this.uri}/search`;
+
+    return this.authService.get(url, this.params);
   }
 
-  createParams(page?: number): Params {
-    const params = {
-      query: this.query,
-      addition: this.addition,
-      ...(page && { page }),
-    };
-    return params;
+  getQuery(): string {
+    return this.params.query;
   }
 
-  search(uri: string, query: string, addition: any): Observable<any> {
-    this.uri = uri;
-    this.query = query;
-    this.addition = addition;
-
-    return this.authService.get(this.createURL(), this.createParams());
-  }
-
-  getPage(page: number): Observable<any> {
-    return this.authService.get(this.createURL(), this.createParams(page));
+  getPage(): number {
+    return this.params.page;
   }
 }

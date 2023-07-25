@@ -29,9 +29,11 @@ export class SearchComponent {
 
   ngOnInit(): void {
     this.onLoading(false);
-    this.searchService.search(this.uri, '', this.addition).subscribe(data => {
-      this.itemsEvent.emit(data);
-    });
+    this.searchService
+      .get({ addition: this.addition }, this.uri)
+      .subscribe((data) => {
+        this.itemsEvent.emit(data);
+      });
 
     //Observer of query change, need to be fixed, should watch the text change
     fromEvent(this.query.nativeElement, 'keyup')
@@ -40,15 +42,21 @@ export class SearchComponent {
         debounceTime(300),
         tap(() => this.onLoading(true)),
         switchMap((query: string) =>
-          this.searchService.search(this.uri, query, this.addition)
+          this.searchService.get(
+            {
+              query: query,
+              addition: this.addition,
+            },
+            this.uri
+          )
         )
       )
       .subscribe({
-        next: data => {
+        next: (data) => {
           this.onLoading(false);
           this.itemsEvent.emit(data);
         },
-        error: err => {
+        error: (err) => {
           this.onLoading(false);
           this.aleartService.error(err);
         },

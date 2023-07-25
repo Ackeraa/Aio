@@ -14,7 +14,7 @@ export class CommentsService {
   ) {}
 
   getPage(which: string, page: number): Observable<any> {
-    return this.searchService.getPage(page);
+    return this.searchService.get({ page });
   }
 
   voteUp(id: number): Observable<any> {

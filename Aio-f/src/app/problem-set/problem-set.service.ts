@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Subject, BehaviorSubject, Observable, combineLatest } from 'rxjs';
-import { map, filter, switchMap } from 'rxjs/operators'; 
+import { map, filter, switchMap } from 'rxjs/operators';
 import { AuthService } from '../_services';
 import { ProblemSearchService } from '../_services';
 
@@ -17,7 +17,7 @@ export class ProblemSetService {
 	}
 
 	getPage(page: number): Observable<any> {
-		return this.problemSearchService.getPage(page);
+		return this.problemSearchService.get({ page });
 	}
 
 	getProblems(id: string): Observable<any> {

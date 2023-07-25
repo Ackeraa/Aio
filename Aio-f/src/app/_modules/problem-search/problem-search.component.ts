@@ -41,7 +41,7 @@ export class ProblemSearchComponent implements AfterViewInit {
     const lastQuery = this.searchService.getQuery() || '';
     this.source.nativeElement.value = lastSource;
     this.query.nativeElement.value = lastQuery;
-    this.searchService.search(lastSource, lastQuery).subscribe({
+    this.searchService.get({ source: lastSource, query: lastQuery }).subscribe({
       next: (data) => this.problemsEvent.emit(data),
       error: (err) => this.alertService.error(err),
     });
@@ -56,9 +56,12 @@ export class ProblemSearchComponent implements AfterViewInit {
       .pipe(
         map((e: any) => e.target.value),
         tap(() => this.onLoading(true)),
-        switchMap((source: string) =>
-          this.searchService.search(source, this.query.nativeElement.value)
-        )
+        switchMap((source: string) => {
+          return this.searchService.get({
+            source: source,
+            query: this.query.nativeElement.value,
+          });
+        })
       )
       .subscribe({
         next: (data) => {
@@ -79,7 +82,10 @@ export class ProblemSearchComponent implements AfterViewInit {
         debounceTime(300),
         tap(() => this.onLoading(true)),
         switchMap((query: string) =>
-          this.searchService.search(this.source.nativeElement.value, query)
+          this.searchService.get({
+            source: this.source.nativeElement.value,
+            query: query,
+          })
         )
       )
       .subscribe({
