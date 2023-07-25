@@ -9,7 +9,10 @@ import {
   HTTP_INTERCEPTORS,
 } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import {
+  FontAwesomeModule,
+  FaIconLibrary,
+} from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { MarkdownModule } from 'ngx-markdown';
 import { FileUploadModule } from 'ng2-file-upload';
@@ -17,10 +20,10 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { ProblemSearchModule } from './_components';
-import { SearchModule } from './_components';
-import { CommentsModule } from './_components';
-import { SubmissionsModule } from './_components';
+import { ProblemSearchModule } from './_modules';
+import { SearchModule } from './_modules';
+import { CommentsModule } from './_modules';
+import { SubmissionsModule } from './_modules';
 import { HomeModule } from './home';
 import { GroupModule } from './group/group.module';
 import { GroupsModule } from './groups/groups.module';
@@ -53,8 +56,6 @@ import {
   AlertComponent,
   HeaderComponent,
   FooterComponent,
-  SearchComponent,
-  ProblemSearchComponent,
 } from './_components';
 import { ErrorComponent } from './error/error.component';
 

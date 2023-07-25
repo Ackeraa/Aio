@@ -6,17 +6,8 @@ import { SearchModule } from '../search/search.module';
 import { SubmissionsComponent } from '.';
 
 @NgModule({
-	declarations: [
-		SubmissionsComponent
-	],
-	imports: [
-		CommonModule,
-		FormsModule,
-		NgxPaginationModule,
-		SearchModule
-	],
-	exports: [
-		SubmissionsComponent
-	]
+  declarations: [SubmissionsComponent],
+  imports: [CommonModule, FormsModule, NgxPaginationModule, SearchModule],
+  exports: [SubmissionsComponent],
 })
-export class SubmissionsModule { }
+export class SubmissionsModule {}

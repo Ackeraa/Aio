@@ -6,37 +6,35 @@ import { RouterModule } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 import { ContestRoutingModule } from './contest-routing.module';
-import { ProblemSearchModule } from '../_components';
-import { SubmissionsModule } from '../_components';
+import { ProblemSearchModule } from '../_modules';
+import { SubmissionsModule } from '../_modules';
 
 import {
-	MySubmissionsComponent,
-	ProblemsComponent,
-	SubmissionsComponent,
-	SubmitComponent,
-	RanksComponent
+  MySubmissionsComponent,
+  ProblemsComponent,
+  SubmissionsComponent,
+  SubmitComponent,
+  RanksComponent,
 } from '.';
 
-
 @NgModule({
-	declarations: [
-		ProblemsComponent,
-		SubmitComponent,
-		MySubmissionsComponent,
-		SubmissionsComponent,
-		RanksComponent
-	],
-	imports: [
-		CommonModule,
-		RouterModule,
-		NgxPaginationModule,
-		FormsModule,
-		CodemirrorModule,
-		ContestRoutingModule,
-		ProblemSearchModule,
-		SubmissionsModule
-	],
-	exports: [
-	]
+  declarations: [
+    ProblemsComponent,
+    SubmitComponent,
+    MySubmissionsComponent,
+    SubmissionsComponent,
+    RanksComponent,
+  ],
+  imports: [
+    CommonModule,
+    RouterModule,
+    NgxPaginationModule,
+    FormsModule,
+    CodemirrorModule,
+    ContestRoutingModule,
+    ProblemSearchModule,
+    SubmissionsModule,
+  ],
+  exports: [],
 })
-export class ContestModule { }
+export class ContestModule {}

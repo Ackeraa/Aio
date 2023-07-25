@@ -6,41 +6,40 @@ import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 import { FormsModule } from '@angular/forms';
 import { ProblemRoutingModule } from './problem-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { SearchModule } from '../_components';
-import { CommentsModule } from '../_components';
-import { SubmissionsModule } from '../_components';
+import { SearchModule } from '../_modules';
+import { CommentsModule } from '../_modules';
+import { SubmissionsModule } from '../_modules';
 
 import {
-	DescriptionComponent,
-	DiscussionComponent,
-	MySubmissionsComponent,
-	SolutionsComponent,
-	SubmissionsComponent,
-	SubmitComponent
+  DescriptionComponent,
+  DiscussionComponent,
+  MySubmissionsComponent,
+  SolutionsComponent,
+  SubmissionsComponent,
+  SubmitComponent,
 } from '.';
 
 @NgModule({
-	declarations: [
-		DescriptionComponent,
-		DiscussionComponent,
-		MySubmissionsComponent,
-		SolutionsComponent,
-		SubmissionsComponent,
-		SubmitComponent
-	],
-	imports: [
-		CommonModule,
-        HttpClientModule,
-		FormsModule,
-		CodemirrorModule,
-		ProblemRoutingModule,
-		NgxPaginationModule,
-		SearchModule,
-		CommentsModule,
-		SubmissionsModule,
-		MarkdownModule.forChild(),
-	],
-	exports: [
-	]
+  declarations: [
+    DescriptionComponent,
+    DiscussionComponent,
+    MySubmissionsComponent,
+    SolutionsComponent,
+    SubmissionsComponent,
+    SubmitComponent,
+  ],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    FormsModule,
+    CodemirrorModule,
+    ProblemRoutingModule,
+    NgxPaginationModule,
+    SearchModule,
+    CommentsModule,
+    SubmissionsModule,
+    MarkdownModule.forChild(),
+  ],
+  exports: [],
 })
-export class ProblemModule { }
+export class ProblemModule {}

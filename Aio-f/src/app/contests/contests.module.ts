@@ -4,29 +4,20 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContestsRoutingModule } from './contests-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { SearchModule } from '../_components/search/search.module';
-import {
-	CreateComponent,
-	RecentComponent,
-	PastComponent
-} from '.';
+import { SearchModule } from '../_modules/search/search.module';
+import { CreateComponent, RecentComponent, PastComponent } from '.';
 
 @NgModule({
-	declarations: [
-		CreateComponent,
-		RecentComponent,
-		PastComponent
-	],
-	imports: [
-		CommonModule,
-		NgbModule,
-		ContestsRoutingModule,
-		FormsModule,
-		NgxPaginationModule,
-		SearchModule,
-		ReactiveFormsModule,
-	],
-	exports: [
-	]
+  declarations: [CreateComponent, RecentComponent, PastComponent],
+  imports: [
+    CommonModule,
+    NgbModule,
+    ContestsRoutingModule,
+    FormsModule,
+    NgxPaginationModule,
+    SearchModule,
+    ReactiveFormsModule,
+  ],
+  exports: [],
 })
-export class ContestsModule { }
+export class ContestsModule {}
