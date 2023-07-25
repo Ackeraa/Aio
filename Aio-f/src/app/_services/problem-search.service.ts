@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { tap, catchError, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
 interface ProblemSearchParams {
