@@ -26,25 +26,23 @@ export class CollectionComponent {
     private alertService: AlertService
   ) {}
 
-  ngOnInit(): void {}
-
-  setProblems(data: ProblemsData): void {
-    this.problems = data.problems;
-    this.total = data.total;
-    this.p = this.problemsService.getCollectionPage();
+  ngOnInit(): void {
+    this.getProblems({});
   }
 
-  getProblems(event: { page: number } ): void {
-    const page = event.page;
-    this.problemsService.getCollectionProblems(page).subscribe({
+  getProblems(event: any): void {
+    this.setLoading(true);
+    this.problemsService.getCollectionProblems(event).subscribe({
       next: (data: ProblemsData) => {
         this.problems = data.problems;
         this.total = data.total;
-        this.p = page;
+        this.p = event.page || this.problemsService.getCollectionPage();
         this.alertService.clear();
+        this.setLoading(false);
       },
       error: err => {
         this.alertService.error(err);
+        this.setLoading(false);
       },
     });
   }

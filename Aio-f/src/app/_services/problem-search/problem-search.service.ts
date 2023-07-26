@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../_services';
+import { environment } from 'src/environments/environment';
 
 interface Params {
   source?: string;
@@ -13,13 +14,14 @@ interface Params {
 })
 export class ProblemSearchService {
   private params: Params = {
-    source: 'Atcoder',
+    source: environment.vproblemsSources[0],
     query: '',
     page: 1,
   };
 
   constructor(private authService: AuthService) {}
 
+  //FIXME: should reset page to 1 when source or query changes.
   get(params: Params): Observable<any> {
     this.params = {
       source: params.source || this.params.source,

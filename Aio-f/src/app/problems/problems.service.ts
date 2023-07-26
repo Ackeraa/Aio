@@ -8,8 +8,8 @@ import { ProblemSearchService } from '../_services';
 export class ProblemsService {
   constructor(private ProblemSearchService: ProblemSearchService) {}
 
-  getCollectionProblems(page: number): Observable<any> {
-    return this.ProblemSearchService.get({ page });
+  getCollectionProblems(params: any): Observable<any> {
+    return this.ProblemSearchService.get(params);
   }
 
   getCollectionPage(): number {

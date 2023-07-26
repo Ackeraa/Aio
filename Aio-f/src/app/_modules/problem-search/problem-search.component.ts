@@ -21,7 +21,6 @@ export class ProblemSearchComponent implements AfterViewInit {
   sources: Array<string>;
 
   @Output() problemsEvent = new EventEmitter<any>();
-  @Output() loadingEvent = new EventEmitter<boolean>();
   @ViewChild('query', { static: true }) query: ElementRef;
   @ViewChild('source', { static: true }) source: ElementRef;
 
@@ -36,79 +35,41 @@ export class ProblemSearchComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit(): void {
-    this.source.nativeElement.value =
-      this.searchService.getSource() || this.sources[0];
-    this.query.nativeElement.value = this.searchService.getQuery() || '';
-
-    this.searchService.get({}).subscribe({
-      next: data => this.problemsEvent.emit(data),
-      error: err => this.alertService.error(err),
-    });
+    this.source.nativeElement.value = this.searchService.getSource();
+    this.query.nativeElement.value = this.searchService.getQuery();
   }
 
   ngOnInit(): void {
-    this.setLoading(false);
     this.sources = environment.vproblemsSources;
 
     //Observer of source change.
-    this.source$ = fromEvent(this.source.nativeElement, 'change')
-      .pipe(
-        map((e: any) => e.target.value),
-        tap(() => this.setLoading(true)),
-        switchMap((source: string) => {
-          return this.searchService.get({
-            source: source,
-            query: this.query.nativeElement.value,
-          });
-        })
-      )
-      .subscribe({
-        next: data => {
-          this.problemsEvent.emit(data);
-          this.setLoading(false);
-          this.alertService.clear();
-        },
-        error: err => {
-          this.setLoading(false);
-          this.alertService.error(err);
-        },
-      });
+    this.source$ = fromEvent(this.source.nativeElement, 'change').subscribe({
+      next: (e: any) => {
+        this.problemsEvent.emit({
+          source: e.target.value,
+          query: this.query.nativeElement.value,
+        });
+      },
+    });
 
     //Observer of query change.
     this.query$ = fromEvent(this.query.nativeElement, 'keyup')
-      .pipe(
-        map((e: any) => e.target.value),
-        debounceTime(300),
-        tap(() => this.setLoading(true)),
-        switchMap((query: string) =>
-          this.searchService.get({
-            source: this.source.nativeElement.value,
-            query: query,
-          })
-        )
-      )
+      .pipe(debounceTime(300))
       .subscribe({
-        next: data => {
-          this.problemsEvent.emit(data);
-          this.setLoading(false);
-          this.alertService.clear();
-        },
-        error: err => {
-          this.setLoading(false);
-          this.alertService.error(err);
+        next: (e: any) => {
+          this.problemsEvent.emit({
+            source: this.source.nativeElement.value,
+            query: e.target.value,
+          });
         },
       });
-  }
-
-  private setLoading(status: boolean): void {
-    this.loadingEvent.emit(status);
   }
 
   reSpide(): void {
     this.query.nativeElement.value = '';
     this.searchService.reSpide(this.source.nativeElement.value).subscribe({
-      next: data => this.problemsEvent.emit(data),
-      error: err => this.alertService.error(err),
+      next: (data) => this.problemsEvent.emit(data),
+      error: (err) => this.alertService.error(err),
     });
   }
   ngOnDestroy(): void {
