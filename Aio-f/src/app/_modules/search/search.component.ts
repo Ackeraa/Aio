@@ -23,8 +23,8 @@ import { SearchService } from '../';
   styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent {
-  @Input() uri: string;
-  @Input() addition: any;
+  @Input() url: string;
+  @Input() addition: { [key: string]: string };
   @Output() itemsEvent = new EventEmitter<any>();
   @Output() loadingEvent = new EventEmitter<boolean>();
   @ViewChild('query', { static: true }) query: ElementRef;
@@ -38,8 +38,9 @@ export class SearchComponent {
 
   ngOnInit(): void {
     this.onLoading(false);
-    this.searchService.get({ addition: this.addition }, this.uri).subscribe({
+    this.searchService.get({ addition: this.addition }, this.url).subscribe({
       next: data => {
+        console.log('fuck', data);
         this.itemsEvent.emit(data);
       },
       error: err => {
@@ -59,7 +60,7 @@ export class SearchComponent {
               query: query,
               addition: this.addition,
             },
-            this.uri
+            this.url
           )
         )
       )

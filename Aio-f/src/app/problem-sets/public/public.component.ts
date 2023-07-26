@@ -2,40 +2,36 @@ import { Component } from '@angular/core';
 import { ProblemSetsService } from '../problem-sets.service';
 
 @Component({
-	selector: 'app-public',
-	templateUrl: './public.component.html',
-	styleUrls: ['./public.component.scss']
+  selector: 'app-public',
+  templateUrl: './public.component.html',
+  styleUrls: ['./public.component.scss'],
 })
 export class PublicComponent {
+  url: string = 'problem_sets';
+  addition: string = 'public';
+  loading: boolean;
+  problemSets: Array<any>;
+  p: number;
+  total: number;
 
+  constructor(private problemSetsService: ProblemSetsService) {}
 
-	uri: string = 'problem_sets';
-	addition: string = 'public';
-	loading: boolean;
-	problemSets: Array<any>;
-	p: number;
-	total: number;
+  ngOnInit(): void {}
 
-	constructor(private problemSetsService: ProblemSetsService) { }
+  setProblemSets(data: any): void {
+    this.problemSets = data.problem_sets;
+    this.total = data.total;
+  }
 
-	ngOnInit(): void {
-	}
+  setLoading(loading: boolean): void {
+    this.loading = loading;
+  }
 
-	setProblemSets(data: any): void {
-		this.problemSets = data.problem_sets;
-		this.total = data.total;
-	}
-
-	setLoading(loading: boolean): void {
-		this.loading = loading;
-	}
-
-	getPage(page: number): void {
-		this.problemSetsService.getPage(page)
-			.subscribe(data => {
-				this.problemSets = data.problemSets;
-				this.total = data.total;
-				this.p = page;
-			});
-	}
+  getPage(page: number): void {
+    this.problemSetsService.getPage(page).subscribe(data => {
+      this.problemSets = data.problemSets;
+      this.total = data.total;
+      this.p = page;
+    });
+  }
 }

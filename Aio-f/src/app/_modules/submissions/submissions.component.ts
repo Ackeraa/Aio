@@ -12,7 +12,7 @@ import { SubmissionsService } from '../';
 export class SubmissionsComponent {
   @Input() addition: undefined;
 
-  uri: string = 'submissions';
+  url: string = 'submissions';
   loading: boolean;
   p: number;
   total: number;
@@ -25,10 +25,10 @@ export class SubmissionsComponent {
     //only receive.
     this.receiver = this.submissionsService
       .getSubmissionsChannel(this.addition)
-      .pipe(filter((x) => x != null))
-      .subscribe((submission) => {
+      .pipe(filter(x => x != null))
+      .subscribe(submission => {
         console.log(submission);
-        let i = this.submissions.findIndex((x) => x.id === submission.id);
+        let i = this.submissions.findIndex(x => x.id === submission.id);
         if (i == -1) {
           this.submissions.push(submission);
         } else {
@@ -47,7 +47,7 @@ export class SubmissionsComponent {
   }
 
   getPage(page: number): void {
-    this.submissionsService.getSubmissionsPage(page).subscribe((data) => {
+    this.submissionsService.getSubmissionsPage(page).subscribe(data => {
       this.submissions = data.submissions;
       this.total = data.total;
       this.p = page;

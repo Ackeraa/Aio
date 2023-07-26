@@ -14,7 +14,7 @@ export class CommentsComponent {
   @Input() which: string;
 
   // Define the route url.
-  uri: string = 'comments';
+  url: string = 'comments';
 
   loading: boolean;
   descriptions: any;
@@ -31,8 +31,8 @@ export class CommentsComponent {
   ngOnInit(): void {
     this.descriptions = {};
     this.authService.user$
-      .pipe(filter((x) => x != null))
-      .subscribe((user) => (this.user = user));
+      .pipe(filter(x => x != null))
+      .subscribe(user => (this.user = user));
   }
 
   setComments(data: any): void {
@@ -45,7 +45,7 @@ export class CommentsComponent {
   }
 
   getPage(page: number): void {
-    this.commentsService.getPage(this.which, page).subscribe((data) => {
+    this.commentsService.getPage(this.which, page).subscribe(data => {
       this.comments = data.comments;
       this.total = data.total;
       this.p = page;

@@ -13,13 +13,12 @@ interface Params {
 })
 export class ProblemSearchService {
   private params: Params = {
-    source: 'aio',
+    source: 'Atcoder',
     query: '',
     page: 1,
   };
 
   constructor(private authService: AuthService) {}
-
 
   get(params: Params): Observable<any> {
     this.params.source = params.source || this.params.source;

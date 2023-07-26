@@ -5,7 +5,9 @@ Rails.application.routes.draw do
       get 'search',                             :action => 'search'
       get ':id/problems',                       :action => 'problems'     
       get ':id/add_problem/:problem_id',        :action => 'add_problem'     
-      get ':id/delete_problem/:problem_id',     :action => 'delete_problem'     
+      get ':id/delete_problem/:problem_id',     :action => 'delete_problem'  
+      get 'recent',                             :action => 'recent'
+      get 'past',                               :action => 'past'   
     end
   end
 

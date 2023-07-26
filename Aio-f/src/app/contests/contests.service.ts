@@ -12,11 +12,11 @@ export class ContestsService {
     private authService: AuthService
   ) {}
 
-  getPage(page: number): Observable<any> {
+  getContests(page: number): Observable<any> {
     return this.searchService.get({ page });
   }
 
-  create(data: any): Observable<any> {
+  createContests(data: any): Observable<any> {
     return this.authService.post('/contests', data);
   }
 }

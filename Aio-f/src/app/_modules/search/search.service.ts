@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../_services';
+import { th } from 'date-fns/locale';
 
 interface Params {
   query?: string;
-  addition?: any;
+  addition?: { [key: string]: string };
   page?: number;
 }
 
@@ -17,20 +18,30 @@ export class SearchService {
     addition: {},
     page: 1,
   };
-  private uri: string;
+  private url: string;
 
   constructor(private authService: AuthService) {}
 
-  get(params: Params, uri?: string): Observable<any> {
-    this.uri = uri || this.uri;
-    this.params.query = params.query || this.params.query;
-    this.params.addition = JSON.stringify(
-      params.addition || this.params.addition
-    );
-    this.params.page = params.page || this.params.page;
-    const url = `/${this.uri}/search`;
+  createExtParams(): any {
+    const extParams = {};
+    extParams['query'] = this.params.query;
+    extParams['page'] = this.params.page;
+    Object.keys(this.params.addition).forEach(key => {
+      extParams[key] = this.params.addition[key];
+    });
 
-    return this.authService.get(url, this.params);
+    return extParams;
+  }
+
+  get(params: Params, url?: string): Observable<any> {
+    this.url = url || this.url;
+    this.params.query = params.query || this.params.query;
+    this.params.addition = params.addition || this.params.addition;
+    this.params.page = params.page || this.params.page;
+
+    console.log('search service', url, this.createExtParams());
+
+    return this.authService.get(url, this.createExtParams());
   }
 
   getQuery(): string {

@@ -1,44 +1,53 @@
 <div class="card shadow-sm">
-	<div class="card-body">
-		<app-search
-			[uri]="uri"
-			[addition]="addition"
-			(itemsEvent)="setProblemSets($event)" 
-			(loadingEvent)="setLoading($event)" >
-		</app-search>
-		<br/>
-		<div *ngIf="loading" class="row">
-			Loading...
-		</div>
-		<div class="row">
-			<th class="col"> TITLE </th>
-			<th class="col"> Description </th>
-			<th class="col"> Author </th>
-		</div>
-		<hr class="title"/>
-		<div *ngIf="!loading">
-			<div class="table-content" *ngFor="let problemSet of problemSets | paginate:
-						{itemsPerPage:20, currentPage:p, totalItems:total}">
-				<div class="row">
-					<div class="col">
-						<a class="link link-content" routerLink="../../problem-set/{{problemSet.id}}">
-							{{problemSet.name}}
-						</a>
-					</div>
-					<div class="col">{{problemSet.description}}</div>
-					<div class="col">{{problemSet.creater}}</div>
-				</div>
-				<hr class="content"/>
-			</div>
-		</div>
-	</div>
+  <div class="card-body">
+    <app-search
+      [url]="url"
+      [addition]="addition"
+      (itemsEvent)="setProblemSets($event)"
+      (loadingEvent)="setLoading($event)"
+    >
+    </app-search>
+    <br />
+    <div *ngIf="loading" class="row">Loading...</div>
+    <div class="row">
+      <th class="col">TITLE</th>
+      <th class="col">Description</th>
+      <th class="col">Author</th>
+    </div>
+    <hr class="title" />
+    <div *ngIf="!loading">
+      <div
+        class="table-content"
+        *ngFor="
+          let problemSet of problemSets
+            | paginate : { itemsPerPage: 20, currentPage: p, totalItems: total }
+        "
+      >
+        <div class="row">
+          <div class="col">
+            <a
+              class="link link-content"
+              routerLink="../../problem-set/{{ problemSet.id }}"
+            >
+              {{ problemSet.name }}
+            </a>
+          </div>
+          <div class="col">{{ problemSet.description }}</div>
+          <div class="col">{{ problemSet.creater }}</div>
+        </div>
+        <hr class="content" />
+      </div>
+    </div>
+  </div>
 </div>
-<br/>
+<br />
 <div class="row justify-content-center">
-	<pagination-controls class="paginator"
-		(pageChange)="getPage($event)"
-		auotHide="true"
-		previousLabel=""
-		nextLabel="" >
-	</pagination-controls>
+  <pagination-controls
+    class="paginator"
+    (pageChange)="getPage($event)"
+    auotHide="true"
+    previousLabel=""
+    nextLabel=""
+  >
+  </pagination-controls>
 </div>
