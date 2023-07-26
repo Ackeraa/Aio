@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { MarkdownModule, MarkedOptions, MarkedRenderer } from 'ngx-markdown';
 import { ProblemService } from '../problem.service';
 
-const BASE_URL = 'http://127.0.0.1:3000';
-
 @Component({
   selector: 'app-problem-description',
   templateUrl: './description.component.html',

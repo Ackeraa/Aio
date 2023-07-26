@@ -1,66 +1,69 @@
 <div *ngIf="problem">
-	<div class="d-flex justify-content-center">
-		<h2>{{problem.name}}</h2>
-		<a (click)="reSpideProblem()">
-			<i class="fas fa-spider"></i>
-		</a>
-	</div>
+  <div class="d-flex justify-content-center">
+    <h2>{{ problem.name }}</h2>
+    <a (click)="reSpideProblem()">
+      <fa-icon [icon]="['fas', 'spider']"></fa-icon>
+    </a>
+  </div>
+  <div class="d-flex justify-content-center">
+    <h6>
+      <var>Source: {{ problem.source }}</var>
+    </h6>
+  </div>
+  <div class="d-flex justify-content-center">
+    <h6>
+      <var>Time Limit: {{ problem.time_limit }} MS</var>
+    </h6>
+  </div>
+  <div class="d-flex justify-content-center">
+    <h6>
+      <var>Memory Limit: {{ problem.memory_limit }} MB</var>
+    </h6>
+  </div>
 
-	<div class="d-flex justify-content-center">
-		<h6><var>Source: {{problem.source}}</var></h6>
-	</div>
-	<div class="d-flex justify-content-center">
-		<h6><var>Time Limit: {{problem.time_limit}} MS</var></h6>
-	</div>
-	<div class="d-flex justify-content-center">
-		<h6><var>Memory Limit: {{problem.memory_limit}} MB</var></h6>
-	</div>
+  <h3>Description</h3>
+  <markdown [data]="problem.description" katex></markdown>
 
-	<h3>Description</h3>
-	<markdown [data]="problem.description" katex></markdown>
+  <h3>Input</h3>
+  <markdown [data]="problem.input" katex></markdown>
 
-	<h3>Input</h3>
-	<markdown [data]="problem.input" katex></markdown>
+  <h3>Output</h3>
+  <markdown [data]="problem.output" katex></markdown>
 
-	<h3>Output</h3>
-	<markdown [data]="problem.output" katex></markdown>
-
-	<h3>Samples</h3>
-	<div *ngFor="let sample of problem.samples let i=index"> 
-		<div class="card-group">
-			<div class="card shadow-sm border-secondary">
-				<div class="card-header bg-transparent border-secondary">
-					Input{{i + 1}} 
-				</div>
-				<div class="card-body">
-					<markdown [data]="sample.sample_input" katex></markdown>
-				</div>
-			</div>
-			<div class="col-1"> </div>
-			<div class="card shadow-sm border-secondary">
-				<div class="card-header bg-transparent border-secondary">
-					Output{{i + 1}} 
-				</div>
-				<div class="card-body">
-					<markdown [data]="sample.sample_output" katex></markdown>
-				</div>
-			</div>
-			<div class="col-1"> </div>
-		</div>
-		<br/>
-		<div *ngIf="sample.sample_hint">
-			<markdown [data]="sample.sample_hint" katex></markdown>
-		</div>
-		<hr/>
-	</div>
-	<div *ngIf="problem.hint">
-		<h3>Hint</h3>
-			<markdown [data]="problem.hint" katex></markdown>
-	</div>
-	<br/> <br/>
+  <h3>Samples</h3>
+  <div *ngFor="let sample of problem.samples; let i = index">
+    <div class="card-group">
+      <div class="card shadow-sm border-secondary">
+        <div class="card-header bg-transparent border-secondary">
+          Input{{ i + 1 }}
+        </div>
+        <div class="card-body">
+          <markdown [data]="sample.sample_input" katex></markdown>
+        </div>
+      </div>
+      <div class="col-1"></div>
+      <div class="card shadow-sm border-secondary">
+        <div class="card-header bg-transparent border-secondary">
+          Output{{ i + 1 }}
+        </div>
+        <div class="card-body">
+          <markdown [data]="sample.sample_output" katex></markdown>
+        </div>
+      </div>
+      <div class="col-1"></div>
+    </div>
+    <br />
+    <div *ngIf="sample.sample_hint">
+      <markdown [data]="sample.sample_hint" katex></markdown>
+    </div>
+    <hr />
+  </div>
+  <div *ngIf="problem.hint">
+    <h3>Hint</h3>
+    <markdown [data]="problem.hint" katex></markdown>
+  </div>
+  <br />
+  <br />
 </div>
 
-<div *ngIf="!problem">
-	Loading.....
-</div>
-
+<div *ngIf="!problem">Loading.....</div>

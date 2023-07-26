@@ -6,6 +6,11 @@ import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 import { FormsModule } from '@angular/forms';
 import { ProblemRoutingModule } from './problem-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
+import {
+  FontAwesomeModule,
+  FaIconLibrary,
+} from '@fortawesome/angular-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 import { SearchModule } from '../_modules';
 import { CommentsModule } from '../_modules';
 import { SubmissionsModule } from '../_modules';
@@ -39,7 +44,12 @@ import {
     CommentsModule,
     SubmissionsModule,
     MarkdownModule.forChild(),
+    FontAwesomeModule,
   ],
   exports: [],
 })
-export class ProblemModule {}
+export class ProblemModule {
+  constructor(library: FaIconLibrary) {
+    library.addIconPacks(fas);
+  }
+}

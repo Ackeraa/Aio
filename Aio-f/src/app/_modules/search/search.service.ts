@@ -23,23 +23,21 @@ export class SearchService {
   constructor(private authService: AuthService) {}
 
   createExtParams(): any {
-    const extParams = {};
-    extParams['query'] = this.params.query;
-    extParams['page'] = this.params.page;
-    Object.keys(this.params.addition).forEach(key => {
-      extParams[key] = this.params.addition[key];
-    });
-
+    const extParams: Params = {
+      query: this.params.query,
+      page: this.params.page,
+      addition: { ...this.params.addition },
+    };
     return extParams;
   }
 
   get(params: Params, url?: string): Observable<any> {
     this.url = url || this.url;
-    this.params.query = params.query || this.params.query;
-    this.params.addition = params.addition || this.params.addition;
-    this.params.page = params.page || this.params.page;
-
-    console.log('search service', url, this.createExtParams());
+    this.params = {
+      query: params.query || this.params.query,
+      addition: params.addition || this.params.addition,
+      page: params.page || this.params.page,
+    };
 
     return this.authService.get(url, this.createExtParams());
   }
@@ -53,6 +51,6 @@ export class SearchService {
   }
 
   getAddition(): any {
-    return this.params.addition;
+    return { ...this.params.addition };
   }
 }

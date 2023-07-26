@@ -21,9 +21,11 @@ export class ProblemSearchService {
   constructor(private authService: AuthService) {}
 
   get(params: Params): Observable<any> {
-    this.params.source = params.source || this.params.source;
-    this.params.query = params.query || this.params.query;
-    this.params.page = params.page || this.params.page;
+    this.params = {
+      source: params.source || this.params.source,
+      query: params.query || this.params.query,
+      page: params.page || this.params.page,
+    };
     const url =
       this.params.source === 'aio' ? '/problems/search' : '/vproblems/search';
 
