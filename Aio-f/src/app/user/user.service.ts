@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Subject, BehaviorSubject, Observable, combineLatest } from 'rxjs';
-import { map, filter, switchMap } from 'rxjs/operators';
-import { AuthService } from '../_services/auth.service';
+import { BehaviorSubject, filter } from 'rxjs';
+import { AuthService } from '../_services';
 
 @Injectable({
   providedIn: 'root',

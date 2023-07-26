@@ -14,8 +14,7 @@ import {
   tap,
   switchMap,
 } from 'rxjs';
-import { AlertService } from '../../_services';
-import { SearchService } from '../';
+import { AlertService, SearchService } from '../../_services';
 
 @Component({
   selector: 'app-search',
@@ -39,11 +38,11 @@ export class SearchComponent {
   ngOnInit(): void {
     this.setLoading(false);
     this.searchService.get({ addition: this.addition }, this.url).subscribe({
-      next: data => {
+      next: (data) => {
         console.log('fuck', data);
         this.itemsEvent.emit(data);
       },
-      error: err => {
+      error: (err) => {
         this.aleartService.error(err);
       },
     });
@@ -65,11 +64,11 @@ export class SearchComponent {
         )
       )
       .subscribe({
-        next: data => {
+        next: (data) => {
           this.setLoading(false);
           this.itemsEvent.emit(data);
         },
-        error: err => {
+        error: (err) => {
           this.setLoading(false);
           this.aleartService.error(err);
         },

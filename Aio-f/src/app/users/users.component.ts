@@ -1,13 +1,10 @@
 import { Component } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
-import { HttpResponse } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 import {
   faUser,
   faSearch,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { AuthService } from '../_services/auth.service';
+import { AuthService } from '../_services';
 
 @Component({
 	selector: 'app-users',

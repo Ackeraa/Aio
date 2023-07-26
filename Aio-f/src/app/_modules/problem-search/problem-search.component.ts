@@ -9,8 +9,7 @@ import {
 import { fromEvent, Subscription } from 'rxjs';
 import { faSpider } from '@fortawesome/free-solid-svg-icons';
 import { map, debounceTime, tap, switchMap } from 'rxjs/operators';
-import { ProblemSearchService } from '../';
-import { AlertService } from '../../_services';
+import { AlertService, ProblemSearchService } from '../../_services';
 import { environment } from '../../../environments/environment';
 
 @Component({

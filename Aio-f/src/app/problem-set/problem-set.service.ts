@@ -1,7 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Subject, BehaviorSubject, Observable, combineLatest } from 'rxjs';
-import { AuthService } from '../_services';
-import { ProblemSearchService } from '../_modules';
+import { AuthService, ProblemSearchService } from '../_services';
 
 @Injectable({
   providedIn: 'root',

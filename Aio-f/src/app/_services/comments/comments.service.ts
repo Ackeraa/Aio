@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SearchService } from '../';
-import { AuthService } from '../../_services/';
+import { AuthService, SearchService } from '../';
 
 @Injectable({
   providedIn: 'root',

@@ -2,8 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { Subject, BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { map, filter, switchMap } from 'rxjs/operators';
 import { ActionCableService, Channel } from 'angular2-actioncable';
-import { AuthService } from '../_services';
-import { ProblemSearchService } from '../_modules';
+import { AuthService, ProblemSearchService } from '../_services';
 
 @Injectable({
   providedIn: 'root',

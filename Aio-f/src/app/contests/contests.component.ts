@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../_services';
-import { SearchService } from '../_modules';
+import { AuthService, SearchService } from '../_services';
 
 @Component({
   selector: 'app-contests',

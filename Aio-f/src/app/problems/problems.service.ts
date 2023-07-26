@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ProblemSearchService } from '../_modules';
+import { ProblemSearchService } from '../_services';
 
 @Injectable({
   providedIn: 'root',

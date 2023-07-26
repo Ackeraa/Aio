@@ -47,7 +47,7 @@ import { WikiComponent } from './wiki';
 
 //import { AngularTokenService } from 'angular-token';
 import { AngularTokenModule } from 'angular-token';
-import { AuthService } from './_services/auth.service';
+import { AuthService } from './_services';
 import { ActionCableService } from 'angular2-actioncable';
 
 import { environment } from '../environments/environment';

@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { filter } from 'rxjs/operators';
-import { AuthService } from '../../_services/auth.service';
-import { CommentsService } from '../';
+import { AuthService, CommentsService } from '../../_services';
 
 @Component({
   selector: 'app-comments',
@@ -10,7 +9,6 @@ import { CommentsService } from '../';
 })
 export class CommentsComponent {
   @Input() which: string;
-  addition = { which: this.which };
 
   url: string = '/comments';
 

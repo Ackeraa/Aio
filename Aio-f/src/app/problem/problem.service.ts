@@ -7,8 +7,7 @@ import {
   switchMap,
 } from 'rxjs';
 import { ActionCableService, Channel } from 'angular2-actioncable';
-import { AuthService } from '../_services';
-import { SearchService } from '../_modules';
+import { AuthService, SearchService } from '../_services';
 
 @Injectable({
   providedIn: 'root',
