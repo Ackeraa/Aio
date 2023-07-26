@@ -9,7 +9,7 @@ import { AuthService } from '../../_services';
   styleUrls: ['./my-submissions.component.scss'],
 })
 export class MySubmissionsComponent {
-  addition: {} | undefined = undefined;
+  addition: any;
 
   constructor(
     private authService: AuthService,
@@ -17,12 +17,10 @@ export class MySubmissionsComponent {
   ) {}
 
   ngOnInit(): void {
-    console.log('MySubmissionsComponent');
-    combineLatest(this.problemService.problem$, this.authService.user$)
+    combineLatest([this.problemService.problem$, this.authService.user$])
       .pipe(filter(([x, y]) => x != null && y != null))
-      .subscribe((z) => {
+      .subscribe(z => {
         this.addition = { problem_id: z[0].id, user_id: z[1].user_id };
-        console.log("MySubmissionsComponent addition", this.addition);
       });
   }
 }

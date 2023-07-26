@@ -22,14 +22,14 @@ export class SearchService {
   constructor(private authService: AuthService) {}
 
   get(params: Params, uri?: string): Observable<any> {
-    console.log('search service', this.params);
     this.uri = uri || this.uri;
     this.params.query = params.query || this.params.query;
-    this.params.addition = params.addition || this.params.addition;
+    this.params.addition = JSON.stringify(
+      params.addition || this.params.addition
+    );
     this.params.page = params.page || this.params.page;
     const url = `/${this.uri}/search`;
 
-    console.log(this.params);
     return this.authService.get(url, this.params);
   }
 

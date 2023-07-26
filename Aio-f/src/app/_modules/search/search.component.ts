@@ -37,14 +37,12 @@ export class SearchComponent {
   ) {}
 
   ngOnInit(): void {
-    console.log("search component", this.addition);
-
     this.onLoading(false);
     this.searchService.get({ addition: this.addition }, this.uri).subscribe({
-      next: (data) => {
+      next: data => {
         this.itemsEvent.emit(data);
       },
-      error: (err) => {
+      error: err => {
         this.aleartService.error(err);
       },
     });
@@ -66,11 +64,11 @@ export class SearchComponent {
         )
       )
       .subscribe({
-        next: (data) => {
+        next: data => {
           this.onLoading(false);
           this.itemsEvent.emit(data);
         },
-        error: (err) => {
+        error: err => {
           this.onLoading(false);
           this.aleartService.error(err);
         },
