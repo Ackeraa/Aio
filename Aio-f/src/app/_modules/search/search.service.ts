@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../_services';
-import { th } from 'date-fns/locale';
 
 interface Params {
   query?: string;

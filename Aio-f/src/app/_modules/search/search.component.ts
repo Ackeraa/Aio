@@ -37,7 +37,7 @@ export class SearchComponent {
   ) {}
 
   ngOnInit(): void {
-    this.onLoading(false);
+    this.setLoading(false);
     this.searchService.get({ addition: this.addition }, this.url).subscribe({
       next: data => {
         console.log('fuck', data);
@@ -53,7 +53,7 @@ export class SearchComponent {
       .pipe(
         map((e: any) => e.target.value),
         debounceTime(300),
-        tap(() => this.onLoading(true)),
+        tap(() => this.setLoading(true)),
         switchMap((query: string) =>
           this.searchService.get(
             {
@@ -66,17 +66,17 @@ export class SearchComponent {
       )
       .subscribe({
         next: data => {
-          this.onLoading(false);
+          this.setLoading(false);
           this.itemsEvent.emit(data);
         },
         error: err => {
-          this.onLoading(false);
+          this.setLoading(false);
           this.aleartService.error(err);
         },
       });
   }
 
-  private onLoading(status: boolean): void {
+  private setLoading(status: boolean): void {
     this.loadingEvent.emit(status);
   }
 

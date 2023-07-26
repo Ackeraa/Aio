@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { MarkdownModule, MarkedOptions, MarkedRenderer } from 'ngx-markdown';
-import { map, filter } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { AuthService } from '../../_services/auth.service';
 import { CommentsService } from '../';
 
@@ -10,11 +9,10 @@ import { CommentsService } from '../';
   styleUrls: ['./comments.component.scss'],
 })
 export class CommentsComponent {
-  // Define the comments location.
   @Input() which: string;
+  addition = { which: this.which };
 
-  // Define the route url.
-  url: string = 'comments';
+  url: string = '/comments';
 
   loading: boolean;
   descriptions: any;
@@ -31,8 +29,8 @@ export class CommentsComponent {
   ngOnInit(): void {
     this.descriptions = {};
     this.authService.user$
-      .pipe(filter(x => x != null))
-      .subscribe(user => (this.user = user));
+      .pipe(filter((x) => x != null))
+      .subscribe((user) => (this.user = user));
   }
 
   setComments(data: any): void {
@@ -44,8 +42,8 @@ export class CommentsComponent {
     this.loading = loading;
   }
 
-  getPage(page: number): void {
-    this.commentsService.getPage(this.which, page).subscribe(data => {
+  getComments(page: number): void {
+    this.commentsService.getComments(this.which, page).subscribe((data) => {
       this.comments = data.comments;
       this.total = data.total;
       this.p = page;

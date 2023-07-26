@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject, BehaviorSubject, Observable, combineLatest } from 'rxjs';
+import { Observable } from 'rxjs';
 import { SearchService } from '../';
 import { AuthService } from '../../_services/';
 
@@ -12,7 +12,7 @@ export class CommentsService {
     private authService: AuthService
   ) {}
 
-  getPage(which: string, page: number): Observable<any> {
+  getComments(which: string, page: number): Observable<any> {
     return this.searchService.get({ page });
   }
 
@@ -37,7 +37,7 @@ export class CommentsService {
       body = { parent_id: parent_id, which: which, description: description };
     }
     // need to be fixed
-    this.authService.post(url, body).subscribe(data => {
+    this.authService.post(url, body).subscribe((data) => {
       console.log(data);
     });
   }

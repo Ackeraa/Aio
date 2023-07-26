@@ -48,14 +48,14 @@ export class ProblemSearchComponent implements AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.onLoading(false);
+    this.setLoading(false);
     this.sources = environment.vproblemsSources;
 
     //Observer of source change.
     this.source$ = fromEvent(this.source.nativeElement, 'change')
       .pipe(
         map((e: any) => e.target.value),
-        tap(() => this.onLoading(true)),
+        tap(() => this.setLoading(true)),
         switchMap((source: string) => {
           return this.searchService.get({
             source: source,
@@ -66,11 +66,11 @@ export class ProblemSearchComponent implements AfterViewInit {
       .subscribe({
         next: data => {
           this.problemsEvent.emit(data);
-          this.onLoading(false);
+          this.setLoading(false);
           this.alertService.clear();
         },
         error: err => {
-          this.onLoading(false);
+          this.setLoading(false);
           this.alertService.error(err);
         },
       });
@@ -80,7 +80,7 @@ export class ProblemSearchComponent implements AfterViewInit {
       .pipe(
         map((e: any) => e.target.value),
         debounceTime(300),
-        tap(() => this.onLoading(true)),
+        tap(() => this.setLoading(true)),
         switchMap((query: string) =>
           this.searchService.get({
             source: this.source.nativeElement.value,
@@ -91,17 +91,17 @@ export class ProblemSearchComponent implements AfterViewInit {
       .subscribe({
         next: data => {
           this.problemsEvent.emit(data);
-          this.onLoading(false);
+          this.setLoading(false);
           this.alertService.clear();
         },
         error: err => {
-          this.onLoading(false);
+          this.setLoading(false);
           this.alertService.error(err);
         },
       });
   }
 
-  private onLoading(status: boolean): void {
+  private setLoading(status: boolean): void {
     this.loadingEvent.emit(status);
   }
 
