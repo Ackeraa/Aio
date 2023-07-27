@@ -3,17 +3,17 @@ import { Observable } from 'rxjs';
 import { AuthService } from '../../_services';
 import { environment } from 'src/environments/environment';
 
-interface Params {
+export interface ProblemSearchParams {
   source?: string;
   query?: string;
-  page?: number;
+  page: number;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProblemSearchService {
-  private params: Params = {
+  private params: ProblemSearchParams = {
     source: environment.vproblemsSources[0],
     query: '',
     page: 1,
@@ -21,8 +21,7 @@ export class ProblemSearchService {
 
   constructor(private authService: AuthService) {}
 
-  //FIXME: should reset page to 1 when source or query changes.
-  get(params: Params): Observable<any> {
+  get(params: ProblemSearchParams): Observable<any> {
     this.params = {
       source: params.source || this.params.source,
       query: params.query || this.params.query,

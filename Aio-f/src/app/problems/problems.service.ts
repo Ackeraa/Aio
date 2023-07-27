@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ProblemSearchService } from '../_services';
+import { ProblemSearchService, ProblemSearchParams } from '../_services';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +8,7 @@ import { ProblemSearchService } from '../_services';
 export class ProblemsService {
   constructor(private ProblemSearchService: ProblemSearchService) {}
 
-  getCollectionProblems(params: any): Observable<any> {
+  getCollectionProblems(params: ProblemSearchParams): Observable<any> {
     return this.ProblemSearchService.get(params);
   }
 

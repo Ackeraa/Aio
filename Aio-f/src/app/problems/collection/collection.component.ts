@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProblemsService } from '../problems.service';
-import { AlertService } from 'src/app/_services';
+import { AlertService, ProblemSearchParams } from '../../_services';
 import { ProblemBasic } from '../../_models/';
 
 interface ProblemsData {
@@ -27,28 +27,24 @@ export class CollectionComponent {
   ) {}
 
   ngOnInit(): void {
-    this.getProblems({});
+    this.getProblems({ page: this.problemsService.getCollectionPage() });
   }
 
-  getProblems(event: any): void {
-    this.setLoading(true);
-    this.problemsService.getCollectionProblems(event).subscribe({
+  getProblems(params: ProblemSearchParams): void {
+    this.loading = true;
+    this.problemsService.getCollectionProblems(params).subscribe({
       next: (data: ProblemsData) => {
         this.problems = data.problems;
         this.total = data.total;
-        this.p = event.page || this.problemsService.getCollectionPage();
+        this.p = params.page;
         this.alertService.clear();
-        this.setLoading(false);
+        this.loading = false;
       },
       error: err => {
         this.alertService.error(err);
-        this.setLoading(false);
+        this.loading = false;
       },
     });
-  }
-
-  setLoading(loading: boolean): void {
-    this.loading = loading;
   }
 
   viewProblem(source: string, id: string): void {

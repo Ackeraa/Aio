@@ -8,8 +8,12 @@ import {
 } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
 import { faSpider } from '@fortawesome/free-solid-svg-icons';
-import { map, debounceTime, tap, switchMap } from 'rxjs/operators';
-import { AlertService, ProblemSearchService } from '../../_services';
+import { debounceTime } from 'rxjs/operators';
+import {
+  AlertService,
+  ProblemSearchService,
+  ProblemSearchParams,
+} from '../../_services';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -44,32 +48,40 @@ export class ProblemSearchComponent implements AfterViewInit {
 
     //Observer of source change.
     this.source$ = fromEvent(this.source.nativeElement, 'change').subscribe({
-      next: (e: any) => {
-        this.problemsEvent.emit({
-          source: e.target.value,
-          query: this.query.nativeElement.value,
-        });
-      },
+      next: (event: Event) => this.onSourceChange(event),
     });
 
     //Observer of query change.
     this.query$ = fromEvent(this.query.nativeElement, 'keyup')
       .pipe(debounceTime(300))
       .subscribe({
-        next: (e: any) => {
-          this.problemsEvent.emit({
-            source: this.source.nativeElement.value,
-            query: e.target.value,
-          });
-        },
+        next: (event: Event) => this.onQueryChange(event),
       });
+  }
+
+  onSourceChange(event: Event) {
+    const params: ProblemSearchParams = {
+      source: (event.target as HTMLInputElement).value,
+      query: this.query.nativeElement.value,
+      page: 1,
+    };
+    this.problemsEvent.emit(params);
+  }
+
+  onQueryChange(event: Event) {
+    const params: ProblemSearchParams = {
+      source: this.source.nativeElement.value,
+      query: (event.target as HTMLInputElement).value,
+      page: 1,
+    };
+    this.problemsEvent.emit(params);
   }
 
   reSpide(): void {
     this.query.nativeElement.value = '';
     this.searchService.reSpide(this.source.nativeElement.value).subscribe({
-      next: (data) => this.problemsEvent.emit(data),
-      error: (err) => this.alertService.error(err),
+      next: data => this.problemsEvent.emit(data),
+      error: err => this.alertService.error(err),
     });
   }
   ngOnDestroy(): void {
