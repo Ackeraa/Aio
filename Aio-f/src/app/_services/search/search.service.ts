@@ -33,7 +33,7 @@ export class SearchService {
   get(params: Params, url?: string): Observable<any> {
     this.url = url || this.url;
     this.params = {
-      query: params.query || this.params.query,
+      query: params.query !== undefined ? params.query : this.params.query,
       addition: params.addition || this.params.addition,
       page: params.page || this.params.page,
     };

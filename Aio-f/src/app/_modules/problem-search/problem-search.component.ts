@@ -9,11 +9,7 @@ import {
 import { fromEvent, Subscription } from 'rxjs';
 import { faSpider } from '@fortawesome/free-solid-svg-icons';
 import { debounceTime } from 'rxjs/operators';
-import {
-  AlertService,
-  ProblemSearchService,
-  ProblemSearchParams,
-} from '../../_services';
+import { ProblemSearchService, ProblemSearchParams } from '../../_services';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -24,7 +20,8 @@ import { environment } from '../../../environments/environment';
 export class ProblemSearchComponent implements AfterViewInit {
   sources: Array<string>;
 
-  @Output() problemsEvent = new EventEmitter<any>();
+  @Output() searchEvent = new EventEmitter<any>();
+  @Output() spideEvent = new EventEmitter<any>();
   @ViewChild('query', { static: true }) query: ElementRef;
   @ViewChild('source', { static: true }) source: ElementRef;
 
@@ -33,10 +30,7 @@ export class ProblemSearchComponent implements AfterViewInit {
 
   faSpider = faSpider;
 
-  constructor(
-    private searchService: ProblemSearchService,
-    private alertService: AlertService
-  ) {}
+  constructor(private searchService: ProblemSearchService) {}
 
   ngAfterViewInit(): void {
     this.source.nativeElement.value = this.searchService.getSource();
@@ -65,7 +59,7 @@ export class ProblemSearchComponent implements AfterViewInit {
       query: this.query.nativeElement.value,
       page: 1,
     };
-    this.problemsEvent.emit(params);
+    this.searchEvent.emit(params);
   }
 
   onQueryChange(event: Event) {
@@ -74,16 +68,14 @@ export class ProblemSearchComponent implements AfterViewInit {
       query: (event.target as HTMLInputElement).value,
       page: 1,
     };
-    this.problemsEvent.emit(params);
+    this.searchEvent.emit(params);
   }
 
-  reSpide(): void {
+  spide(): void {
     this.query.nativeElement.value = '';
-    this.searchService.reSpide(this.source.nativeElement.value).subscribe({
-      next: data => this.problemsEvent.emit(data),
-      error: err => this.alertService.error(err),
-    });
+    this.spideEvent.emit(this.source.nativeElement.value);
   }
+
   ngOnDestroy(): void {
     this.query$.unsubscribe();
     this.source$.unsubscribe();

@@ -1,76 +1,88 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
-import { Subject, Observable, fromEvent } from 'rxjs';
-import { map, filter, debounceTime, tap } from 'rxjs/operators';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContestService } from '../contest.service';
+import { AlertService, ProblemSearchParams } from 'src/app/_services';
+import { finalize } from 'rxjs';
 
 @Component({
-	selector: 'app-contest-problems',
-	templateUrl: './problems.component.html',
-	styleUrls: ['./problems.component.scss']
+  selector: 'app-contest-problems',
+  templateUrl: './problems.component.html',
+  styleUrls: ['./problems.component.scss'],
 })
 export class ProblemsComponent {
+  loading: boolean;
+  allProblems: any;
+  problems: Array<any>;
+  p: number;
+  total: number;
 
-	loading: boolean;
-	allProblems: any;
-	problems: Array<any>;
-	p: number;
-	total: number;
+  constructor(
+    private router: Router,
+    private contestService: ContestService,
+    private alertService: AlertService
+  ) {}
 
-	constructor(private router: Router,
-			    private contestService: ContestService){
-	}
+  //FIXME: loading not set properly
+  ngOnInit(): void {
+    this.getAllProblems({ page: this.contestService.getAllProblemsPage() });
+    this.problems = [];
+    this.contestService.problems$.subscribe(
+      problems => (this.problems = problems)
+    );
+  }
 
-	ngOnInit(): void {
-		this.p = 1;
-		this.problems = [];
-		this.contestService.problems$
-			.subscribe(problems => this.problems = problems);
-	}
+  getAllProblems(params: ProblemSearchParams): void {
+    this.p = params.page;
+    this.loading = true;
+    this.contestService
+      .getAllProblems(params)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe({
+        next: data => {
+          this.allProblems = data.problems;
+          this.total = data.total;
+        },
+        error: err => {
+          this.alertService.error(err);
+        },
+      });
+  }
 
-	setAllProblems(data: any): void {
-		this.allProblems = data.problems;
-		this.total = data.total;
-		this.p = 1;
-	}
+  spideAllProblems(source: string): void {
+    this.loading = true;
+    this.contestService
+      .spideAllProblems(source)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe({
+        next: data => {
+          this.allProblems = data.problems;
+          this.total = data.total;
+          this.p = 1;
+        },
+        error: err => {
+          this.alertService.error(err);
+        },
+      });
+  }
 
-	getPage(page: number): void {
-		this.contestService.getPage(page)
-			.subscribe(data => {
-				this.allProblems = data.problems;
-				this.total = data.total;
-				this.p = page;
-			});
-	}
+  viewProblem(source: string, id: string): void {
+    const url = source === 'aio' ? `/problems/l/${id}` : `/problems/v/${id}`;
 
-	setLoading(loading: boolean): void {
-		this.loading = loading;
-	}
+    this.router.navigate([url]);
+  }
 
-
-	viewProblem(source: string, id: string): void {
-		let url: string;
-		if (source == "aio") {
-			url = "/problem/l/" + id;
-		} else {
-			url = "/problem/v/" + id;
-		}
-		this.router.navigate([url]);
-	}
-
-	isAdded(id: string): boolean {
-		if (this.problems){
-			return this.problems.filter(x => x.id === id).length > 0;
-		}
+  isAdded(id: string): boolean {
+    if (this.problems) {
+      return this.problems.filter(x => x.id === id).length > 0;
+    }
     return false;
-	}
+  }
 
-	addProblem(id: string): void {
-		this.contestService.addProblem(id);
-	}
+  addProblem(id: string): void {
+    this.contestService.addProblem(id);
+  }
 
-	deleteProblem(id: string): void {
-		this.contestService.deleteProblem(id);
-	}
-
+  deleteProblem(id: string): void {
+    this.contestService.deleteProblem(id);
+  }
 }

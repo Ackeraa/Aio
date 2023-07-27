@@ -1,7 +1,8 @@
 <div class="card shadow-sm">
   <div class="card-body">
     <app-problem-search
-      (problemsEvent)="getProblems($event)"
+      (searchEvent)="getProblems($event)"
+      (spideEvent)="spide($event)"
     >
     </app-problem-search>
     <br />

@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 export interface ProblemSearchParams {
   source?: string;
   query?: string;
-  page: number;
+  page?: number;
 }
 
 @Injectable({
@@ -24,16 +24,17 @@ export class ProblemSearchService {
   get(params: ProblemSearchParams): Observable<any> {
     this.params = {
       source: params.source || this.params.source,
-      query: params.query || this.params.query,
+      query: params.query !== undefined ? params.query : this.params.query,
       page: params.page || this.params.page,
     };
+    console.log(this.params, params);
     const url =
       this.params.source === 'aio' ? '/problems/search' : '/vproblems/search';
 
     return this.authService.get(url, this.params);
   }
 
-  reSpide(source: string): Observable<any> {
+  spide(source: string): Observable<any> {
     return this.authService.get('/vproblems/respides', { source });
   }
 
