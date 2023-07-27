@@ -27,7 +27,7 @@ export class ContestService implements OnInit {
   getData(id: string): void {
     this.id = id;
     let url = 'contests/' + id + '/problems';
-    this.authService.get(url).subscribe(data => {
+    this.authService.get(url).subscribe((data) => {
       this.contest$.next(data.contest);
       this.problems$.next(data.problems);
     });
@@ -37,8 +37,8 @@ export class ContestService implements OnInit {
     return this.problemSearchService.get(params);
   }
 
-  getAllProblemsPage(): number {
-    return this.problemSearchService.getPage();
+  getAllProblemsPage(): ProblemSearchParams {
+    return { page: this.problemSearchService.getPage() };
   }
 
   spideAllProblems(source: string): Observable<any> {
@@ -47,14 +47,14 @@ export class ContestService implements OnInit {
 
   addProblem(problem_id: string): void {
     let url = 'contests/' + this.id + '/add_problem/' + problem_id;
-    this.authService.get(url).subscribe(problems => {
+    this.authService.get(url).subscribe((problems) => {
       this.problems$.next(problems);
     });
   }
 
   deleteProblem(problem_id: string): void {
     let url = 'contests/' + this.id + '/delete_problem/' + problem_id;
-    this.authService.get(url).subscribe(problems => {
+    this.authService.get(url).subscribe((problems) => {
       this.problems$.next(problems);
     });
   }
@@ -84,7 +84,7 @@ export class ContestService implements OnInit {
 
   getRanks(): Observable<any> {
     return this.problems$.pipe(
-      filter(x => x != null),
+      filter((x) => x != null),
       switchMap(() => {
         let url = 'acm_contest_ranks/get_contest_rank';
         let params = { contest_id: this.id };
@@ -95,7 +95,7 @@ export class ContestService implements OnInit {
 
   getRanksChannel(): Observable<any> {
     return this.problems$.pipe(
-      filter(x => x != null),
+      filter((x) => x != null),
       switchMap(() => {
         let url = 'ws://127.0.0.1:3000/cable';
         let channel = 'RanksChannel';

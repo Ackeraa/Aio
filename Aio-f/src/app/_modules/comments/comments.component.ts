@@ -1,6 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { filter } from 'rxjs/operators';
-import { AuthService, CommentsService } from '../../_services';
+import { filter, finalize } from 'rxjs';
+import {
+  AuthService,
+  AlertService,
+  CommentsService,
+  SearchParams,
+} from 'src/app/_services';
+
 
 @Component({
   selector: 'app-comments',
@@ -14,38 +20,52 @@ export class CommentsComponent {
 
   loading: boolean;
   descriptions: any;
-  comments: Array<any>;
+  comments: Array<any> = new Array<any>();
   user: any;
   p: number;
   total: number;
+  collapseStates: Array<boolean>;
 
   constructor(
     private authService: AuthService,
+    private alertService: AlertService,
     private commentsService: CommentsService
   ) {}
 
   ngOnInit(): void {
+    this.getComments(this.commentsService.getCommentsPage());
+
     this.descriptions = {};
     this.authService.user$
       .pipe(filter((x) => x != null))
       .subscribe((user) => (this.user = user));
   }
 
-  setComments(data: any): void {
-    this.comments = data.comments;
-    this.total = data.total;
+  getComments(params: SearchParams): void {
+    this.loading = true;
+    this.p = params.page;
+    params.addition = { which: this.which };
+    this.commentsService
+      .getComments('/comments/search', params)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe({
+        next: (data) => {
+          console.log("FXXXX", data);
+          this.comments = data.comments || [];
+          this.total = data.total || 0;
+
+          this.collapseStates = new Array(this.comments.length);
+          this.collapseStates.fill(true);
+          console.log("FXXXX", this.collapseStates);
+        },
+        error: (err) => {
+          this.alertService.error(err);
+        },
+      });
   }
 
-  setLoading(loading: boolean): void {
-    this.loading = loading;
-  }
-
-  getComments(page: number): void {
-    this.commentsService.getComments(this.which, page).subscribe((data) => {
-      this.comments = data.comments;
-      this.total = data.total;
-      this.p = page;
-    });
+  toggleCollapse(index: number): void {
+    this.collapseStates[index] = !this.collapseStates[index];
   }
 
   setVisible(comment: any): void {

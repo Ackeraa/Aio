@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthService, SearchService } from '../';
+import { AuthService, SearchService, SearchParams } from '../';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +11,12 @@ export class CommentsService {
     private authService: AuthService
   ) {}
 
-  getComments(which: string, page: number): Observable<any> {
-    return this.searchService.get('', { page });
+  getComments(url: string, params: SearchParams): Observable<any> {
+    return this.searchService.get(url, params);
+  }
+
+  getCommentsPage(): SearchParams {
+    return { page: this.searchService.getPage() };
   }
 
   voteUp(id: number): Observable<any> {
@@ -28,7 +32,6 @@ export class CommentsService {
   }
 
   create(parent_id: number, which: string, description: string) {
-    let url = 'comments';
     let body;
     if (parent_id == 0) {
       body = { which: which, description: description };
@@ -36,7 +39,7 @@ export class CommentsService {
       body = { parent_id: parent_id, which: which, description: description };
     }
     // need to be fixed
-    this.authService.post(url, body).subscribe(data => {
+    this.authService.post('/comments', body).subscribe((data) => {
       console.log(data);
     });
   }

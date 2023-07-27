@@ -28,7 +28,7 @@ export class CollectionComponent {
   ) {}
 
   ngOnInit(): void {
-    this.getProblems({ page: this.problemsService.getCollectionPage() });
+    this.getProblems(this.problemsService.getCollectionPage());
   }
 
   getProblems(params: ProblemSearchParams): void {
@@ -43,7 +43,7 @@ export class CollectionComponent {
           this.total = data.total;
           this.alertService.clear();
         },
-        error: err => {
+        error: (err) => {
           this.alertService.error(err);
         },
       });
@@ -62,7 +62,7 @@ export class CollectionComponent {
           this.p = 1;
           this.alertService.clear();
         },
-        error: err => {
+        error: (err) => {
           this.alertService.error(err);
         },
       });

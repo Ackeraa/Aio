@@ -9,8 +9,8 @@ import {
 import { fromEvent, Subscription } from 'rxjs';
 import { faSpider } from '@fortawesome/free-solid-svg-icons';
 import { debounceTime } from 'rxjs/operators';
-import { ProblemSearchService, ProblemSearchParams } from '../../_services';
-import { environment } from '../../../environments/environment';
+import { ProblemSearchService, ProblemSearchParams } from 'src/app/_services';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-problem-search',
@@ -27,8 +27,6 @@ export class ProblemSearchComponent implements AfterViewInit {
 
   private query$: Subscription;
   private source$: Subscription;
-
-  faSpider = faSpider;
 
   constructor(private searchService: ProblemSearchService) {}
 

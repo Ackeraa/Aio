@@ -24,7 +24,7 @@ export class SearchService {
     const extParams: SearchParams = {
       query: this.params.query,
       page: this.params.page,
-      addition: { ...this.params.addition },
+      ...this.params.addition,
     };
     return extParams;
   }

@@ -24,7 +24,7 @@ export class ProblemsComponent {
 
   //FIXME: loading not set properly
   ngOnInit(): void {
-    this.getAllProblems({ page: this.contestService.getAllProblemsPage() });
+    this.getAllProblems(this.contestService.getAllProblemsPage());
     this.problems = [];
     this.contestService.problems$.subscribe(
       problems => (this.problems = problems)

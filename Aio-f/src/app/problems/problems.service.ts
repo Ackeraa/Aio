@@ -12,8 +12,8 @@ export class ProblemsService {
     return this.ProblemSearchService.get(params);
   }
 
-  getCollectionPage(): number {
-    return this.ProblemSearchService.getPage();
+  getCollectionPage(): ProblemSearchParams {
+    return { page: this.ProblemSearchService.getPage() };
   }
 
   spideProblems(source: string): Observable<any> {
