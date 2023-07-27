@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subscription, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ActionCableService, Channel } from 'angular2-actioncable';
 import { SearchService } from '../';
 
@@ -9,7 +9,7 @@ import { SearchService } from '../';
 export class SubmissionsService {
   constructor(
     private searchService: SearchService,
-    private cableService: ActionCableService,
+    private cableService: ActionCableService
   ) {}
 
   getSubmissionsChannel(params: any): Observable<any> {
@@ -19,6 +19,6 @@ export class SubmissionsService {
   }
 
   getSubmissionsPage(page: number): Observable<any> {
-    return this.searchService.get({ page });
+    return this.searchService.get('', { page });
   }
 }

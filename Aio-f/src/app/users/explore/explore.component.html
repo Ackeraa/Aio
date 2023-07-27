@@ -1,9 +1,4 @@
-<app-search
-  [url]="url"
-  (itemsEvent)="setUsers($event)"
-  (loadingEvent)="setLoading($event)"
->
-</app-search>
+<app-search (searchEvent)="setUsers($event)"> </app-search>
 <div class="row mt-4">
   <div
     class="col-xs-12 col-sm-6 col-md-3"

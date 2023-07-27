@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthService, SearchService } from '../_services';
+import { AuthService, SearchService, SearchParams } from '../_services';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +11,12 @@ export class ContestsService {
     private authService: AuthService
   ) {}
 
-  getContests(page: number): Observable<any> {
-    return this.searchService.get({ page });
+  getContests(url: string, params: SearchParams): Observable<any> {
+    return this.searchService.get(url, params);
+  }
+
+  getContestsPage(): number {
+    return this.searchService.getPage();
   }
 
   createContests(data: any): Observable<any> {

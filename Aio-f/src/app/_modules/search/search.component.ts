@@ -2,19 +2,11 @@ import {
   Component,
   ViewChild,
   ElementRef,
-  Input,
   Output,
   EventEmitter,
 } from '@angular/core';
-import {
-  fromEvent,
-  Subscription,
-  map,
-  debounceTime,
-  tap,
-  switchMap,
-} from 'rxjs';
-import { AlertService, SearchService } from '../../_services';
+import { fromEvent, Subscription, debounceTime } from 'rxjs';
+import { SearchParams } from 'src/app/_services';
 
 @Component({
   selector: 'app-search',
@@ -22,61 +14,26 @@ import { AlertService, SearchService } from '../../_services';
   styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent {
-  @Input() url: string;
-  @Input() addition: { [key: string]: string };
-  @Output() itemsEvent = new EventEmitter<any>();
-  @Output() loadingEvent = new EventEmitter<boolean>();
+  @Output() searchEvent = new EventEmitter<any>();
   @ViewChild('query', { static: true }) query: ElementRef;
 
   private query$: Subscription;
 
-  constructor(
-    private searchService: SearchService,
-    private aleartService: AlertService
-  ) {}
+  constructor() {}
 
   ngOnInit(): void {
-    this.setLoading(false);
-    this.searchService.get({ addition: this.addition }, this.url).subscribe({
-      next: (data) => {
-        console.log('fuck', data);
-        this.itemsEvent.emit(data);
-      },
-      error: (err) => {
-        this.aleartService.error(err);
-      },
-    });
-
     //Observer of query change, need to be fixed, should watch the text change
     this.query$ = fromEvent(this.query.nativeElement, 'keyup')
-      .pipe(
-        map((e: any) => e.target.value),
-        debounceTime(300),
-        tap(() => this.setLoading(true)),
-        switchMap((query: string) =>
-          this.searchService.get(
-            {
-              query: query,
-              addition: this.addition,
-            },
-            this.url
-          )
-        )
-      )
+      .pipe(debounceTime(300))
       .subscribe({
-        next: (data) => {
-          this.setLoading(false);
-          this.itemsEvent.emit(data);
-        },
-        error: (err) => {
-          this.setLoading(false);
-          this.aleartService.error(err);
+        next: (event: Event) => {
+          const params: SearchParams = {
+            query: (event.target as HTMLInputElement).value,
+            page: 1,
+          };
+          this.searchEvent.emit(params);
         },
       });
-  }
-
-  private setLoading(status: boolean): void {
-    this.loadingEvent.emit(status);
   }
 
   ngOnDestroy(): void {

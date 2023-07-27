@@ -12,7 +12,7 @@ export class CommentsService {
   ) {}
 
   getComments(which: string, page: number): Observable<any> {
-    return this.searchService.get({ page });
+    return this.searchService.get('', { page });
   }
 
   voteUp(id: number): Observable<any> {
@@ -36,7 +36,7 @@ export class CommentsService {
       body = { parent_id: parent_id, which: which, description: description };
     }
     // need to be fixed
-    this.authService.post(url, body).subscribe((data) => {
+    this.authService.post(url, body).subscribe(data => {
       console.log(data);
     });
   }

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { finalize } from 'rxjs';
+import { AlertService, SearchParams } from 'src/app/_services';
 import { ContestsService } from '../contests.service';
 
 @Component({
@@ -7,37 +9,40 @@ import { ContestsService } from '../contests.service';
   styleUrls: ['./past.component.scss'],
 })
 export class PastComponent {
-  url: string = '/contests/recent';
-  addition: { [key: string]: string };
   loading: boolean;
   contests: Array<any>;
   p: number;
   total: number;
 
-  constructor(private contestsService: ContestsService) {}
+  constructor(
+    private contestsService: ContestsService,
+    private alertService: AlertService
+  ) {}
 
-  ngOnInit(): void {}
-
-  setContests(data: any): void {
-    this.contests = data.contests;
-    this.contests.map(contest => {
-      let start_day = new Date(contest.start_time).getDay();
-      let end_day = new Date(contest.end_time).getDay();
-      contest.days = end_day - start_day;
-      return contest;
-    });
-    this.total = data.total;
+  ngOnInit(): void {
+    this.getContests({ page: this.contestsService.getContestsPage() });
   }
 
-  setLoading(loading: boolean): void {
-    this.loading = loading;
-  }
+  getContests(params: SearchParams): void {
+    this.loading = true;
+    this.p = params.page;
 
-  getContests(page: number): void {
-    this.contestsService.getContests(page).subscribe(data => {
-      this.contests = data.contests;
-      this.total = data.total;
-      this.p = page;
-    });
+    this.contestsService
+      .getContests('/contests/past', params)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe({
+        next: data => {
+          this.contests = data.contests.map(contest => {
+            const start_day = new Date(contest.start_time).getDay();
+            const end_day = new Date(contest.end_time).getDay();
+            contest.days = end_day - start_day;
+            return contest;
+          });
+          this.total = data.total;
+        },
+        error: err => {
+          this.alertService.error(err);
+        },
+      });
   }
 }

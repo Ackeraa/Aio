@@ -12,7 +12,7 @@ export class ProblemSetsService {
   ) {}
 
   getPage(page: number): Observable<any> {
-    return this.searchService.get({ page });
+    return this.searchService.get('', { page });
   }
 
   create(data: any): Observable<any> {

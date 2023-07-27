@@ -11,6 +11,7 @@ import {
 } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { NonNullAssert } from '@angular/compiler';
 
 interface User {
   user_id: string;
@@ -23,6 +24,7 @@ export class AuthService implements OnInit {
 
   private user_$: BehaviorSubject<User | null | undefined> =
     new BehaviorSubject(undefined);
+
   user$ = this.user_$.pipe(
     skipWhile(val => val === undefined)
   ) as Observable<User | null>;

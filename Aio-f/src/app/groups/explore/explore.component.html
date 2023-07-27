@@ -1,9 +1,4 @@
-<app-search
-  [url]="url"
-  (itemsEvent)="setGroups($event)"
-  (loadingEvent)="setLoading($event)"
->
-</app-search>
+<app-search (searchEvent)="setGroups($event)"> </app-search>
 
 <div class="row mt-4">
   <div

@@ -1,12 +1,6 @@
 <div class="card shadow-sm">
   <div class="card-body">
-    <app-search
-      [url]="url"
-      [addition]="addition"
-      (itemsEvent)="setProblemSets($event)"
-      (loadingEvent)="setLoading($event)"
-    >
-    </app-search>
+    <app-search (searchEvent)="setProblemSets($event)"> </app-search>
     <br />
     <div *ngIf="loading" class="row">Loading...</div>
     <div class="row">

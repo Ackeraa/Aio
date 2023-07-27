@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../_services';
 
-interface Params {
+export interface SearchParams {
   query?: string;
   addition?: { [key: string]: string };
   page?: number;
@@ -12,17 +12,16 @@ interface Params {
   providedIn: 'root',
 })
 export class SearchService {
-  private params: Params = {
+  private params: SearchParams = {
     query: '',
     addition: {},
     page: 1,
   };
-  private url: string;
 
   constructor(private authService: AuthService) {}
 
   createExtParams(): any {
-    const extParams: Params = {
+    const extParams: SearchParams = {
       query: this.params.query,
       page: this.params.page,
       addition: { ...this.params.addition },
@@ -30,8 +29,7 @@ export class SearchService {
     return extParams;
   }
 
-  get(params: Params, url?: string): Observable<any> {
-    this.url = url || this.url;
+  get(url: string, params: SearchParams): Observable<any> {
     this.params = {
       query: params.query !== undefined ? params.query : this.params.query,
       addition: params.addition || this.params.addition,
