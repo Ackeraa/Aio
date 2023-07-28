@@ -21,18 +21,14 @@ export class CommentsService {
   }
 
   voteUp(id: number): Observable<any> {
-    let url = 'comments/vote_up';
-    let body = { id: id };
-    return this.authService.post(url, body);
+    return this.authService.post('/comments/vote_up', { id: id });
   }
 
   voteDown(id: number): Observable<any> {
-    let url = 'comments/vote_down';
-    let body = { id: id };
-    return this.authService.post(url, body);
+    return this.authService.post('/comments/vote_down', { id: id });
   }
 
-  create(
+  createComment(
     parent_id: number,
     which: string,
     description: string

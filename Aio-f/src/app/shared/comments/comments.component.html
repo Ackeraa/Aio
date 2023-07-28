@@ -47,14 +47,14 @@
               <fa-icon
                 class="hit-link p-1"
                 [icon]="['fas', 'thumbs-up']"
-                (click)="voteUp(node.comment)"
+                (click)="voteUp(node)"
               ></fa-icon>
               <span class="p-1">{{ node.comment.likes.votes }}</span>
 
               <fa-icon
                 class="hit-link p-1"
                 [icon]="['fas', 'thumbs-down']"
-                (click)="voteDown(node.comment)"
+                (click)="voteDown(node)"
               ></fa-icon>
               <span class="p-1">{{ node.comment.dislikes.votes }}</span>
 

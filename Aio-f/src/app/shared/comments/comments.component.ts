@@ -48,8 +48,8 @@ export class CommentsComponent {
       .subscribe({
         next: data => {
           this.comments = data.comments || [];
-          this.total = data.total || 0;
           console.log(this.comments);
+          this.total = data.total || 0;
         },
         error: err => {
           this.alertService.error(err);
@@ -71,30 +71,32 @@ export class CommentsComponent {
     }
   }
 
-  voteUp(comment: any): void {
-    if (comment.likes.voters.indexOf(this.user.user_id) == -1) {
-      comment.likes.votes++;
-      comment.likes.voters.push(this.user.user_id);
-      let index = comment.dislikes.voters.indexOf(this.user.user_id);
-      if (index != -1) {
-        comment.dislikes.votes--;
-        comment.dislikes.voters.splice(index, 1);
-      }
-    }
-    this.commentsService.voteUp(comment.id);
+  voteUp(node: any): void {
+    this.commentsService
+      .voteUp(node.comment.id)
+      .pipe(finalize(() => (this.loading = true)))
+      .subscribe({
+        next: comment => {
+          node.comment = comment;
+        },
+        error: err => {
+          this.alertService.error(err);
+        },
+      });
   }
 
-  voteDown(comment: any): void {
-    if (comment.dislikes.voters.indexOf(this.user.user_id) == -1) {
-      comment.dislikes.votes++;
-      comment.dislikes.voters.push(this.user.user_id);
-      let index = comment.likes.voters.indexOf(this.user.user_id);
-      if (index != -1) {
-        comment.likes.votes--;
-        comment.likes.voters.splice(index, 1);
-      }
-    }
-    this.commentsService.voteDown(comment.id);
+  voteDown(node: any): void {
+    this.commentsService
+      .voteDown(node.comment.id)
+      .pipe(finalize(() => (this.loading = true)))
+      .subscribe({
+        next: comment => {
+          node.comment = comment;
+        },
+        error: err => {
+          this.alertService.error(err);
+        },
+      });
   }
 
   addComment(): void {
@@ -102,10 +104,13 @@ export class CommentsComponent {
       return;
     }
     this.commentsService
-      .create(0, this.which, this.descriptions[0])
+      .createComment(0, this.which, this.descriptions[0])
       .pipe(finalize(() => (this.loading = true)))
       .subscribe({
         next: comment => {
+          this.descriptions[0] = '';
+          this.visibilityStates[0] = true;
+          this.collapseStates[0] = false;
           this.comments.unshift({
             comment: comment,
             children: [],
@@ -122,10 +127,13 @@ export class CommentsComponent {
       return;
     }
     this.commentsService
-      .create(node.comment.id, this.which, this.descriptions[node.comment.id])
+      .createComment(
+        node.comment.id,
+        this.which,
+        this.descriptions[node.comment.id]
+      )
       .subscribe({
         next: comment => {
-          console.log('dddddd', comment);
           this.descriptions[node.comment.id] = '';
           this.visibilityStates[node.comment.id] = true;
           this.collapseStates[node.comment.id] = false;
