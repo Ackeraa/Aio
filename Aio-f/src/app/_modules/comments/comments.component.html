@@ -3,18 +3,9 @@
     <br />
     <app-search (searchEvent)="getComments($event)"> </app-search>
     <div class="mt-2 mb-2 text-right">
-      <button
-        class="btn btn-primary"
-        data-toggle="collapse"
-        data-target="#collapse-0"
-        aria-expanded="true"
-        aria-controls="collapse-0"
-        (click)="initDescription(0)"
-      >
-        Comment
-      </button>
+      <button class="btn btn-primary" (click)="setCollapse(0)">Comment</button>
     </div>
-    <div class="collapse" id="collapse-0">
+    <div [ngbCollapse]="!collapseStates[0]">
       <markdown [data]="descriptions[0]" katex></markdown>
       <textarea
         style="overflow-y: auto; height: 13vh"
@@ -26,22 +17,11 @@
       <div class="mt-2 text-right">
         <button
           class="btn btn-primary btn-sm shadow-none"
-          data-toggle="collapse"
-          data-target="#collapse-0"
-          aria-expanded="false"
-          aria-controls="collapse-0"
           (click)="addComment()"
         >
           Submit
         </button>
-        <button
-          class="btn btn-primary btn-sm ml-2"
-          data-toggle="collapse"
-          data-target="#collapse-0"
-          aria-expanded="false"
-          aria-controls="collapse-0"
-          (click)="initDescription(0)"
-        >
+        <button class="btn btn-primary btn-sm" (click)="setCollapse(0)">
           Cancel
         </button>
       </div>
@@ -54,7 +34,7 @@
               {{ node.comment.creator }}
             </h6>
             <span class="mb-1 p-1">
-              {{ node.comment.created_at | date : "YYYY-MM-dd HH:mm:ss" }}
+              {{ node.comment.created_at | date : 'YYYY-MM-dd HH:mm:ss' }}
             </span>
           </div>
           <div class="comment-text-sm">
@@ -78,15 +58,7 @@
               ></fa-icon>
               <span class="p-1">{{ node.comment.dislikes.votes }}</span>
 
-              <a
-                class="hit-link p-1"
-                data-toggle="collapse"
-                aria-expanded="false"
-                (click)="collapseDirective.toggle()"
-                [attr.aria-controls]="'collapse-' + node.comment.id"
-                [attr.href]="'discussion#collapse-' + node.comment.id"
-                (onclick)="initDescription(node.comment.id)"
-              >
+              <a class="hit-link p-1" (click)="setCollapse(node.comment.id)">
                 <fa-icon [icon]="['fas', 'comment-dots']"></fa-icon>
               </a>
             </div>
@@ -94,24 +66,21 @@
               <div *ngIf="node.children.length">
                 <a
                   class="link link-view"
-                  (click)="setVisible(node.comment)"
-                  *ngIf="node.comment.is_visible"
+                  (click)="setVisibility(node.comment.id)"
+                  *ngIf="visibilityStates[node.comment.id]"
                 >
                   Hide {{ node.children.length }} replies
                 </a>
                 <a
                   class="link link-view"
-                  (click)="setVisible(node.comment)"
-                  *ngIf="!node.comment.is_visible"
+                  (click)="setVisibility(node.comment.id)"
+                  *ngIf="!visibilityStates[node.comment.id]"
                 >
                   Show {{ node.children.length }} replies
                 </a>
               </div>
             </div>
-            <div
-              [attr.id]="'collapse-' + node.comment.id"
-              appCollapse #collapseDirective="appCollapse"
-            >
+            <div [ngbCollapse]="!collapseStates[node.comment.id]">
               <markdown [data]="descriptions[node.comment.id]" katex></markdown>
               <textarea
                 style="overflow-y: auto; height: 13vh"
@@ -121,18 +90,14 @@
               </textarea>
               <div class="mt-2 text-right">
                 <button
-                  class="btn btn-primary btn-sm shadow-none"
-                  data-toggle="collapse"
-                  [attr.href]="'#collapse-' + node.comment.id"
+                  class="btn btn-primary btn-sm shadow-none p-1"
                   (click)="reply(node)"
                 >
                   Submit
                 </button>
                 <button
                   class="btn btn-primary btn-sm p-1"
-                  data-toggle="collapse"
-                  [attr.href]="'#collapse-' + node.comment.id"
-                  (click)="initDescription(node.comment.id)"
+                  (click)="setCollapse(node.comment.id)"
                 >
                   Cancel
                 </button>
@@ -141,7 +106,7 @@
           </div>
         </div>
         <div
-          *ngIf="node.children.length && node.comment.is_visible"
+          *ngIf="node.children.length && visibilityStates[node.comment.id]"
           class="node__children"
         >
           <ng-template ngFor let-child [ngForOf]="node.children">

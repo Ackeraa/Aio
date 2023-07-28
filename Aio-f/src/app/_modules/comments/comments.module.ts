@@ -16,10 +16,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import { CommentsComponent } from './comments.component';
-import { CollapseDirective } from './collapse.directive';
 
 @NgModule({
-  declarations: [CommentsComponent, CollapseDirective],
+  declarations: [CommentsComponent],
   imports: [
     CommonModule,
     MarkdownModule,

@@ -7,7 +7,6 @@ import {
   SearchParams,
 } from 'src/app/_services';
 
-
 @Component({
   selector: 'app-comments',
   templateUrl: './comments.component.html',
@@ -16,15 +15,14 @@ import {
 export class CommentsComponent {
   @Input() which: string;
 
-  url: string = '/comments';
-
   loading: boolean;
-  descriptions: any;
-  comments: Array<any> = new Array<any>();
+  comments: Array<any>;
   user: any;
   p: number;
   total: number;
-  collapseStates: Array<boolean>;
+  descriptions: { [key: number]: string };
+  collapseStates: { [key: number]: boolean };
+  visibilityStates: { [key: number]: boolean };
 
   constructor(
     private authService: AuthService,
@@ -33,12 +31,15 @@ export class CommentsComponent {
   ) {}
 
   ngOnInit(): void {
+    this.collapseStates = {};
+    this.visibilityStates = {};
+    this.descriptions = {};
+
     this.getComments(this.commentsService.getCommentsPage());
 
-    this.descriptions = {};
     this.authService.user$
-      .pipe(filter((x) => x != null))
-      .subscribe((user) => (this.user = user));
+      .pipe(filter(x => x != null))
+      .subscribe(user => (this.user = user));
   }
 
   getComments(params: SearchParams): void {
@@ -49,32 +50,29 @@ export class CommentsComponent {
       .getComments('/comments/search', params)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
-        next: (data) => {
-          console.log("FXXXX", data);
+        next: data => {
           this.comments = data.comments || [];
           this.total = data.total || 0;
-
-          this.collapseStates = new Array(this.comments.length);
-          this.collapseStates.fill(true);
-          console.log("FXXXX", this.collapseStates);
+          console.log(this.comments);
         },
-        error: (err) => {
+        error: err => {
           this.alertService.error(err);
         },
       });
   }
 
-  toggleCollapse(index: number): void {
-    this.collapseStates[index] = !this.collapseStates[index];
+  setVisibility(id: number): void {
+    this.visibilityStates[id] = !this.visibilityStates[id];
   }
 
-  setVisible(comment: any): void {
-    //Set visibility of the children of comment.
-    comment.is_visible = !comment.is_visible;
-  }
+  setCollapse(id: number): void {
+    this.collapseStates[id] = !this.collapseStates[id];
 
-  initDescription(id: number): void {
-    this.descriptions[id] = '';
+    for (let key in this.collapseStates) {
+      if (Number(key) !== id) {
+        this.collapseStates[key] = false;
+      }
+    }
   }
 
   voteUp(comment: any): void {
@@ -104,33 +102,45 @@ export class CommentsComponent {
   }
 
   addComment(): void {
-    this.comments.unshift({
-      comment: {
-        creator: this.user.user_name,
-        description: this.descriptions[0],
-        likes: { votes: 0, voters: [] },
-        dislikes: { votes: 0, voters: [] },
-      },
-      children: [],
-    });
-    this.commentsService.create(0, this.which, this.descriptions[0]);
+    if (!this.descriptions[0]) {
+      return;
+    }
+    this.commentsService
+      .create(0, this.which, this.descriptions[0])
+      .pipe(finalize(() => (this.loading = true)))
+      .subscribe({
+        next: comment => {
+          this.comments.unshift({
+            comment: comment,
+            children: [],
+          });
+        },
+        error: err => {
+          this.alertService.error(err);
+        },
+      });
   }
 
   reply(node: any): void {
-    node.comment.is_visible = true;
-    node.children.unshift({
-      comment: {
-        creator: this.user.user_name,
-        description: this.descriptions[node.comment.id],
-        likes: { votes: 0, voters: [] },
-        dislikes: { votes: 0, voters: [] },
-      },
-      children: [],
-    });
-    this.commentsService.create(
-      node.comment.id,
-      this.which,
-      this.descriptions[node.comment.id]
-    );
+    if (!this.descriptions[node.comment.id]) {
+      return;
+    }
+    this.commentsService
+      .create(node.comment.id, this.which, this.descriptions[node.comment.id])
+      .subscribe({
+        next: comment => {
+          console.log('dddddd', comment);
+          this.descriptions[node.comment.id] = '';
+          this.visibilityStates[node.comment.id] = true;
+          this.collapseStates[node.comment.id] = false;
+          node.children.unshift({
+            comment: comment,
+            children: [],
+          });
+        },
+        error: err => {
+          this.alertService.error(err);
+        },
+      });
   }
 }

@@ -31,16 +31,17 @@ export class CommentsService {
     return this.authService.post(url, body);
   }
 
-  create(parent_id: number, which: string, description: string) {
+  create(
+    parent_id: number,
+    which: string,
+    description: string
+  ): Observable<any> {
     let body;
     if (parent_id == 0) {
       body = { which: which, description: description };
     } else {
       body = { parent_id: parent_id, which: which, description: description };
     }
-    // need to be fixed
-    this.authService.post('/comments', body).subscribe((data) => {
-      console.log(data);
-    });
+    return this.authService.post('/comments', body);
   }
 }
