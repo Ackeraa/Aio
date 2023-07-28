@@ -5,7 +5,7 @@ import { MarkdownModule } from 'ngx-markdown';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProblemsRoutingModule } from './problems-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { ProblemSearchModule } from '../_modules';
+import { ProblemSearchModule } from '../shared';
 
 import {
   CreateComponent,

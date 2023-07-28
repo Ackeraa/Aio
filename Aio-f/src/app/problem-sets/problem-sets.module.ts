@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProblemSetsRoutingModule } from './problem-sets-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { SearchModule } from '../_modules/search/search.module';
+import { SearchModule } from '../shared/search/search.module';
 import { CreateComponent, PrivateComponent, PublicComponent } from '.';
 
 @NgModule({

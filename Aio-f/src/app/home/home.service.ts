@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Subject, BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { map, filter, switchMap } from 'rxjs/operators';
-import { AuthService } from '../_services';
+import { AuthService } from '../auth';
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: 'root',
 })
 export class HomeService {
+  constructor(private authService: AuthService) {}
 
-	constructor(private authService: AuthService) { }
-
-	getInfo(): Observable<any> {
-		let url = '/homes';
-		return this.authService.get(url);
-	}
+  getInfo(): Observable<any> {
+    let url = '/homes';
+    return this.authService.get(url);
+  }
 }

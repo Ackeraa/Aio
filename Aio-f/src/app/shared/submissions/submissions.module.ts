@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SearchModule } from '../search/search.module';
-import { SubmissionsComponent } from '.';
+import { SubmissionsComponent } from './submissions.component';
 
 @NgModule({
   declarations: [SubmissionsComponent],

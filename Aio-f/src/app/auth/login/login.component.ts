@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-import { AlertService, AuthService } from '../../_services';
-import { XStatus } from '../../_models';
+import { AuthService } from '../';
+import { AlertService, XStatus } from '../../shared';
 
 @Component({
   selector: 'app-auth-login',

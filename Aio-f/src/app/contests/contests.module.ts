@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContestsRoutingModule } from './contests-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { SearchModule } from '../_modules/search/search.module';
+import { SearchModule } from '../shared/search/search.module';
 import { CreateComponent, RecentComponent, PastComponent } from '.';
 
 @NgModule({

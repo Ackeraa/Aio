@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { faClock, faHome } from '@fortawesome/free-solid-svg-icons';
 import { finalize } from 'rxjs';
-import { AlertService, SearchParams } from 'src/app/_services';
+import { AlertService, SearchParams } from '../../shared';
 import { ContestsService } from '../contests.service';
 
 @Component({

@@ -6,7 +6,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { fromEvent, Subscription, debounceTime } from 'rxjs';
-import { SearchParams } from 'src/app/_services';
+import { SearchParams } from '../';
 
 @Component({
   selector: 'app-search',

@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProblemsService } from '../problems.service';
-import { AlertService, ProblemSearchParams } from '../../_services';
-import { ProblemBasic } from '../../_models/';
+import { AlertService, ProblemBasic, ProblemSearchParams } from '../../shared/';
 import { finalize } from 'rxjs';
 
 interface ProblemsData {
@@ -43,7 +42,7 @@ export class CollectionComponent {
           this.total = data.total;
           this.alertService.clear();
         },
-        error: (err) => {
+        error: err => {
           this.alertService.error(err);
         },
       });
@@ -62,7 +61,7 @@ export class CollectionComponent {
           this.p = 1;
           this.alertService.clear();
         },
-        error: (err) => {
+        error: err => {
           this.alertService.error(err);
         },
       });

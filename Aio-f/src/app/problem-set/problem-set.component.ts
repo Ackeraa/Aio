@@ -1,5 +1,4 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { Subject, Observable, fromEvent } from 'rxjs';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ProblemSetService } from './problem-set.service';
 

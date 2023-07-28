@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContestService } from '../contest.service';
-import { AlertService, ProblemSearchParams } from 'src/app/_services';
+import { AlertService, ProblemSearchParams } from '../../shared';
 import { finalize } from 'rxjs';
 
 @Component({

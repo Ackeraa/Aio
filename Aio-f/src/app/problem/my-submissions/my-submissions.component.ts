@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { combineLatest, filter } from 'rxjs';
 import { ProblemService } from '../problem.service';
-import { AuthService } from '../../_services';
+import { AuthService } from '../../auth';
 
 @Component({
   selector: 'app-problem-my-submissions',

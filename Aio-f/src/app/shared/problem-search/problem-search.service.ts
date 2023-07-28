@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthService } from '../../_services';
+import { AuthService } from '../../auth';
 import { environment } from 'src/environments/environment';
 
 export interface ProblemSearchParams {

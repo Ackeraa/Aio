@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { AlertService } from '../../_services';
+import { AlertService } from '../';
 
 @Component({
   selector: 'app-alert',
@@ -14,7 +14,7 @@ export class AlertComponent {
   constructor(private alertService: AlertService) {}
 
   ngOnInit() {
-    this.subscription = this.alertService.getAlert().subscribe((message) => {
+    this.subscription = this.alertService.getAlert().subscribe(message => {
       switch (message && message.type) {
         case 'success':
           message.cssClass = 'alert alert-success';

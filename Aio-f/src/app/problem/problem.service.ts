@@ -7,7 +7,8 @@ import {
   switchMap,
 } from 'rxjs';
 import { ActionCableService, Channel } from 'angular2-actioncable';
-import { AuthService, SearchService } from '../_services';
+import { AuthService } from '../auth';
+import { SearchService } from '../shared';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +31,7 @@ export class ProblemService {
     } else {
       url = '/vproblems/' + id;
     }
-    this.authService.get(url).subscribe((problem) => {
+    this.authService.get(url).subscribe(problem => {
       this.problem$.next(problem);
       console.log('problem service');
     });
@@ -38,7 +39,7 @@ export class ProblemService {
 
   reSpideProblem(): Observable<any> {
     let id;
-    this.problem$.subscribe((problem) => {
+    this.problem$.subscribe(problem => {
       id = problem.id;
     });
     let url = '/vproblems/' + id + '/respide';

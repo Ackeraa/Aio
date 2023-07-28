@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertService, AuthService } from '../../_services';
-import { environment } from '../../../environments/environment';
-import { XStatus } from '../../_models';
+import { AuthService } from '../';
+import { environment } from 'src/environments/environment';
+import { XStatus, AlertService } from '../../shared';
 import { AuthValidators } from '../auth-valdators';
 
 @Component({

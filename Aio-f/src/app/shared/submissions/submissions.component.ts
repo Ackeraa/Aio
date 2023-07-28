@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { ActionCableService, Channel } from 'angular2-actioncable';
-import { SubmissionsService } from '../../_services';
+import { SubmissionsService } from '../';
 
 @Component({
   selector: 'app-submissions',

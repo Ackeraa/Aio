@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { combineLatest } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { ContestService } from '../contest.service';
-import { AuthService } from '../../_services';
+import { AuthService } from '../../auth';
 
 @Component({
   selector: 'app-contest-my-submissions',

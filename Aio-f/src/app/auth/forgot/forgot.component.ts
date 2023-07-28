@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertService, AuthService } from '../../_services';
-import { XStatus } from '../../_models';
+import { AlertService } from 'src/app/shared';
+import { AuthService } from '../';
+import { XStatus } from 'src/app/shared';
 import { AuthValidators } from '../auth-valdators';
 
 @Component({

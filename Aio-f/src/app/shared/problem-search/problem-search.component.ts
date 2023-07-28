@@ -7,9 +7,8 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
-import { faSpider } from '@fortawesome/free-solid-svg-icons';
 import { debounceTime } from 'rxjs/operators';
-import { ProblemSearchService, ProblemSearchParams } from 'src/app/_services';
+import { ProblemSearchService, ProblemSearchParams } from '../';
 import { environment } from 'src/environments/environment';
 
 @Component({

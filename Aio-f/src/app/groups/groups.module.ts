@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { GroupsRoutingModule } from './groups-routing.module';
-import { SearchModule } from '../_modules/search/search.module';
+import { SearchModule } from '../shared/search/search.module';
 import { GroupModule } from '../group/group.module';
 import { ExploreComponent, MyGroupsComponent } from '.';
 

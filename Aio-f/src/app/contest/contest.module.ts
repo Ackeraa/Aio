@@ -6,8 +6,7 @@ import { RouterModule } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 import { ContestRoutingModule } from './contest-routing.module';
-import { ProblemSearchModule } from '../_modules';
-import { SubmissionsModule } from '../_modules';
+import { ProblemSearchModule, SubmissionsModule } from '../shared';
 
 import {
   MySubmissionsComponent,

@@ -8,7 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../_services/auth.service';
 import { AlertService } from '../../_services/alert.service';
 import { of, throwError } from 'rxjs';
-import { XStatus } from '../../_models';
+import { XStatus } from '../../shared/models';
 
 fdescribe('ForgotComponent', () => {
   let component: ForgotComponent;

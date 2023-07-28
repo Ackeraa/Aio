@@ -1,90 +1,136 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
-	<div class="row">
-		<div class="col-md-4">
-			<label class="form-label"><h5>Title</h5></label>
-			<div *ngIf="name.hasError('required') && name.touched"
-				   class="alert alert-danger" role="alert">
-				Title is required.
-			</div>
-			<input type="text" [formControl]="name" class="form-control"/>
-		</div>
-	</div>
-	<br/>
-	<div class="row">
-		<div class="col-md-12">
-			<h5>Description</h5>
-			<div *ngIf="description.hasError('required') && description.touched"
-			 class="alert alert-danger" role="alert">
-				Description is required.
-			</div>
-			<textarea style="overflow-y:auto; height: 30vh" class="form-control"
-				[formControl]="description">
-			</textarea>
-		</div>
-	</div>
-	<br/>
+  <div class="row">
+    <div class="col-md-4">
+      <label class="form-label"><h5>Title</h5></label>
+      <div
+        *ngIf="name.hasError('required') && name.touched"
+        class="alert alert-danger"
+        role="alert"
+      >
+        Title is required.
+      </div>
+      <input type="text" [formControl]="name" class="form-control" />
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <div class="col-md-12">
+      <h5>Description</h5>
+      <div
+        *ngIf="description.hasError('required') && description.touched"
+        class="alert alert-danger"
+        role="alert"
+      >
+        Description is required.
+      </div>
+      <textarea
+        style="overflow-y: auto; height: 30vh"
+        class="form-control"
+        [formControl]="description"
+      >
+      </textarea>
+    </div>
+  </div>
+  <br />
 
-	<div class="row">
-		<div class="col-md-3">
-			<label class="form-label"><h5>Start Time</h5></label>
-			<input class="form-control" placeholder="yyyy-mm-dd"
-				   [(ngModel)]="start_d" [ngModelOptions]="{standalone: true}"
-				   ngbDatepicker #sd="ngbDatepicker" (click)="sd.toggle()">
-		</div>
-		<div class="col-md-3">
-			<label class="form-label"><h5>&nbsp;</h5></label>
-				<ngb-timepicker [(ngModel)]="start_t" [ngModelOptions]="{standalone: true}">
-				</ngb-timepicker>
-		</div>
-		<div class="col-md-3">
-			<label class="form-label"><h5>End Time</h5></label>
-			<input class="form-control" placeholder="yyyy-mm-dd"
-				   [(ngModel)]="end_d" [ngModelOptions]="{standalone: true}"
-				   ngbDatepicker #ed="ngbDatepicker" (click)="ed.toggle()">
-		</div>
-		<div class="col-md-3">
-			<label class="form-label"><h5>&nbsp;</h5></label>
-				<ngb-timepicker [(ngModel)]="end_t" [ngModelOptions]="{standalone: true}">
-				</ngb-timepicker>
-		</div>
-	</div>
-	<br/>
+  <div class="row">
+    <div class="col-md-3">
+      <label class="form-label"><h5>Start Time</h5></label>
+      <input
+        class="form-control"
+        placeholder="yyyy-mm-dd"
+        [(ngModel)]="start_d"
+        [ngModelOptions]="{ standalone: true }"
+        ngbDatepicker
+        #sd="ngbDatepicker"
+        (click)="sd.toggle()"
+      />
+    </div>
+    <div class="col-md-3">
+      <label class="form-label"><h5>&nbsp;</h5></label>
+      <ngb-timepicker
+        [(ngModel)]="start_t"
+        [ngModelOptions]="{ standalone: true }"
+      >
+      </ngb-timepicker>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label"><h5>End Time</h5></label>
+      <input
+        class="form-control"
+        placeholder="yyyy-mm-dd"
+        [(ngModel)]="end_d"
+        [ngModelOptions]="{ standalone: true }"
+        ngbDatepicker
+        #ed="ngbDatepicker"
+        (click)="ed.toggle()"
+      />
+    </div>
+    <div class="col-md-3">
+      <label class="form-label"><h5>&nbsp;</h5></label>
+      <ngb-timepicker
+        [(ngModel)]="end_t"
+        [ngModelOptions]="{ standalone: true }"
+      >
+      </ngb-timepicker>
+    </div>
+  </div>
+  <br />
 
-	<div class="row">
-		<div class="col-md-4">
-			<span class="form-label"><h5>Rule </h5></span>
-			<label class="form-check form-check-inline">
-				<input class="form-check-input" type="radio" name="rule_type" value="acm" checked
-						(click)="selectRule($event.target.value)">
-				<span class="form-check-label">ACM</span>
-			</label>
-			<label class="form-check form-check-inline">
-				<input class="form-check-input" type="radio" name="rule_type" value="oi"
-						(click)="selectRule($event.target.value)">
-				<span class="form-check-label">OI</span>
-			</label>
-		</div>
-		<div class="col-md-3">
-			<span class="form-label"><h5>Visible </h5></span>
-			<div class="custom-control custom-switch">
-				<input type="checkbox" class="custom-control-input" id="visible"
-						(click)="selectVisible($event.target.checked)">
-				<label class="custom-control-label" for="visible">NO/YES</label>
-			</div>
-		</div>
-		<div class="col-md-5">
-			<span class="form-label"><h5>Password </h5></span>
-			<input type="password" [formControl]="password"
-				   class="form-control" autocomplete="false"/>
-		</div>
-	</div>
-	<br/> <br/> <br/>
-	<div class="row justify-content-center">
-		<button type="submit" class="btn btn-info col-sm-4">
-			<i class="fas fa-upload"></i> Submit
-		</button>
-	</div>
+  <div class="row">
+    <div class="col-md-4">
+      <span class="form-label"><h5>Rule</h5></span>
+      <label class="form-check form-check-inline">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="rule_type"
+          value="acm"
+          checked
+          (click)="selectRule($event.target.value)"
+        />
+        <span class="form-check-label">ACM</span>
+      </label>
+      <label class="form-check form-check-inline">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="rule_type"
+          value="oi"
+          (click)="selectRule($event.target.value)"
+        />
+        <span class="form-check-label">OI</span>
+      </label>
+    </div>
+    <div class="col-md-3">
+      <span class="form-label"><h5>Visible</h5></span>
+      <div class="custom-control custom-switch">
+        <input
+          type="checkbox"
+          class="custom-control-input"
+          id="visible"
+          (click)="selectVisible($event.target.checked)"
+        />
+        <label class="custom-control-label" for="visible">NO/YES</label>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <span class="form-label"><h5>Password</h5></span>
+      <input
+        type="password"
+        [formControl]="password"
+        class="form-control"
+        autocomplete="false"
+      />
+    </div>
+  </div>
+  <br />
+  <br />
+  <br />
+  <div class="row justify-content-center">
+    <button type="submit" class="btn btn-info col-sm-4">
+      <i class="fas fa-upload"></i> Submit
+    </button>
+  </div>
 </form>
-<br/>
-
-
+<br />

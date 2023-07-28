@@ -1,11 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { filter, finalize } from 'rxjs';
-import {
-  AuthService,
-  AlertService,
-  CommentsService,
-  SearchParams,
-} from 'src/app/_services';
+import { AuthService } from '../../auth';
+import { AlertService, CommentsService, SearchParams } from '../';
 
 @Component({
   selector: 'app-comments',

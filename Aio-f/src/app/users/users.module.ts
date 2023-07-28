@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { UsersRoutingModule } from './users-routing.module';
-import { SearchModule } from '../_modules/search/search.module';
+import { SearchModule } from '../shared/search/search.module';
 import { UserModule } from '../user/user.module';
 
 import { MyInfoComponent, ExploreComponent } from '.';

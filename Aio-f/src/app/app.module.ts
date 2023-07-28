@@ -20,17 +20,17 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { ProblemSearchModule } from './_modules';
-import { SearchModule } from './_modules';
-import { CommentsModule } from './_modules';
-import { SubmissionsModule } from './_modules';
+import { ProblemSearchModule } from './shared';
+import { SearchModule } from './shared';
+import { CommentsModule } from './shared';
+import { SubmissionsModule } from './shared';
 import { HomeModule } from './home';
 import { GroupModule } from './group/group.module';
 import { GroupsModule } from './groups/groups.module';
 import { UserModule } from './user/user.module';
 
 import { AppRoutingModule } from './app-routing.module';
-import { ErrorInterceptor } from './_helpers';
+import { ErrorInterceptor } from './helpers';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home';
 import { ContestsComponent } from './contests';
@@ -47,16 +47,12 @@ import { WikiComponent } from './wiki';
 
 //import { AngularTokenService } from 'angular-token';
 import { AngularTokenModule } from 'angular-token';
-import { AuthService } from './_services';
+import { AuthService } from './auth';
 import { ActionCableService } from 'angular2-actioncable';
 
 import { environment } from '../environments/environment';
 
-import {
-  AlertComponent,
-  HeaderComponent,
-  FooterComponent,
-} from './_components';
+import { AlertComponent, HeaderComponent, FooterComponent } from './shared';
 import { ErrorComponent } from './error/error.component';
 
 @NgModule({
