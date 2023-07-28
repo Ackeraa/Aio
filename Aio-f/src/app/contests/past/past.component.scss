@@ -1,4 +1,4 @@
-@import '../../_layouts/pagination.scss';
+@import '../../layouts/pagination.scss';
 
 .logo {
   height: 50px;
@@ -14,20 +14,20 @@
   //border: 2px dashed #f69c55;
 }
 
-hr { 
-  height: 18px; 
-  border-style: solid; 
-  border-color: #8c8b8b; 
-  border-width: 1px 0 0 0; 
-  border-radius: 20px; 
-} 
-hr:before { 
-  display: block; 
-  content: ""; 
-  height: 18px; 
-  margin-top: -19px; 
-  border-style: solid; 
-  border-color: #8c8b8b; 
-  border-width: 0 0 1px 0; 
-  border-radius: 20px; 
+hr {
+  height: 18px;
+  border-style: solid;
+  border-color: #8c8b8b;
+  border-width: 1px 0 0 0;
+  border-radius: 20px;
+}
+hr:before {
+  display: block;
+  content: "";
+  height: 18px;
+  margin-top: -19px;
+  border-style: solid;
+  border-color: #8c8b8b;
+  border-width: 0 0 1px 0;
+  border-radius: 20px;
 }
