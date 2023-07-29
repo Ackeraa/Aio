@@ -13,7 +13,6 @@ export class CommentsComponent {
 
   loading: boolean;
   comments: Array<any>;
-  user: any;
   p: number;
   total: number;
   descriptions: { [key: number]: string };
@@ -21,7 +20,6 @@ export class CommentsComponent {
   visibilityStates: { [key: number]: boolean };
 
   constructor(
-    private authService: AuthService,
     private alertService: AlertService,
     private commentsService: CommentsService
   ) {}
@@ -30,12 +28,7 @@ export class CommentsComponent {
     this.collapseStates = {};
     this.visibilityStates = {};
     this.descriptions = {};
-
     this.getComments(this.commentsService.getCommentsPage());
-
-    this.authService.user$
-      .pipe(filter(x => x != null))
-      .subscribe(user => (this.user = user));
   }
 
   getComments(params: SearchParams): void {
@@ -47,9 +40,8 @@ export class CommentsComponent {
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: data => {
-          this.comments = data.comments || [];
-          console.log(this.comments);
-          this.total = data.total || 0;
+          this.comments = data.comments;
+          this.total = data.total;
         },
         error: err => {
           this.alertService.error(err);
@@ -99,48 +91,19 @@ export class CommentsComponent {
       });
   }
 
-  addComment(): void {
-    if (!this.descriptions[0]) {
+  addComment(id: number = 0): void {
+    if (!this.descriptions[id]) {
       return;
     }
     this.commentsService
-      .createComment(0, this.which, this.descriptions[0])
+      .createComment(id, this.which, this.descriptions[id])
       .pipe(finalize(() => (this.loading = true)))
       .subscribe({
-        next: comment => {
-          this.descriptions[0] = '';
-          this.visibilityStates[0] = true;
-          this.collapseStates[0] = false;
-          this.comments.unshift({
-            comment: comment,
-            children: [],
-          });
-        },
-        error: err => {
-          this.alertService.error(err);
-        },
-      });
-  }
-
-  reply(node: any): void {
-    if (!this.descriptions[node.comment.id]) {
-      return;
-    }
-    this.commentsService
-      .createComment(
-        node.comment.id,
-        this.which,
-        this.descriptions[node.comment.id]
-      )
-      .subscribe({
-        next: comment => {
-          this.descriptions[node.comment.id] = '';
-          this.visibilityStates[node.comment.id] = true;
-          this.collapseStates[node.comment.id] = false;
-          node.children.unshift({
-            comment: comment,
-            children: [],
-          });
+        next: () => {
+          this.descriptions[id] = '';
+          this.visibilityStates[id] = true;
+          this.collapseStates[id] = false;
+          this.getComments(this.commentsService.getCommentsPage());
         },
         error: err => {
           this.alertService.error(err);

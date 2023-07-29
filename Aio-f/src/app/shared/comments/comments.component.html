@@ -2,8 +2,8 @@
   <div class="d-flex flex-column col-md-12">
     <br />
     <app-search (searchEvent)="getComments($event)"> </app-search>
-    <div class="mt-2 mb-2 text-right">
-      <button class="btn btn-primary" (click)="setCollapse(0)">Comment</button>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-2 mb-2">
+      <button class="btn btn-outline-primary me-md-2" (click)="setCollapse(0)">Comment</button>
     </div>
     <div [ngbCollapse]="!collapseStates[0]">
       <markdown [data]="descriptions[0]" katex></markdown>
@@ -14,14 +14,14 @@
       >
       </textarea>
 
-      <div class="mt-2 text-right">
+      <div class="d-grid gap-1 d-md-flex justify-content-md-end mt-1">
         <button
-          class="btn btn-primary btn-sm shadow-none"
+          class="btn btn-success btn-sm me-md-1"
           (click)="addComment()"
         >
           Submit
         </button>
-        <button class="btn btn-primary btn-sm" (click)="setCollapse(0)">
+        <button class="btn btn-danger btn-sm" (click)="setCollapse(0)">
           Cancel
         </button>
       </div>
@@ -43,22 +43,22 @@
             </span>
           </div>
           <div class="reply-section mt-2">
-            <div class="d-flex flex-row align-items-center">
+            <div class="d-grid gap-2 d-md-block">
               <fa-icon
-                class="hit-link p-1"
+                class="hit-link me-md-1"
                 [icon]="['fas', 'thumbs-up']"
                 (click)="voteUp(node)"
               ></fa-icon>
-              <span class="p-1">{{ node.comment.likes.votes }}</span>
+              <span class="me-md-2">{{ node.comment.likes.votes }}</span>
 
               <fa-icon
-                class="hit-link p-1"
+                class="hit-link me-md-1"
                 [icon]="['fas', 'thumbs-down']"
                 (click)="voteDown(node)"
               ></fa-icon>
-              <span class="p-1">{{ node.comment.dislikes.votes }}</span>
+              <span class="me-md-2">{{ node.comment.dislikes.votes }}</span>
 
-              <a class="hit-link p-1" (click)="setCollapse(node.comment.id)">
+              <a class="hit-link" (click)="setCollapse(node.comment.id)">
                 <fa-icon [icon]="['fas', 'comment-dots']"></fa-icon>
               </a>
             </div>
@@ -88,15 +88,15 @@
                 [(ngModel)]="descriptions[node.comment.id]"
               >
               </textarea>
-              <div class="mt-2 text-right">
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-1">
                 <button
-                  class="btn btn-primary btn-sm shadow-none p-1"
-                  (click)="reply(node)"
+                  class="btn btn-success btn-sm me-md-1"
+                  (click)="addComment(node.comment.id)"
                 >
                   Submit
                 </button>
                 <button
-                  class="btn btn-primary btn-sm p-1"
+                  class="btn btn-danger btn-sm"
                   (click)="setCollapse(node.comment.id)"
                 >
                   Cancel

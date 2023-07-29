@@ -16,7 +16,6 @@ class CommentsController < ApplicationController
     total = Comment.where('which=? and creator ilike(?)', which, "%#{query}%").count
     @comments = Comment.where('which=? and creator ilike(?)',  which, "%#{query}%")
                        .limit(10).offset(@page * 10).hash_tree(limit_depth: 5)
-
     render json: { total: total, comments: comments_tree_for(@comments) }
   end
 
@@ -27,12 +26,10 @@ class CommentsController < ApplicationController
 
   # POST /comments
   def create
-    parent_id = params[:parent_id]
     which = params[:which]
     description = params[:description]
-
-    if parent_id.to_i > 0
-      parent = Comment.find_by_id(parent_id)
+    if params[:parent_id].to_i > 0
+      parent = Comment.find_by_id(params[:parent_id])
       @comment = parent.children.build(
         which: which,
         creator: current_user.name,

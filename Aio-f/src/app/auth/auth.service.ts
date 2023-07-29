@@ -11,7 +11,6 @@ import {
 } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { NonNullAssert } from '@angular/compiler';
 
 interface User {
   user_id: string;
@@ -41,7 +40,7 @@ export class AuthService implements OnInit {
           user_name: user.name,
         });
       },
-      error: err => {
+      error: () => {
         this.user_$.next(null);
       },
     });
@@ -88,7 +87,7 @@ export class AuthService implements OnInit {
   }
 
   isLoggedIn(): boolean {
-    return this.tokenService.userSignedIn();
+    return this.user_$.getValue() !== null;
   }
 
   register(data: {
