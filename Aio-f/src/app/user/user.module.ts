@@ -4,9 +4,9 @@ import {
 	UserComponent,
 	HomeComponent,
 	ContestsComponent,
-	ProblemsComponent, 
-	GroupsComponent, 
-	FriendsComponent, 
+	ProblemsComponent,
+	GroupsComponent,
+	FriendsComponent,
 	SettingsComponent
 } from '.';
 
@@ -15,9 +15,9 @@ import {
 		UserComponent,
 		HomeComponent,
 		ContestsComponent,
-		ProblemsComponent, 
-		GroupsComponent, 
-		FriendsComponent, 
+		ProblemsComponent,
+		GroupsComponent,
+		FriendsComponent,
 		SettingsComponent
 	],
 	imports: [

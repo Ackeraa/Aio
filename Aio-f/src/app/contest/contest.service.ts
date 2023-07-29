@@ -23,7 +23,7 @@ export class ContestService implements OnInit {
 
   getData(id: string): void {
     this.id = id;
-    let url = 'contests/' + id + '/problems';
+    let url = '/contests/' + id + '/problems';
     this.authService.get(url).subscribe(data => {
       this.contest$.next(data.contest);
       this.problems$.next(data.problems);
@@ -43,14 +43,14 @@ export class ContestService implements OnInit {
   }
 
   addProblem(problem_id: string): void {
-    let url = 'contests/' + this.id + '/add_problem/' + problem_id;
+    let url = '/contests/' + this.id + '/add_problem/' + problem_id;
     this.authService.get(url).subscribe(problems => {
       this.problems$.next(problems);
     });
   }
 
   deleteProblem(problem_id: string): void {
-    let url = 'contests/' + this.id + '/delete_problem/' + problem_id;
+    let url = '/contests/' + this.id + '/delete_problem/' + problem_id;
     this.authService.get(url).subscribe(problems => {
       this.problems$.next(problems);
     });
@@ -62,9 +62,9 @@ export class ContestService implements OnInit {
       switchMap(([problems, user]) => {
         let url, body;
         if (problems[index].source == 'aio') {
-          url = 'problems/' + problems[index].id + '/submit';
+          url = '/problems/' + problems[index].id + '/submit';
         } else {
-          url = 'vproblems/' + problems[index].id + '/submit';
+          url = '/vproblems/' + problems[index].id + '/submit';
         }
         body = {
           language: language,
@@ -83,7 +83,7 @@ export class ContestService implements OnInit {
     return this.problems$.pipe(
       filter(x => x != null),
       switchMap(() => {
-        let url = 'acm_contest_ranks/get_contest_rank';
+        let url = '/acm_contest_ranks/get_contest_rank';
         let params = { contest_id: this.id };
         return this.authService.get(url, params);
       })

@@ -28,7 +28,7 @@
               class="btn btn-outline-danger"
               (click)="deleteProblem(problem.id)"
             >
-              <i class="far fa-trash-alt"></i>
+              <fa-icon [icon]="['fas', 'trash-alt']"></fa-icon>
             </button>
           </td>
         </tr>
@@ -36,10 +36,8 @@
     </table>
   </div>
 </div>
-<br />
-<br />
 
-<div class="card shadow-sm">
+<div class="card shadow-sm mt-5">
   <div class="card-body">
     <app-problem-search
       (searchEvent)="getAllProblems($event)"
@@ -75,11 +73,11 @@
           <td>
             <button
               type="button"
-              class="btn btn-outline-dark"
+              class="btn btn-outline-success"
               (click)="addProblem(problem.id)"
               [disabled]="isAdded(problem.id)"
             >
-              <i class="fas fa-plus"></i>
+            <fa-icon [icon]="['fas', 'plus']"></fa-icon>
             </button>
           </td>
         </tr>

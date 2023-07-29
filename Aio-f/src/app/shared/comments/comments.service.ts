@@ -33,12 +33,10 @@ export class CommentsService {
     which: string,
     description: string
   ): Observable<any> {
-    let body;
-    if (parent_id == 0) {
-      body = { which: which, description: description };
-    } else {
-      body = { parent_id: parent_id, which: which, description: description };
-    }
-    return this.authService.post('/comments', body);
+    return this.authService.post('/comments', {
+      parent_id: parent_id,
+      which: which,
+      description: description,
+    });
   }
 }

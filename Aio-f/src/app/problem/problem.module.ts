@@ -10,7 +10,6 @@ import {
   FontAwesomeModule,
   FaIconLibrary,
 } from '@fortawesome/angular-fontawesome';
-import { fas } from '@fortawesome/free-solid-svg-icons';
 import { SearchModule, CommentsModule, SubmissionsModule } from '../shared';
 
 import {
@@ -48,6 +47,5 @@ import {
 })
 export class ProblemModule {
   constructor(library: FaIconLibrary) {
-    library.addIconPacks(fas);
   }
 }

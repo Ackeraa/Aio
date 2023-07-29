@@ -9,15 +9,9 @@
     <div *ngIf="loading" class="row">Loading...</div>
     <div class="row">
       <th class="col-1">#</th>
-      <th class="col">TITLE</th>
+      <th class="col-8">TITLE</th>
       <th class="col">SOURCE</th>
       <th class="col">STATUS</th>
-      <th class="col">
-        <div class="custom-control custom-switch">
-          <input type="checkbox" class="custom-control-input" id="tags" />
-          <label class="custom-control-label" for="tags">TAGS</label>
-        </div>
-      </th>
     </div>
     <hr class="title" />
     <div *ngIf="!loading">
@@ -30,7 +24,7 @@
       >
         <div class="row">
           <div class="col-1">{{ problem.id }}</div>
-          <div class="col">
+          <div class="col-8">
             <a
               class="link link-content"
               (click)="viewProblem(problem.source, problem.id)"
@@ -47,7 +41,6 @@
             </a>
           </div>
           <div class="col">22/45</div>
-          <div class="col">Hard</div>
         </div>
         <hr class="content" />
       </div>
