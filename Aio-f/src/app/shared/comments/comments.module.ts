@@ -5,16 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MarkdownModule } from 'ngx-markdown';
 import { SearchModule } from '../search/search.module';
-import {
-  FontAwesomeModule,
-  FaIconLibrary,
-} from '@fortawesome/angular-fontawesome';
-import {
-  faThumbsUp,
-  faThumbsDown,
-  faCommentDots,
-} from '@fortawesome/free-solid-svg-icons';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommentsComponent } from './comments.component';
 
 @NgModule({
@@ -30,8 +21,4 @@ import { CommentsComponent } from './comments.component';
   ],
   exports: [CommentsComponent],
 })
-export class CommentsModule {
-  constructor(library: FaIconLibrary) {
-    library.addIcons(faThumbsUp, faThumbsDown, faCommentDots);
-  }
-}
+export class CommentsModule {}

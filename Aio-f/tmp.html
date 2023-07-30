@@ -1,3 +1,4 @@
+
 <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
   <div class="row">
     <div class="col-md-4">
@@ -253,14 +254,14 @@
     </div>
     <div class="col-md-2">
       <span class="form-label"><h5>Visible</h5></span>
-      <div class="form-check form-switch">
+      <div class="custom-control custom-switch">
         <input
-          class="form-check-input"
           type="checkbox"
+          class="custom-control-input"
           id="visible"
           (click)="selectVisible($event.target.checked)"
         />
-        <label class="form-check-lable" for="visible">NO / YES</label>
+        <label class="custom-control-label" for="visible">NO/YES</label>
       </div>
     </div>
     <div class="col-md-7">
@@ -274,27 +275,9 @@
       </div>
       <div
         *ngFor="let lan of languages"
-        class="form-check form-check-inline"
-      >
-        <input
-          type="checkbox"
-          class="form-check-input"
-          id="{{ lan }}"
-          checked="checked"
-          (click)="selectLan($event.target.checked, lan)"
-        />
-        <label class="form-check-lable" for="{{ lan }}">{{ lan }}</label>
-      </div>
+        class="custom-control custom-control-inline custom-checkbox"
+      ></div>
     </div>
   </div>
-
-  <div class="mt-4">
-    <app-problems-upload (uploadEvent)="setToken($event)"></app-problems-upload>
-  </div>
-
-  <div class="row justify-content-center mt-5 mb-4">
-    <button type="button" class="btn btn-success col-sm-4">
-      <fa-icon [icon]="['fas', 'upload']"></fa-icon> Submit
-    </button>
-  </div>
 </form>
+

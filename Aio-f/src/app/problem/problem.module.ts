@@ -8,7 +8,6 @@ import { ProblemRoutingModule } from './problem-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {
   FontAwesomeModule,
-  FaIconLibrary,
 } from '@fortawesome/angular-fontawesome';
 import { SearchModule, CommentsModule, SubmissionsModule } from '../shared';
 
@@ -46,6 +45,4 @@ import {
   exports: [],
 })
 export class ProblemModule {
-  constructor(library: FaIconLibrary) {
-  }
 }

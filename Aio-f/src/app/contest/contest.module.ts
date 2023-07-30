@@ -7,10 +7,8 @@ import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 import { ContestRoutingModule } from './contest-routing.module';
 import { ProblemSearchModule, SubmissionsModule } from '../shared';
 import {
-  FaIconLibrary,
   FontAwesomeModule,
 } from '@fortawesome/angular-fontawesome';
-import { faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import {
   MySubmissionsComponent,
@@ -42,7 +40,4 @@ import {
   exports: [],
 })
 export class ContestModule {
-  constructor(library: FaIconLibrary) {
-    library.addIcons(faTrashAlt, faPlus);
-  }
 }
