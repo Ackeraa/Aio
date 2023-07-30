@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContestsRoutingModule } from './contests-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SearchModule } from '../shared/search/search.module';
 import {
   CreateComponent,
@@ -26,6 +27,7 @@ import {
   imports: [
     CommonModule,
     NgbModule,
+    FontAwesomeModule,
     ContestsRoutingModule,
     FormsModule,
     NgxPaginationModule,
