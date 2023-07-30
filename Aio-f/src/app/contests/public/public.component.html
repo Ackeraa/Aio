@@ -33,8 +33,8 @@
                 </a>
               </text>
               <p class="card-text time">
-                <fa-icon [icon]="lock"></fa-icon> asdsa &nbsp;
-                <fa-icon [icon]="clock"></fa-icon>
+                <fa-icon [icon]="['fas', 'lock']"></fa-icon> &nbsp;
+                <fa-icon [icon]="['fas', 'clock']"></fa-icon>
                 {{ contest.start_time | date : 'HH:mm' }}
                 -
                 {{ contest.end_time | date : 'HH:mm' }}
@@ -42,7 +42,7 @@
               </p>
             </div>
             <div class="col-auto status">
-              <i class="fas fa-user-alt"></i> 23
+              <fa-icon [icon]="['fas', 'user-alt']"></fa-icon> 23
             </div>
           </div>
         </div>
