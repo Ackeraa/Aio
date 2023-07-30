@@ -5,10 +5,24 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContestsRoutingModule } from './contests-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SearchModule } from '../shared/search/search.module';
-import { CreateComponent, RecentComponent, PastComponent } from '.';
+import {
+  CreateComponent,
+  RecentComponent,
+  PastComponent,
+  PublicComponent,
+  GroupComponent,
+  PrivateComponent,
+} from '.';
 
 @NgModule({
-  declarations: [CreateComponent, RecentComponent, PastComponent],
+  declarations: [
+    CreateComponent,
+    RecentComponent,
+    PastComponent,
+    PublicComponent,
+    GroupComponent,
+    PrivateComponent,
+  ],
   imports: [
     CommonModule,
     NgbModule,

@@ -4,10 +4,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProblemSetsRoutingModule } from './problem-sets-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SearchModule } from '../shared/search/search.module';
-import { CreateComponent, PrivateComponent, PublicComponent } from '.';
+import {
+  CreateComponent,
+  PrivateComponent,
+  PublicComponent,
+  GroupComponent,
+} from '.';
 
 @NgModule({
-  declarations: [CreateComponent, PrivateComponent, PublicComponent],
+  declarations: [
+    CreateComponent,
+    PrivateComponent,
+    PublicComponent,
+    GroupComponent,
+  ],
   imports: [
     CommonModule,
     ProblemSetsRoutingModule,

@@ -8,11 +8,11 @@ import { ProblemSearchService, ProblemSearchParams } from '../shared';
 export class ProblemsService {
   constructor(private ProblemSearchService: ProblemSearchService) {}
 
-  getCollectionProblems(params: ProblemSearchParams): Observable<any> {
+  getPublicProblems(params: ProblemSearchParams): Observable<any> {
     return this.ProblemSearchService.get(params);
   }
 
-  getCollectionPage(): ProblemSearchParams {
+  getPublicPage(): ProblemSearchParams {
     return { page: this.ProblemSearchService.getPage() };
   }
 

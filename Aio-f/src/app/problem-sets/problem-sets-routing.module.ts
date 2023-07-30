@@ -4,7 +4,8 @@ import {
 	ProblemSetsComponent,
 	CreateComponent,
 	PrivateComponent,
-	PublicComponent
+	PublicComponent,
+  GroupComponent
 } from '.';
 
 const routes: Routes = [
@@ -13,8 +14,9 @@ const routes: Routes = [
 		children: [
 			{ path: '', redirectTo: 'public', pathMatch: 'full' },
 			{ path: 'create', component: CreateComponent },
-			{ path: 'private', component: PrivateComponent },
 			{ path: 'public', component: PublicComponent },
+      { path: 'group', component: GroupComponent },
+			{ path: 'private', component: PrivateComponent },
 		]
 	},
 ];

@@ -11,15 +11,17 @@ import {
   CreateComponent,
   BetaComponent,
   UploadComponent,
-  CollectionComponent,
+  PublicComponent,
 } from '.';
+import { PrivateComponent } from './private/private.component';
 
 @NgModule({
   declarations: [
     CreateComponent,
     BetaComponent,
     UploadComponent,
-    CollectionComponent,
+    PublicComponent,
+    PrivateComponent,
   ],
   imports: [
     CommonModule,

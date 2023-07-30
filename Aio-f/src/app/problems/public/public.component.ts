@@ -10,11 +10,11 @@ interface ProblemsData {
 }
 
 @Component({
-  selector: 'app-problems-collection',
-  templateUrl: './collection.component.html',
-  styleUrls: ['./collection.component.scss'],
+  selector: 'app-problems-public',
+  templateUrl: './public.component.html',
+  styleUrls: ['./public.component.scss'],
 })
-export class CollectionComponent {
+export class PublicComponent {
   loading: boolean;
   problems: ProblemBasic[];
   p: number;
@@ -27,14 +27,14 @@ export class CollectionComponent {
   ) {}
 
   ngOnInit(): void {
-    this.getProblems(this.problemsService.getCollectionPage());
+    this.getProblems(this.problemsService.getPublicPage());
   }
 
   getProblems(params: ProblemSearchParams): void {
     this.p = params.page;
     this.loading = true;
     this.problemsService
-      .getCollectionProblems(params)
+      .getPublicProblems(params)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: (data: ProblemsData) => {
