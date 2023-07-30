@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
 	UserComponent,
 	HomeComponent,
@@ -7,7 +9,11 @@ import {
 	ProblemsComponent,
 	GroupsComponent,
 	FriendsComponent,
-	SettingsComponent
+	SettingsComponent,
+  GeneralSettingsComponent,
+  PasswordSettingsComponent,
+  PrivacySettingsComponent,
+  ConnectionSettingsComponent
 } from '.';
 
 @NgModule({
@@ -18,10 +24,17 @@ import {
 		ProblemsComponent,
 		GroupsComponent,
 		FriendsComponent,
-		SettingsComponent
+		SettingsComponent,
+    GeneralSettingsComponent,
+    PasswordSettingsComponent,
+    PrivacySettingsComponent,
+    ConnectionSettingsComponent
 	],
 	imports: [
-		CommonModule
+		CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgbModule
 	],
 	exports: [
 		UserComponent

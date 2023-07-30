@@ -1,0 +1,21 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Source</th>
+      <th>Solved Problems</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let classfiedProblem of classifiedProblems">
+		<td>{{classfiedProblem.source}}</td>
+      <td>
+		  <a *ngFor="let problem of classfiedProblem.problems; let i = index">
+			  {{problem}}
+			  <text *ngIf="i !== classfiedProblem.problems.length - 1">
+			  	,
+			  </text>
+		  </a>
+	  </td>
+    </tr>
+  </tbody>
+</table>

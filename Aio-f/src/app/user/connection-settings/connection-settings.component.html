@@ -1,0 +1,61 @@
+<div *ngIf="!loading">
+	<div class="card-body">
+		<div class="form-group">
+			<label class="form-label">Codeforces</label>
+			<div class="row">
+				<div class="col">
+					<input type="text" class="form-control" [(ngModel)]="codeforces.name"
+						   autocomplete="false" placeholder="User Name"/>
+				</div>
+				<div class="col">
+					<input type="password" class="form-control" [(ngModel)]="codeforces.password"
+						   autocomplete="false" placeholder="Password"/>
+				</div>
+				<div class="col">
+					<button [disabled]="loading" class="btn btn-primary" (click)="connect('codeforces')">
+						<span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+						Connect
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="form-label">Atcoder</label>
+			<div class="row">
+				<div class="col">
+					<input type="text" class="form-control" [(ngModel)]="atcoder.name"
+						   autocomplete="false" placeholder="User Name"/>
+				</div>
+				<div class="col">
+					<input type="password" class="form-control" [(ngModel)]="atcoder.password"
+						   autocomplete="false" placeholder="Password"/>
+				</div>
+				<div class="col">
+					<button [disabled]="loading" class="btn btn-primary" (click)="connect('atcoder')">
+						<span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+						Connect
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="form-label">Poj</label>
+			<div class="row">
+				<div class="col">
+					<input type="text" class="form-control" [(ngModel)]="poj.name"
+						   autocomplete="false" placeholder="User Name"/>
+				</div>
+				<div class="col">
+					<input type="password" class="form-control" [(ngModel)]="poj.password"
+						   autocomplete="false" placeholder="Password"/>
+				</div>
+				<div class="col">
+					<button [disabled]="loading" class="btn btn-primary" (click)="connect('poj')">
+						<span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+						Connect
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -5,15 +5,12 @@
         <div class="profile-header">
           <div class="profile-header-cover"></div>
           <div class="profile-header-content">
-            <div class="profile-header-img">
-              <img
-                src="https://bootdey.com/img/Content/avatar/avatar3.png"
-                alt=""
-              />
+            <div *ngIf="photo" class="profile-header-img">
+              <img [src]="photo" alt="" />
             </div>
             <div class="profile-header-info">
               <h4 class="m-t-10 m-b-5">Sean Ngu</h4>
-              <p class="m-b-10">UXUI + Frontend Developer</p>
+              <p class="m-b-10">Happy coder</p>
               <button class="btn btn-primary">Follow</button>
             </div>
           </div>
@@ -24,141 +21,47 @@
 </div>
 
 <div class="p-5 bg-white rounded shadow">
-  <ul
-    id="myTab2"
-    role="tablist"
-    class="nav nav-tabs nav-pills with-arrow lined flex-column flex-sm-row text-center"
-  >
-    <li class="nav-item flex-sm-fill">
-      <a
-        id="home-tab"
-        data-toggle="tab"
-        href="/#home"
-        role="tab"
-        aria-controls="home"
-        aria-selected="true"
-        class="nav-link font-weight-bold mr-sm-3 rounded-0 active"
-      >
-        Home
-      </a>
-    </li>
-    <li class="nav-item flex-sm-fill">
-      <a
-        id="contests-tab"
-        data-toggle="tab"
-        role="tab"
-        aria-controls="contests"
-        aria-selected="false"
-        class="nav-link font-weight-bold mr-sm-3 rounded-0"
-        (click)="getContests()"
-      >
-        Contests
-      </a>
-    </li>
-    <li class="nav-item flex-sm-fill">
-      <a
-        id="problems-tab"
-        data-toggle="tab"
-        href="#problems"
-        role="tab"
-        aria-controls="problems"
-        aria-selected="false"
-        class="nav-link font-weight-bold mr-sm-3 rounded-0"
-        (click)="getProblems()"
-      >
-        Problems
-      </a>
-    </li>
-    <li class="nav-item flex-sm-fill">
-      <a
-        id="groups-tab"
-        data-toggle="tab"
-        href="#groups"
-        role="tab"
-        aria-controls="groups"
-        aria-selected="false"
-        class="nav-link font-weight-bold mr-sm-3 rounded-0"
-        (click)="getGroups()"
-      >
-        Groups
-      </a>
-    </li>
-    <li class="nav-item flex-sm-fill">
-      <a
-        id="friends-tab"
-        data-toggle="tab"
-        href="#friends"
-        role="tab"
-        aria-controls="friends"
-        aria-selected="false"
-        class="nav-link font-weight-bold rounded-0"
-        (click)="getFriends()"
-      >
-        Friends
-      </a>
-    </li>
-    <li class="nav-item flex-sm-fill">
-      <a
-        id="settings-tab"
-        data-toggle="tab"
-        href="#settings"
-        role="tab"
-        aria-controls="settings"
-        aria-selected="false"
-        class="nav-link font-weight-bold rounded-0"
-      >
-        Settings
-      </a>
-    </li>
-  </ul>
-  <div id="myTab2Content" class="tab-content">
-    <div
-      id="home"
-      role="tabpanel"
-      aria-labelledby="home-tab"
-      class="tab-pane fade px-4 py-5 show active"
+  <nav>
+    <ul
+      ngbNav
+      #navTabs="ngbNav"
+      class="nav nav-tabs nav-pills lined flex-column flex-sm-row text-center"
     >
-      <app-user-home></app-user-home>
-    </div>
-    <div
-      id="contests"
-      role="tabpanel"
-      aria-labelledby="contests-tab"
-      class="tab-pane fade px-4 py-5"
-    >
-      <app-user-contests></app-user-contests>
-    </div>
-    <div
-      id="problems"
-      role="tabpanel"
-      aria-labelledby="problems-tab"
-      class="tab-pane fade px-4 py-5"
-    >
-      <app-user-problems></app-user-problems>
-    </div>
-    <div
-      id="groups"
-      role="tabpanel"
-      aria-labelledby="groups-tab"
-      class="tab-pane fade px-4 py-5"
-    >
-      <app-user-groups></app-user-groups>
-    </div>
-    <div
-      id="friends"
-      role="tabpanel"
-      aria-labelledby="friends-tab"
-      class="tab-pane fade px-4 py-5"
-    >
-      <app-user-friends></app-user-friends>
-    </div>
-    <div
-      id="settings"
-      role="tabpanel"
-      aria-labelledby="settings-tab"
-      class="tab-pane fade px-4 py-5"
-    >
-      <app-user-settings></app-user-settings>
-    </div>
-  </div>
+      <li [ngbNavItem]="1" class="nav-item flex-sm-fill">
+        <a ngbNavLink>Home</a>
+        <ng-template ngbNavContent><app-user-home></app-user-home></ng-template>
+      </li>
+      <li [ngbNavItem]="2" class="nav-item flex-sm-fill">
+        <a ngbNavLink (click)="getContests()">Contests</a>
+        <ng-template ngbNavContent
+          ><app-user-contests></app-user-contests
+        ></ng-template>
+      </li>
+      <li [ngbNavItem]="3" class="nav-item flex-sm-fill">
+        <a ngbNavLink (click)="getProblems()">Problems</a>
+        <ng-template ngbNavContent
+          ><app-user-problems></app-user-problems
+        ></ng-template>
+      </li>
+      <li [ngbNavItem]="4" class="nav-item flex-sm-fill">
+        <a ngbNavLink (click)="getGroups()">Groups</a>
+        <ng-template ngbNavContent
+          ><app-user-groups></app-user-groups
+        ></ng-template>
+      </li>
+      <li [ngbNavItem]="5" class="nav-item flex-sm-fill">
+        <a ngbNavLink (click)="getFriends()">Friends</a>
+        <ng-template ngbNavContent
+          ><app-user-friends></app-user-friends
+        ></ng-template>
+      </li>
+      <li [ngbNavItem]="6" class="nav-item flex-sm-fill">
+        <a ngbNavLink>Settings</a>
+        <ng-template ngbNavContent
+          ><app-user-settings></app-user-settings
+        ></ng-template>
+      </li>
+    </ul>
+  </nav>
+  <div [ngbNavOutlet]="navTabs" class="mt-2"></div>
 </div>

@@ -5,3 +5,8 @@ export * from './problems/problems.component';
 export * from './groups/groups.component';
 export * from './friends/friends.component';
 export * from './settings/settings.component';
+export * from './general-settings/general-settings.component';
+export * from './password-settings/password-settings.component';
+export * from './privacy-settings/privacy-settings.component';
+export * from './connection-settings/connection-settings.component';
+

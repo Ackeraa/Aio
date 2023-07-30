@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, filter } from 'rxjs';
+import { Subject, BehaviorSubject, Observable, combineLatest } from 'rxjs';
+import { map, filter, switchMap } from 'rxjs/operators';
 import { AuthService } from '../auth';
 
 @Injectable({
@@ -23,7 +24,6 @@ export class UserService {
       this.isSelf = false;
       let url = `/users/${id}/get_info`;
       this.authService.get(url).subscribe((info) => {
-        info.user = JSON.parse(info.user);
         this.homeInfo$.next(info);
       });
     } else {
@@ -55,7 +55,7 @@ export class UserService {
   getProblems(): void {
     this.problems$.subscribe((problems) => {
       if (problems === null) {
-        let url = `users/${this.id}/get_problems`;
+        let url = `/users/${this.id}/get_problems`;
         this.authService
           .get(url)
           .subscribe((problems) => this.problems$.next(problems));
@@ -66,7 +66,7 @@ export class UserService {
   getGroups(): void {
     this.groups$.subscribe((groups) => {
       if (groups === null) {
-        let url = `users/${this.id}/get_groups`;
+        let url = `/users/${this.id}/get_groups`;
         this.authService
           .get(url)
           .subscribe((groups) => this.groups$.next(groups));
@@ -77,11 +77,30 @@ export class UserService {
   getFriends(): void {
     this.friends$.subscribe((friends) => {
       if (friends === null) {
-        let url = `users/${this.id}/get_friends`;
+        let url = `/users/${this.id}/get_friends`;
         this.authService
           .get(url)
           .subscribe((friends) => this.friends$.next(friends));
       }
     });
+  }
+
+  updateUserName(): void {
+    //this.authService.getUserInfo();
+  }
+
+  changeGeneral(data: any): any {
+    let url = `/users/${this.id}`;
+    return this.authService.put(url, data);
+  }
+
+  changePassword(data: any): Observable<any> {
+    return this.authService.logout();
+  }
+
+  connect(which: string, account: any): Observable<any> {
+    let url = `/users/${this.id}/connect`;
+    let data = { which: which, account: account };
+    return this.authService.post(url, data);
   }
 }

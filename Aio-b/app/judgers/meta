@@ -1,0 +1,8 @@
+time:0.002
+time-wall:0.002
+max-rss:1308
+csw-voluntary:3
+csw-forced:6
+exitcode:253
+status:RE
+message:Exited with error status 253
