@@ -13,28 +13,10 @@
       placeholder="{{ 'auth.username' | translate }}"
     />
     <small
-      *ngIf="(f.name.touched || status === XStatus.Clicked) && f.name.errors"
+      *ngIf="(f.name.touched || status === XStatus.Clicked) && f.name.invalid"
       class="text-danger"
     >
-      <div *ngIf="f.name.errors.required">
-        {{
-          'errors.required' | translate : { v1: 'auth.username' | translate }
-        }}
-      </div>
-      <div *ngIf="f.name.errors.tooShort">
-        {{
-          'errors.tooShort'
-            | translate
-              : { v1: 'auth.username' | translate, v2: envs.unameMinLen }
-        }}
-      </div>
-      <div *ngIf="f.name.errors.tooLong">
-        {{
-          'errors.tooLong'
-            | translate
-              : { v1: 'auth.username' | translate, v2: envs.unameMaxLen }
-        }}
-      </div>
+      {{ f.name.errors.error }}
     </small>
     <small *ngIf="status === XStatus.Failed" class="text-danger">
       <div *ngIf="errors.name && !f.name.errors">
@@ -54,12 +36,7 @@
       *ngIf="(f.email.touched || status === XStatus.Clicked) && f.email.errors"
       class="text-danger"
     >
-      <div *ngIf="f.email.errors.required">
-        {{ 'errors.required' | translate : { v1: 'auth.email' | translate } }}
-      </div>
-      <div *ngIf="f.email.errors.invalid">
-        {{ 'errors.invalid' | translate : { v1: 'auth.email' | translate } }}
-      </div>
+      {{ f.email.errors.error }}
     </small>
     <small *ngIf="status === XStatus.Failed" class="text-danger">
       <div *ngIf="errors.email && !f.email.errors">
@@ -80,29 +57,11 @@
     />
     <small
       *ngIf="
-        (f.password.touched || status === XStatus.Clicked) && f.password.errors
+        (f.password.touched || status === XStatus.Clicked) && f.password.invalid
       "
       class="text-danger"
     >
-      <div *ngIf="f.password.errors.required">
-        {{
-          'errors.required' | translate : { v1: 'auth.password' | translate }
-        }}
-      </div>
-      <div *ngIf="f.password.errors.tooShort">
-        {{
-          'errors.tooShort'
-            | translate
-              : { v1: 'auth.password' | translate, v2: envs.passwdMinLen }
-        }}
-      </div>
-      <div *ngIf="f.password.errors.tooLong">
-        {{
-          'errors.tooLong'
-            | translate
-              : { v1: 'auth.password' | translate, v2: envs.passwdMaxLen }
-        }}
-      </div>
+      {{ f.password.errors.error }}
     </small>
     <small *ngIf="status === XStatus.Failed" class="text-danger">
       <div *ngIf="errors.password && !f.password.errors">
@@ -129,19 +88,7 @@
       "
       class="text-danger"
     >
-      <div *ngIf="f.passwordConfirm.errors.required">
-        {{
-          'errors.required'
-            | translate : { v1: 'auth.passwordConfirm' | translate }
-        }}
-      </div>
-      <div
-        *ngIf="
-          !f.passwordConfirm.errors.required && f.passwordConfirm.errors.pattern
-        "
-      >
-        {{ 'auth.passwordMismatch' | translate }}
-      </div>
+      {{ f.passwordConfirm.errors.error }}
     </small>
     <small *ngIf="status === XStatus.Failed" class="text-danger">
       <div *ngIf="errors.password_confirmation && !f.passwordConfirm.errors">

@@ -1,7 +1,8 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { ProblemsService } from '../problems.service';
+import { Validators } from '../../helpers';
 import { CreateValidators } from './create-validators';
 
 @Component({
@@ -31,12 +32,12 @@ export class CreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      name: ['', CreateValidators.textValidator],
+      name: ['', Validators.textValidator],
       memory_limit: ['', CreateValidators.memoryValidator],
       time_limit: ['', CreateValidators.timeValidator],
-      description: ['', CreateValidators.textValidator],
-      input: ['', CreateValidators.textValidator],
-      output: ['', CreateValidators.textValidator],
+      description: ['', Validators.textValidator],
+      input: ['', Validators.textValidator],
+      output: ['', Validators.textValidator],
       samples: this.fb.array([this.createSample()]),
       hint: [''],
     });
@@ -62,8 +63,8 @@ export class CreateComponent implements OnInit {
 
   createSample(): FormGroup {
     return this.fb.group({
-      sample_input: ['', Validators.required],
-      sample_output: ['', Validators.required],
+      sample_input: ['', Validators.textValidator],
+      sample_output: ['', Validators.textValidator],
     });
   }
 
@@ -94,6 +95,7 @@ export class CreateComponent implements OnInit {
 
   selectRule(rule: any) {
     this.rule_type = rule;
+    console.log(this.f.memory_limit.errors.required);
   }
 
   selectVisible(visible: boolean) {

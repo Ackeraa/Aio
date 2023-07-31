@@ -13,6 +13,7 @@
       <small *ngIf="f.name.errors && f.name.touched" class="text-danger">
         <div *ngIf="f.name.errors.required">Title is required.</div>
         <div *ngIf="f.name.errors.tooLong">Title is too long.</div>
+        {{ f.name.errors }}
       </small>
     </div>
     <div class="col-md-4">
@@ -33,10 +34,10 @@
       <label class="form-label"><h5>Memory Limit(MB)</h5> </label>
       <input type="text" [formControl]="f.memory_limit" class="form-control" />
       <small
-        *ngIf="f.memory_limit.errors && f.memory_limit.touched"
+        *ngIf="f.memory_limit.invalid && f.memory_limit.touched"
         class="text-danger"
       >
-        <div *ngIf="f.memory_limit.errors.required">
+        <!-- <div *ngIf="f.memory_limit.errors.required">
           Memory Limit is required.
         </div>
         <div *ngIf="f.memory_limit.errors.invalid">
@@ -44,7 +45,8 @@
         </div>
         <div *ngIf="f.memory_limit.errors.tooLarge">
           Memory Limit is too large
-        </div>
+        </div> -->
+        {{ f.memory_limit.errors.error }}
       </small>
     </div>
   </div>

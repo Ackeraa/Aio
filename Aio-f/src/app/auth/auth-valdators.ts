@@ -2,61 +2,67 @@ import { AbstractControl, ValidatorFn } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 
 export class AuthValidators {
-  static nameValidator(control: AbstractControl): { [s: string]: boolean } {
+  static nameValidator(c: AbstractControl): { [s: string]: string } | null {
     // Check if value is empty;
-    const value = control.value;
+    const value = c.value;
     if (!value) {
-      return { required: true };
+      return { error: 'errors.required' };
     }
 
     // Check if value is valid
     const regex = new RegExp(/^[a-zA-Z][a-zA-Z0-9_]*$/);
     if (!value.match(regex)) {
-      return { invalid: true };
+      return { error: 'errors.invalid' };
     }
 
     // Check if value is too short or too long
     return AuthValidators.lengthValidator(
       environment.unameMinLen,
       environment.unameMaxLen
-    )(control);
+    )(c);
   }
 
-  static emailValidator(control: AbstractControl): { [s: string]: boolean } {
-    const value = control.value;
+  static emailValidator(c: AbstractControl): { [s: string]: string } | null {
+    const value = c.value;
     // Check if value is empty;
     if (!value) {
-      return { empty: true };
+      return { error: 'errors.required' };
     }
 
     // Check if value is valid
     const regex = new RegExp(/^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i);
     if (!value.match(regex)) {
-      return { invalidEmail: true };
+      return { error: 'errors.invalid' };
     }
+
+    return null;
   }
 
-  static passwordValidator(control: AbstractControl): { [s: string]: boolean } {
+  static passwordValidator(c: AbstractControl): { [s: string]: string } | null {
     // Check if value is empty;
-    const value = control.value;
+    const value = c.value;
     if (!value) {
-      return { empty: true };
+      return { empty: 'errors.required' };
     }
 
     // Check if value is too short or too long
     return AuthValidators.lengthValidator(
       environment.passwdMinLen,
       environment.passwdMaxLen
-    )(control);
+    )(c);
   }
 
   static lengthValidator(minLength: number, maxLength: number): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } => {
-      const value = control.value;
+    return (c: AbstractControl): { [key: string]: string } | null => {
+      const value = c.value;
       if (value.length < minLength) {
-        return { tooShort: true };
+        return {
+          error: 'errors.tooShort',
+          v1: 'auth.password',
+          v2: environment.passwdMinLen.toString(),
+        };
       } else if (value.length > maxLength) {
-        return { tooLong: true };
+        return { error: 'errors.tooLong' };
       }
 
       return null;

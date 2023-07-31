@@ -11,6 +11,7 @@ export const environment = {
   unameMaxLen: 10,
   passwdMinLen: 6,
   passwdMaxLen: 16,
+  titleMaxLen: 30,
   textMaxLen: 3000,
   memoryMax: 512,
   timeMax: 10000,
