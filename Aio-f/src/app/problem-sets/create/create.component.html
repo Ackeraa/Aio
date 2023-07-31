@@ -1,31 +1,62 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
-	<div class="row mt-4">
-		<div class="col-md-4">
-			<label class="form-label"><h5>Title</h5></label>
-			<div *ngIf="title.hasError('required') && title.touched"
-				   class="alert alert-danger" role="alert">
-				Title is required.
-			</div>
-			<input type="text" [formControl]="title" class="form-control"/>
-		</div>
-	</div>
-	<div class="row mt-4">
-		<div class="col-md-12">
-			<h5>Description</h5>
-			<div *ngIf="description.hasError('required') && description.touched"
-			 class="alert alert-danger" role="alert">
-				Description is required.
-			</div>
-			<textarea style="overflow-y:auto; height: 30vh" class="form-control"
-				[formControl]="description">
-			</textarea>
-		</div>
-	</div>
+  <div class="row mt-4">
+    <div class="col-md-4">
+      <label class="form-label"><h5>Title</h5></label>
+      <input
+        type="text"
+        [formControl]="f.title"
+        class="form-control"
+        [ngClass]="{
+          'is-invalid':
+            (status === XStatus.Clicked || f.title.touched) && f.title.invalid
+        }"
+      />
+      <small
+        *ngIf="
+          f.title.invalid && (f.title.touched || status === XStatus.Clicked)
+        "
+        class="text-danger"
+      >
+        {{ f.title.errors.error }}
+      </small>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <h5>Description</h5>
+      <textarea
+        style="overflow-y: auto; height: 30vh"
+        class="form-control"
+        [formControl]="f.description"
+        [ngClass]="{
+          'is-invalid':
+            (status === XStatus.Clicked || f.description.touched) &&
+            f.description.invalid
+        }"
+      >
+      </textarea>
+      <small
+        *ngIf="
+          f.description.invalid &&
+          (f.description.touched || status === XStatus.Clicked)
+        "
+        class="text-danger"
+      >
+        {{ f.description.errors.error }}
+      </small>
+    </div>
+  </div>
 
-	<div class="row justify-content-center mt-5">
-		<button type="submit" class="btn btn-success col-sm-4">
+  <div class="row justify-content-center mt-5">
+    <button
+      [disabled]="status === XStatus.Sent"
+      class="btn btn-success col-sm-4"
+    >
+      <span
+        *ngIf="status === XStatus.Sent"
+        class="spinner-border spinner-border-sm mr-1"
+      ></span>
       <fa-icon [icon]="['fas', 'upload']"></fa-icon> Submit
-		</button>
-	</div>
+    </button>
+  </div>
 </form>
-

@@ -56,7 +56,11 @@
     "allowedLanguages": "允许语言",
     "rule": "规则"
   },
-  "problemSet": {},
+  "problemSets": {
+    "title": "标题",
+    "description": "描述",
+    "submit": "提交"
+  },
   "submissions": {},
   "discussion": {},
   "groups": {},

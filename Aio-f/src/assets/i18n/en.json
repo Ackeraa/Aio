@@ -56,7 +56,11 @@
     "allowedLanguages": "Allowed languages",
     "rule": "Rule"
   },
-  "problemSet": {},
+  "problemSets": {
+    "title": "Title",
+    "description": "Description",
+    "submit": "Submit"
+  },
   "submissions": {},
   "discussion": {},
   "groups": {},
