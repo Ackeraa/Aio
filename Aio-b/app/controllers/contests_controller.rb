@@ -35,10 +35,9 @@ class ContestsController < ApplicationController
     render json: { total: total, contests: @contests }
   end
 
-  # GET /contests/group
+  # Get /contests/group
   def group
     query = params[:query]
-    puts "SSSSSS", query
     total = Contest.where('name ilike(?)',  "%#{query}%").count
     @contests = Contest.where('name ilike(?)',  "%#{query}%").limit(20).offset(@page * 20)
     render json: { total: total, contests: @contests }

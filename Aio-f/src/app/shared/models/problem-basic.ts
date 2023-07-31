@@ -4,4 +4,6 @@ export interface ProblemBasic {
   vid: number;
   name: string;
   source: string;
+  submissions: number;
+  accepts: number;
 }

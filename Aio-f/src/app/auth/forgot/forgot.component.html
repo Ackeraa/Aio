@@ -12,24 +12,20 @@
       [ngClass]="{ 'is-invalid': status == XStatus.Clicked && f.email.errors }"
       placeholder="{{ 'auth.email' | translate }}"
     />
-    <div
+    <small
       *ngIf="(f.email.touched || status == XStatus.Clicked) && f.email.errors"
       class="text-danger"
     >
-      <small>
-        <div *ngIf="f.email.errors.required">
-          {{ 'errors.required' | translate : { v1: 'auth.email' | translate } }}
-        </div>
-        <div *ngIf="f.email.errors.invalidEmail">
-          {{ 'errors.invalid' | translate : { v1: 'auth.email' | translate } }}
-        </div>
-      </small>
-    </div>
-    <div *ngIf="status === XStatus.Failed" class="text-danger mt-3">
-      <small>
-        <center>{{ errors[0] }}</center>
-      </small>
-    </div>
+      <div *ngIf="f.email.errors.required">
+        {{ 'errors.required' | translate : { v1: 'auth.email' | translate } }}
+      </div>
+      <div *ngIf="f.email.errors.invalid">
+        {{ 'errors.invalid' | translate : { v1: 'auth.email' | translate } }}
+      </div>
+    </small>
+    <small *ngIf="status === XStatus.Failed" class="text-danger mt-3">
+      <center>{{ errors[0] }}</center>
+    </small>
   </div>
   <br />
   <div class="d-grid gap-2 mb-3">

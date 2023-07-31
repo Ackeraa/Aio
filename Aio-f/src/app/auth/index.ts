@@ -5,4 +5,6 @@ export * from './register/register.component';
 export * from './reset/reset.component';
 export * from './reset/reset.guard';
 export * from './auth.guard';
+export * from './auth-valdators';
 export * from './auth.service';
+export * from './auth-validator.service';

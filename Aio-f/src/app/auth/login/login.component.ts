@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { AuthService, AuthValidators } from '../';
 import { AlertService, XStatus } from '../../shared';
 
 @Component({
@@ -27,8 +27,8 @@ export class LoginComponent {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      name_email: ['', Validators.required],
-      password: ['', Validators.required],
+      name_email: ['', AuthValidators.emailValidator],
+      password: ['', AuthValidators.passwordValidator],
     });
 
     // Get return url from route parameters or default to '/'
