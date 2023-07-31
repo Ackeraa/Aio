@@ -12,9 +12,7 @@
       />
       <small *ngIf="f.name.errors && f.name.touched" class="text-danger">
         <div *ngIf="f.name.errors.required">Title is required.</div>
-        <div *ngIf="!f.name.errors.required && f.name.errors.tooLong">
-          Title should be at most 5 characters.
-        </div>
+        <div *ngIf="f.name.errors.tooLong">Title is too long.</div>
       </small>
     </div>
     <div class="col-md-4">
@@ -25,14 +23,10 @@
         class="text-danger"
       >
         <div *ngIf="f.time_limit.errors.required">Time Limit is required.</div>
-        <div
-          *ngIf="
-            !f.time_limit.errors.required &&
-            f.time_limit.errors.invalidTimeLimit
-          "
-        >
+        <div *ngIf="f.time_limit.errors.invalid">
           Time Limit should be integer value.
         </div>
+        <div *ngIf="f.time_limit.errors.tooLarge">Time Limit is too large.</div>
       </small>
     </div>
     <div class="col-md-4">
@@ -45,13 +39,11 @@
         <div *ngIf="f.memory_limit.errors.required">
           Memory Limit is required.
         </div>
-        <div
-          *ngIf="
-            !f.memory_limit.errors.required &&
-            f.memory_limit.errors.invalidTimeLimit
-          "
-        >
+        <div *ngIf="f.memory_limit.errors.invalid">
           Memory Limit should be integer value.
+        </div>
+        <div *ngIf="f.memory_limit.errors.tooLarge">
+          Memory Limit is too large
         </div>
       </small>
     </div>

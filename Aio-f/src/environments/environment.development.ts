@@ -10,5 +10,8 @@ export const environment = {
   unameMaxLen: 10,
   passwdMinLen: 6,
   passwdMaxLen: 16,
+  textMaxLen: 3000,
+  memoryMax: 512,
+  timeMax: 10000,
   vproblemsSources: ['Atcoder', 'Codeforces', 'UVA', 'POJ'],
 };

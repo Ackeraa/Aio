@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../';
+import { AuthService, AuthValidators } from '../';
 import { environment } from 'src/environments/environment';
 import { XStatus, AlertService } from '../../shared';
-import { AuthValidators } from '../auth-valdators';
 
 @Component({
   selector: 'app-auth-reset',
@@ -29,10 +28,7 @@ export class ResetComponent {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      password: [
-        '',
-        [Validators.required, AuthValidators.passwordLengthValidator],
-      ],
+      password: ['', AuthValidators.passwordValidator],
       passwordConfirm: ['', Validators.required],
     });
   }

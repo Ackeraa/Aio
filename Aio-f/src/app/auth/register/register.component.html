@@ -32,7 +32,7 @@
         {{
           'errors.tooLong'
             | translate
-              : { v1: 'keywords.username' | translate, v2: envs.unameMaxLen }
+              : { v1: 'auth.username' | translate, v2: envs.unameMaxLen }
         }}
       </div>
     </small>
@@ -57,7 +57,7 @@
       <div *ngIf="f.email.errors.required">
         {{ 'errors.required' | translate : { v1: 'auth.email' | translate } }}
       </div>
-      <div *ngIf="f.email.errors.invalidEmail">
+      <div *ngIf="f.email.errors.invalid">
         {{ 'errors.invalid' | translate : { v1: 'auth.email' | translate } }}
       </div>
     </small>

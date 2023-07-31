@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/shared';
-import { AuthService } from '../';
-import { XStatus } from 'src/app/shared';
-import { AuthValidators } from '../auth-valdators';
+import { AuthService, AuthValidators } from '../';
+import { XStatus } from '../../shared';
 
 @Component({
   selector: 'app-auth-forgot',
@@ -27,7 +26,7 @@ export class ForgotComponent {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      email: ['', [Validators.required, AuthValidators.emailValidator]],
+      email: ['', AuthValidators.emailValidator],
     });
   }
 

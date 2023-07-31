@@ -1,14 +1,8 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { NavigationStart, Router } from '@angular/router';
-import {
-  FormBuilder,
-  FormGroup,
-  FormArray,
-  Validators,
-  AbstractControl,
-  FormControl,
-} from '@angular/forms';
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ProblemsService } from '../problems.service';
+import { CreateValidators } from './create-validators';
 
 @Component({
   selector: 'app-problems-create',
@@ -37,21 +31,12 @@ export class CreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      name: [
-        '',
-        Validators.compose([Validators.required, Validators.maxLength(15)]),
-      ],
-      memory_limit: [
-        '',
-        Validators.compose([Validators.required, this.memoryValidator]),
-      ],
-      time_limit: [
-        '',
-        Validators.compose([Validators.required, this.timeValidator]),
-      ],
-      description: ['', Validators.required],
-      input: ['', Validators.required],
-      output: ['', Validators.required],
+      name: ['', CreateValidators.textValidator],
+      memory_limit: ['', CreateValidators.memoryValidator],
+      time_limit: ['', CreateValidators.timeValidator],
+      description: ['', CreateValidators.textValidator],
+      input: ['', CreateValidators.textValidator],
+      output: ['', CreateValidators.textValidator],
       samples: this.fb.array([this.createSample()]),
       hint: [''],
     });
@@ -71,20 +56,8 @@ export class CreateComponent implements OnInit {
     this.submitted = false;
   }
 
-  timeValidator(time_limit: FormControl): { [s: string]: boolean } {
-    if (!time_limit.value.match(/^[1-9]\d*$/)) {
-      return { invalidTimeLimit: true };
-    }
-  }
-
   get f() {
     return this.form.controls;
-  }
-
-  memoryValidator(memory_limit: FormControl): { [s: string]: boolean } {
-    if (!memory_limit.value.match(/^[1-9]\d*$/)) {
-      return { invalidMemoryLimit: true };
-    }
   }
 
   createSample(): FormGroup {

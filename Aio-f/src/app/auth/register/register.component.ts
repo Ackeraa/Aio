@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
-import { AuthService } from '../';
+import { AuthService, AuthValidators } from '../';
 import { XStatus, AlertService } from '../../shared';
-import { AuthValidators } from '../auth-valdators';
 
 @Component({
   selector: 'app-auth-register',
@@ -27,19 +26,9 @@ export class RegisterComponent {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      name: [
-        '',
-        [
-          AuthValidators.nameValidator,
-          Validators.required,
-          AuthValidators.nameLengthValidator,
-        ],
-      ],
-      email: ['', [Validators.required, AuthValidators.emailValidator]],
-      password: [
-        '',
-        [Validators.required, AuthValidators.passwordLengthValidator],
-      ],
+      name: ['', AuthValidators.nameValidator],
+      email: ['', AuthValidators.emailValidator],
+      password: ['', AuthValidators.passwordValidator],
       passwordConfirm: ['', Validators.required],
     });
   }
