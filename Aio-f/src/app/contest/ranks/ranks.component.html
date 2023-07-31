@@ -1,33 +1,37 @@
 <div class="card shadow-sm">
-	<div class="card-body">
-		<table class="table table-hover">
-			<thead>
-				<tr class="row">
-					<th class="col">
-						RANK
-					</th>
-					<th class="col-3">
-						USER
-					</th>
-					<th class="col">
-						SCORE
-					</th>
-					<th *ngFor="let problem of problems" class="col">
-						{{problem}}
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr *ngFor="let rank of ranks let i = index" class="row">
-					<td class="col">{{i + 1}}</td>
-					<td class="col-3">{{rank.user_id}}</td>
-					<td class="col">{{rank.time}}</td>
-					<td *ngFor="let problem of problems let j = index" class="col">
-						{{rank.submission_info[j]?.result}}
-					</td>
-				</tr>
-			</tbody>
-
-		</table>
-	</div>
+  <div class="card-body">
+    <div class="row">
+      <th class="col">RANK</th>
+      <th class="col-3">USER</th>
+      <th class="col">SCORE</th>
+      <th *ngFor="let problem of problems" class="col">
+        {{ problem }}
+      </th>
+    </div>
+    <hr class="title" />
+    <div *ngFor="let rank of ranks; let i = index">
+      <div class="row">
+        <div class="col">{{ i + 1 }}</div>
+        <div class="col-3">{{ rank.user_id }}</div>
+        <div class="col">{{ rank.time }}</div>
+        <div *ngFor="let problem of problems; let j = index" class="col">
+          <div *ngIf="rank.submission_info[j]?.result == 'AC'">
+            <button class="btn btn-success">
+              {{ rank.submission_info[j]?.result }}
+            </button>
+          </div>
+          <div
+            *ngIf="
+              rank.submission_info[j]?.result != 'AC' && rank.submission_info[j]
+            "
+          >
+            <button class="btn btn-danger">
+              {{ rank.submission_info[j]?.result }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <hr />
+    </div>
+  </div>
 </div>

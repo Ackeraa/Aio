@@ -15,39 +15,35 @@
       placeholder="{{ 'auth.password' | translate }}"
       autocomplete="false"
     />
-    <div
+    <small
       *ngIf="
         (f.password.touched || status == XStatus.Clicked) && f.password.errors
       "
       class="text-danger"
     >
-      <small>
-        <div *ngIf="f.password.errors.required">
-          {{
-            'errors.required' | translate : { v1: 'auth.password' | translate }
-          }}
-        </div>
-        <div *ngIf="f.password.errors.tooShort">
-          {{
-            'errors.tooShort'
-              | translate
-                : { v1: 'auth.password' | translate, v2: envs.passwdMinLen }
-          }}
-        </div>
-        <div *ngIf="f.password.errors.tooLong">
-          {{
-            'errors.tooLong'
-              | translate
-                : { v1: 'auth.password' | translate, v2: envs.passwdMaxLen }
-          }}
-        </div>
-      </small>
-    </div>
-    <div *ngIf="status == XStatus.Clicked && errors" class="text-danger">
-      <small>
-        {{ errors[0] }}
-      </small>
-    </div>
+      <div *ngIf="f.password.errors.required">
+        {{
+          'errors.required' | translate : { v1: 'auth.password' | translate }
+        }}
+      </div>
+      <div *ngIf="f.password.errors.tooShort">
+        {{
+          'errors.tooShort'
+            | translate
+              : { v1: 'auth.password' | translate, v2: envs.passwdMinLen }
+        }}
+      </div>
+      <div *ngIf="f.password.errors.tooLong">
+        {{
+          'errors.tooLong'
+            | translate
+              : { v1: 'auth.password' | translate, v2: envs.passwdMaxLen }
+        }}
+      </div>
+    </small>
+    <small *ngIf="status == XStatus.Clicked && errors" class="text-danger">
+      {{ errors[0] }}
+    </small>
   </div>
   <br />
   <div class="form-group">
@@ -62,37 +58,32 @@
       placeholder="{{ 'auth.passwordConfirm' | translate }}"
       autocomplete="false"
     />
-    <div
+    <small
       *ngIf="
         (f.passwordConfirm.touched || status == XStatus.Clicked) &&
         f.passwordConfirm.errors
       "
       class="text-danger"
     >
-      <small>
-        <div *ngIf="f.passwordConfirm.errors.required">
-          {{
-            'errors.required'
-              | translate : { v1: 'auth.passwordConfirm' | translate }
-          }}
-        </div>
-        <div
-          *ngIf="
-            !f.passwordConfirm.errors.required &&
-            f.passwordConfirm.errors.pattern
-          "
-        >
-          {{ 'auth.passwordMismatch' | translate }}
-        </div>
-      </small>
-    </div>
-    <div *ngIf="status == XStatus.Failed" class="text-danger">
-      <small>
-        <div *ngIf="errors.password_confirmation">
-          {{ errors.password_confirmation[0] }}
-        </div>
-      </small>
-    </div>
+      <div *ngIf="f.passwordConfirm.errors.required">
+        {{
+          'errors.required'
+            | translate : { v1: 'auth.passwordConfirm' | translate }
+        }}
+      </div>
+      <div
+        *ngIf="
+          !f.passwordConfirm.errors.required && f.passwordConfirm.errors.pattern
+        "
+      >
+        {{ 'auth.passwordMismatch' | translate }}
+      </div>
+    </small>
+    <small *ngIf="status == XStatus.Failed" class="text-danger">
+      <div *ngIf="errors.password_confirmation">
+        {{ errors.password_confirmation[0] }}
+      </div>
+    </small>
   </div>
   <br />
   <div class="d-grid gap-2 mb-3">

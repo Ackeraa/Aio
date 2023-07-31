@@ -1,117 +1,119 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="row mt-4">
     <div class="col-md-4">
       <label class="form-label"><h5>Title</h5></label>
-      <div
-        *ngIf="name.hasError('required') && name.touched"
-        class="alert alert-danger"
-        role="alert"
-      >
-        Title is required.
-      </div>
-      <input type="text" [formControl]="name" class="form-control" />
+      <input
+        type="text"
+        [formControl]="f.name"
+        class="form-control"
+        [ngClass]="{
+          'is-invalid': f.name.touched && f.name.errors
+        }"
+      />
+      <small *ngIf="f.name.errors && f.name.touched" class="text-danger">
+        <div *ngIf="f.name.errors.required">Title is required.</div>
+        <div *ngIf="!f.name.errors.required && f.name.errors.tooLong">
+          Title should be at most 5 characters.
+        </div>
+      </small>
     </div>
     <div class="col-md-4">
       <label class="form-label"><h5>Time Limit(MS)</h5></label>
-      <div
-        *ngIf="time_limit.hasError('required') && time_limit.touched"
-        class="alert alert-danger"
-        role="alert"
+      <input type="text" [formControl]="f.time_limit" class="form-control" />
+      <small
+        *ngIf="f.time_limit.errors && f.time_limit.touched"
+        class="text-danger"
       >
-        Time Limit is required.
-      </div>
-      <div
-        *ngIf="
-          !time_limit.hasError('required') &&
-          time_limit.hasError('invalidTimeLimit') &&
-          time_limit.touched
-        "
-        class="alert alert-danger"
-        role="alert"
-      >
-        Time Limit should be integer value.
-      </div>
-      <input type="text" [formControl]="time_limit" class="form-control" />
+        <div *ngIf="f.time_limit.errors.required">Time Limit is required.</div>
+        <div
+          *ngIf="
+            !f.time_limit.errors.required &&
+            f.time_limit.errors.invalidTimeLimit
+          "
+        >
+          Time Limit should be integer value.
+        </div>
+      </small>
     </div>
     <div class="col-md-4">
       <label class="form-label"><h5>Memory Limit(MB)</h5> </label>
-      <div
-        *ngIf="memory_limit.hasError('required') && memory_limit.touched"
-        class="alert alert-danger"
-        role="alert"
+      <input type="text" [formControl]="f.memory_limit" class="form-control" />
+      <small
+        *ngIf="f.memory_limit.errors && f.memory_limit.touched"
+        class="text-danger"
       >
-        Memory Limit is required.
-      </div>
-      <div
-        *ngIf="
-          !memory_limit.hasError('required') &&
-          memory_limit.hasError('invalidMemoryLimit') &&
-          memory_limit.touched
-        "
-        class="alert alert-danger"
-        role="alert"
-      >
-        Memory Limit should be integer value.
-      </div>
-      <input type="text" [formControl]="memory_limit" class="form-control" />
+        <div *ngIf="f.memory_limit.errors.required">
+          Memory Limit is required.
+        </div>
+        <div
+          *ngIf="
+            !f.memory_limit.errors.required &&
+            f.memory_limit.errors.invalidTimeLimit
+          "
+        >
+          Memory Limit should be integer value.
+        </div>
+      </small>
     </div>
   </div>
 
   <div class="row mt-4">
     <div class="col-md-12">
       <h3>Description</h3>
-      <div
-        *ngIf="description.hasError('required') && description.touched"
-        class="alert alert-danger"
-        role="alert"
-      >
-        Description is required.
-      </div>
-      <markdown [data]="description.value" katex></markdown>
+      <markdown [data]="f.description.value" katex></markdown>
       <textarea
         style="overflow-y: auto; height: 30vh"
         class="form-control"
-        [formControl]="description"
+        [formControl]="f.description"
       >
       </textarea>
+      <small
+        *ngIf="f.description.errors && f.description.touched"
+        class="text-danger"
+      >
+        <div *ngIf="f.description.errors.required">
+          Description is required.
+        </div>
+        <div *ngIf="f.description.errors.tooLong">
+          Description should be at most 5 characters.
+        </div>
+      </small>
     </div>
   </div>
   <div class="row mt-4">
     <div class="col-md-12">
       <h3>Input</h3>
-      <div
-        *ngIf="input.hasError('required') && input.touched"
-        class="alert alert-danger"
-        role="alert"
-      >
-        Input is required.
-      </div>
-      <markdown [data]="input.value" katex></markdown>
+      <markdown [data]="f.input.value" katex></markdown>
       <textarea
         style="overflow-y: auto; height: 15vh"
         class="form-control"
-        [formControl]="input"
+        [formControl]="f.input"
       >
       </textarea>
+      <small *ngIf="f.input.errors && f.input.touched" class="text-danger">
+        <div *ngIf="f.input.errors.required">Input is required.</div>
+        <div *ngIf="f.input.errors.tooLong">
+          Input should be at most 5 characters.
+        </div>
+      </small>
     </div>
   </div>
   <div class="row mt-4">
     <div class="col-md-12">
       <h3>Output</h3>
-      <div
-        *ngIf="output.hasError('required') && output.touched"
-        class="alert alert-danger"
-        role="alert"
-      >
-        Output is required.
-      </div>
-      <markdown [data]="output.value" katex></markdown>
+      <markdown [data]="f.output.value" katex></markdown>
       <textarea
         style="overflow-y: auto; height: 15vh"
         class="form-control"
-        [formControl]="output"
+        [formControl]="f.output"
       >
       </textarea>
+      <small *ngIf="f.output.errors && f.output.touched" class="text-danger">
+        <div *ngIf="f.output.errors.required">Output is required.</div>
+        <div *ngIf="f.output.errors.tooLong">
+          Output should be at most 5 characters.
+        </div>
+      </small>
     </div>
   </div>
   <h3 class="d-grid d-flex justify-content-between mt-4">
@@ -128,26 +130,6 @@
     <div [formGroupName]="i">
       <div class="row">
         <div class="col-md-12">
-          <div
-            *ngIf="
-              sample.controls['sample_input'].hasError('required') &&
-              sample.controls['sample_input'].touched
-            "
-            class="alert alert-danger"
-            role="alert"
-          >
-            Input sample is required.
-          </div>
-          <div
-            *ngIf="
-              sample.controls['sample_output'].hasError('required') &&
-              sample.controls['sample_output'].touched
-            "
-            class="alert alert-danger"
-            role="alert"
-          >
-            Output sample is required.
-          </div>
           <div
             class="card-group d-grid gap-2 d-flex justify-content-between mt-1 mb-4"
           >
@@ -168,6 +150,22 @@
                     formControlName="sample_input"
                   >
                   </textarea>
+                  <small
+                    *ngIf="
+                      sample.controls['sample_input'].errors &&
+                      sample.controls['sample_input'].touched
+                    "
+                    class="text-danger"
+                  >
+                    <div
+                      *ngIf="sample.controls['sample_input'].errors.required"
+                    >
+                      Input sample is required.
+                    </div>
+                    <div *ngIf="sample.controls['sample_input'].errors.tooLong">
+                      Input should be at most 5 characters
+                    </div>
+                  </small>
                 </div>
               </div>
             </div>
@@ -188,6 +186,24 @@
                     formControlName="sample_output"
                   >
                   </textarea>
+                  <small
+                    *ngIf="
+                      sample.controls['sample_output'].errors &&
+                      sample.controls['sample_output'].touched
+                    "
+                    class="text-danger"
+                  >
+                    <div
+                      *ngIf="sample.controls['sample_output'].errors.required"
+                    >
+                      Output sample is required.
+                    </div>
+                    <div
+                      *ngIf="sample.controls['sample_output'].errors.tooLong"
+                    >
+                      Output should be at most 5 characters
+                    </div>
+                  </small>
                 </div>
               </div>
             </div>
@@ -199,11 +215,11 @@
   <div class="row mt-4">
     <div class="col-md-12">
       <h3>Hint</h3>
-      <markdown [data]="hint.value" katex></markdown>
+      <markdown [data]="f.hint.value" katex></markdown>
       <textarea
         style="overflow-y: auto; height: 13vh"
         class="form-control"
-        [formControl]="hint"
+        [formControl]="f.hint"
       >
       </textarea>
     </div>
@@ -272,10 +288,7 @@
       >
         Please select at least one language.
       </div>
-      <div
-        *ngFor="let lan of languages"
-        class="form-check form-check-inline"
-      >
+      <div *ngFor="let lan of languages" class="form-check form-check-inline">
         <input
           type="checkbox"
           class="form-check-input"

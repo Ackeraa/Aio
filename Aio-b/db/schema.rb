@@ -2,16 +2,15 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# This file is the source Rails uses to define your schema when running `rails
-# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
 # be faster and is potentially less error prone than running all of your
 # migrations from scratch. Old migrations may fail to apply correctly if those
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_18_025208) do
-
+ActiveRecord::Schema[7.0].define(version: 2023_07_31_023046) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,8 +21,8 @@ ActiveRecord::Schema.define(version: 2021_05_18_025208) do
     t.jsonb "submission_info"
     t.bigint "contest_id", null: false
     t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "user_name"
     t.index ["contest_id"], name: "index_acm_contest_ranks_on_contest_id"
     t.index ["user_id"], name: "index_acm_contest_ranks_on_user_id"
@@ -32,8 +31,8 @@ ActiveRecord::Schema.define(version: 2021_05_18_025208) do
   create_table "auth_permissions", force: :cascade do |t|
     t.string "name"
     t.integer "type_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "auth_permissions_users", force: :cascade do |t|
@@ -55,8 +54,8 @@ ActiveRecord::Schema.define(version: 2021_05_18_025208) do
     t.integer "parent_id"
     t.string "creator"
     t.text "description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "is_visible", default: false
     t.jsonb "likes", default: {"votes"=>0, "voters"=>[]}
     t.jsonb "dislikes", default: {"votes"=>0, "voters"=>[]}
@@ -69,8 +68,8 @@ ActiveRecord::Schema.define(version: 2021_05_18_025208) do
     t.text "description"
     t.boolean "visible"
     t.bigint "contest_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["contest_id"], name: "index_contest_announcements_on_contest_id"
   end
 
@@ -82,8 +81,8 @@ ActiveRecord::Schema.define(version: 2021_05_18_025208) do
     t.text "output"
     t.text "hint"
     t.jsonb "samples"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["contest_id"], name: "index_contest_problems_on_contest_id"
     t.index ["problem_id"], name: "index_contest_problems_on_problem_id"
   end
@@ -92,13 +91,13 @@ ActiveRecord::Schema.define(version: 2021_05_18_025208) do
     t.string "creater"
     t.string "name"
     t.text "description"
-    t.datetime "start_time"
-    t.datetime "end_time"
+    t.datetime "start_time", precision: nil
+    t.datetime "end_time", precision: nil
     t.string "rule_type"
     t.string "password"
     t.boolean "is_visible"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "group_id", default: 0, null: false
     t.index ["group_id"], name: "index_contests_on_group_id"
   end
@@ -113,23 +112,23 @@ ActiveRecord::Schema.define(version: 2021_05_18_025208) do
   create_table "contribute_scores", force: :cascade do |t|
     t.string "action"
     t.integer "score"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "cost_scores", force: :cascade do |t|
     t.string "action"
     t.integer "score"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "events", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_events_on_user_id"
   end
 
@@ -137,8 +136,8 @@ ActiveRecord::Schema.define(version: 2021_05_18_025208) do
     t.bigint "group_id"
     t.bigint "user_id"
     t.string "role"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_group_users_on_group_id"
     t.index ["user_id"], name: "index_group_users_on_user_id"
   end
@@ -146,23 +145,23 @@ ActiveRecord::Schema.define(version: 2021_05_18_025208) do
   create_table "groups", force: :cascade do |t|
     t.string "creater"
     t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "items", force: :cascade do |t|
     t.string "name"
     t.string "description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "picture"
   end
 
   create_table "languages", force: :cascade do |t|
     t.string "source"
     t.jsonb "allowed_languages"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "oi_contest_ranks", force: :cascade do |t|
@@ -172,8 +171,8 @@ ActiveRecord::Schema.define(version: 2021_05_18_025208) do
     t.jsonb "submission_info"
     t.bigint "contest_id", null: false
     t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["contest_id"], name: "index_oi_contest_ranks_on_contest_id"
     t.index ["user_id"], name: "index_oi_contest_ranks_on_user_id"
   end
@@ -182,8 +181,8 @@ ActiveRecord::Schema.define(version: 2021_05_18_025208) do
     t.string "creater"
     t.string "name"
     t.text "description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "group_id", default: 0, null: false
     t.index ["group_id"], name: "index_problem_sets_on_group_id"
   end
@@ -216,10 +215,10 @@ ActiveRecord::Schema.define(version: 2021_05_18_025208) do
     t.string "spj"
     t.string "rule_type"
     t.boolean "is_visible"
-    t.integer "submissions"
-    t.integer "accepts"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.integer "submissions", default: 0
+    t.integer "accepts", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "vid"
   end
 
@@ -243,8 +242,8 @@ ActiveRecord::Schema.define(version: 2021_05_18_025208) do
     t.integer "likes"
     t.bigint "problem_id", null: false
     t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["problem_id"], name: "index_solutions_on_problem_id"
     t.index ["user_id"], name: "index_solutions_on_user_id"
   end
@@ -258,8 +257,8 @@ ActiveRecord::Schema.define(version: 2021_05_18_025208) do
     t.bigint "problem_id", null: false
     t.bigint "contest_id", null: false
     t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["contest_id"], name: "index_submissions_on_contest_id"
     t.index ["problem_id"], name: "index_submissions_on_problem_id"
     t.index ["user_id"], name: "index_submissions_on_user_id"
@@ -267,8 +266,8 @@ ActiveRecord::Schema.define(version: 2021_05_18_025208) do
 
   create_table "tags", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "team_contest_ranks", force: :cascade do |t|
@@ -278,8 +277,8 @@ ActiveRecord::Schema.define(version: 2021_05_18_025208) do
     t.json "submission_info"
     t.bigint "contest_id", null: false
     t.bigint "team_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["contest_id"], name: "index_team_contest_ranks_on_contest_id"
     t.index ["team_id"], name: "index_team_contest_ranks_on_team_id"
   end
@@ -292,8 +291,8 @@ ActiveRecord::Schema.define(version: 2021_05_18_025208) do
     t.jsonb "member2"
     t.jsonb "member3"
     t.bigint "group_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_teams_on_group_id"
   end
 
@@ -301,8 +300,8 @@ ActiveRecord::Schema.define(version: 2021_05_18_025208) do
     t.bigint "user_id"
     t.bigint "problem_id"
     t.string "result"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["problem_id"], name: "index_user_problems_on_problem_id"
     t.index ["user_id"], name: "index_user_problems_on_user_id"
   end
@@ -312,12 +311,12 @@ ActiveRecord::Schema.define(version: 2021_05_18_025208) do
     t.string "uid", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
+    t.datetime "reset_password_sent_at", precision: nil
     t.boolean "allow_password_change", default: false
-    t.datetime "remember_created_at"
+    t.datetime "remember_created_at", precision: nil
     t.string "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
+    t.datetime "confirmed_at", precision: nil
+    t.datetime "confirmation_sent_at", precision: nil
     t.string "unconfirmed_email"
     t.string "name"
     t.string "real_name"
@@ -329,12 +328,12 @@ ActiveRecord::Schema.define(version: 2021_05_18_025208) do
     t.string "email"
     t.text "tokens"
     t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
+    t.datetime "current_sign_in_at", precision: nil
+    t.datetime "last_sign_in_at", precision: nil
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "school"
     t.jsonb "followers", default: []
     t.jsonb "following", default: []

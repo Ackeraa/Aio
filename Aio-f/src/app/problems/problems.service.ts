@@ -1,22 +1,30 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { AuthService } from '../auth';
 import { ProblemSearchService, ProblemSearchParams } from '../shared';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProblemsService {
-  constructor(private ProblemSearchService: ProblemSearchService) {}
+  constructor(
+    private problemSearchService: ProblemSearchService,
+    private authService: AuthService
+  ) {}
 
   getPublicProblems(params: ProblemSearchParams): Observable<any> {
-    return this.ProblemSearchService.get(params);
+    return this.problemSearchService.get(params);
   }
 
   getPublicPage(): ProblemSearchParams {
-    return { page: this.ProblemSearchService.getPage() };
+    return { page: this.problemSearchService.getPage() };
   }
 
   spideProblems(source: string): Observable<any> {
-    return this.ProblemSearchService.spide(source);
+    return this.problemSearchService.spide(source);
+  }
+
+  createProblem(problem: any): any {
+    return this.authService.post('/problems', problem);
   }
 }

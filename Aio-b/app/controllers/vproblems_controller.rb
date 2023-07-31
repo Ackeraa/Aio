@@ -43,6 +43,16 @@ class VproblemsController < ApplicationController
                                 source.downcase, "%#{query}%")
                          .order(:id).limit(20).offset(@page * 20)
     end
+    @problems = @problems.map {
+      |problem| { 
+        id: problem.id, 
+        vid: problem.vid,
+        name: problem.name, 
+        source: problem.source, 
+        submissions: problem.submissions,
+        accepts: problem.accepts
+      }
+    }
     render json: { total: total, problems: @problems }
   end
 

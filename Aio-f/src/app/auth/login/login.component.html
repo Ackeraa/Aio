@@ -14,21 +14,19 @@
       }"
       placeholder="{{ 'auth.username' | translate }}"
     />
-    <div
+    <small
       *ngIf="
         (f.name_email.touched || status === XStatus.Clicked) &&
         f.name_email.errors
       "
       class="text-danger"
     >
-      <small>
-        <div *ngIf="f.name_email.errors.required">
-          {{
-            'errors.required' | translate : { v1: 'auth.username' | translate }
-          }}
-        </div>
-      </small>
-    </div>
+      <div *ngIf="f.name_email.errors.required">
+        {{
+          'errors.required' | translate : { v1: 'auth.username' | translate }
+        }}
+      </div>
+    </small>
   </div>
   <div class="form-group">
     <input
@@ -41,30 +39,26 @@
       placeholder="{{ 'auth.password' | translate }}"
       autocomplete="false"
     />
-    <div
+    <small
       *ngIf="
         (f.password.touched || status === XStatus.Clicked) && f.password.errors
       "
       class="text-danger"
     >
-      <small>
-        <div *ngIf="f.password.errors.required">
-          {{
-            'errors.required' | translate : { v1: 'auth.password' | translate }
-          }}
-        </div>
-      </small>
-    </div>
+      <div *ngIf="f.password.errors.required">
+        {{
+          'errors.required' | translate : { v1: 'auth.password' | translate }
+        }}
+      </div>
+    </small>
     <small>
       <a class="link-success" routerLink="/auth/forgot"
         >{{ 'auth.forgotPassword' | translate }}?</a
       >
     </small>
-    <div *ngIf="status === XStatus.Failed" class="text-danger">
-      <small>
-        <center>{{ errors[0] }}</center>
-      </small>
-    </div>
+    <small *ngIf="status === XStatus.Failed" class="text-danger">
+      <center>{{ errors[0] }}</center>
+    </small>
   </div>
   <br />
   <div class="d-grid gap-2 mb-3">
