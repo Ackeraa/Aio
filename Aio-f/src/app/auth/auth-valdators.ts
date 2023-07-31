@@ -42,7 +42,7 @@ export class AuthValidators {
     // Check if value is empty;
     const value = c.value;
     if (!value) {
-      return { empty: 'errors.required' };
+      return { error: 'errors.required' };
     }
 
     // Check if value is too short or too long

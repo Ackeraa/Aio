@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/shared';
-import { AuthService, AuthValidators } from '../';
+import { AuthService, AuthValidatorService } from '../';
 import { XStatus } from '../../shared';
 
 @Component({
@@ -21,12 +21,13 @@ export class ForgotComponent {
     private router: Router,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
-    private authService: AuthService
+    private authService: AuthService,
+    private authValidator: AuthValidatorService
   ) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      email: ['', AuthValidators.emailValidator],
+      email: ['', this.authValidator.checkEmail.bind(this.authValidator)],
     });
   }
 

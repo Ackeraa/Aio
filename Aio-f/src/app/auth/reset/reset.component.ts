@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService, AuthValidators } from '../';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { environment } from 'src/environments/environment';
+import { AuthService } from '../';
+import { AuthValidatorService } from '../';
 import { XStatus, AlertService } from '../../shared';
 
 @Component({
@@ -23,13 +24,14 @@ export class ResetComponent {
     private route: ActivatedRoute,
     private router: Router,
     private alertService: AlertService,
-    private authService: AuthService
+    private authService: AuthService,
+    private authValidator: AuthValidatorService
   ) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      password: ['', AuthValidators.passwordValidator],
-      passwordConfirm: ['', Validators.required],
+      password: ['', this.authValidator.checkPassword.bind(this.authValidator)],
+      passwordConfirm: ['', this.authValidator.checkPassword.bind(this.authValidator)],
     });
   }
 

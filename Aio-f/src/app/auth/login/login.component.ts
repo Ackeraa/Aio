@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { AuthService, AuthValidators } from '../';
+import { AuthService, AuthValidatorService } from '../';
 import { AlertService, XStatus } from '../../shared';
 
 @Component({
@@ -22,13 +22,14 @@ export class LoginComponent {
     private route: ActivatedRoute,
     private router: Router,
     private alertService: AlertService,
-    private authService: AuthService
+    private authService: AuthService,
+    private authValidator: AuthValidatorService
   ) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      name_email: ['', AuthValidators.emailValidator],
-      password: ['', AuthValidators.passwordValidator],
+      name_email: ['', this.authValidator.checkEmail.bind(this.authValidator)],
+      password: ['', this.authValidator.checkPassword.bind(this.authValidator)],
     });
 
     // Get return url from route parameters or default to '/'

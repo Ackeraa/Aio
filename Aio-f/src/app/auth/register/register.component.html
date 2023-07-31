@@ -1,6 +1,6 @@
 <div class="logo mb-3">
   <div class="col-md-12 text-center">
-    <h1>{{ 'keywords.register' | translate }}</h1>
+    <h1>{{ "keywords.register" | translate }}</h1>
   </div>
 </div>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -9,7 +9,7 @@
       type="text"
       class="form-control"
       [formControl]="f.name"
-      [ngClass]="{ 'is-invalid': status === XStatus.Clicked && f.name.errors }"
+      [ngClass]="{ 'is-invalid': status === XStatus.Clicked && f.name.invalid }"
       placeholder="{{ 'auth.username' | translate }}"
     />
     <small
@@ -19,8 +19,8 @@
       {{ f.name.errors.error }}
     </small>
     <small *ngIf="status === XStatus.Failed" class="text-danger">
-      <div *ngIf="errors.name && !f.name.errors">
-        {{ 'auth.username' | translate }} {{ errors.name[0] }}
+      <div *ngIf="errors.name">
+        {{ "auth.username" | translate }} {{ errors.name[0] }}
       </div>
     </small>
   </div>
@@ -29,18 +29,20 @@
       type="email"
       class="form-control"
       [formControl]="f.email"
-      [ngClass]="{ 'is-invalid': status === XStatus.Clicked && f.email.errors }"
+      [ngClass]="{
+        'is-invalid': status === XStatus.Clicked && f.email.invalid
+      }"
       placeholder="{{ 'auth.email' | translate }}"
     />
     <small
-      *ngIf="(f.email.touched || status === XStatus.Clicked) && f.email.errors"
+      *ngIf="(f.email.touched || status === XStatus.Clicked) && f.email.invalid"
       class="text-danger"
     >
       {{ f.email.errors.error }}
     </small>
     <small *ngIf="status === XStatus.Failed" class="text-danger">
-      <div *ngIf="errors.email && !f.email.errors">
-        {{ 'auth.email' | translate }} {{ errors.email[0] }}
+      <div *ngIf="errors.email">
+        {{ "auth.email" | translate }} {{ errors.email[0] }}
       </div>
     </small>
   </div>
@@ -50,7 +52,7 @@
       class="form-control"
       [formControl]="f.password"
       [ngClass]="{
-        'is-invalid': status === XStatus.Clicked && f.password.errors
+        'is-invalid': status === XStatus.Clicked && f.password.invalid
       }"
       placeholder="{{ 'auth.password' | translate }}"
       autocomplete="false"
@@ -64,8 +66,8 @@
       {{ f.password.errors.error }}
     </small>
     <small *ngIf="status === XStatus.Failed" class="text-danger">
-      <div *ngIf="errors.password && !f.password.errors">
-        {{ 'auth.password' | translate }} {{ errors.password[0] }}
+      <div *ngIf="errors.password">
+        {{ "auth.password" | translate }} {{ errors.password[0] }}
       </div>
     </small>
   </div>
@@ -75,7 +77,7 @@
       class="form-control"
       [formControl]="f.passwordConfirm"
       [ngClass]="{
-        'is-invalid': status === XStatus.Clicked && f.passwordConfirm.errors
+        'is-invalid': status === XStatus.Clicked && f.passwordConfirm.invalid
       }"
       pattern="{{ f.password.value }}"
       placeholder="{{ 'auth.passwordConfirm' | translate }}"
@@ -84,14 +86,19 @@
     <small
       *ngIf="
         (f.passwordConfirm.touched || status === XStatus.Clicked) &&
-        f.passwordConfirm.errors
+        f.passwordConfirm.invalid
       "
       class="text-danger"
     >
-      {{ f.passwordConfirm.errors.error }}
+      <div *ngIf="f.passwordConfirm.errors.pattern">
+        {{ "auth.passwordMismatch" | translate }}
+      </div>
+      <div *ngIf="!f.passwordConfirm.errors.pattern">
+        {{ f.passwordConfirm.errors.error }}
+      </div>
     </small>
     <small *ngIf="status === XStatus.Failed" class="text-danger">
-      <div *ngIf="errors.password_confirmation && !f.passwordConfirm.errors">
+      <div *ngIf="errors.password_confirmation">
         {{ errors.password_confirmation[0] }}
       </div>
     </small>
@@ -103,17 +110,17 @@
         *ngIf="status === XStatus.Sent"
         class="spinner-border spinner-border-sm mr-1"
       ></span>
-      {{ 'keywords.register' | translate }}
+      {{ "keywords.register" | translate }}
     </button>
   </div>
   <div class="col-md-12">
     <div class="form-group">
       <small>
         <p class="text-center">
-          {{ 'auth.alreadyHaveAccount' | translate }}
-          <a class="link-success" routerLink="/auth/login">{{
-            'keywords.login' | translate
-          }}</a>
+          {{ "auth.alreadyHaveAccount" | translate }}
+          <a class="link-success" routerLink="/auth/login">
+            {{ "keywords.login" | translate }}
+          </a>
         </p>
       </small>
     </div>

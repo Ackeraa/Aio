@@ -1,6 +1,6 @@
 <div class="logo mb-3">
   <div class="col-md-12 text-center">
-    <h1>{{ 'auth.forgotPassword' | translate }}</h1>
+    <h1>{{ "auth.forgotPassword" | translate }}</h1>
   </div>
 </div>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -9,19 +9,14 @@
       type="email"
       [formControl]="f.email"
       class="form-control"
-      [ngClass]="{ 'is-invalid': status == XStatus.Clicked && f.email.errors }"
+      [ngClass]="{ 'is-invalid': status == XStatus.Clicked && f.email.invalid }"
       placeholder="{{ 'auth.email' | translate }}"
     />
     <small
-      *ngIf="(f.email.touched || status == XStatus.Clicked) && f.email.errors"
+      *ngIf="(f.email.touched || status == XStatus.Clicked) && f.email.invalid"
       class="text-danger"
     >
-      <div *ngIf="f.email.errors.required">
-        {{ 'errors.required' | translate : { v1: 'auth.email' | translate } }}
-      </div>
-      <div *ngIf="f.email.errors.invalid">
-        {{ 'errors.invalid' | translate : { v1: 'auth.email' | translate } }}
-      </div>
+      {{ f.email.errors.error }}
     </small>
     <small *ngIf="status === XStatus.Failed" class="text-danger mt-3">
       <center>{{ errors[0] }}</center>
@@ -34,17 +29,17 @@
         *ngIf="status === XStatus.Sent"
         class="spinner-border spinner-border-sm mr-1"
       ></span>
-      {{ 'auth.forgotPassword' | translate }}
+      {{ "auth.forgotPassword" | translate }}
     </button>
   </div>
   <div class="col-md-12">
     <div class="form-group">
       <small>
         <p class="text-center">
-          {{ 'auth.rememberedPassword' | translate }}
-          <a class="link-success" routerLink="/auth/login">{{
-            'keywords.login' | translate
-          }}</a>
+          {{ "auth.rememberedPassword" | translate }}
+          <a class="link-success" routerLink="/auth/login">
+            {{ "keywords.login" | translate }}
+          </a>
         </p>
       </small>
     </div>
