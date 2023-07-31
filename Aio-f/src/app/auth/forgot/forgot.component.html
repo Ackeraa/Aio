@@ -9,7 +9,11 @@
       type="email"
       [formControl]="f.email"
       class="form-control"
-      [ngClass]="{ 'is-invalid': status == XStatus.Clicked && f.email.invalid }"
+      [ngClass]="{
+        'is-invalid':
+          ((status == XStatus.Clicked || f.email.touched) && f.email.invalid) ||
+          (status == XStatus.Failed && errors[0])
+      }"
       placeholder="{{ 'auth.email' | translate }}"
     />
     <small

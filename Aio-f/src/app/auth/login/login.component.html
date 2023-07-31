@@ -10,7 +10,9 @@
       [formControl]="f.name_email"
       class="form-control"
       [ngClass]="{
-        'is-invalid': status === XStatus.Clicked && f.name_email.invalid
+        'is-invalid':
+          (status === XStatus.Clicked || f.name_email.touched) &&
+          f.name_email.invalid
       }"
       placeholder="{{ 'auth.username' | translate }}"
     />
@@ -30,7 +32,9 @@
       [formControl]="f.password"
       class="form-control"
       [ngClass]="{
-        'is-invalid': status === XStatus.Clicked && f.password.invalid
+        'is-invalid':
+          (status === XStatus.Clicked || f.password.touched) &&
+          f.password.invalid
       }"
       placeholder="{{ 'auth.password' | translate }}"
       autocomplete="false"

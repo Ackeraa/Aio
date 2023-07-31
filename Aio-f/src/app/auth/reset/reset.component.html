@@ -10,7 +10,9 @@
       [formControl]="f.password"
       class="form-control"
       [ngClass]="{
-        'is-invalid': status == XStatus.Clicked && f.password.invalid
+        'is-invalid':
+          (status == XStatus.Clicked || f.password.touched) &&
+          f.password.invalid
       }"
       placeholder="{{ 'auth.password' | translate }}"
       autocomplete="false"
@@ -23,9 +25,6 @@
     >
       {{ f.password.errors.error }}
     </small>
-    <small *ngIf="status == XStatus.Clicked && errors" class="text-danger">
-      {{ errors[0] }}
-    </small>
   </div>
   <br />
   <div class="form-group">
@@ -34,7 +33,9 @@
       class="form-control"
       [formControl]="f.passwordConfirm"
       [ngClass]="{
-        'is-invalid': status == XStatus.Clicked && f.passwordConfirm.invalid
+        'is-invalid':
+          (status == XStatus.Clicked || f.passwordConfirm.touched) &&
+          f.passwordConfirm.invalid
       }"
       pattern="{{ f.password.value }}"
       placeholder="{{ 'auth.passwordConfirm' | translate }}"
@@ -52,11 +53,6 @@
       </div>
       <div *ngIf="!f.passwordConfirm.errors.pattern">
         {{ f.passwordConfirm.errors.error }}
-      </div>
-    </small>
-    <small *ngIf="status == XStatus.Failed" class="text-danger">
-      <div *ngIf="errors.password_confirmation">
-        {{ errors.password_confirmation[0] }}
       </div>
     </small>
   </div>

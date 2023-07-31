@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavigationStart, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ContestsService } from '../contests.service';
 import {
   NgbDateStruct,
@@ -15,6 +15,7 @@ import {
   AbstractControl,
   FormControl,
 } from '@angular/forms';
+
 
 @Component({
   selector: 'app-contest-create',

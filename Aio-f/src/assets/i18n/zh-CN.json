@@ -9,6 +9,7 @@
   "errors": {
     "tooShort": "{{v1}}太短，至少{{v2}}个字符.",
     "tooLong": "{{v1}}太长，至多{{v2}}个字符.",
+    "tooLarge": "{{v1}}太大，至多为{{v2}}.",
     "required": "{{v1}}不能为空.",
     "invalid": "{{v1}}无效."
   },
@@ -38,7 +39,23 @@
   },
   "home": {},
   "contests": {},
-  "problems": {},
+  "problems": {
+    "title": "标题",
+    "timeLimit": "时间限制",
+    "memoryLimit": "内存限制",
+    "description": "描述",
+    "input": "输入",
+    "output": "输出",
+    "sampleInput": "样例输入",
+    "sampleOutput": "样例输出",
+    "hint": "提示",
+    "source": "来源",
+    "tags": "标签",
+    "submit": "提交",
+    "visible": "可见",
+    "allowedLanguages": "允许语言",
+    "rule": "规则"
+  },
   "problemSet": {},
   "submissions": {},
   "discussion": {},

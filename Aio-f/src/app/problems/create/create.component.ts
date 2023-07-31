@@ -1,9 +1,11 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 import { ProblemsService } from '../problems.service';
-import { Validators } from '../../helpers';
-import { CreateValidators } from './create-validators';
+import { ValidatorService } from '../../helpers';
+import { CreateValidatorService } from './create-validator.service';
+import { AlertService, XStatus } from '../../shared';
 
 @Component({
   selector: 'app-problems-create',
@@ -20,24 +22,51 @@ export class CreateComponent implements OnInit {
   languages: Array<any>;
   allowed_languages: Array<any>;
 
-  submitted: boolean;
   token: string;
+
+  status: XStatus = XStatus.Ready;
+  XStatus = XStatus;
+  envs = environment;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private renderer: Renderer2,
-    private problemsService: ProblemsService
+    private alertService: AlertService,
+    private problemsService: ProblemsService,
+    private validator: ValidatorService,
+    private createValidator: CreateValidatorService
   ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      name: ['', Validators.textValidator],
-      memory_limit: ['', CreateValidators.memoryValidator],
-      time_limit: ['', CreateValidators.timeValidator],
-      description: ['', Validators.textValidator],
-      input: ['', Validators.textValidator],
-      output: ['', Validators.textValidator],
+      name: [
+        '',
+        this.validator.checkTitle.bind(this.validator, 'problems.title'),
+      ],
+      memory_limit: [
+        '',
+        this.createValidator.checkMemory.bind(this.createValidator),
+      ],
+      time_limit: [
+        '',
+        this.createValidator.checkTime.bind(this.createValidator),
+      ],
+      description: [
+        '',
+        this.validator.checkContent.bind(
+          this.validator,
+          'problems.description'
+        ),
+      ],
+      input: [
+        '',
+        this.validator.checkContent.bind(this.validator, 'problems.input'),
+      ],
+      output: [
+        '',
+        this.validator.checkContent.bind(this.validator, 'problems.output'),
+      ],
       samples: this.fb.array([this.createSample()]),
       hint: [''],
     });
@@ -54,17 +83,32 @@ export class CreateComponent implements OnInit {
       { id: 3, value: 'Python' },
     ];
     this.allowed_languages = Array.from(this.languages);
-    this.submitted = false;
   }
 
   get f() {
     return this.form.controls;
   }
 
+  get sampleControls() {
+    return this.form.get('samples')['controls'];
+  }
+
   createSample(): FormGroup {
     return this.fb.group({
-      sample_input: ['', Validators.textValidator],
-      sample_output: ['', Validators.textValidator],
+      sample_input: [
+        '',
+        this.validator.checkContent.bind(
+          this.validator,
+          'problems.sampleInput'
+        ),
+      ],
+      sample_output: [
+        '',
+        this.validator.checkContent.bind(
+          this.validator,
+          'problems.sampleOutput'
+        ),
+      ],
     });
   }
 
@@ -74,10 +118,6 @@ export class CreateComponent implements OnInit {
 
   removeSample(i: number, sample: any): void {
     this.samples.removeAt(i);
-  }
-
-  get sampleControls() {
-    return this.form.get('samples')['controls'];
   }
 
   selectTag(btn: any, tag: string) {
@@ -112,19 +152,32 @@ export class CreateComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.submitted = true;
+    this.status = XStatus.Clicked;
+
+    // Reset alerts on submit
+    this.alertService.clear();
+
+    // Stop here if form is invalid
     if (this.form.invalid) {
       return;
     }
+
     let data: any = this.form.value;
     data.allowed_languages = this.allowed_languages;
     data.tags = this.tags;
     data.is_visible = this.is_visible;
     data.rule_type = this.rule_type;
     data.source = 'aio';
-    this.problemsService.createProblem(data).subscribe(id => {
-      let url = '/problem/l/' + id + '/upload';
-      this.router.navigate([url]);
+    this.problemsService.createProblem(data).subscribe({
+      next: (id: number) => {
+        this.status = XStatus.Succeed;
+        let url = '/problem/l/' + id + '/upload';
+        this.router.navigate([url]);
+      },
+      error: (err: any) => {
+        this.status = XStatus.Failed;
+        this.alertService.error(err);
+      },
     });
   }
 

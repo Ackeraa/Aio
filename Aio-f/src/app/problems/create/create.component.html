@@ -7,45 +7,58 @@
         [formControl]="f.name"
         class="form-control"
         [ngClass]="{
-          'is-invalid': f.name.touched && f.name.errors
+          'is-invalid':
+            (f.name.touched || status === XStatus.Clicked) && f.name.invalid
         }"
       />
-      <small *ngIf="f.name.errors && f.name.touched" class="text-danger">
-        <div *ngIf="f.name.errors.required">Title is required.</div>
-        <div *ngIf="f.name.errors.tooLong">Title is too long.</div>
-        {{ f.name.errors }}
+      <small
+        *ngIf="f.name.invalid && (f.name.touched || status === XStatus.Clicked)"
+        class="text-danger"
+      >
+        {{ f.name.errors.error }}
       </small>
     </div>
     <div class="col-md-4">
       <label class="form-label"><h5>Time Limit(MS)</h5></label>
-      <input type="text" [formControl]="f.time_limit" class="form-control" />
+      <input
+        type="text"
+        [formControl]="f.time_limit"
+        class="form-control"
+        [ngClass]="{
+          'is-invalid':
+            (f.time_limit.touched || status === XStatus.Clicked) &&
+            f.time_limit.invalid
+        }"
+      />
       <small
-        *ngIf="f.time_limit.errors && f.time_limit.touched"
+        *ngIf="
+          f.time_limit.invalid &&
+          (f.time_limit.touched || status === XStatus.Clicked)
+        "
         class="text-danger"
       >
-        <div *ngIf="f.time_limit.errors.required">Time Limit is required.</div>
-        <div *ngIf="f.time_limit.errors.invalid">
-          Time Limit should be integer value.
-        </div>
-        <div *ngIf="f.time_limit.errors.tooLarge">Time Limit is too large.</div>
+        {{ f.time_limit.errors.error }}
       </small>
     </div>
     <div class="col-md-4">
       <label class="form-label"><h5>Memory Limit(MB)</h5> </label>
-      <input type="text" [formControl]="f.memory_limit" class="form-control" />
+      <input
+        type="text"
+        [formControl]="f.memory_limit"
+        class="form-control"
+        [ngClass]="{
+          'is-invalid':
+            (f.memory_limit.touched || status === XStatus.Clicked) &&
+            f.memory_limit.invalid
+        }"
+      />
       <small
-        *ngIf="f.memory_limit.invalid && f.memory_limit.touched"
+        *ngIf="
+          f.memory_limit.invalid &&
+          (f.memory_limit.touched || status === XStatus.Clicked)
+        "
         class="text-danger"
       >
-        <!-- <div *ngIf="f.memory_limit.errors.required">
-          Memory Limit is required.
-        </div>
-        <div *ngIf="f.memory_limit.errors.invalid">
-          Memory Limit should be integer value.
-        </div>
-        <div *ngIf="f.memory_limit.errors.tooLarge">
-          Memory Limit is too large
-        </div> -->
         {{ f.memory_limit.errors.error }}
       </small>
     </div>
@@ -59,18 +72,21 @@
         style="overflow-y: auto; height: 30vh"
         class="form-control"
         [formControl]="f.description"
+        [ngClass]="{
+          'is-invalid':
+            (f.description.touched || status === XStatus.Clicked) &&
+            f.description.invalid
+        }"
       >
       </textarea>
       <small
-        *ngIf="f.description.errors && f.description.touched"
+        *ngIf="
+          f.description.invalid &&
+          (f.description.touched || status === XStatus.Clicked)
+        "
         class="text-danger"
       >
-        <div *ngIf="f.description.errors.required">
-          Description is required.
-        </div>
-        <div *ngIf="f.description.errors.tooLong">
-          Description should be at most 5 characters.
-        </div>
+        {{ f.description.errors.error }}
       </small>
     </div>
   </div>
@@ -82,13 +98,19 @@
         style="overflow-y: auto; height: 15vh"
         class="form-control"
         [formControl]="f.input"
+        [ngClass]="{
+          'is-invalid':
+            (f.input.touched || status === XStatus.Clicked) && f.input.invalid
+        }"
       >
       </textarea>
-      <small *ngIf="f.input.errors && f.input.touched" class="text-danger">
-        <div *ngIf="f.input.errors.required">Input is required.</div>
-        <div *ngIf="f.input.errors.tooLong">
-          Input should be at most 5 characters.
-        </div>
+      <small
+        *ngIf="
+          f.input.invalid && (f.input.touched || status === XStatus.Clicked)
+        "
+        class="text-danger"
+      >
+        {{ f.input.errors.error }}
       </small>
     </div>
   </div>
@@ -100,13 +122,19 @@
         style="overflow-y: auto; height: 15vh"
         class="form-control"
         [formControl]="f.output"
+        [ngClass]="{
+          'is-invalid':
+            (f.output.touched || status === XStatus.Clicked) && f.output.invalid
+        }"
       >
       </textarea>
-      <small *ngIf="f.output.errors && f.output.touched" class="text-danger">
-        <div *ngIf="f.output.errors.required">Output is required.</div>
-        <div *ngIf="f.output.errors.tooLong">
-          Output should be at most 5 characters.
-        </div>
+      <small
+        *ngIf="
+          f.output.invalid && (f.output.touched || status === XStatus.Clicked)
+        "
+        class="text-danger"
+      >
+        {{ f.output.errors.error }}
       </small>
     </div>
   </div>
@@ -142,23 +170,16 @@
                     style="overflow-y: auto; height: 15vh; border: 0"
                     class="form-control"
                     formControlName="sample_input"
+                    [ngClass]="{
+                      'is-invalid':
+                        sample.controls['sample_input'].invalid &&
+                        (sample.controls['sample_input'].touched ||
+                          status === XStatus.Clicked)
+                    }"
                   >
                   </textarea>
-                  <small
-                    *ngIf="
-                      sample.controls['sample_input'].errors &&
-                      sample.controls['sample_input'].touched
-                    "
-                    class="text-danger"
-                  >
-                    <div
-                      *ngIf="sample.controls['sample_input'].errors.required"
-                    >
-                      Input sample is required.
-                    </div>
-                    <div *ngIf="sample.controls['sample_input'].errors.tooLong">
-                      Input should be at most 5 characters
-                    </div>
+                  <small *ngIf=" sample.controls['sample_input'].invalid && (status === XStatus.Clicked || sample.controls['sample_input'].touched)" class="text-danger">
+                    {{ sample.controls["sample_input"].errors.error }}
                   </small>
                 </div>
               </div>
@@ -178,25 +199,23 @@
                     style="overflow-y: auto; height: 15vh; border: 0"
                     class="form-control"
                     formControlName="sample_output"
+                    [ngClass]="{
+                      'is-invalid':
+                        sample.controls['sample_output'].invalid &&
+                        (sample.controls['sample_output'].touched ||
+                          status === XStatus.Clicked)
+                    }"
                   >
                   </textarea>
                   <small
                     *ngIf="
-                      sample.controls['sample_output'].errors &&
-                      sample.controls['sample_output'].touched
+                      sample.controls['sample_output'].invalid &&
+                      (status === XStatus.Clicked ||
+                        sample.controls['sample_output'].touched)
                     "
                     class="text-danger"
                   >
-                    <div
-                      *ngIf="sample.controls['sample_output'].errors.required"
-                    >
-                      Output sample is required.
-                    </div>
-                    <div
-                      *ngIf="sample.controls['sample_output'].errors.tooLong"
-                    >
-                      Output should be at most 5 characters
-                    </div>
+                    {{ sample.controls["sample_output"].errors.error }}
                   </small>
                 </div>
               </div>
@@ -300,7 +319,7 @@
   </div>
 
   <div class="row justify-content-center mt-5 mb-4">
-    <button type="button" class="btn btn-success col-sm-4">
+    <button class="btn btn-success col-sm-4">
       <fa-icon [icon]="['fas', 'upload']"></fa-icon> Submit
     </button>
   </div>

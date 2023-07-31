@@ -13,7 +13,6 @@ import { XStatus, AlertService } from '../../shared';
 })
 export class ResetComponent {
   form: FormGroup;
-  errors: any;
 
   status: XStatus = XStatus.Ready;
   XStatus = XStatus;
@@ -31,7 +30,10 @@ export class ResetComponent {
   ngOnInit() {
     this.form = this.formBuilder.group({
       password: ['', this.authValidator.checkPassword.bind(this.authValidator)],
-      passwordConfirm: ['', this.authValidator.checkPassword.bind(this.authValidator)],
+      passwordConfirm: [
+        '',
+        this.authValidator.checkPassword.bind(this.authValidator),
+      ],
     });
   }
 
@@ -65,14 +67,15 @@ export class ResetComponent {
     this.status = XStatus.Sent;
 
     this.authService.reset(data, token).subscribe({
-      next: res => {
+      next: (res) => {
         this.status = XStatus.Succeed;
         this.alertService.success(res.message, true);
         this.router.navigate(['/auth/login']);
       },
-      error: err => {
+      error: (err) => {
         this.status = XStatus.Failed;
-        this.errors = err;
+        // FIXME: This is a hack to show the error message
+        this.alertService.error(err, true);
       },
     });
   }

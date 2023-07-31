@@ -9,6 +9,7 @@
   "errors": {
     "tooShort": "{{v1}} is too short (minimum is {{v2}} characters).",
     "tooLong": "{{v1}} is too long (maximum is {{v2}} characters).",
+    "tooLarge": "{{v1}} is too large (maximum is {{v2}}).",
     "required": "{{v1}} can't be blank.",
     "invalid": "{{v1}} is invalid."
   },
@@ -38,7 +39,23 @@
   },
   "home": {},
   "contests": {},
-  "problems": {},
+  "problems": {
+    "title": "Title",
+    "timeLimit": "Time limit",
+    "memoryLimit": "Memory limit",
+    "description": "Description",
+    "input": "Input",
+    "output": "Output",
+    "sampleInput": "Sample input",
+    "sampleOutput": "Sample output",
+    "hint": "Hint",
+    "source": "Source",
+    "tags": "Tags",
+    "submit": "Submit",
+    "visible": "Visible",
+    "allowedLanguages": "Allowed languages",
+    "rule": "Rule"
+  },
   "problemSet": {},
   "submissions": {},
   "discussion": {},

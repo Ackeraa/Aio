@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 export class ValidatorService {
   constructor(private translate: TranslateService) {}
 
-  checkTitle(c: AbstractControl, name: string): { [s: string]: string } | null {
+  checkTitle(name:string, c: AbstractControl): { [s: string]: string } | null {
     const value = c.value;
     // Check if value is empty;
     if (!value) {
@@ -33,7 +33,7 @@ export class ValidatorService {
     return null;
   }
 
-  checkText(c: AbstractControl, name: string): { [s: string]: string } | null {
+  checkContent(name: string, c: AbstractControl): { [s: string]: string } | null {
     const value = c.value;
     // Check if value is empty;
     if (!value) {
@@ -45,11 +45,11 @@ export class ValidatorService {
     }
 
     // Check if value is too long
-    if (value.length > environment.textMaxLen) {
+    if (value.length > environment.contentMaxLen) {
       return {
         error: this.translate.instant('errors.tooLong', {
           v1: this.translate.instant(name),
-          v2: environment.textMaxLen,
+          v2: environment.contentMaxLen,
         }),
       };
     }
