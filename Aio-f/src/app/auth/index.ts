@@ -7,4 +7,4 @@ export * from './reset/reset.guard';
 export * from './auth.guard';
 export * from './auth-valdators';
 export * from './auth.service';
-export * from './auth-validation.service';
+export * from './auth-validator.service';

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
-import { AuthService, AuthValidationService } from '../';
+import { AuthService, AuthValidatorService } from '../';
 import { XStatus, AlertService } from '../../shared';
 
 @Component({
@@ -22,14 +22,14 @@ export class RegisterComponent {
     private router: Router,
     private authService: AuthService,
     private alertService: AlertService,
-    private authValidatorService: AuthValidationService
+    private authValidator: AuthValidatorService
   ) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      name: ['', this.authValidatorService.nameValidator],
-      email: ['', this.authValidatorService.emailValidator],
-      password: ['', this.authValidatorService.passwordValidator],
+      name: ['', this.authValidator.checkName.bind(this.authValidator)],
+      email: ['', this.authValidator.checkEmail.bind(this.authValidator)],
+      password: ['', this.authValidator.checkPassword.bind(this.authValidator)],
       passwordConfirm: ['', Validators.required],
     });
   }

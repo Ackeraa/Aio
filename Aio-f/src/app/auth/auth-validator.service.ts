@@ -6,24 +6,13 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthValidationService {
-  constructor(private translate: TranslateService) {
-    console.log(
-      this.translate.instant('errors.required', {
-        v1: this.translate.instant('auth.username'),
-      })
-    );
-    console.log('ddddddd');
-  }
+export class AuthValidatorService {
+  constructor(private translate: TranslateService) {}
 
-  nameValidator(c: AbstractControl): { [s: string]: string } | null {
+  checkName(c: AbstractControl): { [s: string]: string } | null {
     // Check if value is empty;
     const value = c.value;
     if (!value) {
-      console.log('FFFFFFF');
-      console.log(this.translate);
-      return null;
-      console.log('ffffff');
       return {
         error: this.translate.instant('errors.required', {
           v1: this.translate.instant('auth.username'),
@@ -42,13 +31,13 @@ export class AuthValidationService {
     }
 
     // Check if value is too short or too long
-    return this.lengthValidator(
+    return this.checkLength(
       environment.unameMinLen,
       environment.unameMaxLen
     )(c);
   }
 
-  emailValidator(c: AbstractControl): { [s: string]: string } | null {
+  checkEmail(c: AbstractControl): { [s: string]: string } | null {
     const value = c.value;
     // Check if value is empty;
     if (!value) {
@@ -72,7 +61,7 @@ export class AuthValidationService {
     return null;
   }
 
-  passwordValidator(c: AbstractControl): { [s: string]: string } | null {
+  checkPassword(c: AbstractControl): { [s: string]: string } | null {
     // Check if value is empty;
     const value = c.value;
     if (!value) {
@@ -84,13 +73,13 @@ export class AuthValidationService {
     }
 
     // Check if value is too short or too long
-    return this.lengthValidator(
+    return this.checkLength(
       environment.passwdMinLen,
       environment.passwdMaxLen
     )(c);
   }
 
-  lengthValidator(minLength: number, maxLength: number): ValidatorFn {
+  checkLength(minLength: number, maxLength: number): ValidatorFn {
     return (c: AbstractControl): { [key: string]: string } | null => {
       const value = c.value;
       if (value.length < minLength) {
