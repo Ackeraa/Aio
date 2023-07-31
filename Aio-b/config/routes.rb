@@ -6,8 +6,9 @@ Rails.application.routes.draw do
       get ':id/problems',                       :action => 'problems'     
       get ':id/add_problem/:problem_id',        :action => 'add_problem'     
       get ':id/delete_problem/:problem_id',     :action => 'delete_problem'  
-      get 'recent',                             :action => 'recent'
-      get 'past',                               :action => 'past'   
+      get 'public',                             :action => 'public'
+      get 'group',                              :action => 'group'   
+      get 'private',                            :action => 'private'   
     end
   end
 

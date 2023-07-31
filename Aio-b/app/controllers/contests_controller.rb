@@ -1,7 +1,7 @@
 class ContestsController < ApplicationController
   before_action :set_contest, only: [:show, :update, :destroy,
                                      :problems, :add_problem, :delete_problem]
-  before_action :set_page, only: [:search, :recent, :past]
+  before_action :set_page, only: [:search, :public, :group, :private]
 
   # GET /contests
   def index
@@ -14,20 +14,20 @@ class ContestsController < ApplicationController
   def search
     query = params[:query]
     which = params[:addition]
-    if which == 'recent'
+    if which == 'public'
       puts "CCCCCCCCCC", total
       total = Contest.where('name ilike(?)',  "%#{query}%").count
       puts "FFFFFFFF", total
       @contests = Contest.where('name ilike(?)',  "%#{query}%").limit(20).offset(@page * 20)
-    elsif which == 'past'
+    elsif which == 'group'
       total = Contest.where('name ilike(?)',  "%#{query}%").count
       @contests = Contest.where('name ilike(?)',  "%#{query}%").limit(20).offset(@page * 20)
     end
     render json: { total: total, contests: @contests }
   end
 
-  # GET /contests/recent
-  def recent
+  # GET /contests/public
+  def public
     query = params[:query]
     puts "SSSSSS", query
     total = Contest.where('name ilike(?)',  "%#{query}%").count
@@ -35,8 +35,17 @@ class ContestsController < ApplicationController
     render json: { total: total, contests: @contests }
   end
 
-  # Get /contests/past
-  def past
+  # GET /contests/group
+  def group
+    query = params[:query]
+    puts "SSSSSS", query
+    total = Contest.where('name ilike(?)',  "%#{query}%").count
+    @contests = Contest.where('name ilike(?)',  "%#{query}%").limit(20).offset(@page * 20)
+    render json: { total: total, contests: @contests }
+  end
+
+  # Get /contests/private
+  def private
     query = params[:query]
     total = Contest.where('name ilike(?)',  "%#{query}%").count
     @contests = Contest.where('name ilike(?)',  "%#{query}%").limit(20).offset(@page * 20)
