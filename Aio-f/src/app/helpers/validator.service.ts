@@ -9,10 +9,14 @@ import { environment } from 'src/environments/environment';
 export class ValidatorService {
   constructor(private translate: TranslateService) {}
 
-  checkTitle(name:string, c: AbstractControl): { [s: string]: string } | null {
+  checkTitle(
+    name: string,
+    necessary: boolean,
+    c: AbstractControl
+  ): { [s: string]: string } | null {
     const value = c.value;
     // Check if value is empty;
-    if (!value) {
+    if (necessary && !value) {
       return {
         error: this.translate.instant('errors.required', {
           v1: this.translate.instant(name),
@@ -33,10 +37,14 @@ export class ValidatorService {
     return null;
   }
 
-  checkContent(name: string, c: AbstractControl): { [s: string]: string } | null {
+  checkContent(
+    name: string,
+    necessary: boolean,
+    c: AbstractControl
+  ): { [s: string]: string } | null {
     const value = c.value;
     // Check if value is empty;
-    if (!value) {
+    if (necessary && !value) {
       return {
         error: this.translate.instant('errors.required', {
           v1: this.translate.instant(name),

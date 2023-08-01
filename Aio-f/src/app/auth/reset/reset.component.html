@@ -1,11 +1,12 @@
 <div class="logo mb-3">
   <div class="col-md-12 text-center">
-    <h1>{{ "auth.resetPassword" | translate }}</h1>
+    <h1>{{ 'auth.resetPassword' | translate }}</h1>
   </div>
 </div>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="form-group">
     <input
+      id="password"
       type="password"
       [formControl]="f.password"
       class="form-control"
@@ -29,6 +30,7 @@
   <br />
   <div class="form-group">
     <input
+      id="passwordConfirm"
       type="password"
       class="form-control"
       [formControl]="f.passwordConfirm"
@@ -49,7 +51,7 @@
       class="text-danger"
     >
       <div *ngIf="f.passwordConfirm.errors.pattern">
-        {{ "auth.passwordMismatch" | translate }}
+        {{ 'auth.passwordMismatch' | translate }}
       </div>
       <div *ngIf="!f.passwordConfirm.errors.pattern">
         {{ f.passwordConfirm.errors.error }}
@@ -63,7 +65,7 @@
         *ngIf="status === XStatus.Sent"
         class="spinner-border spinner-border-sm mr-1"
       ></span>
-      {{ "auth.resetPassword" | translate }}
+      {{ 'auth.resetPassword' | translate }}
     </button>
   </div>
 </form>

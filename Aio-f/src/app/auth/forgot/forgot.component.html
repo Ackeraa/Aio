@@ -1,12 +1,14 @@
 <div class="logo mb-3">
   <div class="col-md-12 text-center">
-    <h1>{{ "auth.forgotPassword" | translate }}</h1>
+    <h1>{{ 'auth.forgotPassword' | translate }}</h1>
   </div>
 </div>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="form-group mb-3">
     <input
+      id="email"
       type="email"
+      autocomplete="email"
       [formControl]="f.email"
       class="form-control"
       [ngClass]="{
@@ -33,16 +35,16 @@
         *ngIf="status === XStatus.Sent"
         class="spinner-border spinner-border-sm mr-1"
       ></span>
-      {{ "auth.forgotPassword" | translate }}
+      {{ 'auth.forgotPassword' | translate }}
     </button>
   </div>
   <div class="col-md-12">
     <div class="form-group">
       <small>
         <p class="text-center">
-          {{ "auth.rememberedPassword" | translate }}
+          {{ 'auth.rememberedPassword' | translate }}
           <a class="link-success" routerLink="/auth/login">
-            {{ "keywords.login" | translate }}
+            {{ 'keywords.login' | translate }}
           </a>
         </p>
       </small>

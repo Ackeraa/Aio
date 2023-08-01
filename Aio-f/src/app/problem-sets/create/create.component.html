@@ -1,9 +1,10 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
   <div class="row mt-4">
     <div class="col-md-4">
-      <label class="form-label"><h5>Title</h5></label>
+      <label class="form-label" for="title"><h5>Title</h5></label>
       <input
         type="text"
+        id="title"
         [formControl]="f.title"
         class="form-control"
         [ngClass]="{
@@ -25,16 +26,16 @@
     <div class="col-md-12">
       <h5>Description</h5>
       <textarea
+        id="description"
         style="overflow-y: auto; height: 30vh"
-        class="form-control"
         [formControl]="f.description"
+        class="form-control"
         [ngClass]="{
           'is-invalid':
             (status === XStatus.Clicked || f.description.touched) &&
             f.description.invalid
         }"
-      >
-      </textarea>
+      ></textarea>
       <small
         *ngIf="
           f.description.invalid &&

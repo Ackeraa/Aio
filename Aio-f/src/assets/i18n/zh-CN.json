@@ -39,14 +39,15 @@
   },
   "home": {},
   "contests": {
-    "title": "标题",
+    "name": "标题",
     "description": "描述",
     "password": "密码",
     "startTime": "开始时间",
-    "endTime": "结束时间"
+    "endTime": "结束时间",
+    "tooEarly": "结束时间太早"
   },
   "problems": {
-    "title": "标题",
+    "name": "标题",
     "timeLimit": "时间限制",
     "memoryLimit": "内存限制",
     "description": "描述",
@@ -63,7 +64,7 @@
     "rule": "规则"
   },
   "problemSets": {
-    "title": "标题",
+    "name": "标题",
     "description": "描述",
     "submit": "提交"
   },

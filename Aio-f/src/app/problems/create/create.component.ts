@@ -42,7 +42,7 @@ export class CreateComponent implements OnInit {
     this.form = this.fb.group({
       name: [
         '',
-        this.validator.checkTitle.bind(this.validator, 'problems.title'),
+        this.validator.checkTitle.bind(this.validator, 'problems.name', true),
       ],
       memory_limit: [
         '',
@@ -56,16 +56,25 @@ export class CreateComponent implements OnInit {
         '',
         this.validator.checkContent.bind(
           this.validator,
-          'problems.description'
+          'problems.description',
+          true
         ),
       ],
       input: [
         '',
-        this.validator.checkContent.bind(this.validator, 'problems.input'),
+        this.validator.checkContent.bind(
+          this.validator,
+          'problems.input',
+          true
+        ),
       ],
       output: [
         '',
-        this.validator.checkContent.bind(this.validator, 'problems.output'),
+        this.validator.checkContent.bind(
+          this.validator,
+          'problems.output',
+          true
+        ),
       ],
       samples: this.fb.array([this.createSample()]),
       hint: [''],
@@ -99,14 +108,16 @@ export class CreateComponent implements OnInit {
         '',
         this.validator.checkContent.bind(
           this.validator,
-          'problems.sampleInput'
+          'problems.sampleInput',
+          true
         ),
       ],
       sample_output: [
         '',
         this.validator.checkContent.bind(
           this.validator,
-          'problems.sampleOutput'
+          'problems.sampleOutput',
+          true
         ),
       ],
     });

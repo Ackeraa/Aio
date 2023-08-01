@@ -1,8 +1,10 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="row mt-4">
     <div class="col-md-4">
-      <label class="form-label"><h5>Title</h5></label>
+      <label for="name" class="form-label"><h5>Title</h5></label>
       <input
+        id="name"
+        autocomplete="title"
         type="text"
         [formControl]="f.name"
         class="form-control"
@@ -23,6 +25,7 @@
     <div class="col-md-12">
       <h5>Description</h5>
       <textarea
+        id="description"
         style="overflow-y: auto; height: 30vh"
         class="form-control"
         [formControl]="f.description"
@@ -46,8 +49,9 @@
   </div>
   <div class="row mt-4">
     <div class="col-md-3">
-      <label class="form-label"><h5>Start Time</h5></label>
+      <label for="startDay" class="form-label"><h5>Start Time</h5></label>
       <input
+        id="startDay"
         class="form-control"
         placeholder="yyyy-mm-dd"
         formControlName="start_d"
@@ -55,27 +59,11 @@
         #sd="ngbDatepicker"
         (click)="sd.toggle()"
         readonly
-        [ngClass]="{
-          'is-invalid': f.start_d.invalid && status === XStatus.Clicked
-        }"
       />
-      <small
-        *ngIf="f.start_d.invalid && status === XStatus.Clicked"
-        class="text-danger"
-      >
-        {{ f.start_d.errors.error }}
-      </small>
     </div>
     <div class="col-md-3">
       <label class="form-label"><h5>&nbsp;</h5></label>
-      <ngb-timepicker
-        formControlName="start_t"
-        [ngClass]="{
-          'is-invalid':
-            f.start_t.invalid &&
-            (status === XStatus.Clicked || f.start_t.touched)
-        }"
-      >
+      <ngb-timepicker id="startTime" formControlName="start_t">
       </ngb-timepicker>
       <small
         *ngIf="
@@ -87,8 +75,9 @@
       </small>
     </div>
     <div class="col-md-3">
-      <label class="form-label"><h5>End Time</h5></label>
+      <label for="endDay" class="form-label"><h5>End Time</h5></label>
       <input
+        id="endDay"
         class="form-control"
         placeholder="yyyy-mm-dd"
         formControlName="end_d"
@@ -97,26 +86,16 @@
         (click)="ed.toggle()"
         readonly
         [ngClass]="{
-          'is-invalid': f.end_d.invalid && status === XStatus.Clicked
+          'is-invalid': status === XStatus.Clicked && errors
         }"
       />
-      <small
-        *ngIf="f.end_d.invalid && status === XStatus.Clicked"
-        class="text-danger"
-      >
-        {{ f.end_d.errors.error }}
+      <small *ngIf="status === XStatus.Clicked && errors" class="text-danger">
+        {{ errors | translate }}
       </small>
     </div>
     <div class="col-md-3">
       <label class="form-label"><h5>&nbsp;</h5></label>
-      <ngb-timepicker
-        formControlName="end_t"
-        [ngClass]="{
-          'is-invalid':
-            f.end_t.invalid && (status === XStatus.Clicked || f.end_t.touched)
-        }"
-      >
-      </ngb-timepicker>
+      <ngb-timepicker id="endTime" formControlName="end_t"> </ngb-timepicker>
       <small
         *ngIf="
           f.end_t.invalid && (status === XStatus.Clicked || f.end_t.touched)
@@ -130,44 +109,31 @@
 
   <div class="row mt-5">
     <div class="col-md-4">
-      <span class="form-label"><h5>Rule</h5></span>
-      <label class="form-check form-check-inline">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="rule_type"
-          value="acm"
-          checked
-          (click)="selectRule($event.target.value)"
-        />
-        <span class="form-check-label">ACM</span>
-      </label>
-      <label class="form-check form-check-inline">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="rule_type"
-          value="oi"
-          (click)="selectRule($event.target.value)"
-        />
-        <span class="form-check-label">OI</span>
-      </label>
+      <span for="ruleSelect" class="form-label"><h5>Rule</h5></span>
+      <div class="col-6">
+        <select class="form-select" id="ruleSelect" [formControl]="f.ruleType">
+          <option *ngFor="let ruleType of ruleTypes" [value]="ruleType">
+            {{ ruleType }}
+          </option>
+        </select>
+      </div>
     </div>
     <div class="col-md-3">
-      <span class="form-label"><h5>Visible</h5></span>
+      <span for="visible" class="form-label"><h5>Visible</h5></span>
       <div class="form-check form-switch">
         <input
           class="form-check-input"
           type="checkbox"
           id="visible"
-          (click)="selectVisible($event.target.checked)"
+          [formControl]="f.isVisible"
         />
         <label class="form-check-lable" for="visible">NO / YES</label>
       </div>
     </div>
     <div class="col-md-5">
-      <span class="form-label"><h5>Password</h5></span>
+      <span for="password" class="form-label"><h5>Password</h5></span>
       <input
+        id="password"
         type="password"
         [formControl]="f.password"
         class="form-control"

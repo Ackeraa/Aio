@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
   <div class="col-2">
-    <select #source class="form-select">
+    <select id="sourceSelect" #source class="form-select">
       <option *ngFor="let source of sources; let i = index" (value)="(i)">
         {{ source }}
       </option>
@@ -8,10 +8,12 @@
   </div>
   <div class="col-4">
     <input
+      id="problemSearch"
       #query
       type="text"
       class="form-control"
       placeholder="Search Problems"
+      autocomplete="false"
     />
   </div>
   <div class="col-auto">

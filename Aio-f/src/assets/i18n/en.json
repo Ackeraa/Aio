@@ -39,14 +39,15 @@
   },
   "home": {},
   "contests": {
-    "title": "Title",
+    "name": "Title",
     "description": "Description",
     "password": "Password",
     "startTime": "Start time",
-    "endTime": "End time"
+    "endTime": "End time",
+    "tooEarly": "End time is too early"
   },
   "problems": {
-    "title": "Title",
+    "name": "Title",
     "timeLimit": "Time limit",
     "memoryLimit": "Memory limit",
     "description": "Description",
@@ -63,7 +64,7 @@
     "rule": "Rule"
   },
   "problemSets": {
-    "title": "Title",
+    "name": "Title",
     "description": "Description",
     "submit": "Submit"
   },

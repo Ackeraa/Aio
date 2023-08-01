@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { ContestsService } from '../contests.service';
 import {
   NgbDateStruct,
-  NgbCalendar,
   NgbTimepickerConfig,
   NgbTimeStruct,
 } from '@ng-bootstrap/ng-bootstrap';
@@ -18,16 +17,12 @@ import { XStatus, AlertService } from '../../shared';
   styleUrls: ['./create.component.scss'],
 })
 export class CreateComponent {
-  start_time: string;
-  end_time: string;
-
   form: FormGroup;
-  is_visible: boolean;
-  rule_type: string;
-
+  errors: any;
   status: XStatus = XStatus.Ready;
   XStatus = XStatus;
   envs = environment;
+  ruleTypes = this.envs.ruleTypes;
 
   constructor(
     private router: Router,
@@ -45,7 +40,7 @@ export class CreateComponent {
     const currentDate = new Date();
     const defaultDate: NgbDateStruct = {
       year: currentDate.getFullYear(),
-      month: currentDate.getMonth() + 1, // January is 0, so we add 1
+      month: currentDate.getMonth() + 1,
       day: currentDate.getDate(),
     };
     const defaultTime: NgbTimeStruct = {
@@ -56,68 +51,62 @@ export class CreateComponent {
     this.form = this.fb.group({
       name: [
         '',
-        this.validator.checkTitle.bind(this.validator, 'contests.title'),
+        this.validator.checkTitle.bind(this.validator, 'contests.name', true),
       ],
       description: [
         '',
         this.validator.checkContent.bind(
           this.validator,
-          'contests.description'
+          'contests.description',
+          true
         ),
       ],
+      isVisible: [false],
+      ruleType: [this.ruleTypes[0]],
       password: [
         '',
-        this.validator.checkTitle.bind(this.validator, 'contests.password'),
+        this.validator.checkTitle.bind(
+          this.validator,
+          'contests.password',
+          false
+        ),
       ],
-      start_d: [
-        defaultDate,
-        this.validator.checkTitle.bind(this.validator, 'contests.startTime'),
-      ],
+      start_d: [defaultDate],
       start_t: [
         defaultTime,
-        this.validator.checkTitle.bind(this.validator, 'contests.startTime'),
+        this.validator.checkTitle.bind(
+          this.validator,
+          'contests.startTime',
+          true
+        ),
       ],
-      end_d: [
-        defaultDate,
-        this.validator.checkTitle.bind(this.validator, 'contests.endTime'),
-      ],
+      end_d: [defaultDate],
       end_t: [
         defaultTime,
-        this.validator.checkTitle.bind(this.validator, 'contests.endTime'),
+        this.validator.checkTitle.bind(
+          this.validator,
+          'contests.endTime',
+          true
+        ),
       ],
     });
-    this.is_visible = false;
-    this.rule_type = 'acm';
   }
 
   get f() {
     return this.form.controls;
   }
 
-  checkTime() {
-    const start_time = new Date(
-      this.f.start_d.value.year,
-      this.f.start_d.value.month - 1,
-      this.f.start_d.value.day,
-      this.f.start_t.value.hour,
-      this.f.start_t.value.minute
+  getDateTime(date: NgbDateStruct, time: NgbTimeStruct): Date {
+    return new Date(
+      date.year,
+      date.month - 1,
+      date.day,
+      time.hour,
+      time.minute
     );
-    const end_time = new Date(
-      this.f.end_d.value.year,
-      this.f.end_d.value.month - 1,
-      this.f.end_d.value.day,
-      this.f.end_t.value.hour,
-      this.f.end_t.value.minute
-    );
-    // Check if start time is earlier than end time
-    if (start_time > end_time) {
-      this.alertService.error('errors.endTime');
-      return;
-    }
   }
 
   onSubmit(): void {
-    this.checkTime();
     this.status = XStatus.Clicked;
 
     // Reset alerts on submit
@@ -128,15 +117,30 @@ export class CreateComponent {
       return;
     }
 
-    let data: any = this.form;
-    data.rule_type = this.rule_type;
-    data.is_visible = this.is_visible;
-    data.start_time = new Date();
-    data.end_time = new Date();
+    // Check if start time is earlier than end time
+    const startTime = this.getDateTime(
+      this.f.start_d.value,
+      this.f.start_t.value
+    );
+    const endTime = this.getDateTime(this.f.end_d.value, this.f.end_t.value);
+
+    if (startTime > endTime) {
+      this.errors = 'contests.tooEarly';
+      return;
+    }
+
+    const data = {
+      name: this.f.name.value,
+      description: this.f.description.value,
+      password: this.f.password.value,
+      rule_type: this.f.ruleType.value.toLowerCase,
+      is_visible: this.f.isVisible.value,
+      start_time: startTime,
+      end_time: endTime,
+    };
 
     this.contestsService.createContests(data).subscribe({
       next: res => {
-        console.log('success');
         this.status = XStatus.Succeed;
         this.alertService.success('ssssssssss', true);
         this.router.navigate(['/contest/' + res.id]);
@@ -148,23 +152,5 @@ export class CreateComponent {
         this.alertService.error(err, true);
       },
     });
-  }
-
-  //rule
-  selectRule(rule: any) {
-    this.rule_type = rule;
-  }
-
-  //visible
-  selectVisible(visible: boolean) {
-    this.is_visible = visible;
-  }
-
-  onInputClick() {
-    this.f.start_d.markAsUntouched();
-  }
-
-  onInputBlur() {
-    this.f.start_d.markAsTouched();
   }
 }

@@ -1,13 +1,15 @@
 <div class="logo mb-3">
   <div class="col-md-12 text-center">
-    <h1>{{ "keywords.register" | translate }}</h1>
+    <h1>{{ 'keywords.register' | translate }}</h1>
   </div>
 </div>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="form-group mb-3">
     <input
+      id="name"
       type="text"
       class="form-control"
+      autocomplete="name"
       [formControl]="f.name"
       [ngClass]="{
         'is-invalid':
@@ -24,13 +26,15 @@
     </small>
     <small *ngIf="status === XStatus.Failed" class="text-danger">
       <div *ngIf="errors.name">
-        {{ "auth.username" | translate }} {{ errors.name[0] }}
+        {{ 'auth.username' | translate }} {{ errors.name[0] }}
       </div>
     </small>
   </div>
   <div class="form-group mb-3">
     <input
+      id="email"
       type="email"
+      autocomplete="email"
       class="form-control"
       [formControl]="f.email"
       [ngClass]="{
@@ -48,12 +52,13 @@
     </small>
     <small *ngIf="status === XStatus.Failed" class="text-danger">
       <div *ngIf="errors.email">
-        {{ "auth.email" | translate }} {{ errors.email[0] }}
+        {{ 'auth.email' | translate }} {{ errors.email[0] }}
       </div>
     </small>
   </div>
   <div class="form-group mb-3">
     <input
+      id="password"
       type="password"
       class="form-control"
       [formControl]="f.password"
@@ -76,6 +81,7 @@
   </div>
   <div class="form-group">
     <input
+      id="passwordConfirm"
       type="password"
       class="form-control"
       [formControl]="f.passwordConfirm"
@@ -96,7 +102,7 @@
       class="text-danger"
     >
       <div *ngIf="f.passwordConfirm.errors.pattern">
-        {{ "auth.passwordMismatch" | translate }}
+        {{ 'auth.passwordMismatch' | translate }}
       </div>
       <div *ngIf="!f.passwordConfirm.errors.pattern">
         {{ f.passwordConfirm.errors.error }}
@@ -110,16 +116,16 @@
         *ngIf="status === XStatus.Sent"
         class="spinner-border spinner-border-sm mr-1"
       ></span>
-      {{ "keywords.register" | translate }}
+      {{ 'keywords.register' | translate }}
     </button>
   </div>
   <div class="col-md-12">
     <div class="form-group">
       <small>
         <p class="text-center">
-          {{ "auth.alreadyHaveAccount" | translate }}
+          {{ 'auth.alreadyHaveAccount' | translate }}
           <a class="link-success" routerLink="/auth/login">
-            {{ "keywords.login" | translate }}
+            {{ 'keywords.login' | translate }}
           </a>
         </p>
       </small>
