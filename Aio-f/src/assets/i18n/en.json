@@ -38,7 +38,13 @@
     "rememberedPassword": "Remembered your password?"
   },
   "home": {},
-  "contests": {},
+  "contests": {
+    "title": "Title",
+    "description": "Description",
+    "password": "Password",
+    "startTime": "Start time",
+    "endTime": "End time"
+  },
   "problems": {
     "title": "Title",
     "timeLimit": "Time limit",

@@ -38,7 +38,13 @@
     "rememberedPassword": "记得密码了？"
   },
   "home": {},
-  "contests": {},
+  "contests": {
+    "title": "标题",
+    "description": "描述",
+    "password": "密码",
+    "startTime": "开始时间",
+    "endTime": "结束时间"
+  },
   "problems": {
     "title": "标题",
     "timeLimit": "时间限制",
