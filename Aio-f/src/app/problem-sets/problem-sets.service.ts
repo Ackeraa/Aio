@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth';
-import { SearchService } from '../shared';
+import { SearchService, SearchParams } from '../shared';
 
 @Injectable({
   providedIn: 'root',
@@ -12,12 +12,15 @@ export class ProblemSetsService {
     private searchService: SearchService
   ) {}
 
-  getPage(page: number): Observable<any> {
-    return this.searchService.get('', { page });
+  getProblemSets(url: string, params: SearchParams): Observable<any> {
+    return this.searchService.get(url, params);
   }
 
-  create(data: any): Observable<any> {
-    let url = 'problem_sets';
-    return this.authService.post(url, data);
+  getProblemSetsPage(): SearchParams {
+    return { page: this.searchService.getPage() };
+  }
+
+  createProblemSet(data: any): Observable<any> {
+    return this.authService.post('/problem_sets', data);
   }
 }

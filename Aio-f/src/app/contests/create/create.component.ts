@@ -139,7 +139,7 @@ export class CreateComponent {
       end_time: endTime,
     };
 
-    this.contestsService.createContests(data).subscribe({
+    this.contestsService.createContest(data).subscribe({
       next: res => {
         this.status = XStatus.Succeed;
         this.alertService.success('ssssssssss', true);

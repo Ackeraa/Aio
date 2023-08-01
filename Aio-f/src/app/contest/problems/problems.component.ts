@@ -72,10 +72,11 @@ export class ProblemsComponent {
   }
 
   isAdded(id: string): boolean {
-    if (this.problems) {
-      return this.problems.filter(x => x.id === id).length > 0;
+    // FIXME: this.problems is not set properly
+    if (!this.problems) {
+      return false;
     }
-    return false;
+    return this.problems.filter(x => x.id === id).length > 0;
   }
 
   addProblem(id: string): void {

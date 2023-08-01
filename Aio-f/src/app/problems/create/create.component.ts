@@ -6,6 +6,7 @@ import { ProblemsService } from '../problems.service';
 import { ValidatorService } from '../../helpers';
 import { CreateValidatorService } from './create-validator.service';
 import { AlertService, XStatus } from '../../shared';
+import { Problem } from '../';
 
 @Component({
   selector: 'app-problems-create',
@@ -42,11 +43,11 @@ export class CreateComponent implements OnInit {
         '',
         this.validator.checkTitle.bind(this.validator, 'problems.name', true),
       ],
-      memory_limit: [
+      memoryLimit: [
         '',
         this.createValidator.checkMemory.bind(this.createValidator),
       ],
-      time_limit: [
+      timeLimit: [
         '',
         this.createValidator.checkTime.bind(this.createValidator),
       ],
@@ -114,10 +115,10 @@ export class CreateComponent implements OnInit {
   }
 
   addSample(): void {
-    this.sampleArray.push(this.createSample());
+    this.sampleArray.push(this.createSampleGroup());
   }
 
-  removeSample(i: number, sample: any): void {
+  removeSample(i: number): void {
     this.sampleArray.removeAt(i);
   }
 
@@ -153,17 +154,27 @@ export class CreateComponent implements OnInit {
       return;
     }
 
-    let data: any = this.form.value;
-    data.allowed_languages = this.languages;
-    data.tags = this.tags;
-    // data.is_visible = this.is_visible;
-    // data.rule_type = this.rule_type;
-    data.source = 'aio';
+    const data: Problem = {
+      name: this.f.name.value,
+      description: this.f.description.value,
+      source: 'aio',
+      memory_limit: this.f.memoryLimit.value,
+      time_limit: this.f.timeLimit.value,
+      input: this.f.input.value,
+      output: this.f.output.value,
+      hint: this.f.hint.value,
+      samples: this.f.samples.value,
+      is_visible: this.f.isVisible.value,
+      rule_type: this.f.ruleType.value,
+      tags: this.tags,
+      allowed_languages: this.languages,
+    };
+
     this.problemsService.createProblem(data).subscribe({
       next: (id: number) => {
         this.status = XStatus.Succeed;
-        let url = '/problem/l/' + id + '/upload';
-        this.router.navigate([url]);
+        //let url = '/problem/l/' + id + '/upload';
+        //this.router.navigate([`/problem/l/${id}/upload`]);
       },
       error: (err: any) => {
         this.status = XStatus.Failed;

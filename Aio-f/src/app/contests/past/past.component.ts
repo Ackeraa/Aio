@@ -20,7 +20,7 @@ export class PastComponent {
   ) {}
 
   ngOnInit(): void {
-    this.getContests({ page: this.contestsService.getContestsPage() });
+    this.getContests(this.contestsService.getContestsPage());
   }
 
   getContests(params: SearchParams): void {

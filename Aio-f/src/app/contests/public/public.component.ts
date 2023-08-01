@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { faClock, faHome } from '@fortawesome/free-solid-svg-icons';
 import { finalize } from 'rxjs';
 import { AlertService, SearchParams } from '../../shared';
 import { ContestsService } from '../contests.service';
@@ -15,8 +14,6 @@ export class PublicComponent {
   total: number;
   p: number;
 
-  lock = faHome;
-  clock = faClock;
 
   constructor(
     private contestsService: ContestsService,
@@ -24,7 +21,7 @@ export class PublicComponent {
   ) {}
 
   ngOnInit(): void {
-    this.getContests({ page: this.contestsService.getContestsPage() });
+    this.getContests(this.contestsService.getContestsPage());
   }
 
   getContests(params: SearchParams): void {

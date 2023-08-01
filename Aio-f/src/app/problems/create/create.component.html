@@ -28,22 +28,22 @@
       >
       <input
         type="text"
-        [formControl]="f.time_limit"
+        [formControl]="f.timeLimit"
         class="form-control"
         [ngClass]="{
           'is-invalid':
-            (f.time_limit.touched || status === XStatus.Clicked) &&
-            f.time_limit.invalid
+            (f.timeLimit.touched || status === XStatus.Clicked) &&
+            f.timeLimit.invalid
         }"
       />
       <small
         *ngIf="
-          f.time_limit.invalid &&
-          (f.time_limit.touched || status === XStatus.Clicked)
+          f.timeLimit.invalid &&
+          (f.timeLimit.touched || status === XStatus.Clicked)
         "
         class="text-danger"
       >
-        {{ f.time_limit.errors.error }}
+        {{ f.timeLimit.errors.error }}
       </small>
     </div>
     <div class="col-md-4">
@@ -52,22 +52,22 @@
       </label>
       <input
         type="text"
-        [formControl]="f.memory_limit"
+        [formControl]="f.memoryLimit"
         class="form-control"
         [ngClass]="{
           'is-invalid':
-            (f.memory_limit.touched || status === XStatus.Clicked) &&
-            f.memory_limit.invalid
+            (f.memoryLimit.touched || status === XStatus.Clicked) &&
+            f.memoryLimit.invalid
         }"
       />
       <small
         *ngIf="
-          f.memory_limit.invalid &&
-          (f.memory_limit.touched || status === XStatus.Clicked)
+          f.memoryLimit.invalid &&
+          (f.memoryLimit.touched || status === XStatus.Clicked)
         "
         class="text-danger"
       >
-        {{ f.memory_limit.errors.error }}
+        {{ f.memoryLimit.errors.error }}
       </small>
     </div>
   </div>
@@ -240,7 +240,7 @@
       </div>
     </div>
   </div>
-  <div class="row mt-4">
+  <div class="row mt-1">
     <div class="col-md-12">
       <h3>{{ 'problems.hint' | translate }}</h3>
       <markdown [data]="f.hint.value" katex></markdown>
@@ -253,7 +253,7 @@
     </div>
   </div>
 
-  <div class="row mt-4">
+  <div class="row mt-5">
     <div class="col-md-12">
       <span class="form-label"
         ><h5>{{ 'problems.tags' | translate }}</h5></span
@@ -272,7 +272,7 @@
     </div>
   </div>
 
-  <div class="row mt-4">
+  <div class="row mt-5">
     <div class="col-md-12">
       <span class="form-label"
         ><h5>{{ 'problems.allowedLanguages' | translate }}</h5></span
@@ -291,8 +291,8 @@
     </div>
   </div>
 
-  <div class="row mt-4">
-    <div class="col-md-3">
+  <div class="d-grid d-md-flex justify-content-between mt-5">
+    <div class="col">
       <span for="ruleSelect" class="form-label"
         ><h5>{{ 'problems.rule' | translate }}</h5></span
       >
@@ -304,7 +304,7 @@
         </select>
       </div>
     </div>
-    <div class="col-md-2">
+    <div class="col">
       <span for="visible" class="form-label"
         ><h5>{{ 'problems.isVisible' | translate }}</h5></span
       >
@@ -320,7 +320,7 @@
     </div>
   </div>
 
-  <div class="mt-4">
+  <div class="mt-5">
     <app-problems-upload (uploadEvent)="setToken($event)"></app-problems-upload>
   </div>
 

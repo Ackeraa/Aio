@@ -182,7 +182,7 @@ class ProblemsController < ApplicationController
     def upload(type)
       @problem.update(type.to_sym => params[type]) 
       if @problem.save
-        unzip(@problem.data.file.file)
+        unzip(@problem.data.file.file) if type == :data
         render json: @problem.token, status: :ok
       else
         render json: @problem.errors, status: :unprocessable_entity

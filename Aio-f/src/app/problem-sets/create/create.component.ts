@@ -59,13 +59,13 @@ export class CreateComponent {
       return;
     }
 
-    this.problemSetsService.create(form).subscribe({
-      next: data => {
+    this.problemSetsService.createProblemSet(form).subscribe({
+      next: (data) => {
         this.status = XStatus.Succeed;
         this.alertService.success('alerts.createSucceed');
         this.router.navigate(['/problem-sets', data.id]);
       },
-      error: err => {
+      error: (err) => {
         this.status = XStatus.Failed;
         this.alertService.error(err);
       },

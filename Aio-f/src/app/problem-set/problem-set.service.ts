@@ -1,7 +1,7 @@
-import { Injectable, OnInit } from '@angular/core';
-import { Subject, BehaviorSubject, Observable, combineLatest } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { AuthService } from '../auth';
-import { ProblemSearchService } from '../shared';
+import { ProblemSearchService, ProblemSearchParams } from '../shared';
 
 @Injectable({
   providedIn: 'root',
@@ -14,23 +14,27 @@ export class ProblemSetService {
     private problemSearchService: ProblemSearchService
   ) {}
 
-  getPage(page: number): Observable<any> {
-    return this.problemSearchService.get({ page });
-  }
-
   getProblems(id: string): Observable<any> {
     this.id = id;
-    let url = 'problem_sets/' + id + '/problems';
+    let url = '/problem_sets/' + id + '/problems';
     return this.authService.get(url);
   }
 
+  getAllProblems(params: ProblemSearchParams): Observable<any> {
+    return this.problemSearchService.get(params);
+  }
+
+  getAllProblemsPage(): ProblemSearchParams {
+    return { page: this.problemSearchService.getPage() };
+  }
+
   addProblem(problem_id: string): Observable<any> {
-    let url = 'problem_sets/' + this.id + '/add_problem/' + problem_id;
+    let url = '/problem_sets/' + this.id + '/add_problem/' + problem_id;
     return this.authService.get(url);
   }
 
   deleteProblem(problem_id: string): Observable<any> {
-    let url = 'problem_sets/' + this.id + '/delete_problem/' + problem_id;
+    let url = '/problem_sets/' + this.id + '/delete_problem/' + problem_id;
     return this.authService.get(url);
   }
 }

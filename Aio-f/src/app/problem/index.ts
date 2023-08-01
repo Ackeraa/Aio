@@ -4,4 +4,5 @@ export * from './my-submissions/my-submissions.component';
 export * from './solutions/solutions.component';
 export * from './submissions/submissions.component';
 export * from './submit/submit.component';
+export * from './upload/upload.component';
 export * from './problem.component';

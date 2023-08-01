@@ -36,6 +36,7 @@ export class SearchService {
       page: params.page || this.params.page,
     };
 
+    console.log(this.createExtParams());
     return this.authService.get(url, this.createExtParams());
   }
 

@@ -16,11 +16,11 @@ export class ContestsService {
     return this.searchService.get(url, params);
   }
 
-  getContestsPage(): number {
-    return this.searchService.getPage();
+  getContestsPage(): SearchParams {
+    return { page: this.searchService.getPage() };
   }
 
-  createContests(data: any): Observable<any> {
+  createContest(data: any): Observable<any> {
     return this.authService.post('/contests', data);
   }
 }

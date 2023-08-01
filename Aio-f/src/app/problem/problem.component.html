@@ -43,6 +43,14 @@
       >
         <fa-icon [icon]="['fas', 'book-reader']"></fa-icon> Solutions
       </a>
+      <a
+        class="nav-item nav-link"
+        routerLinkActive="active"
+        routerLink="./upload"
+        *ngIf="source === 'l' && user && user.role !== 'admin'"
+      >
+        <fa-icon [icon]="['fas', 'book-reader']"></fa-icon> Upload
+      </a>
     </div>
   </div>
 </nav>

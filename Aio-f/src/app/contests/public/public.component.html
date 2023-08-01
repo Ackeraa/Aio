@@ -14,10 +14,10 @@
         <div class="col-auto logo">
           <div class="calendar">
             <span class="calendar-month-0">
-              {{ contest.start_time | date : 'MMM' }}
+              {{ contest.start_time | date : "MMM" }}
             </span>
             <span class="calendar-day-0">
-              {{ contest.start_time | date : 'dd' }}
+              {{ contest.start_time | date : "dd" }}
             </span>
           </div>
         </div>
@@ -35,9 +35,9 @@
               <p class="card-text time">
                 <fa-icon [icon]="['fas', 'lock']"></fa-icon> &nbsp;
                 <fa-icon [icon]="['fas', 'clock']"></fa-icon>
-                {{ contest.start_time | date : 'HH:mm' }}
+                {{ contest.start_time | date : "HH:mm" }}
                 -
-                {{ contest.end_time | date : 'HH:mm' }}
+                {{ contest.end_time | date : "HH:mm" }}
                 <sup *ngIf="contest.days > 0"> +{{ contest.days }} </sup>
               </p>
             </div>

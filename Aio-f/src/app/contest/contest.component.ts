@@ -28,8 +28,8 @@ export class ContestComponent implements OnInit {
     let id = this.route.snapshot.paramMap.get('id');
     this.contestService.getData(id);
     this.contestService.contest$
-      .pipe(filter(x => x != null))
-      .subscribe(contest => {
+      .pipe(filter((x) => x != null))
+      .subscribe((contest) => {
         this.start_time = new Date(contest.start_time).getTime();
         this.end_time = new Date(contest.end_time).getTime();
         let now = Date.now();

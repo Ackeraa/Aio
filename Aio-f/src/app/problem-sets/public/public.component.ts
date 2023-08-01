@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { finalize } from 'rxjs/operators';
+import { AlertService, SearchParams } from '../../shared';
 import { ProblemSetsService } from '../problem-sets.service';
 
 @Component({
@@ -7,31 +9,35 @@ import { ProblemSetsService } from '../problem-sets.service';
   styleUrls: ['./public.component.scss'],
 })
 export class PublicComponent {
-  url: string = 'problem_sets';
-  addition: string = 'public';
   loading: boolean;
   problemSets: Array<any>;
-  p: number;
   total: number;
+  p: number;
 
-  constructor(private problemSetsService: ProblemSetsService) {}
+  constructor(
+    private problemSetsService: ProblemSetsService,
+    private AlertService: AlertService
+  ) {}
 
-  ngOnInit(): void {}
-
-  setProblemSets(data: any): void {
-    this.problemSets = data.problem_sets;
-    this.total = data.total;
+  ngOnInit(): void {
+    this.getProblemSets(this.problemSetsService.getProblemSetsPage());
   }
 
-  setLoading(loading: boolean): void {
-    this.loading = loading;
-  }
+  getProblemSets(params: SearchParams): void {
+    this.loading = true;
+    this.p = params.page;
 
-  getPage(page: number): void {
-    this.problemSetsService.getPage(page).subscribe(data => {
-      this.problemSets = data.problemSets;
-      this.total = data.total;
-      this.p = page;
-    });
+    this.problemSetsService
+      .getProblemSets('/problem_sets/public', params)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe({
+        next: (data) => {
+          this.problemSets = data.problem_sets;
+          this.total = data.total;
+        },
+        error: (err) => {
+          this.AlertService.error(err);
+        },
+      });
   }
 }

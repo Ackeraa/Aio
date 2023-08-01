@@ -4,10 +4,11 @@ import { ProblemComponent } from './problem.component';
 import {
 	DescriptionComponent,
 	DiscussionComponent,
-	MySubmissionsComponent, 
-	SolutionsComponent, 
-	SubmissionsComponent, 
-	SubmitComponent
+	MySubmissionsComponent,
+	SolutionsComponent,
+	SubmissionsComponent,
+	SubmitComponent,
+  UploadComponent
 } from '.';
 
 const routes: Routes = [
@@ -16,11 +17,12 @@ const routes: Routes = [
 		children: [
 			{ path: '', redirectTo: 'description', pathMatch: 'full' },
 			{ path: 'description', component: DescriptionComponent },
-			{ path: 'discussion', component: DiscussionComponent }, 
-			{ path: 'my-submissions', component: MySubmissionsComponent }, 
+			{ path: 'discussion', component: DiscussionComponent },
+			{ path: 'my-submissions', component: MySubmissionsComponent },
 			{ path: 'solutions', component: SolutionsComponent },
-			{ path: 'submissions', component: SubmissionsComponent }, 
-			{ path: 'submit', component: SubmitComponent }
+			{ path: 'submissions', component: SubmissionsComponent },
+			{ path: 'submit', component: SubmitComponent },
+      { path: 'upload', component: UploadComponent }
 		]
 	},
 ];

@@ -1,5 +1,7 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Component } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { finalize } from 'rxjs';
+import { AlertService, ProblemSearchParams } from '../shared';
 import { ProblemSetService } from './problem-set.service';
 
 @Component({
@@ -17,58 +19,61 @@ export class ProblemSetComponent {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private problemSetService: ProblemSetService
+    private problemSetService: ProblemSetService,
+    private alertService: AlertService
   ) {}
 
   ngOnInit(): void {
+    this.getAllProblems(this.problemSetService.getAllProblemsPage());
     let id = this.route.snapshot.paramMap.get('id');
-    this.problemSetService
-      .getProblems(id)
-      .subscribe(problems => (this.problems = problems));
-    this.p = 1;
-  }
-
-  setAllProblems(data: any): void {
-    this.allProblems = data.problems;
-    this.total = data.total;
-    this.p = 1;
-  }
-
-  getPage(page: number): void {
-    this.problemSetService.getPage(page).subscribe(data => {
-      this.allProblems = data.problems;
-      this.total = data.total;
-      this.p = page;
+    this.problems = [];
+    this.problemSetService.getProblems(id).subscribe({
+      next: (data) => {
+        this.problems = data.problems;
+      },
     });
   }
 
-  setLoading(loading: boolean): void {
-    this.loading = loading;
+  getAllProblems(params: ProblemSearchParams): void {
+    this.p = params.page;
+    this.loading = true;
+    this.problemSetService
+      .getAllProblems(params)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe({
+        next: (data) => {
+          this.allProblems = data.problems;
+          this.total = data.total;
+        },
+        error: (err) => {
+          this.alertService.error(err);
+        },
+      });
   }
 
   viewProblem(source: string, id: string): void {
-    let url: string;
-    if (source == 'aio') {
-      url = '/problem/l/' + id;
-    } else {
-      url = '/problem/v/' + id;
-    }
+    const url = source === 'aio' ? `/problems/l/${id}` : `/problems/v/${id}`;
+
     this.router.navigate([url]);
   }
 
   isAdded(id: string): boolean {
-    return this.problems.filter(x => x.id === id).length > 0;
+    // FIXME: this is a hack, fix it
+    if (!this.problems) {
+      return false;
+    }
+    return this.problems.filter((x) => x.id === id).length > 0;
   }
 
   addProblem(id: string): void {
     this.problemSetService
       .addProblem(id)
-      .subscribe(problems => (this.problems = problems));
+      .subscribe((problems) => (this.problems = problems));
   }
 
   deleteProblem(id: string): void {
     this.problemSetService
       .deleteProblem(id)
-      .subscribe(problems => (this.problems = problems));
+      .subscribe((problems) => (this.problems = problems));
   }
 }
