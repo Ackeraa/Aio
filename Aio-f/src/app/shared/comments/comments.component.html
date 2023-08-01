@@ -3,7 +3,9 @@
     <br />
     <app-search (searchEvent)="getComments($event)"> </app-search>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-2 mb-2">
-      <button class="btn btn-outline-primary me-md-2" (click)="setCollapse(0)">Comment</button>
+      <button class="btn btn-outline-primary me-md-2" (click)="setCollapse(0)">
+        {{ 'comments.comment' | translate }}
+      </button>
     </div>
     <div [ngbCollapse]="!collapseStates[0]">
       <markdown [data]="descriptions[0]" katex></markdown>
@@ -15,14 +17,11 @@
       </textarea>
 
       <div class="d-grid gap-1 d-md-flex justify-content-md-end mt-1">
-        <button
-          class="btn btn-success btn-sm me-md-1"
-          (click)="addComment()"
-        >
-          Submit
+        <button class="btn btn-success btn-sm me-md-1" (click)="addComment()">
+          {{ 'comments.submit' | translate }}
         </button>
         <button class="btn btn-danger btn-sm" (click)="setCollapse(0)">
-          Cancel
+          {{ 'comments.cancel' | translate }}
         </button>
       </div>
     </div>
@@ -69,14 +68,16 @@
                   (click)="setVisibility(node.comment.id)"
                   *ngIf="visibilityStates[node.comment.id]"
                 >
-                  Hide {{ node.children.length }} replies
+                  {{ 'comments.hide' | translate }} {{ node.children.length }}
+                  {{ 'comments.reply' | translate }}
                 </a>
                 <a
                   class="link link-view"
                   (click)="setVisibility(node.comment.id)"
                   *ngIf="!visibilityStates[node.comment.id]"
                 >
-                  Show {{ node.children.length }} replies
+                  {{ 'comments.show' | translate }} {{ node.children.length }}
+                  {{ 'comments.reply' | translate }}
                 </a>
               </div>
             </div>
@@ -93,13 +94,13 @@
                   class="btn btn-success btn-sm me-md-1"
                   (click)="addComment(node.comment.id)"
                 >
-                  Submit
+                  {{ 'comments.submit' | translate }}
                 </button>
                 <button
                   class="btn btn-danger btn-sm"
                   (click)="setCollapse(node.comment.id)"
                 >
-                  Cancel
+                  {{ 'comments.cancel' | translate }}
                 </button>
               </div>
             </div>

@@ -7,21 +7,24 @@
         routerLinkActive="active"
         routerLink="./public"
       >
-        <fa-icon [icon]="['fas', 'spider']"></fa-icon> Public
+        <fa-icon [icon]="['fas', 'calendar-minus']"></fa-icon>
+        {{ 'keywords.public' | translate }}
       </a>
       <a
         class="nav-item nav-link"
         routerLinkActive="active"
         routerLink="./private"
       >
-        <fa-icon [icon]="['fas', 'folder-plus']"></fa-icon> Private
+        <fa-icon [icon]="['fas', 'folder-plus']"></fa-icon>
+        {{ 'keywords.private' | translate }}
       </a>
       <a
         class="nav-item nav-link"
         routerLinkActive="active"
         routerLink="./create"
       >
-        <fa-icon [icon]="['fas', 'folder-plus']"></fa-icon> Create
+        <fa-icon [icon]="['fas', 'folder-plus']"></fa-icon>
+        {{ 'keywords.create' | translate }}
       </a>
     </div>
   </div>

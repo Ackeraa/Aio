@@ -1,7 +1,9 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="row mt-4">
     <div class="col-md-4">
-      <label for="name" class="form-label"><h5>Title</h5></label>
+      <label for="name" class="form-label"
+        ><h5>{{ 'contests.name' | translate }}</h5></label
+      >
       <input
         id="name"
         autocomplete="title"
@@ -23,7 +25,7 @@
   </div>
   <div class="row mt-4">
     <div class="col-md-12">
-      <h5>Description</h5>
+      <h5>{{ 'contests.description' | translate }}</h5>
       <textarea
         id="description"
         style="overflow-y: auto; height: 30vh"
@@ -49,7 +51,9 @@
   </div>
   <div class="row mt-4">
     <div class="col-md-3">
-      <label for="startDay" class="form-label"><h5>Start Time</h5></label>
+      <label for="startDay" class="form-label"
+        ><h5>{{ 'contests.startTime' | translate }}</h5></label
+      >
       <input
         id="startDay"
         class="form-control"
@@ -75,7 +79,9 @@
       </small>
     </div>
     <div class="col-md-3">
-      <label for="endDay" class="form-label"><h5>End Time</h5></label>
+      <label for="endDay" class="form-label"
+        ><h5>{{ 'contests.endTime' | translate }}</h5></label
+      >
       <input
         id="endDay"
         class="form-control"
@@ -109,7 +115,9 @@
 
   <div class="row mt-5">
     <div class="col-md-4">
-      <span for="ruleSelect" class="form-label"><h5>Rule</h5></span>
+      <span for="ruleSelect" class="form-label"
+        ><h5>{{ 'contests.rule' | translate }}</h5></span
+      >
       <div class="col-6">
         <select class="form-select" id="ruleSelect" [formControl]="f.ruleType">
           <option *ngFor="let ruleType of ruleTypes" [value]="ruleType">
@@ -119,7 +127,9 @@
       </div>
     </div>
     <div class="col-md-3">
-      <span for="visible" class="form-label"><h5>Visible</h5></span>
+      <span for="visible" class="form-label"
+        ><h5>{{ 'contests.visible' | translate }}</h5></span
+      >
       <div class="form-check form-switch">
         <input
           class="form-check-input"
@@ -131,7 +141,9 @@
       </div>
     </div>
     <div class="col-md-5">
-      <span for="password" class="form-label"><h5>Password</h5></span>
+      <span for="password" class="form-label"
+        ><h5>{{ 'contests.password' | translate }}</h5></span
+      >
       <input
         id="password"
         type="password"
@@ -164,7 +176,8 @@
         *ngIf="status === XStatus.Sent"
         class="spinner-border spinner-border-sm mr-1"
       ></span>
-      <fa-icon [icon]="['fas', 'upload']"></fa-icon> Submit
+      <fa-icon [icon]="['fas', 'upload']"></fa-icon>
+      {{ 'contests.submit' | translate }}
     </button>
   </div>
 </form>

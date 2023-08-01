@@ -3,8 +3,19 @@
     "login": "Login",
     "logout": "Logout",
     "register": "Register",
-    "description": "Description",
-    "title": "Title"
+    "home": "Home",
+    "contests": "Contests",
+    "problems": "Problems",
+    "problemSets": "Problem sets",
+    "submissions": "Submissions",
+    "discussion": "Discussion",
+    "groups": "Groups",
+    "users": "Users",
+    "wiki": "Wiki",
+    "public": "Public",
+    "group": "Group",
+    "private": "Private",
+    "create": "Create"
   },
   "errors": {
     "tooShort": "{{v1}} is too short (minimum is {{v2}} characters).",
@@ -14,17 +25,6 @@
     "invalid": "{{v1}} is invalid."
   },
   "welcome": "Oh, hello there, dear!",
-  "header": {
-    "home": "Home",
-    "contests": "Contests",
-    "problems": "Problems",
-    "problemSet": "Problem sets",
-    "submissions": "Submissions",
-    "discussion": "Discussion",
-    "groups": "Groups",
-    "users": "Users",
-    "wiki": "Wiki"
-  },
   "auth": {
     "username": "Username",
     "email": "Email",
@@ -44,7 +44,10 @@
     "password": "Password",
     "startTime": "Start time",
     "endTime": "End time",
-    "tooEarly": "End time is too early"
+    "tooEarly": "End time is too early",
+    "rule": "Rule",
+    "visible": "visible",
+    "submit": "Submit"
   },
   "problems": {
     "name": "Title",
@@ -70,8 +73,22 @@
   },
   "submissions": {},
   "discussion": {},
-  "groups": {},
-  "users": {},
+  "groups": {
+    "myGroups": "My Groups",
+    "explore": "Explore"
+  },
+  "users": {
+    "myInfo": "My Info",
+    "explore": "Explore"
+  },
+  "comments": {
+    "comment": "Comment",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "show": "Show",
+    "hide": "Hide",
+    "reply": "reply"
+  },
   "wiki": {}
 }
 

@@ -16,7 +16,8 @@
           routerLink="../home"
           (click)="isCollapsed = true"
         >
-          <fa-icon [icon]="['fas', 'home']"></fa-icon> Home
+          <fa-icon [icon]="['fas', 'home']"></fa-icon>
+          {{ 'keywords.home' | translate }}
         </a>
         <a
           class="nav-item nav-link"
@@ -24,7 +25,8 @@
           routerLink="../contests"
           (click)="isCollapsed = true"
         >
-          <fa-icon [icon]="['fas', 'trophy']"></fa-icon> Contests
+          <fa-icon [icon]="['fas', 'trophy']"></fa-icon>
+          {{ 'keywords.contests' | translate }}
         </a>
         <a
           class="nav-item nav-link"
@@ -32,7 +34,8 @@
           routerLink="../problems"
           (click)="isCollapsed = true"
         >
-          <fa-icon [icon]="['fas', 'book']"></fa-icon> Problems
+          <fa-icon [icon]="['fas', 'book']"></fa-icon>
+          {{ 'keywords.problems' | translate }}
         </a>
         <a
           class="nav-item nav-link"
@@ -40,7 +43,8 @@
           routerLink="../problem-sets"
           (click)="isCollapsed = true"
         >
-          <fa-icon [icon]="['fas', 'book-journal-whills']"></fa-icon> Problem Sets
+          <fa-icon [icon]="['fas', 'book-journal-whills']"></fa-icon>
+          {{ 'keywords.problemSets' | translate }}
         </a>
         <a
           class="nav-item nav-link"
@@ -48,7 +52,8 @@
           routerLink="../submissions"
           (click)="isCollapsed = true"
         >
-          <fa-icon [icon]="['fas', 'list-ul']"></fa-icon> Submissions
+          <fa-icon [icon]="['fas', 'list-ul']"></fa-icon>
+          {{ 'keywords.submissions' | translate }}
         </a>
         <a
           class="nav-item nav-link"
@@ -56,7 +61,8 @@
           routerLink="../discussion"
           (click)="isCollapsed = true"
         >
-          <fa-icon [icon]="['fas', 'comments']"></fa-icon> Discussion
+          <fa-icon [icon]="['fas', 'comments']"></fa-icon>
+          {{ 'keywords.discussion' | translate }}
         </a>
         <a
           class="nav-item nav-link"
@@ -64,7 +70,8 @@
           routerLink="../groups"
           (click)="isCollapsed = true"
         >
-          <fa-icon [icon]="['fas', 'users']"></fa-icon> Groups
+          <fa-icon [icon]="['fas', 'users']"></fa-icon>
+          {{ 'keywords.groups' | translate }}
         </a>
         <a
           class="nav-item nav-link"
@@ -72,16 +79,17 @@
           routerLink="../users"
           (click)="isCollapsed = true"
         >
-          <fa-icon [icon]="['fas', 'address-card']"></fa-icon> Users
+          <fa-icon [icon]="['fas', 'address-card']"></fa-icon>
+          {{ 'keywords.users' | translate }}
         </a>
-        <a
+        <!-- <a
           class="nav-item nav-link"
           [routerLinkActive]="['active']"
           routerLink="../protected"
           (click)="isCollapsed = true"
         >
           <fa-icon [icon]="['fas', 'book-open']"></fa-icon> Wiki
-        </a>
+        </a> -->
       </div>
       <div class="navbar-nav ml-auto">
         <a
@@ -89,14 +97,14 @@
           *ngIf="!currentUser"
           [routerLinkActive]="['active']"
           routerLink="/auth/login"
-          >Login</a
+          >{{ 'keywords.login' | translate }}</a
         >
         <a
           class="nav-item nav-link"
           *ngIf="!currentUser"
           [routerLinkActive]="['active']"
           routerLink="/auth/register"
-          >Register</a
+          >{{ 'keywords.register' | translate }}</a
         >
 
         <div ngbDropdown *ngIf="currentUser">
@@ -111,7 +119,9 @@
             <a class="dropdown-item" href="#">Action - 1</a>
             <a class="dropdown-item" href="#">Another Action</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#" (click)="logout()">Logout</a>
+            <a class="dropdown-item" href="#" (click)="logout()">{{
+              'keywords.logout' | translate
+            }}</a>
           </div>
         </div>
       </div>

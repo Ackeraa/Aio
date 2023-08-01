@@ -1,15 +1,24 @@
 <nav class="navbar navbar-expand-lg navbar-light">
-	<a class="navbar-brand" href="#">
-	</a>
-	<div class="collapse navbar-collapse">
-		<div class="navbar-nav mr-auto">
-			<a class="nav-item nav-link" routerLinkActive="active" routerLink="./my-groups">
-        <fa-icon [icon]="myGroupsIcon"></fa-icon> My Groups
+  <a class="navbar-brand" href="#"> </a>
+  <div class="collapse navbar-collapse">
+    <div class="navbar-nav mr-auto">
+      <a
+        class="nav-item nav-link"
+        routerLinkActive="active"
+        routerLink="./my-groups"
+      >
+        <fa-icon [icon]="myGroupsIcon"></fa-icon>
+        {{ 'groups.myGroups' | translate }}
       </a>
-			<a class="nav-item nav-link" routerLinkActive="active" routerLink="./explore">
-        <fa-icon [icon]="exploreIcon"></fa-icon> Explore
+      <a
+        class="nav-item nav-link"
+        routerLinkActive="active"
+        routerLink="./explore"
+      >
+        <fa-icon [icon]="exploreIcon"></fa-icon
+        >{{ 'groups.explore' | translate }}
       </a>
-		</div>
-	</div>
+    </div>
+  </div>
 </nav>
 <router-outlet></router-outlet>

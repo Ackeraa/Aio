@@ -6,6 +6,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { MarkdownModule } from 'ngx-markdown';
 import { SearchModule } from '../search/search.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TranslateModule } from '@ngx-translate/core';
 import { CommentsComponent } from './comments.component';
 
 @NgModule({
@@ -13,6 +14,7 @@ import { CommentsComponent } from './comments.component';
   imports: [
     CommonModule,
     MarkdownModule,
+    TranslateModule,
     FontAwesomeModule,
     NgxPaginationModule,
     NgbModule,

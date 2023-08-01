@@ -4,8 +4,10 @@ import {
   ElementRef,
   Output,
   EventEmitter,
+  AfterViewInit,
 } from '@angular/core';
 import { fromEvent, Subscription, debounceTime } from 'rxjs';
+import { SearchService } from './search.service';
 import { SearchParams } from '../';
 
 @Component({
@@ -13,13 +15,17 @@ import { SearchParams } from '../';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
 })
-export class SearchComponent {
+export class SearchComponent implements AfterViewInit {
   @Output() searchEvent = new EventEmitter<any>();
   @ViewChild('query', { static: true }) query: ElementRef;
 
   private query$: Subscription;
 
-  constructor() {}
+  constructor(private searchService: SearchService) {}
+
+  ngAfterViewInit(): void {
+    this.query.nativeElement.value = this.searchService.getQuery();
+  }
 
   ngOnInit(): void {
     //Observer of query change, need to be fixed, should watch the text change

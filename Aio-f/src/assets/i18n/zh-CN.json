@@ -3,8 +3,19 @@
     "login": "登录",
     "register": "注册",
     "logout": "登出",
-    "description": "描述",
-    "title": "标题"
+    "home": "首页",
+    "contests": "比赛",
+    "problems": "题目",
+    "problemSets": "题集",
+    "submissions": "提交",
+    "discussion": "讨论",
+    "groups": "群组",
+    "users": "用户",
+    "wiki": "百科",
+    "public": "公开的",
+    "group": "小组的",
+    "private": "个人的",
+    "create": "创建"
   },
   "errors": {
     "tooShort": "{{v1}}太短，至少{{v2}}个字符.",
@@ -14,17 +25,6 @@
     "invalid": "{{v1}}无效."
   },
   "welcome": "噢，你好啊，亲爱的！",
-  "header": {
-    "home": "首页",
-    "contests": "比赛",
-    "problems": "问题",
-    "problemSet": "问题集",
-    "submissions": "提交",
-    "discussion": "讨论",
-    "groups": "群组",
-    "users": "用户",
-    "wiki": "百科"
-  },
   "auth": {
     "username": "用户名",
     "email": "电子邮件",
@@ -44,7 +44,10 @@
     "password": "密码",
     "startTime": "开始时间",
     "endTime": "结束时间",
-    "tooEarly": "结束时间太早"
+    "tooEarly": "结束时间太早",
+    "rule": "规则",
+    "visible": "是否可见",
+    "submit": "提交"
   },
   "problems": {
     "name": "标题",
@@ -70,7 +73,21 @@
   },
   "submissions": {},
   "discussion": {},
-  "groups": {},
-  "users": {},
+  "groups": {
+    "myGroups": "我的小组",
+    "explore": "搜索"
+  },
+  "users": {
+    "myInfo": "个人信息",
+    "explore": "搜索"
+  },
+  "comments": {
+    "comment": "评论",
+    "submit": "提交",
+    "cancel": "取消",
+    "show": "显示",
+    "hide": "隐藏",
+    "reply": "条回复"
+  },
   "wiki": {}
 }
