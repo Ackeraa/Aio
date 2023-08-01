@@ -4,6 +4,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { MarkdownModule } from 'ngx-markdown';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { TranslateModule } from '@ngx-translate/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProblemsRoutingModule } from './problems-routing.module';
 
@@ -29,6 +30,7 @@ import { PrivateComponent } from './private/private.component';
     CommonModule,
     FormsModule,
     FontAwesomeModule,
+    TranslateModule,
     FileUploadModule,
     ReactiveFormsModule,
     MarkdownModule.forChild(),

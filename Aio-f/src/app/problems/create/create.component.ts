@@ -14,19 +14,17 @@ import { AlertService, XStatus } from '../../shared';
 })
 export class CreateComponent implements OnInit {
   form: FormGroup;
-  samples: FormArray;
-  all_tags: Array<string>;
   tags: Array<string>;
-  rule_type: string;
-  is_visible: boolean;
   languages: Array<any>;
-  allowed_languages: Array<any>;
 
   token: string;
 
   status: XStatus = XStatus.Ready;
   XStatus = XStatus;
   envs = environment;
+  ruleTypes = this.envs.ruleTypes;
+  allLanguages = this.envs.problemLanguages;
+  allTags = this.envs.problemTags;
 
   constructor(
     private router: Router,
@@ -76,33 +74,25 @@ export class CreateComponent implements OnInit {
           true
         ),
       ],
-      samples: this.fb.array([this.createSample()]),
+      samples: this.fb.array([this.createSampleGroup()]),
       hint: [''],
+      isVisible: [false],
+      ruleType: [this.ruleTypes[0]],
     });
 
-    this.samples = this.form.get('samples') as FormArray;
-    this.all_tags = ['DP', 'Greedy', 'DFS', 'BFS', 'Geometry', 'Brute Force'];
     this.tags = [];
-    this.rule_type = 'acm';
-    this.is_visible = null;
-    this.languages = [
-      { id: 0, value: 'C' },
-      { id: 1, value: 'Cpp' },
-      { id: 2, value: 'Java' },
-      { id: 3, value: 'Python' },
-    ];
-    this.allowed_languages = Array.from(this.languages);
+    this.languages = this.allLanguages.slice();
   }
 
   get f() {
     return this.form.controls;
   }
 
-  get sampleControls() {
-    return this.form.get('samples')['controls'];
+  get sampleArray() {
+    return this.form.get('samples') as FormArray;
   }
 
-  createSample(): FormGroup {
+  createSampleGroup(): FormGroup {
     return this.fb.group({
       sample_input: [
         '',
@@ -124,42 +114,32 @@ export class CreateComponent implements OnInit {
   }
 
   addSample(): void {
-    this.samples.push(this.createSample());
+    this.sampleArray.push(this.createSample());
   }
 
   removeSample(i: number, sample: any): void {
-    this.samples.removeAt(i);
+    this.sampleArray.removeAt(i);
   }
 
-  selectTag(btn: any, tag: string) {
-    let index = this.tags.indexOf(tag);
+  selectBtn(btn: any, element: string, elements: Array<string>) {
+    let index = elements.indexOf(element);
     if (index == -1) {
-      this.tags.push(tag);
+      elements.push(element);
       this.renderer.removeClass(btn, 'btn-outline-dark');
       this.renderer.addClass(btn, 'btn-primary');
     } else {
-      this.tags.splice(index, 1);
+      elements.splice(index, 1);
       this.renderer.removeClass(btn, 'btn-primary');
       this.renderer.addClass(btn, 'btn-outline-dark');
     }
   }
 
-  selectRule(rule: any) {
-    this.rule_type = rule;
-    console.log(this.f.memory_limit.errors.required);
+  selectTag(btn: any, tag: string) {
+    this.selectBtn(btn, tag, this.tags);
   }
 
-  selectVisible(visible: boolean) {
-    this.is_visible = visible;
-  }
-
-  selectLan(check: boolean, lan: string) {
-    if (check) {
-      this.allowed_languages.push(lan);
-    } else {
-      let index = this.allowed_languages.indexOf(lan);
-      this.allowed_languages.splice(index, 1);
-    }
+  selectLanguage(btn: any, language: string) {
+    this.selectBtn(btn, language, this.languages);
   }
 
   onSubmit(): void {
@@ -174,10 +154,10 @@ export class CreateComponent implements OnInit {
     }
 
     let data: any = this.form.value;
-    data.allowed_languages = this.allowed_languages;
+    data.allowed_languages = this.languages;
     data.tags = this.tags;
-    data.is_visible = this.is_visible;
-    data.rule_type = this.rule_type;
+    // data.is_visible = this.is_visible;
+    // data.rule_type = this.rule_type;
     data.source = 'aio';
     this.problemsService.createProblem(data).subscribe({
       next: (id: number) => {

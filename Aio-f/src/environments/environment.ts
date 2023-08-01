@@ -16,5 +16,7 @@ export const environment = {
   memoryMax: 512,
   timeMax: 10000,
   vproblemsSources: ['Atcoder', 'Codeforces', 'UVA', 'POJ'],
+  problemLanguages: ['C', 'Cpp', 'Java', 'Python'],
+  problemTags: ['DP', 'Greedy', 'DFS', 'BFS', 'Geometry', 'Brute Force'],
   ruleTypes: ['ACM', 'OI'],
 };

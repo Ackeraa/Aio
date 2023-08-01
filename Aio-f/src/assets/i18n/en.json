@@ -46,7 +46,7 @@
     "endTime": "End time",
     "tooEarly": "End time is too early",
     "rule": "Rule",
-    "visible": "visible",
+    "isVisible": "visible",
     "submit": "Submit"
   },
   "problems": {
@@ -56,15 +56,16 @@
     "description": "Description",
     "input": "Input",
     "output": "Output",
+    "samples": "Samples",
     "sampleInput": "Sample input",
     "sampleOutput": "Sample output",
     "hint": "Hint",
     "source": "Source",
     "tags": "Tags",
-    "submit": "Submit",
-    "visible": "Visible",
+    "isVisible": "Visible",
     "allowedLanguages": "Allowed languages",
-    "rule": "Rule"
+    "rule": "Rule",
+    "submit": "Submit"
   },
   "problemSets": {
     "name": "Title",

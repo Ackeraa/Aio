@@ -1,7 +1,11 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="row mt-4">
     <div class="col-md-4">
-      <label class="form-label"><h5>Title</h5></label>
+      <label class="form-label"
+        ><h5>
+          {{ 'problems.name' | translate }}
+        </h5></label
+      >
       <input
         type="text"
         [formControl]="f.name"
@@ -19,7 +23,9 @@
       </small>
     </div>
     <div class="col-md-4">
-      <label class="form-label"><h5>Time Limit(MS)</h5></label>
+      <label class="form-label"
+        ><h5>{{ 'problems.timeLimit' | translate }}(MS)</h5></label
+      >
       <input
         type="text"
         [formControl]="f.time_limit"
@@ -41,7 +47,9 @@
       </small>
     </div>
     <div class="col-md-4">
-      <label class="form-label"><h5>Memory Limit(MB)</h5> </label>
+      <label class="form-label"
+        ><h5>{{ 'problems.memoryLimit' | translate }}(MB)</h5>
+      </label>
       <input
         type="text"
         [formControl]="f.memory_limit"
@@ -66,7 +74,7 @@
 
   <div class="row mt-4">
     <div class="col-md-12">
-      <h3>Description</h3>
+      <h3>{{ 'problems.description' | translate }}</h3>
       <markdown [data]="f.description.value" katex></markdown>
       <textarea
         style="overflow-y: auto; height: 30vh"
@@ -92,7 +100,7 @@
   </div>
   <div class="row mt-4">
     <div class="col-md-12">
-      <h3>Input</h3>
+      <h3>{{ 'problems.input' | translate }}</h3>
       <markdown [data]="f.input.value" katex></markdown>
       <textarea
         style="overflow-y: auto; height: 15vh"
@@ -116,7 +124,7 @@
   </div>
   <div class="row mt-4">
     <div class="col-md-12">
-      <h3>Output</h3>
+      <h3>{{ 'problems.output' | translate }}</h3>
       <markdown [data]="f.output.value" katex></markdown>
       <textarea
         style="overflow-y: auto; height: 15vh"
@@ -139,7 +147,7 @@
     </div>
   </div>
   <h3 class="d-grid d-flex justify-content-between mt-4">
-    Samples
+    {{ 'problems.samples' | translate }}
     <button type="button" class="btn btn-outline-success" (click)="addSample()">
       <fa-icon [icon]="['fas', 'plus']"></fa-icon>
     </button>
@@ -147,7 +155,7 @@
 
   <div
     formArrayName="samples"
-    *ngFor="let sample of sampleControls; let i = index"
+    *ngFor="let sample of sampleArray.controls; let i = index"
   >
     <div [formGroupName]="i">
       <div class="row">
@@ -159,7 +167,7 @@
               <div class="card shadow-sm border-secondary">
                 <div class="card-header bg-transparent border-secondary">
                   <div class="d-grid d-flex justify-content-between">
-                    <div>Input {{ i + 1 }}</div>
+                    <div>{{ 'problems.input' | translate }} {{ i + 1 }}</div>
                     <a (click)="removeSample(i, sample)">
                       <fa-icon [icon]="['fas', 'times']"></fa-icon>
                     </a>
@@ -186,7 +194,7 @@
                     "
                     class="text-danger"
                   >
-                    {{ sample.controls["sample_input"].errors.error }}
+                    {{ sample.controls['sample_input'].errors.error }}
                   </small>
                 </div>
               </div>
@@ -195,7 +203,7 @@
               <div class="card shadow-sm border-secondary">
                 <div class="card-header bg-transparent border-secondary">
                   <div class="d-grid d-flex justify-content-between">
-                    <div>Output {{ i + 1 }}</div>
+                    <div>{{ 'problems.output' | translate }} {{ i + 1 }}</div>
                     <a (click)="removeSample(i, sample)">
                       <fa-icon [icon]="['fas', 'times']"></fa-icon>
                     </a>
@@ -222,7 +230,7 @@
                     "
                     class="text-danger"
                   >
-                    {{ sample.controls["sample_output"].errors.error }}
+                    {{ sample.controls['sample_output'].errors.error }}
                   </small>
                 </div>
               </div>
@@ -234,7 +242,7 @@
   </div>
   <div class="row mt-4">
     <div class="col-md-12">
-      <h3>Hint</h3>
+      <h3>{{ 'problems.hint' | translate }}</h3>
       <markdown [data]="f.hint.value" katex></markdown>
       <textarea
         style="overflow-y: auto; height: 13vh"
@@ -247,11 +255,13 @@
 
   <div class="row mt-4">
     <div class="col-md-12">
-      <span class="form-label"><h5>Tags</h5></span>
+      <span class="form-label"
+        ><h5>{{ 'problems.tags' | translate }}</h5></span
+      >
       <div class="d-grid d-flex gap-1">
         <button
           type="button"
-          *ngFor="let tag of all_tags"
+          *ngFor="let tag of allTags"
           class="btn btn-outline-dark"
           #btn
           (click)="selectTag($event.target, tag)"
@@ -263,60 +273,49 @@
   </div>
 
   <div class="row mt-4">
+    <div class="col-md-12">
+      <span class="form-label"
+        ><h5>{{ 'problems.allowedLanguages' | translate }}</h5></span
+      >
+      <div class="d-grid d-flex gap-1">
+        <button
+          type="button"
+          *ngFor="let language of allLanguages"
+          class="btn btn-primary"
+          #btn
+          (click)="selectLanguage($event.target, language)"
+        >
+          {{ language }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
     <div class="col-md-3">
-      <span class="form-label"><h5>Rule</h5></span>
-      <label class="form-check form-check-inline">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="rule_type"
-          value="acm"
-          checked
-          (click)="selectRule($event.target.value)"
-        />
-        <span class="form-check-label">ACM</span>
-      </label>
-      <label class="form-check form-check-inline">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="rule_type"
-          value="oi"
-          (click)="selectRule($event.target.value)"
-        />
-        <span class="form-check-label">OI</span>
-      </label>
+      <span for="ruleSelect" class="form-label"
+        ><h5>{{ 'problems.rule' | translate }}</h5></span
+      >
+      <div class="col-6">
+        <select class="form-select" id="ruleSelect" [formControl]="f.ruleType">
+          <option *ngFor="let ruleType of ruleTypes" [value]="ruleType">
+            {{ ruleType }}
+          </option>
+        </select>
+      </div>
     </div>
     <div class="col-md-2">
-      <span class="form-label"><h5>Visible</h5></span>
+      <span for="visible" class="form-label"
+        ><h5>{{ 'problems.isVisible' | translate }}</h5></span
+      >
       <div class="form-check form-switch">
         <input
           class="form-check-input"
           type="checkbox"
           id="visible"
-          (click)="selectVisible($event.target.checked)"
+          [formControl]="f.isVisible"
         />
         <label class="form-check-lable" for="visible">NO / YES</label>
-      </div>
-    </div>
-    <div class="col-md-7">
-      <span class="form-label"><h5>Allowed Languages</h5></span>
-      <div
-        *ngIf="allowed_languages.length == 0"
-        class="alert alert-danger"
-        role="alert"
-      >
-        Please select at least one language.
-      </div>
-      <div *ngFor="let lan of languages" class="form-check form-check-inline">
-        <input
-          type="checkbox"
-          class="form-check-input"
-          id="{{ lan }}"
-          checked="checked"
-          (click)="selectLan($event.target.checked, lan)"
-        />
-        <label class="form-check-lable" for="{{ lan }}">{{ lan }}</label>
       </div>
     </div>
   </div>
@@ -334,7 +333,8 @@
         *ngIf="status === XStatus.Sent"
         class="spinner-border spinner-border-sm mr-1"
       ></span>
-      <fa-icon [icon]="['fas', 'upload']"></fa-icon> Submit
+      <fa-icon [icon]="['fas', 'upload']"></fa-icon>
+      {{ 'problems.submit' | translate }}
     </button>
   </div>
 </form>
