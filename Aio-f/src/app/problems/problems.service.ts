@@ -24,7 +24,19 @@ export class ProblemsService {
     return this.problemSearchService.spide(source);
   }
 
+  getProblem(id: string): Observable<any> {
+    return this.authService.get(`/problems/${id}`);
+  }
+
   createProblem(problem: any): any {
     return this.authService.post('/problems', problem);
+  }
+
+  updateProblem(id: string, problem: any): any {
+    return this.authService.put(`problems/${id}`, problem);
+  }
+
+  deleteProblem(id: string): any {
+    return this.authService.delete(`problems/${id}`);
   }
 }

@@ -4,9 +4,9 @@ import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class CreateValidatorService {
+export class CreateUpdateValidatorService {
   constructor(private translate: TranslateService) {}
 
   checkMemory(control: AbstractControl): { [s: string]: string } | null {

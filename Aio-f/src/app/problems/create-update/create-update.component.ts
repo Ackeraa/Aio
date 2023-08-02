@@ -1,25 +1,26 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Renderer2 } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { ProblemsService } from '../problems.service';
 import { ValidatorService } from '../../helpers';
-import { CreateValidatorService } from './create-validator.service';
+import { CreateUpdateValidatorService } from './create-update-validator.service';
 import { AlertService, XStatus } from '../../shared';
 import { Problem } from '../';
 
 @Component({
-  selector: 'app-problems-create',
-  templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss'],
+  selector: 'app-problems-create-update',
+  templateUrl: './create-update.component.html',
+  styleUrls: ['./create-update.component.scss'],
 })
-export class CreateComponent implements OnInit {
+export class CreateUpdateComponent {
   form: FormGroup;
+  id: string;
+  isAdd: boolean;
+
   tags: Array<string>;
   languages: Array<any>;
-
   token: string;
-
   status: XStatus = XStatus.Ready;
   XStatus = XStatus;
   envs = environment;
@@ -29,15 +30,27 @@ export class CreateComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private fb: FormBuilder,
     private renderer: Renderer2,
     private alertService: AlertService,
     private problemsService: ProblemsService,
     private validator: ValidatorService,
-    private createValidator: CreateValidatorService
+    private createupdateValidator: CreateUpdateValidatorService
   ) {}
 
   ngOnInit(): void {
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.isAdd = !this.id;
+
+    this.createForm();
+
+    if (!this.isAdd) {
+      this.updateForm();
+    }
+  }
+
+  createForm(): void {
     this.form = this.fb.group({
       name: [
         '',
@@ -45,11 +58,11 @@ export class CreateComponent implements OnInit {
       ],
       memoryLimit: [
         '',
-        this.createValidator.checkMemory.bind(this.createValidator),
+        this.createupdateValidator.checkMemory.bind(this.createupdateValidator),
       ],
       timeLimit: [
         '',
-        this.createValidator.checkTime.bind(this.createValidator),
+        this.createupdateValidator.checkTime.bind(this.createupdateValidator),
       ],
       description: [
         '',
@@ -83,6 +96,14 @@ export class CreateComponent implements OnInit {
 
     this.tags = [];
     this.languages = this.allLanguages.slice();
+  }
+
+  updateForm(): void {
+    this.problemsService.getProblem(this.id).subscribe((problem: Problem) => {
+      this.form.patchValue(problem);
+      this.tags = problem.tags;
+      this.languages = problem.allowed_languages;
+    });
   }
 
   get f() {
@@ -154,7 +175,7 @@ export class CreateComponent implements OnInit {
       return;
     }
 
-    const data: Problem = {
+    const problem: Problem = {
       name: this.f.name.value,
       description: this.f.description.value,
       source: 'aio',
@@ -170,7 +191,30 @@ export class CreateComponent implements OnInit {
       allowed_languages: this.languages,
     };
 
-    this.problemsService.createProblem(data).subscribe({
+    this.status = XStatus.Sent;
+    if (this.isAdd) {
+      this.createProblem(problem);
+    } else {
+      this.updateProblem(problem);
+    }
+  }
+
+  createProblem(problem: Problem): void {
+    this.problemsService.createProblem(problem).subscribe({
+      next: (id: number) => {
+        this.status = XStatus.Succeed;
+        //let url = '/problem/l/' + id + '/upload';
+        //this.router.navigate([`/problem/l/${id}/upload`]);
+      },
+      error: (err: any) => {
+        this.status = XStatus.Failed;
+        this.alertService.error(err);
+      },
+    });
+  }
+
+  updateProblem(problem: Problem): void {
+    this.problemsService.updateProblem(this.id, problem).subscribe({
       next: (id: number) => {
         this.status = XStatus.Succeed;
         //let url = '/problem/l/' + id + '/upload';

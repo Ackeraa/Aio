@@ -8,22 +8,22 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SearchModule } from '../shared/search/search.module';
 import {
-  CreateComponent,
   RecentComponent,
   PastComponent,
   PublicComponent,
   GroupComponent,
   PrivateComponent,
+  CreateUpdateComponent
 } from '.';
 
 @NgModule({
   declarations: [
-    CreateComponent,
     RecentComponent,
     PastComponent,
     PublicComponent,
     GroupComponent,
     PrivateComponent,
+    CreateUpdateComponent,
   ],
   imports: [
     CommonModule,

@@ -1,5 +1,5 @@
 export * from './problem-sets.component';
-export * from './create/create.component';
 export * from './private/private.component';
 export * from './public/public.component';
 export * from './group/group.component';
+export * from './create-update/create-update.component';

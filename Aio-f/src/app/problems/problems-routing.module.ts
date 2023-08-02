@@ -3,9 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProblemsComponent } from './problems.component';
 import {
   BetaComponent,
-  CreateComponent,
   PublicComponent,
   PrivateComponent,
+  CreateUpdateComponent,
 } from '.';
 
 const routes: Routes = [
@@ -17,7 +17,8 @@ const routes: Routes = [
       { path: 'public', component: PublicComponent },
       { path: 'beta', component: BetaComponent },
       { path: 'private', component: PrivateComponent },
-      { path: 'create', component: CreateComponent },
+      { path: 'create', component: CreateUpdateComponent },
+      { path: 'edit/:id', component: CreateUpdateComponent },
     ],
   },
 ];

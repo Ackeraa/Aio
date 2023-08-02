@@ -20,7 +20,19 @@ export class ContestsService {
     return { page: this.searchService.getPage() };
   }
 
+  getContest(id: string): Observable<any> {
+    return this.authService.get(`/contests/${id}`);
+  }
+
   createContest(data: any): Observable<any> {
     return this.authService.post('/contests', data);
+  }
+
+  updateContest(id: string, data: any): Observable<any> {
+    return this.authService.put(`/contests/${id}`, data);
+  }
+
+  deleteContest(id: string): Observable<any> {
+    return this.authService.get(`/contests/${id}`);
   }
 }

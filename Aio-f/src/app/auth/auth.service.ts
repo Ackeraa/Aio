@@ -9,7 +9,7 @@ import {
   tap,
   finalize,
 } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 interface User {
@@ -25,7 +25,7 @@ export class AuthService implements OnInit {
     new BehaviorSubject(undefined);
 
   user$ = this.user_$.pipe(
-    skipWhile(val => val === undefined)
+    skipWhile((val) => val === undefined)
   ) as Observable<User | null>;
 
   constructor(
@@ -33,7 +33,7 @@ export class AuthService implements OnInit {
     private http: HttpClient
   ) {
     this.tokenService.validateToken().subscribe({
-      next: res => {
+      next: (res) => {
         let user = res.data;
         this.user_$.next({
           user_id: user.id,
@@ -60,30 +60,33 @@ export class AuthService implements OnInit {
     return new HttpHeaders();
   }
 
-  get(url: string, params: any = null): Observable<any> {
-    const fullUrl = this.baseUrl + url;
-    const headers = this.getHeaders();
-    let queryParams: HttpParams;
+  fullUrl(url: string): string {
+    return this.baseUrl + url;
+  }
 
-    if (params) {
-      queryParams = new HttpParams({ fromObject: params });
-    }
-
-    return this.http.get(fullUrl, { headers: headers, params: queryParams });
+  get(url: string, params: any = undefined): Observable<any> {
+    return this.http.get(this.fullUrl(url), {
+      headers: this.getHeaders(),
+      params: params,
+    });
   }
 
   post(url: string, body: any): Observable<any> {
-    const fullUrl = this.baseUrl + url;
-    const headers = this.getHeaders();
-
-    return this.http.post(fullUrl, body, { headers: headers });
+    return this.http.post(this.fullUrl(url), body, {
+      headers: this.getHeaders(),
+    });
   }
 
   put(url: string, body: any): Observable<any> {
-    const fullUrl = this.baseUrl + url;
-    const headers = this.getHeaders();
+    return this.http.put(`${this.baseUrl}${url}`, body, {
+      headers: this.getHeaders(),
+    });
+  }
 
-    return this.http.put(fullUrl, body, { headers: headers });
+  delete(url: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}${url}`, {
+      headers: this.getHeaders(),
+    });
   }
 
   isLoggedIn(): boolean {
@@ -97,7 +100,7 @@ export class AuthService implements OnInit {
     passwordConfirmation: string;
   }): Observable<any> {
     return this.tokenService.registerAccount(data).pipe(
-      catchError(err => {
+      catchError((err) => {
         let errors = err.error.errors;
         return throwError(() => errors);
       })
@@ -106,14 +109,14 @@ export class AuthService implements OnInit {
 
   login(data: { login: string; password: string }): Observable<any> {
     return this.tokenService.signIn(data).pipe(
-      tap(res => {
+      tap((res) => {
         let user = res.body.data;
         this.user_$.next({
           user_id: user.id,
           user_name: user.name,
         });
       }),
-      catchError(err => {
+      catchError((err) => {
         this.user_$.next(null);
         let errors = err.error.errors;
         return throwError(() => errors);
@@ -126,7 +129,7 @@ export class AuthService implements OnInit {
       finalize(() => {
         this.user_$.next(null);
       }),
-      catchError(err => {
+      catchError((err) => {
         let errors = err.error.errors;
         return throwError(() => errors);
       })
@@ -141,7 +144,7 @@ export class AuthService implements OnInit {
       redirect_url: environment.token_auth_config.resetPasswordCallback,
     };
     return this.post(url, newData).pipe(
-      catchError(err => {
+      catchError((err) => {
         let errors = err.error.errors;
         return throwError(() => errors);
       })
@@ -156,7 +159,6 @@ export class AuthService implements OnInit {
     },
     token: any
   ): Observable<any> {
-    const fullUrl = this.baseUrl + '/auth/password';
     const newData = {
       password: data.password,
       password_confirmation: data.passwordConfirmation,
@@ -168,7 +170,9 @@ export class AuthService implements OnInit {
       expiry: token['expiry'],
       uid: token['uid'],
     });
-    return this.http.put(fullUrl, newData, { headers: headers });
+    return this.http.put(this.fullUrl('/auth/password'), newData, {
+      headers: headers,
+    });
   }
 
   ngOnInit(): void {}

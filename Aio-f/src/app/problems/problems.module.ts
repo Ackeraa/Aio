@@ -7,24 +7,23 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { TranslateModule } from '@ngx-translate/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProblemsRoutingModule } from './problems-routing.module';
-
 import { ProblemSearchModule } from '../shared';
 
 import {
-  CreateComponent,
   BetaComponent,
   UploadComponent,
   PublicComponent,
+  PrivateComponent,
+  CreateUpdateComponent,
 } from '.';
-import { PrivateComponent } from './private/private.component';
 
 @NgModule({
   declarations: [
-    CreateComponent,
     BetaComponent,
     UploadComponent,
     PublicComponent,
     PrivateComponent,
+    CreateUpdateComponent,
   ],
   imports: [
     CommonModule,

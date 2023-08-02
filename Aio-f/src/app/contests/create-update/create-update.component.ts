@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ContestsService } from '../contests.service';
 import {
   NgbDateStruct,
@@ -12,12 +12,14 @@ import { ValidatorService } from '../../helpers';
 import { XStatus, AlertService } from '../../shared';
 
 @Component({
-  selector: 'app-contest-create',
-  templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss'],
+  selector: 'app-contests-create-update',
+  templateUrl: './create-update.component.html',
+  styleUrls: ['./create-update.component.scss'],
 })
-export class CreateComponent {
+export class CreateUpdateComponent {
   form: FormGroup;
+  id: string;
+  isAdd: boolean;
   errors: any;
   status: XStatus = XStatus.Ready;
   XStatus = XStatus;
@@ -26,6 +28,7 @@ export class CreateComponent {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private fb: FormBuilder,
     private timeConfig: NgbTimepickerConfig,
     private contestsService: ContestsService,
@@ -37,6 +40,17 @@ export class CreateComponent {
   }
 
   ngOnInit(): void {
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.isAdd = !this.id;
+
+    this.createForm();
+
+    if (!this.isAdd) {
+      this.updateForm();
+    }
+  }
+
+  createForm(): void {
     const currentDate = new Date();
     const defaultDate: NgbDateStruct = {
       year: currentDate.getFullYear(),
@@ -92,6 +106,41 @@ export class CreateComponent {
     });
   }
 
+  updateForm(): void {
+    this.contestsService.getContest(this.id).subscribe({
+      next: (contest) => {
+        console.log(contest);
+        const startTime = new Date(contest.start_time);
+        const endTime = new Date(contest.end_time);
+        this.form.patchValue({
+          name: contest.name,
+          description: contest.description,
+          isVisible: contest.is_visible,
+          ruleType: contest.rule_type,
+          password: contest.password,
+          start_d: {
+            year: startTime.getFullYear(),
+            month: startTime.getMonth() + 1,
+            day: startTime.getDate(),
+          },
+          start_t: {
+            hour: startTime.getHours(),
+            minute: startTime.getMinutes(),
+          },
+          end_d: {
+            year: endTime.getFullYear(),
+            month: endTime.getMonth() + 1,
+            day: endTime.getDate(),
+          },
+          end_t: {
+            hour: endTime.getHours(),
+            minute: endTime.getMinutes(),
+          },
+        });
+      },
+    });
+  }
+
   get f() {
     return this.form.controls;
   }
@@ -128,28 +177,50 @@ export class CreateComponent {
       this.errors = 'contests.tooEarly';
       return;
     }
-
-    const data = {
+    const contest = {
       name: this.f.name.value,
       description: this.f.description.value,
       password: this.f.password.value,
-      rule_type: this.f.ruleType.value.toLowerCase,
+      rule_type: this.f.ruleType.value,
       is_visible: this.f.isVisible.value,
       start_time: startTime,
       end_time: endTime,
     };
 
-    this.contestsService.createContest(data).subscribe({
-      next: res => {
+    this.status = XStatus.Sent;
+    if (this.isAdd) {
+      this.createContest(contest);
+    } else {
+      this.updateContest(contest);
+    }
+  }
+
+  createContest(contest: any): void {
+    this.contestsService.createContest(contest).subscribe({
+      next: (res) => {
         this.status = XStatus.Succeed;
         this.alertService.success('ssssssssss', true);
         this.router.navigate(['/contest/' + res.id]);
       },
-      error: err => {
+      error: (err) => {
         console.log(err);
         this.status = XStatus.Failed;
         // FIXME: This may not be the best way to handle errors
         this.alertService.error(err, true);
+      },
+    });
+  }
+
+  updateContest(contest: any): void {
+    this.contestsService.updateContest(this.id, contest).subscribe({
+      next: (res) => {
+        this.status = XStatus.Succeed;
+        this.alertService.success('ssssssssss', true);
+        this.router.navigate(['/contest/' + res.id]);
+      },
+      error: (err) => {
+        console.log(err);
+        this.status = XStatus.Failed;
       },
     });
   }

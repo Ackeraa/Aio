@@ -1,20 +1,20 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="row mt-4">
     <div class="col-md-4">
-      <label class="form-label" for="title"><h5>Title</h5></label>
+      <label class="form-label" for="name"><h5>Title</h5></label>
       <input
         type="text"
-        id="title"
-        [formControl]="f.title"
+        id="name"
+        [formControl]="f.name"
         class="form-control"
         [ngClass]="{
           'is-invalid':
-            (status === XStatus.Clicked || f.title.touched) && f.title.invalid
+            (status === XStatus.Clicked || f.name.touched) && f.name.invalid
         }"
       />
       <small
         *ngIf="
-          f.title.invalid && (f.title.touched || status === XStatus.Clicked)
+          f.name.invalid && (f.name.touched || status === XStatus.Clicked)
         "
         class="text-danger"
       >
