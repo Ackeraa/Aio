@@ -1,7 +1,7 @@
 class ProblemSetsController < ApplicationController
   before_action :set_problem_set, only: [:show, :update, :destroy,
                                      :problems, :add_problem, :delete_problem]
-  before_action :set_page, only: [:search, :public]
+  before_action :set_page, only: [:search]
 
   # GET /problem_sets
   def index
@@ -27,16 +27,6 @@ class ProblemSetsController < ApplicationController
       total = ProblemSet.count
       @problem_sets = ProblemSet.limit(20).offset(@page * 20)
     end
-    render json: { total: total, problem_sets: @problem_sets }
-  end
-
-  # FIXME: Need to be fixed.
-  # GET /problem_sets/public
-  def public
-    query = params[:query]
-    total = ProblemSet.where('name ilike(?)',  "%#{query}%").count
-    @problem_sets = ProblemSet.where('name ilike(?)',  "%#{query}%").limit(20).offset(@page * 20)
-    puts @problem_sets
     render json: { total: total, problem_sets: @problem_sets }
   end
 

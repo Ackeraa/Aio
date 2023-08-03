@@ -1,34 +1,25 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {
-	ContestsComponent,
-	RecentComponent,
-	PastComponent,
-  PublicComponent,
-  GroupComponent,
-  PrivateComponent,
-  CreateUpdateComponent,
-} from '.';
+import { ContestsComponent, CreateUpdateComponent, ShowComponent } from '.';
 
 const routes: Routes = [
   // Path: /contests
-	{
-		path: '', component: ContestsComponent,
-		children: [
-			{ path: '', redirectTo: 'public', pathMatch: 'full' },
-			{ path: 'recent', component: RecentComponent },
-			{ path: 'past', component: PastComponent },
-      { path: 'public', component: PublicComponent },
-      { path: 'group', component: GroupComponent },
-      { path: 'private', component: PrivateComponent },
+  {
+    path: '',
+    component: ContestsComponent,
+    children: [
+      { path: '', redirectTo: 'show', pathMatch: 'full' },
+      { path: 'public', component: ShowComponent },
+      { path: 'group', component: ShowComponent },
+      { path: 'private', component: ShowComponent },
       { path: 'create', component: CreateUpdateComponent },
       { path: 'edit/:id', component: CreateUpdateComponent },
-		]
-	},
+    ],
+  },
 ];
 
 @NgModule({
-	imports: [RouterModule.forChild(routes)],
-	exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
-export class ContestsRoutingModule { }
+export class ContestsRoutingModule {}

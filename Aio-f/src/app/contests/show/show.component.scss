@@ -1,0 +1,85 @@
+@import '../../layouts/pagination.scss';
+
+.card {
+    position: relative;
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid #d2d2dc;
+    border-radius: 11px;
+    -webkit-box-shadow: 0px 0px 5px 0px rgb(249, 249, 250);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(212, 182, 212, 1);
+    box-shadow: 0px 0px 5px 0px rgb(161, 163, 164)
+}
+
+.logo {
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  //border: 2px dashed #f69c55;
+}
+
+.status {
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  //border: 2px dashed #f69c55;
+}
+
+.calendar {
+	width: 3.125rem;
+	line-height: 1;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	border-radius: .375rem
+}
+
+.month-basic {
+	color: #fff;
+	border-radius: .375rem .375rem 0 0;
+	padding: .25rem;
+	font-weight: 600
+}
+
+.day-basic {
+	font-size: 1.728rem;
+	padding: .25rem;
+	border-top: 0;
+	border-radius: 0 0 .375rem .375rem;
+	color: #9da9bb;
+	font-weight: 700
+}
+.calendar .calendar-month-0 {
+	@extend .month-basic;
+	background-color: #23368D;
+}
+
+.calendar .calendar-month-1 {
+	@extend .month-basic;
+	background-color: #067E09;
+}
+
+.calendar .calendar-day-0 {
+	@extend .day-basic;
+	border: .125rem solid #57618C;
+}
+
+.calendar .calendar-day-1 {
+	@extend .day-basic;
+	border: .125rem solid #6B986C;
+}
+
+.time {
+    font-family: cursive;
+    font-size: 1rem;
+}
+hr {
+	border-top: 1px dashed #8c8b8b;
+}

@@ -5,20 +5,10 @@ import { ProblemSetsRoutingModule } from './problem-sets-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SearchModule } from '../shared/search/search.module';
-import {
-  PrivateComponent,
-  PublicComponent,
-  GroupComponent,
-  CreateUpdateComponent
-} from '.';
+import { CreateUpdateComponent, ShowComponent } from '.';
 
 @NgModule({
-  declarations: [
-    PrivateComponent,
-    PublicComponent,
-    GroupComponent,
-    CreateUpdateComponent,
-  ],
+  declarations: [CreateUpdateComponent, ShowComponent],
   imports: [
     CommonModule,
     FontAwesomeModule,

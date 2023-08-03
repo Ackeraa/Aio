@@ -1,0 +1,64 @@
+<div class="card shadow-sm">
+    <div class="card-body">
+      <app-search (searchEvent)="getContests($event)"> </app-search>
+      <br />
+  
+      <div
+        class="mb-3 card"
+        *ngFor="
+          let contest of contests
+            | paginate : { itemsPerPage: 20, currentPage: p, totalItems: total }
+        "
+      >
+        <div class="row">
+          <div class="col-auto logo">
+            <div class="calendar">
+              <span class="calendar-month-0">
+                {{ contest.start_time | date : "MMM" }}
+              </span>
+              <span class="calendar-day-0">
+                {{ contest.start_time | date : "dd" }}
+              </span>
+            </div>
+          </div>
+          <div class="col-11">
+            <div class="row justify-content-between">
+              <div class="col-auto">
+                <text class="card-title">
+                  <a
+                    class="link link-title"
+                    routerLink="/contest/{{ contest.id }}"
+                  >
+                    <span> {{ contest.name }} </span>
+                  </a>
+                </text>
+                <p class="card-text time">
+                  <fa-icon [icon]="['fas', 'lock']"></fa-icon> &nbsp;
+                  <fa-icon [icon]="['fas', 'clock']"></fa-icon>
+                  {{ contest.start_time | date : "HH:mm" }}
+                  -
+                  {{ contest.end_time | date : "HH:mm" }}
+                  <sup *ngIf="contest.days > 0"> +{{ contest.days }} </sup>
+                </p>
+              </div>
+              <div class="col-auto status">
+                <fa-icon [icon]="['fas', 'user-alt']"></fa-icon> 23
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="row justify-content-center">
+    <pagination-controls
+      class="paginator"
+      (pageChange)="getContests($event)"
+      auotHide="true"
+      previousLabel=""
+      nextLabel=""
+    >
+    </pagination-controls>
+  </div>
+  

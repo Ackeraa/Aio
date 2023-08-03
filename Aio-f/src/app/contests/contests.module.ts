@@ -13,7 +13,8 @@ import {
   PublicComponent,
   GroupComponent,
   PrivateComponent,
-  CreateUpdateComponent
+  CreateUpdateComponent,
+  ShowComponent,
 } from '.';
 
 @NgModule({
@@ -24,6 +25,7 @@ import {
     GroupComponent,
     PrivateComponent,
     CreateUpdateComponent,
+    ShowComponent,
   ],
   imports: [
     CommonModule,
