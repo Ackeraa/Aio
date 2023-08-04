@@ -1,4 +1,11 @@
-import { Component, Renderer2, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  Renderer2,
+  ElementRef,
+  ViewChild,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import { Subject, interval } from 'rxjs';
 import { takeUntil, filter } from 'rxjs/operators';
 
@@ -8,9 +15,9 @@ import { takeUntil, filter } from 'rxjs/operators';
   styleUrls: ['./hold-button.component.scss'],
 })
 export class HoldButtonComponent {
-  constructor(private render: Renderer2) {}
-
   @ViewChild('btn', { static: true }) btn!: ElementRef<HTMLButtonElement>;
+  @Output() holdEvent = new EventEmitter<void>();
+  constructor(private render: Renderer2) {}
 
   holding = false;
   progress = 0;
@@ -47,6 +54,7 @@ export class HoldButtonComponent {
     this.progress = 0;
     this.render.removeClass(this.btn.nativeElement, 'btn-outline-danger');
     this.render.addClass(this.btn.nativeElement, 'btn-outlink-dark');
+    this.holdEvent.emit();
   }
 
   ngOnDestroy() {

@@ -62,7 +62,8 @@ export class PrivateComponent {
   }
 
   deleteProblem(id: number): void {
-    this.problemsService.deleteProblem(id);
+    console.log(id);
+    //this.problemsService.deleteProblem(id);
   }
 
   onHoldButton() {

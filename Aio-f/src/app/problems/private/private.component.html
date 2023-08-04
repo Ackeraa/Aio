@@ -36,6 +36,7 @@
               type="button"
               class="btn btn-outline-info"
               routerLink="../update/{{ problem.id }}"
+              ngbTooltip="Edit"
             >
               <fa-icon [icon]="['fas', 'pen-to-square']"></fa-icon>
             </button>
@@ -43,10 +44,14 @@
               type="button"
               class="btn btn-outline-success"
               (click)="shareProblem(problem.id)"
+              ngbTooltip="Make it pubilc"
             >
               <fa-icon [icon]="['fas', 'share-from-square']"></fa-icon>
             </button>
-            <app-hold-button>sdasd</app-hold-button>
+            <app-hold-button
+              (holdEvent)="deleteProblem(problem.id)"
+              ngbTooltip="Hold to delete"
+            ></app-hold-button>
           </div>
         </div>
         <hr class="content" />

@@ -20,10 +20,14 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { ProblemSearchModule } from './shared';
-import { SearchModule } from './shared';
-import { CommentsModule } from './shared';
-import { SubmissionsModule } from './shared';
+import {
+  ProblemSearchModule,
+  SearchModule,
+  CommentsModule,
+  SubmissionsModule,
+  HoldButtonModule,
+} from './shared';
+
 import { HomeModule } from './home';
 import { GroupModule } from './group/group.module';
 import { GroupsModule } from './groups/groups.module';
@@ -54,9 +58,6 @@ import { environment } from '../environments/environment';
 
 import { AlertComponent, HeaderComponent, FooterComponent } from './shared';
 import { ErrorComponent } from './error/error.component';
-import { DeleteDirective } from './shared/delete.directive';
-import { HoldButtonDirective } from './shared/hold-button/hold-button.directive';
-import { HoldButtonComponent } from './shared/hold-button/hold-button.component';
 
 @NgModule({
   imports: [
@@ -95,6 +96,7 @@ import { HoldButtonComponent } from './shared/hold-button/hold-button.component'
     GroupModule,
     GroupsModule,
     UserModule,
+    HoldButtonModule,
   ],
   declarations: [
     AppComponent,
@@ -114,9 +116,6 @@ import { HoldButtonComponent } from './shared/hold-button/hold-button.component'
     DiscussionComponent,
     GroupsComponent,
     ErrorComponent,
-    DeleteDirective,
-    HoldButtonDirective,
-    HoldButtonComponent,
   ],
   providers: [
     //{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
