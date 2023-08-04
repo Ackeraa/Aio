@@ -38,7 +38,6 @@ export class PublicComponent {
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: (data: ProblemsData) => {
-          console.log(data);
           this.problems = data.problems;
           this.total = data.total;
           this.alertService.clear();

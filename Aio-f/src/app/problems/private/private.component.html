@@ -1,1 +1,74 @@
-<p>private works!</p>
+<div class="card shadow-sm">
+  <div class="card-body">
+    <app-search
+      (searchEvent)="getProblems($event)"
+    >
+    </app-search>
+    <br />
+    <div *ngIf="loading" class="row">Loading...</div>
+    <div class="row">
+      <th class="col-1">#</th>
+      <th class="col-7">TITLE</th>
+      <th class="col">STATUS</th>
+      <th class="col"></th>
+    </div>
+    <hr class="title" />
+    <div *ngIf="!loading">
+      <div
+        class="table-content"
+        *ngFor="
+          let problem of problems
+            | paginate : { itemsPerPage: 20, currentPage: p, totalItems: total }
+        "
+      >
+        <div class="row">
+          <div class="col-1">{{ problem.id }}</div>
+          <div class="col-7">
+            <a
+              class="link link-content"
+              (click)="viewProblem(problem.source, problem.id)"
+            >
+              &nbsp;{{ problem.name }}
+            </a>
+          </div>
+          <div class="col">&nbsp;{{ problem.accepts }}/{{ problem.submissions }}</div>
+          <div class="col d-grid gap-2 d-md-flex ">
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              (click)="deleteProblem(problem.id)"
+            >
+              <fa-icon [icon]="['fas', 'trash-alt']"></fa-icon>
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              (click)="deleteProblem(problem.id)"
+            >
+              <fa-icon [icon]="['fas', 'trash-alt']"></fa-icon>
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              (click)="deleteProblem(problem.id)"
+            >
+              <fa-icon [icon]="['fas', 'trash-alt']"></fa-icon>
+            </button>
+          </div>
+        </div>
+        <hr class="content" />
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<div class="row justify-content-center">
+  <pagination-controls
+    class="paginator"
+    (pageChange)="getProblems({ page: $event })"
+    auotHide="true"
+    previousLabel=""
+    nextLabel=""
+  >
+  </pagination-controls>
+</div>
