@@ -58,22 +58,22 @@
 }
 .calendar .calendar-month-0 {
 	@extend .month-basic;
-	background-color: #23368D;
+	background-color: #38a660;
 }
 
 .calendar .calendar-month-1 {
 	@extend .month-basic;
-	background-color: #067E09;
+	background-color: #771919;
 }
 
 .calendar .calendar-day-0 {
 	@extend .day-basic;
-	border: .125rem solid #57618C;
+	border: .125rem solid #9daba2;
 }
 
 .calendar .calendar-day-1 {
 	@extend .day-basic;
-	border: .125rem solid #6B986C;
+	border: .125rem solid #e9d6da;
 }
 
 .time {
@@ -83,3 +83,5 @@
 hr {
 	border-top: 1px dashed #8c8b8b;
 }
+
+

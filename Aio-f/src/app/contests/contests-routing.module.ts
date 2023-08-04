@@ -8,7 +8,7 @@ const routes: Routes = [
     path: '',
     component: ContestsComponent,
     children: [
-      { path: '', redirectTo: 'show', pathMatch: 'full' },
+      { path: '', redirectTo: 'public', pathMatch: 'full' },
       { path: 'public', component: ShowComponent },
       { path: 'group', component: ShowComponent },
       { path: 'private', component: ShowComponent },
