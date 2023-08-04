@@ -54,6 +54,9 @@ import { environment } from '../environments/environment';
 
 import { AlertComponent, HeaderComponent, FooterComponent } from './shared';
 import { ErrorComponent } from './error/error.component';
+import { DeleteDirective } from './shared/delete.directive';
+import { HoldButtonDirective } from './shared/hold-button/hold-button.directive';
+import { HoldButtonComponent } from './shared/hold-button/hold-button.component';
 
 @NgModule({
   imports: [
@@ -111,6 +114,9 @@ import { ErrorComponent } from './error/error.component';
     DiscussionComponent,
     GroupsComponent,
     ErrorComponent,
+    DeleteDirective,
+    HoldButtonDirective,
+    HoldButtonComponent,
   ],
   providers: [
     //{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

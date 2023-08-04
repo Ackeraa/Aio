@@ -12,7 +12,7 @@ interface ProblemsData {
 @Component({
   selector: 'app-private',
   templateUrl: './private.component.html',
-  styleUrls: ['./private.component.scss']
+  styleUrls: ['./private.component.scss'],
 })
 export class PrivateComponent {
   loading: boolean;
@@ -50,8 +50,23 @@ export class PrivateComponent {
       });
   }
 
-  viewProblem(source: string, id: string): void {
-    const url = source === 'aio' ? `/problem/l/${id}` : `/problem/v/${id}`;
-    this.router.navigate([url]);
+  shareProblem(id: number): void {
+    this.problemsService.shareProblem(id).subscribe({
+      next: res => {
+        this.alertService.success(res);
+      },
+      error: err => {
+        this.alertService.error(err);
+      },
+    });
+  }
+
+  deleteProblem(id: number): void {
+    this.problemsService.deleteProblem(id);
+  }
+
+  onHoldButton() {
+    // Handle the action when the button is held
+    console.log('Button is held');
   }
 }

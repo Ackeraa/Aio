@@ -50,7 +50,9 @@ export class ProblemsService {
     return this.authService.put(`problems/${id}`, problem);
   }
 
-  deleteProblem(id: string): any {
+  deleteProblem(id: number): any {
     return this.authService.delete(`problems/${id}`);
   }
+
+  shareProblem(id: number): any {}
 }

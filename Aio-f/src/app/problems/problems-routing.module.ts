@@ -18,7 +18,7 @@ const routes: Routes = [
       { path: 'beta', component: BetaComponent },
       { path: 'private', component: PrivateComponent },
       { path: 'create', component: CreateUpdateComponent },
-      { path: 'edit/:id', component: CreateUpdateComponent },
+      { path: 'update/:id', component: CreateUpdateComponent },
     ],
   },
 ];

@@ -1,9 +1,6 @@
 <div class="card shadow-sm">
   <div class="card-body">
-    <app-search
-      (searchEvent)="getProblems($event)"
-    >
-    </app-search>
+    <app-search (searchEvent)="getProblems($event)"> </app-search>
     <br />
     <div *ngIf="loading" class="row">Loading...</div>
     <div class="row">
@@ -26,34 +23,30 @@
           <div class="col-7">
             <a
               class="link link-content"
-              (click)="viewProblem(problem.source, problem.id)"
+              routerLink="/problem/l/{{ problem.id }}"
             >
               &nbsp;{{ problem.name }}
             </a>
           </div>
-          <div class="col">&nbsp;{{ problem.accepts }}/{{ problem.submissions }}</div>
-          <div class="col d-grid gap-2 d-md-flex ">
+          <div class="col">
+            &nbsp;{{ problem.accepts }}/{{ problem.submissions }}
+          </div>
+          <div class="col d-grid gap-2 d-md-flex">
             <button
               type="button"
-              class="btn btn-outline-danger"
-              (click)="deleteProblem(problem.id)"
+              class="btn btn-outline-info"
+              routerLink="../update/{{ problem.id }}"
             >
-              <fa-icon [icon]="['fas', 'trash-alt']"></fa-icon>
+              <fa-icon [icon]="['fas', 'pen-to-square']"></fa-icon>
             </button>
             <button
               type="button"
-              class="btn btn-outline-danger"
-              (click)="deleteProblem(problem.id)"
+              class="btn btn-outline-success"
+              (click)="shareProblem(problem.id)"
             >
-              <fa-icon [icon]="['fas', 'trash-alt']"></fa-icon>
+              <fa-icon [icon]="['fas', 'share-from-square']"></fa-icon>
             </button>
-            <button
-              type="button"
-              class="btn btn-outline-danger"
-              (click)="deleteProblem(problem.id)"
-            >
-              <fa-icon [icon]="['fas', 'trash-alt']"></fa-icon>
-            </button>
+            <app-hold-button>sdasd</app-hold-button>
           </div>
         </div>
         <hr class="content" />
