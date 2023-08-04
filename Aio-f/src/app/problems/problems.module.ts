@@ -7,7 +7,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { TranslateModule } from '@ngx-translate/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProblemsRoutingModule } from './problems-routing.module';
-import { ProblemSearchModule } from '../shared';
+import { SearchModule, ProblemSearchModule } from '../shared';
 
 import {
   BetaComponent,
@@ -35,6 +35,7 @@ import {
     MarkdownModule.forChild(),
     ProblemsRoutingModule,
     NgxPaginationModule,
+    SearchModule,
     ProblemSearchModule,
   ],
   exports: [],

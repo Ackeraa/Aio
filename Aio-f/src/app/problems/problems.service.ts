@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth';
-import { ProblemSearchService, ProblemSearchParams } from '../shared';
+import {
+  ProblemSearchService,
+  SearchParams,
+  SearchService,
+  ProblemSearchParams,
+} from '../shared';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +14,7 @@ import { ProblemSearchService, ProblemSearchParams } from '../shared';
 export class ProblemsService {
   constructor(
     private problemSearchService: ProblemSearchService,
+    private searchService: SearchService,
     private authService: AuthService
   ) {}
 
@@ -18,6 +24,14 @@ export class ProblemsService {
 
   getPublicPage(): ProblemSearchParams {
     return { page: this.problemSearchService.getPage() };
+  }
+
+  getPrivateProblems(params: SearchParams): Observable<any> {
+    return this.searchService.get('/problems/search', params);
+  }
+
+  getPrivatePage(): SearchParams {
+    return { page: this.searchService.getPage() };
   }
 
   spideProblems(source: string): Observable<any> {
