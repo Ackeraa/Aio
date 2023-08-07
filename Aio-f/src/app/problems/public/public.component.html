@@ -7,44 +7,65 @@
     </app-problem-search>
     <br />
     <div *ngIf="loading" class="row">Loading...</div>
-    <div class="row">
-      <th class="col-1">#</th>
-      <th class="col-8">TITLE</th>
-      <th class="col">SOURCE</th>
-      <th class="col">STATUS</th>
-    </div>
-    <hr class="title" />
-    <div *ngIf="!loading">
-      <div
-        class="table-content"
-        *ngFor="
-          let problem of problems
-            | paginate : { itemsPerPage: 20, currentPage: p, totalItems: total }
-        "
-      >
-        <div class="row">
-          <div class="col-1">{{ problem.id }}</div>
-          <div class="col-8">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">TITLE</th>
+          <th scope="col">SOURCE</th>
+          <th scope="col">STATUS</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody *ngIf="!loading">
+        <tr
+          class="align-middle"
+          *ngFor="
+            let problem of problems
+              | paginate
+                : { itemsPerPage: 20, currentPage: p, totalItems: total }
+          "
+        >
+          <th scope="row">{{ problem.id }}</th>
+          <td class="col">
             <a
               class="link link-content"
-              (click)="viewProblem(problem.source, problem.id)"
+              routerLink="/problem/l/{{ problem.id }}"
             >
-              {{ problem.name }}
+              &nbsp;{{ problem.name }}
             </a>
-          </div>
-          <div class="col">
-            <a
-              class="link link-content"
-              (click)="viewProblem(problem.source, problem.id)"
+          </td>
+          <td class="col">
+            {{ problem.source }}
+          </td>
+          <td class="col">
+            &nbsp;{{ problem.accepts }}/{{ problem.submissions }}
+          </td>
+          <td class="col d-grid gap-2 d-flex">
+            <button
+              type="button"
+              class="btn btn-outline-info"
+              routerLink="../update/{{ problem.id }}"
+              ngbTooltip="Edit"
             >
-              {{ problem.vid }}
-            </a>
-          </div>
-          <div class="col">{{ problem.accepts }}/{{ problem.submissions }}</div>
-        </div>
-        <hr class="content" />
-      </div>
-    </div>
+              <fa-icon [icon]="['fas', 'pen-to-square']"></fa-icon>
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-success"
+              (click)="shareProblem(problem.id)"
+              ngbTooltip="Make it pubilc"
+            >
+              <fa-icon [icon]="['fas', 'share-from-square']"></fa-icon>
+            </button>
+            <app-hold-button
+              (holdEvent)="deleteProblem(problem.id)"
+              ngbTooltip="Hold to delete"
+            ></app-hold-button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 <br />

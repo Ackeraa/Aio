@@ -48,4 +48,8 @@ export class ShowComponent {
         },
       });
   }
+
+  shareProblemSet(id: number): void {}
+
+  deleteProblemSet(id: number): void {}
 }

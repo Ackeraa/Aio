@@ -6,7 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ContestsRoutingModule } from './contests-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { SearchModule } from '../shared/search/search.module';
+import { SearchModule, HoldButtonModule } from '../shared';
 import {
   RecentComponent,
   PastComponent,
@@ -32,6 +32,7 @@ import {
     NgbModule,
     FontAwesomeModule,
     TranslateModule,
+    HoldButtonModule,
     ContestsRoutingModule,
     FormsModule,
     NgxPaginationModule,

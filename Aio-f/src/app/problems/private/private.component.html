@@ -3,35 +3,37 @@
     <app-search (searchEvent)="getProblems($event)"> </app-search>
     <br />
     <div *ngIf="loading" class="row">Loading...</div>
-    <div class="row">
-      <th class="col-1">#</th>
-      <th class="col-7">TITLE</th>
-      <th class="col">STATUS</th>
-      <th class="col"></th>
-    </div>
-    <hr class="title" />
-    <div *ngIf="!loading">
-      <div
-        class="table-content"
-        *ngFor="
-          let problem of problems
-            | paginate : { itemsPerPage: 20, currentPage: p, totalItems: total }
-        "
-      >
-        <div class="row">
-          <div class="col-1">{{ problem.id }}</div>
-          <div class="col-7">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">TITLE</th>
+          <th scope="col">STATUS</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody *ngIf="!loading">
+        <tr
+          class="align-middle"
+          *ngFor="
+            let problem of problems
+              | paginate
+                : { itemsPerPage: 20, currentPage: p, totalItems: total }
+          "
+        >
+          <th scope="row">{{ problem.id }}</th>
+          <td class="col">
             <a
               class="link link-content"
               routerLink="/problem/l/{{ problem.id }}"
             >
               &nbsp;{{ problem.name }}
             </a>
-          </div>
-          <div class="col">
+          </td>
+          <td class="col">
             &nbsp;{{ problem.accepts }}/{{ problem.submissions }}
-          </div>
-          <div class="col d-grid gap-2 d-md-flex">
+          </td>
+          <td class="col d-grid gap-2 d-flex">
             <button
               type="button"
               class="btn btn-outline-info"
@@ -52,11 +54,10 @@
               (holdEvent)="deleteProblem(problem.id)"
               ngbTooltip="Hold to delete"
             ></app-hold-button>
-          </div>
-        </div>
-        <hr class="content" />
-      </div>
-    </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 <br />

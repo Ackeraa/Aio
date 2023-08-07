@@ -3,35 +3,59 @@
     <app-search (searchEvent)="getProblemSets($event)"> </app-search>
     <br />
     <div *ngIf="loading" class="row">Loading...</div>
-    <div class="row">
-      <th class="col">TITLE</th>
-      <th class="col">Description</th>
-      <th class="col">Author</th>
-    </div>
-    <hr class="title" />
-    <div *ngIf="!loading">
-      <div
-        class="table-content"
-        *ngFor="
-          let problemSet of problemSets
-            | paginate : { itemsPerPage: 20, currentPage: p, totalItems: total }
-        "
-      >
-        <div class="row">
-          <div class="col">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">TITLE</th>
+          <th scope="col">Description</th>
+          <th scope="col">Author</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody *ngIf="!loading">
+        <tr
+          class="align-middle"
+          *ngFor="
+            let problemSet of problemSets
+              | paginate
+                : { itemsPerPage: 20, currentPage: p, totalItems: total }
+          "
+        >
+          <th scope="row">
             <a
               class="link link-content"
               routerLink="../../problem-set/{{ problemSet.id }}"
             >
               {{ problemSet.name }}
             </a>
-          </div>
-          <div class="col">{{ problemSet.description }}</div>
-          <div class="col">{{ problemSet.creater }}</div>
-        </div>
-        <hr class="content" />
-      </div>
-    </div>
+          </th>
+          <td class="col">{{ problemSet.description }}</td>
+          <td class="col">{{ problemSet.creater }}</td>
+          <td class="col d-grid gap-2 d-flex">
+            <button
+              type="button"
+              class="btn btn-outline-info"
+              routerLink="../update/{{ problemSet.id }}"
+              ngbTooltip="Edit"
+            >
+              <fa-icon [icon]="['fas', 'pen-to-square']"></fa-icon>
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-success"
+              (click)="shareProblemSet(problemSet.id)"
+              ngbTooltip="Make it pubilc"
+            >
+              <fa-icon [icon]="['fas', 'share-from-square']"></fa-icon>
+            </button>
+            <app-hold-button
+              (holdEvent)="deleteProblemSet(problemSet.id)"
+              ngbTooltip="Hold to delete"
+            ></app-hold-button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 <br />
