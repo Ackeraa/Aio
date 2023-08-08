@@ -44,6 +44,7 @@ export class CalendarComponent {
           };
           this.events.push(event);
         });
+        this.viewDate = new Date();
       },
     });
   }

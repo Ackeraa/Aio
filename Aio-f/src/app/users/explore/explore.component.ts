@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { finalize } from 'rxjs';
 import { UsersService } from '../users.service';
+import { SearchParams, AlertService } from '../../shared';
 
 @Component({
   selector: 'app-explore',
@@ -7,30 +9,47 @@ import { UsersService } from '../users.service';
   styleUrls: ['./explore.component.scss'],
 })
 export class ExploreComponent {
-  url: string = 'users';
   users: Array<any>;
   loading: boolean;
   p: number;
   total: number;
 
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private alertService: AlertService
+  ) {}
 
-  ngOnInit(): void {}
-
-  setUsers(data: any): void {
-    this.users = data.users;
-    this.total = data.total;
+  ngOnInit(): void {
+    this.getUsers(this.usersService.getUsersPage());
   }
 
-  setLoading(loading: boolean): void {
-    this.loading = loading;
+  getUsers(params: SearchParams): void {
+    this.p = params.page;
+    console.log(this.p);
+    this.loading = true;
+    this.usersService
+      .getUsers(params)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe({
+        next: data => {
+          console.log(data);
+          this.users = data.users;
+          this.total = data.total;
+        },
+        error: err => {
+          this.alertService.error(err);
+        },
+      });
   }
 
-  getPage(page: number): void {
-    this.usersService.getPage(page).subscribe(data => {
-      this.users = data.users;
-      this.total = data.total;
-      this.p = page;
+  deleteUser(id: number) {
+    this.usersService.deleteUser(id).subscribe({
+      next: () => {
+        this.alertService.success('success');
+      },
+      error: err => {
+        this.alertService.error(err);
+      },
     });
   }
 }

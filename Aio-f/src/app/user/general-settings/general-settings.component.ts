@@ -52,7 +52,7 @@ export class GeneralSettingsComponent implements OnInit {
       url: BASE_URL + '/users/upload_photo',
       itemAlias: 'photo',
     });
-    this.photo.onBeforeUploadItem = (item) => {
+    this.photo.onBeforeUploadItem = item => {
       item.withCredentials = false;
     };
     this.photo.onBuildItemForm = (fileItem: any, form: any) => {
@@ -61,10 +61,10 @@ export class GeneralSettingsComponent implements OnInit {
 
     this.userService.homeInfo$
       .pipe(
-        filter((x) => x != null),
-        map((data) => data.user)
+        filter(x => x != null),
+        map(data => data.user)
       )
-      .subscribe((user) => {
+      .subscribe(user => {
         this.form = this.formBuilder.group({
           img: [null],
           name: [
@@ -139,15 +139,15 @@ export class GeneralSettingsComponent implements OnInit {
     this.emailExists = false;
 
     this.userService.changeGeneral(this.form.value).subscribe(
-      (data) => {
+      data => {
         this.loading = false;
         this.alertService.success('Information changed successfully');
         this.userService.getUser('');
         this.userService.updateUserName();
         this.submitted = false;
       },
-      (error) => {
-        let errors = JSON.parse(error['_body']).errors;
+      error => {
+        let errors = error['_body'].errors;
         console.log(errors);
         if (errors.name) {
           this.nameExists = true;

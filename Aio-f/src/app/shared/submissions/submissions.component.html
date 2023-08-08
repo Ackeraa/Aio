@@ -4,8 +4,8 @@
     <br />
     <div *ngIf="loading" class="row">Loading...</div>
     <div class="row">
+      <th class="col-3">WHEN</th>
       <th class="col">ID</th>
-      <th class="col">WHEN</th>
       <th class="col">WHO</th>
       <th class="col">PROBLEM</th>
       <th class="col">LANG</th>
@@ -23,16 +23,35 @@
         "
       >
         <div class="row">
+          <div class="col-3">
+            {{ submission.created_at | date : 'YYYY-MM-dd hh:mm:ss' }}
+          </div>
           <div class="col">
             <a href="#">{{ submission.id }}</a>
           </div>
-          <div class="col">{{ submission.created_at }}</div>
           <div class="col">{{ submission.user_id }}</div>
           <div class="col">{{ submission.problem_id }}</div>
           <div class="col">C++</div>
-          <div class="col">{{ submission.result }}</div>
-          <div class="col">{{ submission.time_usage }}</div>
-          <div class="col">{{ submission.memory_usage }}</div>
+          <div class="col">
+            <span
+              class="badge text-light"
+              [ngClass]="
+                {
+                  judging: 'bg-secondary',
+                  AC: 'bg-success',
+                  CE: 'bg-warning',
+                  WA: 'bg-danger',
+                  RE: 'bg-danger',
+                  TLE: 'bg-danger',
+                  MLE: 'bg-danger'
+                }[submission.result]
+              "
+            >
+              &nbsp;&nbsp;{{ submission.result }}&nbsp;&nbsp;
+            </span>
+          </div>
+          <div class="col">{{ submission.time_usage }} ms</div>
+          <div class="col">{{ submission.memory_usage }} KB</div>
         </div>
         <hr class="content" />
       </div>

@@ -1,55 +1,49 @@
-<app-search (searchEvent)="setUsers($event)"> </app-search>
-<div class="row mt-4">
-  <div
-    class="col-xs-12 col-sm-6 col-md-3"
-    *ngFor="
-      let user of users
-        | paginate : { itemsPerPage: 20, currentPage: p, totalItems: total }
-    "
-  >
-    <div class="image-flip">
-      <div class="mainflip flip-0">
-        <div class="frontside">
-          <div class="card">
-            <div class="card-body text-center">
-              <p>
-                <img
-                  class="img-fluid"
-                  src="https://sunlimetech.com/portfolio/boot4menu/
-									assets/imgs/team/img_01.png"
-                  alt="card image"
-                />
-              </p>
-              <h4 class="card-title">{{ user.name }}</h4>
-              <p class="card-text">
-                This is basic card with image on top, title, description and
-                button.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="backside">
-          <div class="card">
-            <div class="card-body text-center mt-4">
-              <h4 class="card-title">Sunlimetech</h4>
-              <p class="card-text">a</p>
-              <ul class="list-inline">
-                <li class="list-inline-item">
-                  <i class="fa fa-facebook"></i>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<div class="card shadow-sm">
+  <div class="card-body">
+    <app-search (searchEvent)="getUsers($event)"> </app-search>
+    <br />
+    <div *ngIf="loading" class="row">Loading...</div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">USER NAME</th>
+          <th scope="col">REAL NAME</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody *ngIf="!loading">
+        <tr
+          class="align-middle"
+          *ngFor="
+            let user of users
+              | paginate
+                : { itemsPerPage: 20, currentPage: p, totalItems: total }
+          "
+        >
+          <th scope="row">{{ user.id }}</th>
+          <td class="col">
+            <a class="link link-content" routerLink="/user/{{ user.id }}">
+              &nbsp;{{ user.name }}
+            </a>
+          </td>
+          <td class="col">&nbsp;{{ user.real_name }}</td>
+          <td>
+            <app-hold-button
+              (holdEvent)="deleteUser(user.id)"
+              ngbTooltip="Hold to delete"
+            ></app-hold-button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 <br />
 <div class="row justify-content-center">
   <pagination-controls
     class="paginator"
-    (pageChange)="getPage($event)"
+    (pageChange)="getUsers($event)"
     auotHide="true"
     previousLabel=""
     nextLabel=""
