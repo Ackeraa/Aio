@@ -12,10 +12,16 @@
     "groups": "群组",
     "users": "用户",
     "wiki": "百科",
+    "announcements": "公告",
     "public": "公开的",
     "group": "小组的",
     "private": "个人的",
-    "create": "创建"
+    "create": "创建",
+    "recent": "近期",
+    "recentContests": "近期比赛",
+    "recentProblems": "近期题目",
+    "rank": "排名",
+    "overview": "概览"
   },
   "errors": {
     "tooShort": "{{v1}}太短，至少{{v2}}个字符.",

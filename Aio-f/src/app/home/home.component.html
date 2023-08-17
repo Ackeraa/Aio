@@ -1,11 +1,13 @@
 <div class="row">
   <div class="col-9">
     <div class="card">
-      <div class="card-header">Announcements</div>
+      <div class="card-header">{{ 'keywords.announcements' | translate }}</div>
       <div class="card-body"></div>
     </div>
     <div class="card mt-4">
-      <div class="card-header">Recent Contests</div>
+      <div class="card-header">
+        {{ 'keywords.recentContests' | translate }}
+      </div>
       <div class="card-body">
         <app-home-calendar></app-home-calendar>
       </div>
@@ -13,11 +15,15 @@
   </div>
   <div class="col-3">
     <div class="card mb-4">
-      <div class="card-header">Overview</div>
+      <div class="card-header">
+        {{ 'keywords.overview' | translate }}
+      </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">
           <div class="row">
-            <div class="col-8">Total Contests</div>
+            <div class="col-8">
+              {{ 'keywords.contests' | translate }}
+            </div>
             <div class="col-4 d-flex justify-content-center">
               {{ data?.total_contests }}
             </div>
@@ -25,7 +31,9 @@
         </li>
         <li class="list-group-item">
           <div class="row">
-            <div class="col-8">Total Problems</div>
+            <div class="col-8">
+              {{ 'keywords.problems' | translate }}
+            </div>
             <div class="col-4 d-flex justify-content-center">
               {{ data?.total_problems }}
             </div>
@@ -33,7 +41,9 @@
         </li>
         <li class="list-group-item">
           <div class="row">
-            <div class="col-8">Total Users</div>
+            <div class="col-8">
+              {{ 'keywords.users' | translate }}
+            </div>
             <div class="col-4 d-flex justify-content-center">
               {{ data?.total_users }}
             </div>
@@ -41,7 +51,9 @@
         </li>
         <li class="list-group-item">
           <div class="row">
-            <div class="col-8">Total Groups</div>
+            <div class="col-8">
+              {{ 'keywords.groups' | translate }}
+            </div>
             <div class="col-4 d-flex justify-content-center">
               {{ data?.total_groups }}
             </div>
@@ -51,7 +63,9 @@
     </div>
 
     <div class="card">
-      <div class="card-header">Top Scored</div>
+      <div class="card-header">
+        {{ 'keywords.rank' | translate }}
+      </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item" *ngFor="let user of data?.top_users">
           <div class="row">
@@ -65,7 +79,9 @@
     </div>
 
     <div class="card mt-4 shadow-sm">
-      <div class="card-header">Recent Problems</div>
+      <div class="card-header">
+        {{ 'keywords.recentProblems' | translate }}
+      </div>
       <ul class="list-group list-group-flush">
         <li
           class="list-group-item"

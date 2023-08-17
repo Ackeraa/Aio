@@ -12,10 +12,16 @@
     "groups": "Groups",
     "users": "Users",
     "wiki": "Wiki",
+    "announcements": "Announcements",
     "public": "Public",
     "group": "Group",
     "private": "Private",
-    "create": "Create"
+    "create": "Create",
+    "recent": "Recent",
+    "recentContests": "Recent contests",
+    "recentProblems": "Recent problems",
+    "rank": "Rank",
+    "overview": "Overview"
   },
   "errors": {
     "tooShort": "{{v1}} is too short (minimum is {{v2}} characters).",

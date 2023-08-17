@@ -6,6 +6,7 @@ export const environment = {
     resetPasswordCallback: 'http://localhost:4200/auth/reset',
   },
   defaultLang: 'zh-CN',
+  languages: ['zh-CN', 'en'],
   unameMinLen: 5,
   unameMaxLen: 10,
   passwdMinLen: 6,

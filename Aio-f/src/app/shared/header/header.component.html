@@ -92,6 +92,21 @@
         </a>
       </div>
       <div class="navbar-nav ml-auto">
+        <div ngbDropdown>
+          <button class="btn nav-link" id="languageDropdown" ngbDropdownToggle>
+            <fa-icon [icon]="['fas', 'globe']"></fa-icon>
+            {{ currentLanguage }}
+          </button>
+          <div ngbDropdownMenu aria-labelledby="languageDropdown">
+            <button
+              class="dropdown-item"
+              *ngFor="let lang of languages"
+              (click)="changeLanguage(lang)"
+            >
+              {{ lang }}
+            </button>
+          </div>
+        </div>
         <a
           class="nav-item nav-link"
           *ngIf="!currentUser"

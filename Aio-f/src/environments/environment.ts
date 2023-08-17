@@ -7,6 +7,7 @@ export const environment = {
   },
   local_base_url: 'http://localhost:4200',
   defaultLang: 'en',
+  languages: ['zh-CN', 'en'],
   unameMinLen: 5,
   unameMaxLen: 10,
   passwdMinLen: 6,
