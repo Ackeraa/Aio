@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ContestsComponent, CreateUpdateComponent, ShowComponent } from '.';
+import {
+  ContestsComponent,
+  CreateUpdateComponent,
+  ShowComponent,
+} from '.';
 
 const routes: Routes = [
   // Path: /contests

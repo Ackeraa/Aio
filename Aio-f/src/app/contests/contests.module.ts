@@ -7,26 +7,10 @@ import { ContestsRoutingModule } from './contests-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SearchModule, HoldButtonModule } from '../shared';
-import {
-  RecentComponent,
-  PastComponent,
-  PublicComponent,
-  GroupComponent,
-  PrivateComponent,
-  CreateUpdateComponent,
-  ShowComponent,
-} from '.';
+import { CreateUpdateComponent, ShowComponent } from '.';
 
 @NgModule({
-  declarations: [
-    RecentComponent,
-    PastComponent,
-    PublicComponent,
-    GroupComponent,
-    PrivateComponent,
-    CreateUpdateComponent,
-    ShowComponent,
-  ],
+  declarations: [CreateUpdateComponent, ShowComponent],
   imports: [
     CommonModule,
     NgbModule,

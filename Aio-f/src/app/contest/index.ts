@@ -4,4 +4,4 @@ export * from './problems/problems.component';
 export * from './ranks/ranks.component';
 export * from './submissions/submissions.component';
 export * from './submit/submit.component';
-
+export * from './description/description.component';

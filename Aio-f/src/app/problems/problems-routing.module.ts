@@ -1,12 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProblemsComponent } from './problems.component';
-import {
-  BetaComponent,
-  PublicComponent,
-  PrivateComponent,
-  CreateUpdateComponent,
-} from '.';
+import { PublicComponent, PrivateComponent, CreateUpdateComponent } from '.';
 
 const routes: Routes = [
   {
@@ -15,7 +10,6 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'public', pathMatch: 'full' },
       { path: 'public', component: PublicComponent },
-      { path: 'beta', component: BetaComponent },
       { path: 'private', component: PrivateComponent },
       { path: 'create', component: CreateUpdateComponent },
       { path: 'update/:id', component: CreateUpdateComponent },

@@ -4,11 +4,10 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
+import { TranslateModule } from '@ngx-translate/core';
 import { ContestRoutingModule } from './contest-routing.module';
 import { ProblemSearchModule, SubmissionsModule } from '../shared';
-import {
-  FontAwesomeModule,
-} from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import {
   MySubmissionsComponent,
@@ -16,6 +15,7 @@ import {
   SubmissionsComponent,
   SubmitComponent,
   RanksComponent,
+  DescriptionComponent,
 } from '.';
 
 @NgModule({
@@ -25,6 +25,7 @@ import {
     MySubmissionsComponent,
     SubmissionsComponent,
     RanksComponent,
+    DescriptionComponent,
   ],
   imports: [
     CommonModule,
@@ -33,11 +34,11 @@ import {
     NgxPaginationModule,
     FormsModule,
     CodemirrorModule,
+    TranslateModule,
     ContestRoutingModule,
     ProblemSearchModule,
     SubmissionsModule,
   ],
   exports: [],
 })
-export class ContestModule {
-}
+export class ContestModule {}

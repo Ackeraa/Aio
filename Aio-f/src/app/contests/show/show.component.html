@@ -21,7 +21,6 @@
           </text>
           <div class="row card-text time mt-2 justify-content-between">
             <div class="col">
-              <fa-icon [icon]="['fas', 'lock']"></fa-icon> &nbsp;
               <fa-icon [icon]="['fas', 'clock']"></fa-icon>
               {{ contest.start_time | date : 'yyyy-MM-dd HH:mm' }}
               -
@@ -34,7 +33,7 @@
           </div>
         </div>
         <div
-          *ngIF="user?.name === contest.creater || user.role === 'admin'"
+          *ngIf="user?.name === contest.creater || user.role === 'admin'"
           class="d-grid gap-2 d-flex mt-1 justify-content-end"
         >
           <button

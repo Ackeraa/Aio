@@ -25,7 +25,6 @@ export class HomeComponent {
       .subscribe({
         next: data => {
           this.data = data;
-          console.log(data.recent_contests);
         },
         error: err => {
           this.alertService.error(err);

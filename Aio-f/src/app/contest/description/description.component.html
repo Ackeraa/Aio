@@ -1,0 +1,32 @@
+<div *ngIf="loading">
+  <app-loading></app-loading>
+</div>
+<div class="row text-center mt-5">
+  <h2>{{ contest.name }}</h2>
+</div>
+
+<div class="row mt-4 justify-content-center">
+  <div class="col-4">
+    <ul class="list-group mb-3">
+      <li class="list-group-item">创建者：{{ contest.author }}</li>
+      <li class="list-group-item">
+        时间：
+        {{ contest.start_time | date : 'yyyy-MM-dd HH:mm' }}
+        -
+        {{ contest.end_time | date : 'HH:mm' }}
+        <sup *ngIf="contest.days > 0"> +{{ contest.days }} </sup>
+      </li>
+      <li class="list-group-item">赛制：</li>
+      <li class="list-group-item">问题数量：</li>
+      <li class="list-group-item">参与人数：</li>
+    </ul>
+  </div>
+</div>
+<div class="card mt-4">
+  <div class="card-header">{{ 'contests.description' | translate }}</div>
+  <div class="card-body">{{ contest.description }}</div>
+</div>
+<div class="card mt-4">
+  <div class="card-header">{{ 'keywords.announcements' | translate }}</div>
+  <div class="card-body"></div>
+</div>

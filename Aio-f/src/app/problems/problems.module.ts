@@ -11,7 +11,6 @@ import { ProblemsRoutingModule } from './problems-routing.module';
 import { SearchModule, ProblemSearchModule, HoldButtonModule } from '../shared';
 
 import {
-  BetaComponent,
   UploadComponent,
   PublicComponent,
   PrivateComponent,
@@ -20,7 +19,6 @@ import {
 
 @NgModule({
   declarations: [
-    BetaComponent,
     UploadComponent,
     PublicComponent,
     PrivateComponent,
