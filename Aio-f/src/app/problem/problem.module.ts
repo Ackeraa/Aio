@@ -5,11 +5,10 @@ import { CommonModule } from '@angular/common';
 import { MarkdownModule } from 'ngx-markdown';
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { ProblemRoutingModule } from './problem-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
-import {
-  FontAwesomeModule,
-} from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SearchModule, CommentsModule, SubmissionsModule } from '../shared';
 
 import {
@@ -40,6 +39,7 @@ import {
     CodemirrorModule,
     ProblemRoutingModule,
     NgxPaginationModule,
+    TranslateModule,
     SearchModule,
     CommentsModule,
     SubmissionsModule,
@@ -48,5 +48,4 @@ import {
   ],
   exports: [],
 })
-export class ProblemModule {
-}
+export class ProblemModule {}

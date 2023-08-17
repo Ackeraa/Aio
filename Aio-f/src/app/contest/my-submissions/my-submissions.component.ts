@@ -21,7 +21,7 @@ export class MySubmissionsComponent {
     combineLatest(this.contestService.contest$, this.authService.user$)
       .pipe(filter(([x, y]) => x != null && y != null))
       .subscribe(z => {
-        this.addition = { contest_id: z[0].id, user_id: z[1].user_id };
+        this.addition = { contest_id: z[0].id, user_id: z[1].id };
         console.log(this.addition);
       });
   }

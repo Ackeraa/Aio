@@ -4,10 +4,15 @@
     "logout": "Logout",
     "register": "Register",
     "home": "Home",
+    "contest": "Contest",
     "contests": "Contests",
+    "recentContests": "Recent contests",
+    "problem": "Problem",
     "problems": "Problems",
+    "recentProblems": "Recent problems",
     "problemSets": "Problem sets",
     "submissions": "Submissions",
+    "mySubmissions": "My submissions",
     "discussion": "Discussion",
     "groups": "Groups",
     "users": "Users",
@@ -17,11 +22,10 @@
     "group": "Group",
     "private": "Private",
     "create": "Create",
-    "recent": "Recent",
-    "recentContests": "Recent contests",
-    "recentProblems": "Recent problems",
+
     "rank": "Rank",
-    "overview": "Overview"
+    "overview": "Overview",
+    "submit": "Submit"
   },
   "errors": {
     "tooShort": "{{v1}} is too short (minimum is {{v2}} characters).",

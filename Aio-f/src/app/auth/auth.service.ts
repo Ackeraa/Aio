@@ -13,8 +13,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 interface User {
-  user_id: string;
-  user_name: string;
+  id: string;
+  role: string;
+  name: string;
 }
 
 @Injectable()
@@ -25,7 +26,7 @@ export class AuthService implements OnInit {
     new BehaviorSubject(undefined);
 
   user$ = this.user_$.pipe(
-    skipWhile((val) => val === undefined)
+    skipWhile(val => val === undefined)
   ) as Observable<User | null>;
 
   constructor(
@@ -33,11 +34,12 @@ export class AuthService implements OnInit {
     private http: HttpClient
   ) {
     this.tokenService.validateToken().subscribe({
-      next: (res) => {
+      next: res => {
         let user = res.data;
         this.user_$.next({
-          user_id: user.id,
-          user_name: user.name,
+          id: user.id,
+          role: user.role,
+          name: user.name,
         });
       },
       error: () => {
@@ -100,7 +102,7 @@ export class AuthService implements OnInit {
     passwordConfirmation: string;
   }): Observable<any> {
     return this.tokenService.registerAccount(data).pipe(
-      catchError((err) => {
+      catchError(err => {
         let errors = err.error.errors;
         return throwError(() => errors);
       })
@@ -109,14 +111,15 @@ export class AuthService implements OnInit {
 
   login(data: { login: string; password: string }): Observable<any> {
     return this.tokenService.signIn(data).pipe(
-      tap((res) => {
+      tap(res => {
         let user = res.body.data;
         this.user_$.next({
-          user_id: user.id,
-          user_name: user.name,
+          id: user.id,
+          role: user.role,
+          name: user.name,
         });
       }),
-      catchError((err) => {
+      catchError(err => {
         this.user_$.next(null);
         let errors = err.error.errors;
         return throwError(() => errors);
@@ -129,7 +132,7 @@ export class AuthService implements OnInit {
       finalize(() => {
         this.user_$.next(null);
       }),
-      catchError((err) => {
+      catchError(err => {
         let errors = err.error.errors;
         return throwError(() => errors);
       })
@@ -144,7 +147,7 @@ export class AuthService implements OnInit {
       redirect_url: environment.token_auth_config.resetPasswordCallback,
     };
     return this.post(url, newData).pipe(
-      catchError((err) => {
+      catchError(err => {
         let errors = err.error.errors;
         return throwError(() => errors);
       })

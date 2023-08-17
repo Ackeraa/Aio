@@ -31,7 +31,13 @@
           </th>
           <td class="col">{{ problemSet.description }}</td>
           <td class="col">{{ problemSet.creater }}</td>
-          <td class="col d-grid gap-2 d-flex">
+          <td
+            *ngIf="user.name != problemSet.creater && user.role != 'admin'"
+          ></td>
+          <td
+            *ngIf="user.name == problemSet.creater || user.role == 'admin'"
+            class="col d-grid gap-2 d-flex"
+          >
             <button
               type="button"
               class="btn btn-outline-info"

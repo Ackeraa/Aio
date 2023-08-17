@@ -15,6 +15,7 @@ export class ShowComponent {
   contests: any;
   total: number;
   p: number;
+  user: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,6 +29,10 @@ export class ShowComponent {
         this.which = url[0].path;
         console.log(this.which);
       },
+    });
+
+    this.contestsService.getUser().subscribe({
+      next: user => (this.user = user),
     });
 
     this.getContests(this.contestsService.getContestsPage());

@@ -12,6 +12,10 @@ export class ProblemSetsService {
     private searchService: SearchService
   ) {}
 
+  getUser(): Observable<any> {
+    return this.authService.user$;
+  }
+
   getProblemSets(url: string, params: SearchParams): Observable<any> {
     return this.searchService.get(url, params);
   }

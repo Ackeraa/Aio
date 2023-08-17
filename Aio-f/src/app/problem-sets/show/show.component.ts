@@ -15,6 +15,7 @@ export class ShowComponent {
   problemSets: Array<any>;
   total: number;
   p: number;
+  user: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,6 +29,10 @@ export class ShowComponent {
         this.which = url[0].path;
       },
     });
+    this.problemSetsService.getUser().subscribe({
+      next: user => (this.user = user),
+    });
+
     this.getProblemSets(this.problemSetsService.getProblemSetsPage());
   }
 

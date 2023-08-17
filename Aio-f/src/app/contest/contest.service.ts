@@ -70,8 +70,8 @@ export class ContestService implements OnInit {
           language: language,
           code: code,
           contest_id: this.id,
-          user_id: user.user_id,
-          user_name: user.user_name,
+          user_id: user.id,
+          user_name: user.name,
           contest_problem_id: index,
         };
         return this.authService.post(url, body);

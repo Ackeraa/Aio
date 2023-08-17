@@ -32,7 +32,7 @@ export class HeaderComponent {
 
   ngOnInit(): void {
     this.authService.user$.subscribe(data => {
-      this.currentUser = data ? data.user_name : null;
+      this.currentUser = data ? data.name : null;
     });
   }
 

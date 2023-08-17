@@ -6,7 +6,9 @@
     >
     </app-problem-search>
     <br />
-    <div *ngIf="loading" class="row">Loading...</div>
+    <div *ngIf="loading">
+      <app-loading></app-loading>
+    </div>
     <table class="table">
       <thead>
         <tr>
@@ -26,7 +28,7 @@
                 : { itemsPerPage: 20, currentPage: p, totalItems: total }
           "
         >
-          <th scope="row">{{ problem.id }}</th>
+          <td scope="row">{{ problem.id }}</td>
           <td class="col">
             <a
               class="link link-content"
@@ -41,7 +43,11 @@
           <td class="col">
             &nbsp;{{ problem.accepts }}/{{ problem.submissions }}
           </td>
-          <td class="col d-grid gap-2 d-flex">
+          <td *ngIf="user.name != problem.creater && user.role != 'admin'"></td>
+          <td
+            *ngIf="user.name == problem.creater || user.role == 'admin'"
+            class="col d-grid gap-2 d-flex"
+          >
             <button
               type="button"
               class="btn btn-outline-info"

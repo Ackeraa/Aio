@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { AlertService } from '../shared';
 import { HomeService } from './home.service';
-import { TranslateService } from '@ngx-translate/core';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -9,13 +10,26 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class HomeComponent {
   data: any;
+  loading: boolean;
 
-  constructor(private homeService: HomeService) {}
+  constructor(
+    private homeService: HomeService,
+    private alertService: AlertService
+  ) {}
 
   ngOnInit() {
-    this.homeService.getInfo().subscribe(data => {
-      this.data = data;
-      console.log(data.recent_contests);
-    });
+    this.loading = true;
+    this.homeService
+      .getInfo()
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe({
+        next: data => {
+          this.data = data;
+          console.log(data.recent_contests);
+        },
+        error: err => {
+          this.alertService.error(err);
+        },
+      });
   }
 }

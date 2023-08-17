@@ -24,14 +24,14 @@ export class ProblemService implements OnInit {
     } else {
       url = '/vproblems/' + id;
     }
-    this.authService.get(url).subscribe((problem) => {
+    this.authService.get(url).subscribe(problem => {
       this.problem$.next(problem);
     });
   }
 
   reSpideProblem(): Observable<any> {
     let id;
-    this.problem$.subscribe((problem) => {
+    this.problem$.subscribe(problem => {
       id = problem.id;
     });
     let url = '/vproblems/' + id + '/respide';
@@ -51,7 +51,7 @@ export class ProblemService implements OnInit {
         body = {
           language: language,
           code: code,
-          user_id: user.user_id,
+          user_id: user.id,
         };
         return this.authService.post(url, body);
       })

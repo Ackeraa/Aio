@@ -13,3 +13,4 @@ export * from './submissions/submissions.service';
 export * from './models/status';
 export * from './models/problem-basic';
 export * from './hold-button/hold-button.module';
+export * from './loading/loading.component';

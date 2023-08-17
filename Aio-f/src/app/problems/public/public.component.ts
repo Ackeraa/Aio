@@ -19,6 +19,7 @@ export class PublicComponent {
   problems: ProblemBasic[];
   p: number;
   total: number;
+  user: any;
 
   constructor(
     private router: Router,
@@ -27,6 +28,10 @@ export class PublicComponent {
   ) {}
 
   ngOnInit(): void {
+    this.problemsService.getUser().subscribe({
+      next: user => (this.user = user),
+    });
+
     this.getProblems(this.problemsService.getPublicPage());
   }
 

@@ -2,66 +2,74 @@
   <div class="card-body">
     <app-search (searchEvent)="getContests($event)"> </app-search>
     <br />
-    <div
-      class="mb-3"
-      *ngFor="
-        let contest of contests
-          | paginate : { itemsPerPage: 20, currentPage: p, totalItems: total }
-      "
-    >
-      <div class="card">
-        <text class="card-title">
-          <a class="link link-title" routerLink="/contest/{{ contest.id }}">
-            <span>{{ contest.name }}</span>
-          </a>
-        </text>
-        <div class="row card-text time mt-2 justify-content-between">
-          <div class="col">
-            <fa-icon [icon]="['fas', 'lock']"></fa-icon> &nbsp;
-            <fa-icon [icon]="['fas', 'clock']"></fa-icon>
-            {{ contest.start_time | date : 'yyyy-MM-dd HH:mm' }}
-            -
-            {{ contest.end_time | date : 'HH:mm' }}
-            <sup *ngIf="contest.days > 0"> +{{ contest.days }} </sup>
-          </div>
-          <div class="col-1">
-            <fa-icon [icon]="['fas', 'user-alt']"></fa-icon> 23
+    <div *ngIf="loading">
+      <app-loading></app-loading>
+    </div>
+    <div *ngIf="!loading">
+      <div
+        class="mb-3"
+        *ngFor="
+          let contest of contests
+            | paginate : { itemsPerPage: 20, currentPage: p, totalItems: total }
+        "
+      >
+        <div class="card">
+          <text class="card-title">
+            <a class="link link-title" routerLink="/contest/{{ contest.id }}">
+              <span>{{ contest.name }}</span>
+            </a>
+          </text>
+          <div class="row card-text time mt-2 justify-content-between">
+            <div class="col">
+              <fa-icon [icon]="['fas', 'lock']"></fa-icon> &nbsp;
+              <fa-icon [icon]="['fas', 'clock']"></fa-icon>
+              {{ contest.start_time | date : 'yyyy-MM-dd HH:mm' }}
+              -
+              {{ contest.end_time | date : 'HH:mm' }}
+              <sup *ngIf="contest.days > 0"> +{{ contest.days }} </sup>
+            </div>
+            <div class="col-1">
+              <fa-icon [icon]="['fas', 'user-alt']"></fa-icon> 23
+            </div>
           </div>
         </div>
-      </div>
-      <div class="d-grid gap-2 d-flex mt-1 justify-content-end">
-        <button
-          type="button"
-          class="btn btn-outline-info"
-          routerLink="../update/{{ contest.id }}"
-          ngbTooltip="Edit"
+        <div
+          *ngIF="user?.name === contest.creater || user.role === 'admin'"
+          class="d-grid gap-2 d-flex mt-1 justify-content-end"
         >
-          <fa-icon [icon]="['fas', 'pen-to-square']"></fa-icon>
-        </button>
-        <button
-          type="button"
-          class="btn btn-outline-success"
-          (click)="shareProblemSet(contest.id)"
-          ngbTooltip="Make it pubilc"
-        >
-          <fa-icon [icon]="['fas', 'share-from-square']"></fa-icon>
-        </button>
-        <app-hold-button
-          (holdEvent)="deleteProblemSet(contest.id)"
-          ngbTooltip="Hold to delete"
-        ></app-hold-button>
+          <button
+            type="button"
+            class="btn btn-outline-info"
+            routerLink="../update/{{ contest.id }}"
+            ngbTooltip="Edit"
+          >
+            <fa-icon [icon]="['fas', 'pen-to-square']"></fa-icon>
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-success"
+            (click)="shareProblemSet(contest.id)"
+            ngbTooltip="Make it pubilc"
+          >
+            <fa-icon [icon]="['fas', 'share-from-square']"></fa-icon>
+          </button>
+          <app-hold-button
+            (holdEvent)="deleteProblemSet(contest.id)"
+            ngbTooltip="Hold to delete"
+          ></app-hold-button>
+        </div>
       </div>
-    </div>
-    <br />
-    <div class="row justify-content-center">
-      <pagination-controls
-        class="paginator"
-        (pageChange)="getContests($event)"
-        auotHide="true"
-        previousLabel=""
-        nextLabel=""
-      >
-      </pagination-controls>
+      <br />
+      <div class="row justify-content-center">
+        <pagination-controls
+          class="paginator"
+          (pageChange)="getContests($event)"
+          auotHide="true"
+          previousLabel=""
+          nextLabel=""
+        >
+        </pagination-controls>
+      </div>
     </div>
   </div>
 </div>

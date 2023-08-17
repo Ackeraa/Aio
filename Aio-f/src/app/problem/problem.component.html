@@ -6,50 +6,40 @@
         routerLinkActive="active"
         routerLink="./description"
       >
-        <fa-icon [icon]="['fas', 'file-invoice']"></fa-icon> Problem
+        <fa-icon [icon]="['fas', 'file-invoice']"></fa-icon>
+        {{ 'keywords.problem' | translate }}
       </a>
       <a
         class="nav-item nav-link"
         routerLinkActive="active"
         routerLink="./submit"
       >
-        <fa-icon [icon]="['fas', 'upload']"></fa-icon> Submit
+        <fa-icon [icon]="['fas', 'upload']"></fa-icon>
+        {{ 'keywords.submit' | translate }}
       </a>
       <a
         class="nav-item nav-link"
         routerLinkActive="active"
         routerLink="./my-submissions"
       >
-        <fa-icon [icon]="['fas', 'list']"></fa-icon> My Submissions
+        <fa-icon [icon]="['fas', 'list']"></fa-icon>
+        {{ 'keywords.mySubmissions' | translate }}
       </a>
       <a
         class="nav-item nav-link"
         routerLinkActive="active"
         routerLink="./submissions"
       >
-        <fa-icon [icon]="['fas', 'list-ul']"></fa-icon> Submissions
+        <fa-icon [icon]="['fas', 'list-ul']"></fa-icon>
+        {{ 'keywords.submissions' | translate }}
       </a>
       <a
         class="nav-item nav-link"
         routerLinkActive="active"
         routerLink="./discussion"
       >
-        <fa-icon [icon]="['fas', 'comments']"></fa-icon> Discussion
-      </a>
-      <a
-        class="nav-item nav-link"
-        routerLinkActive="active"
-        routerLink="./solutions"
-      >
-        <fa-icon [icon]="['fas', 'book-reader']"></fa-icon> Solutions
-      </a>
-      <a
-        class="nav-item nav-link"
-        routerLinkActive="active"
-        routerLink="./upload"
-        *ngIf="source === 'l' && user && user.role !== 'admin'"
-      >
-        <fa-icon [icon]="['fas', 'book-reader']"></fa-icon> Upload
+        <fa-icon [icon]="['fas', 'comments']"></fa-icon>
+        {{ 'keywords.discussion' | translate }}
       </a>
     </div>
   </div>

@@ -56,7 +56,12 @@ import { ActionCableService } from 'angular2-actioncable';
 
 import { environment } from '../environments/environment';
 
-import { AlertComponent, HeaderComponent, FooterComponent } from './shared';
+import {
+  AlertComponent,
+  HeaderComponent,
+  FooterComponent,
+  LoadingComponent,
+} from './shared';
 import { ErrorComponent } from './error/error.component';
 
 @NgModule({
@@ -116,6 +121,7 @@ import { ErrorComponent } from './error/error.component';
     DiscussionComponent,
     GroupsComponent,
     ErrorComponent,
+    LoadingComponent,
   ],
   providers: [
     //{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
