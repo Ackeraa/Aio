@@ -44,13 +44,15 @@ Rails.application.routes.draw do
   resources :users do
     collection do
       get  'search',                            :action => 'search'
-      get ':id/add_user/:user_id',              :action => 'add_user'     
-      get ':id/delete_user/:user_id',           :action => 'delete_user'     
-      get ':id/get_info',                       :action => 'get_info'
-      get ':id/get_contests',                   :action => 'get_contests'
-      get ':id/get_problems',                   :action => 'get_problems'
-      get ':id/get_groups',                     :action => 'get_groups'
-      get ':id/get_friends',                    :action => 'get_friends'
+      get  ':id/get_info',                      :action => 'get_info'
+      get  ':id/get_contests',                  :action => 'get_contests'
+      get  ':id/get_problems',                  :action => 'get_problems'
+      get  ':id/get_groups',                    :action => 'get_groups'
+      get  ':id/get_friends',                   :action => 'get_friends'
+      get  ':id/get_photo',                     :action => 'get_photo'
+      put  ':id',                               :action => 'update'
+      post ':id/connect',                       :action => 'connect'
+      post 'upload_photo',                      :action => 'upload_photo'
     end
   end
 

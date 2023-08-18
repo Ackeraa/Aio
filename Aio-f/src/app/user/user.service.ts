@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject, BehaviorSubject, Observable, combineLatest } from 'rxjs';
-import { map, filter, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, filter } from 'rxjs';
 import { AuthService } from '../auth';
 
 @Injectable({
@@ -85,6 +84,10 @@ export class UserService {
 
   updateUserName(): void {
     //this.authService.getUserInfo();
+  }
+
+  uploadPhoto(data: any): Observable<any> {
+    return this.authService.post(`/users/upload_photo`, data);
   }
 
   changeGeneral(data: any): any {

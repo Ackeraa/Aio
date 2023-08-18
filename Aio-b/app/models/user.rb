@@ -25,7 +25,9 @@ class User < ActiveRecord::Base
               maximum: 10, too_long: I18n.t("errors.messages.too_long", count: 10) },
     format: { with: /\A[a-zA-Z]+[a-zA-Z0-9_]*\Z/,
               message: I18n.t("errors.messages.name_format")}
-
+  
+  mount_uploader :photo, PhotoUploader
+  
   devise :database_authenticatable,
          :registerable,
          :recoverable,

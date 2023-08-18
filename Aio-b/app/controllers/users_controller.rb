@@ -1,14 +1,14 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy, :get_info, :get_contests,
-                                  :get_problems, :get_groups, :get_friends]
+                                  :get_problems, :get_groups, :get_friends, :upload_photo,
+                                  :get_photo, :connect]
   before_action :set_page, only: [:search]
-
 
   # GET /users
   def index
-    @users = User.all
+    #@users = User.all
 
-    render json: @users
+    send_file '/root/Aio-b/public/uploads/user/photo/27/QQ20191001-0.jpg'
   end
 
   # GET /users/1
@@ -21,17 +21,21 @@ class UsersController < ApplicationController
     query = params[:query]
     total = User.where('name ilike(?)',  "%#{query}%").count
     @users = User.where('name ilike(?)',  "%#{query}%").limit(20).offset(@page * 20)
-    render json: { total: total, users: @users }
+    render json: { total: total, users: @users.to_json }
   end
 
-  #GET /users/1/get_info
+  # GET /users/1/photo
+  def get_photo
+    send_file @user.photo.file.file, disposition: 'inline'
+  end
+
+  # GET /users/1/get_info
   def get_info
     total_contests = @user.contests.count
     total_problems = @user.problems.count
     total_groups = @user.groups.count
     total_followers = @user.followers.size
     total_following = @user.following.size
-    
     render json: {
       user: @user,
       total_contests: total_contests,
@@ -62,6 +66,21 @@ class UsersController < ApplicationController
     render json: { followers: @user.followers, following: @user.following }
   end
 
+  # POST /users/1/connect
+  def connect
+    which = params[:which]
+    account = params[:account]
+    spider = get_spider(which)
+    if spider.account_available(account)
+      @user.oj_accounts = Hash.new(0) if @user.oj_accounts.nil?
+      @user.oj_accounts[which] = account 
+      @user.save
+      render json: @user.oj_accounts
+    else
+      render json:@user.errors, status: :unprocessable_entity
+    end
+  end
+
   # POST /users
   def create
     @user = User.new(user_params)
@@ -82,12 +101,28 @@ class UsersController < ApplicationController
     end
   end
 
+  # POST /users/upload_photo
+  def upload_photo
+    puts "dsdasd", params[:photo]
+    @user.update(photo: params[:photo])
+    if @user.save
+      render json: @user.photo, status: :ok
+    else
+      render json: @user.errors, status: :unprocessable_entity
+    end
+  end
+
   # DELETE /users/1
   def destroy
     @user.destroy
   end
 
   private
+
+    def get_spider(source)
+      which = source.capitalize
+      "#{which}::#{which}Spider".constantize.new
+    end
 
     def set_page
       @page = (params[:page] || 1).to_i - 1
@@ -100,6 +135,6 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.fetch(:user, {})
+      params.permit(User.column_names - ['created_at', 'updated_at'])
     end
 end

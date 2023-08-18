@@ -1,43 +1,107 @@
-<div class="row">
-  <div class="col-md-3 nav flex-column nav-pills nav-pills-custom">
-    <nav>
-      <div
-        class="nav flex-column nav-pills nav-pills-custom"
-        ngbNav
-        #navTabs="ngbNav"
-      >
-        <a [ngbNavItem]="1" ngbNavLink class="nav-link mb-3 p-3 shadow">
-          <i class="fa fa-user-circle-o mr-2"></i>
-          <span class="font-weight-bold small text-uppercase"> General </span>
-          <ng-template ngbNavContent >
-            <app-user-general-settings></app-user-general-settings>
-          </ng-template>
-        </a>
-        <a [ngbNavItem]="2" ngbNavLink class="nav-link mb-3 p-3 shadow">
-          <i class="fa fa-user-circle-o mr-2"></i>
-          <span class="font-weight-bold small text-uppercase">Change Password</span>
-          <ng-template ngbNavContent >
-            <app-user-password-settings></app-user-password-settings>
-          </ng-template>
-        </a>
-        <a [ngbNavItem]="3" ngbNavLink class="nav-link mb-3 p-3 shadow">
-          <i class="fa fa-user-circle-o mr-2"></i>
-          <span class="font-weight-bold small text-uppercase"> Connections </span>
-          <ng-template ngbNavContent >
-            <app-user-connections-settings></app-user-connections-settings>
-          </ng-template>
-        </a>
+<div class="row justify-content-center mt-5">
+  <div class="col-5 card shadow-sm">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="card-body media align-items-center">
+        <img [src]="photoPath" class="d-block ui-w-80" />
+        <div class="media-body ml-4">
+          <label class="btn btn-outline-primary">
+            <i class="fas fa-folder-open"></i> Browse
+            <input
+              type="file"
+              hidden
+              ng2FileSelect
+              [uploader]="photo"
+              (change)="imagePreview($event)"
+            />
+          </label>
+          <div *ngIf="photo.queue[0] as item">
+            <button
+              type="button"
+              class="btn btn-outline-success btn-xs"
+              (click)="item.upload()"
+              [disabled]="item.isReady || item.isUploading || item.isSuccess"
+            >
+              <fa-icon [icon]="['fas', 'cloud-upload-alt']"></fa-icon>
+            </button>
+          </div>
+        </div>
       </div>
-
-    </nav>
-  </div>
-  <div class="col-md-9">
-    <div class="tab-content" id="v-pills-tabContent">
-      <div
-        class="tab-pane fade shadow rounded bg-white show active p-5"
-      >
-        <div [ngbNavOutlet]="navTabs" class="mt-2"></div>
+      <hr class="border-light m-0" />
+      <div class="card-body">
+        <div class="form-group">
+          <label class="form-label">User Name</label>
+          <input
+            type="text"
+            class="form-control"
+            [formControl]="f.name"
+            autocomplete="false"
+            [ngClass]="{
+              'is-invalid':
+                ((status === XStatus.Clicked || f.name.touched) &&
+                  f.name.invalid) ||
+                (status === XStatus.Failed && errors.name)
+            }"
+          />
+          <small
+            *ngIf="
+              (f.name.touched || status === XStatus.Clicked) && f.name.invalid
+            "
+            class="text-danger"
+          >
+            {{ f.name.errors.error }}
+          </small>
+          <small *ngIf="status === XStatus.Failed" class="text-danger">
+            <div *ngIf="errors.name">
+              {{ 'auth.username' | translate }} {{ errors.name[0] }}
+            </div>
+          </small>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Real Name</label>
+          <input
+            type="text"
+            class="form-control"
+            [formControl]="f.real_name"
+            autocomplete="false"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Github</label>
+          <input
+            type="text"
+            class="form-control"
+            [formControl]="f.github"
+            autocomplete="false"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">School</label>
+          <input
+            type="text"
+            class="form-control"
+            [formControl]="f.school"
+            autocomplete="false"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Major</label>
+          <input
+            type="text"
+            class="form-control"
+            [formControl]="f.major"
+            autocomplete="false"
+          />
+        </div>
+        <div class="text-right mt-3">
+          <button [disabled]="status === XStatus.Sent" class="btn btn-success">
+            <span
+              *ngIf="status === XStatus.Sent"
+              class="spinner-border spinner-border-sm mr-1"
+            ></span>
+            Save Changes
+          </button>
+        </div>
       </div>
-    </div>
+    </form>
   </div>
 </div>
