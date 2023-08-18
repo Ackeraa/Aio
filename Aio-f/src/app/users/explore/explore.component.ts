@@ -25,14 +25,12 @@ export class ExploreComponent {
 
   getUsers(params: SearchParams): void {
     this.p = params.page;
-    console.log(this.p);
     this.loading = true;
     this.usersService
       .getUsers(params)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: (data) => {
-          console.log(data);
           this.users = data.users;
           this.total = data.total;
         },

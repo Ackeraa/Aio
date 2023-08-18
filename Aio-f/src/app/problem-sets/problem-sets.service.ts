@@ -24,7 +24,7 @@ export class ProblemSetsService {
     return { page: this.searchService.getPage() };
   }
 
-  getProblemSet(id: string): Observable<any> {
+  getProblemSet(id: number): Observable<any> {
     return this.authService.get(`/problem_sets/${id}`);
   }
 
@@ -32,11 +32,11 @@ export class ProblemSetsService {
     return this.authService.post('/problem_sets', data);
   }
 
-  updateProblemSet(id: string, data: any): Observable<any> {
+  updateProblemSet(id: number, data: any): Observable<any> {
     return this.authService.put(`problem_sets/${id}`, data);
   }
 
-  deleteProblemSet(id: string): Observable<any> {
+  deleteProblemSet(id: number): Observable<any> {
     return this.authService.delete(`problem_sets/${id}`);
   }
 }

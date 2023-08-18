@@ -14,8 +14,8 @@ export class GroupComponent {
 	}
 
 	ngOnInit(): void {
-		let id = this.route.snapshot.paramMap.get('id');
-		this.groupService.getGroup(id);
+		let id = +this.route.snapshot.paramMap.get('id') || null;
+		this.groupService.getInfo(id);
 	}
 
 	getMembers(): void {

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { finalize } from 'rxjs/operators';
 import { GroupsService } from '../groups.service';
+import { AlertService, SearchParams } from '../../shared';
 
 @Component({
   selector: 'app-groups-explore',
@@ -13,24 +15,29 @@ export class ExploreComponent {
   p: number;
   total: number;
 
-  constructor(private groupsService: GroupsService) {}
+  constructor(
+    private groupsService: GroupsService,
+    private alertService: AlertService
+  ) {}
 
-  ngOnInit(): void {}
-
-  setGroups(data: any): void {
-    this.groups = data.groups;
-    this.total = data.total;
+  ngOnInit(): void {
+    this.getGroups(this.groupsService.getGroupsPage());
   }
 
-  setLoading(loading: boolean): void {
-    this.loading = loading;
-  }
-
-  getPage(page: number): void {
-    this.groupsService.getPage(page).subscribe(data => {
-      this.groups = data.groups;
-      this.total = data.total;
-      this.p = page;
-    });
+  getGroups(params: SearchParams): void {
+    this.p = params.page;
+    this.loading = true;
+    this.groupsService
+      .getGroups(params)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe({
+        next: (data) => {
+          this.groups = data.groups;
+          this.total = data.total;
+        },
+        error: (err) => {
+          this.alertService.error(err);
+        },
+      });
   }
 }

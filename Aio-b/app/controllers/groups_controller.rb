@@ -12,6 +12,7 @@ class GroupsController < ApplicationController
   # GET /groups/search
   def search
     query = params[:query]
+    puts "asdsada", query
     total = Group.where('name ilike(?)',  "%#{query}%").count
     @groups = Group.where('name ilike(?)',  "%#{query}%").limit(20).offset(@page * 20)
     render json: { total: total, groups: @groups }
@@ -90,6 +91,6 @@ class GroupsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def group_params
-      params.fetch(:group, {})
+      params.permit(Group.column_names - ['created_at', 'updated_at'])
     end
 end

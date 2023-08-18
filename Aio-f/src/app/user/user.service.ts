@@ -6,7 +6,7 @@ import { AuthService } from '../auth';
   providedIn: 'root',
 })
 export class UserService {
-  id: string;
+  id: number;
   homeInfo$: BehaviorSubject<any> = new BehaviorSubject(null);
   contests$: BehaviorSubject<any> = new BehaviorSubject(null);
   problems$: BehaviorSubject<any> = new BehaviorSubject(null);
@@ -36,7 +36,7 @@ export class UserService {
     });
   }
 
-  getInfo(id: string = null): void {
+  getInfo(id: number | null = null): void {
     if (id) {
       this.id = id;
       this.isSelf = false;

@@ -16,7 +16,7 @@ export class UserComponent {
   ) {}
 
   ngOnInit(): void {
-    let id = this.route.snapshot.paramMap.get('id') || null;
+    let id = +this.route.snapshot.paramMap.get('id') || null;
     this.userService.getInfo(id);
     this.userService.photo$.subscribe({
       next: (photo) => {

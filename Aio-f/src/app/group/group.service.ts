@@ -1,61 +1,69 @@
 import { Injectable } from '@angular/core';
-import { Subject, BehaviorSubject, Observable, combineLatest } from 'rxjs';
+import {
+  Subject,
+  BehaviorSubject,
+  filter,
+  take,
+} from 'rxjs';
 import { AuthService } from '../auth';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GroupService {
-  id: string;
+  id: number;
   homeInfo$: BehaviorSubject<any> = new BehaviorSubject(null);
   contests$: BehaviorSubject<any> = new BehaviorSubject(null);
   problemSets$: BehaviorSubject<any> = new BehaviorSubject(null);
   members$: BehaviorSubject<any> = new BehaviorSubject(null);
+  error$: Subject<any> = new Subject();
 
   isSelf: boolean;
 
   constructor(private authService: AuthService) {}
 
-  getGroup(id: string): void {
-    this.id = id;
-    this.isSelf = false;
-    let url = `/groups/${id}/get_info`;
-    this.authService.get(url).subscribe((info) => {
-      info.leader = JSON.parse(info.leader);
-      this.homeInfo$.next(info);
+  private get(subject$: BehaviorSubject<any>, url: string): void {
+    subject$.pipe(take(1)).subscribe({
+      next: (data) => {
+        if (data === null) {
+          this.authService.get(`/groups/${this.id}/${url}`).subscribe({
+            next: (data) => {
+              subject$.next(data);
+            },
+            error: (err) => {
+              this.error$.next(err);
+            },
+          });
+        }
+      },
     });
+  }
+
+  getInfo(id: number | null = null): void {
+    if (id) {
+      this.id = id;
+      this.isSelf = false;
+      this.get(this.homeInfo$, 'get_info');
+    } else {
+      this.isSelf = true;
+      this.authService.user$
+        .pipe(filter((x) => x != null))
+        .subscribe((user) => {
+          this.id = user.id;
+          this.get(this.homeInfo$, 'get_info');
+        });
+    }
   }
 
   getMembers(): void {
-    this.members$.subscribe((groups) => {
-      if (groups === null) {
-        let url = `/groups/${this.id}/get_members`;
-        this.authService.get(url).subscribe((members) => {
-          this.members$.next(members);
-        });
-      }
-    });
+    this.get(this.members$, 'get_members');
   }
 
   getContests(): void {
-    this.contests$.subscribe((contests) => {
-      if (contests === null) {
-        let url = `/groups/${this.id}/get_contests`;
-        this.authService
-          .get(url)
-          .subscribe((contests) => this.contests$.next(contests));
-      }
-    });
+    this.get(this.contests$, 'get_contests');
   }
 
   getProblemSets(): void {
-    this.problemSets$.subscribe((problems) => {
-      if (problems === null) {
-        let url = `/groups/${this.id}/get_problem_sets`;
-        this.authService
-          .get(url)
-          .subscribe((problemSets) => this.problemSets$.next(problemSets));
-      }
-    });
+    this.get(this.problemSets$, 'get_problem_sets');
   }
 }

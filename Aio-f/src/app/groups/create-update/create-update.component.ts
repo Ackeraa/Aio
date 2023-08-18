@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ProblemSetsService } from '../problem-sets.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { GroupsService } from '../groups.service';
 import { environment } from 'src/environments/environment';
 import { ValidatorService } from '../../helpers';
 import { AlertService, XStatus } from '../../shared';
 
 @Component({
-  selector: 'app-problem-sets-create-update',
+  selector: 'app-my-groups-create-update',
   templateUrl: './create-update.component.html',
-  styleUrls: ['./create-update.component.scss'],
+  styleUrls: ['./create-update.component.scss']
 })
 export class CreateUpdateComponent {
   form: FormGroup;
@@ -24,7 +24,7 @@ export class CreateUpdateComponent {
     private router: Router,
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private problemSetsService: ProblemSetsService,
+    private groupsService: GroupsService,
     private alertService: AlertService,
     private validator: ValidatorService
   ) {}
@@ -46,7 +46,7 @@ export class CreateUpdateComponent {
         '',
         this.validator.checkTitle.bind(
           this.validator,
-          'problemSets.name',
+          'groups.name',
           true
         ),
       ],
@@ -54,7 +54,7 @@ export class CreateUpdateComponent {
         '',
         this.validator.checkContent.bind(
           this.validator,
-          'problemSets.description',
+          'groups.description',
           true
         ),
       ],
@@ -62,7 +62,7 @@ export class CreateUpdateComponent {
   }
 
   updateForm(): void {
-    this.problemSetsService.getProblemSet(this.id).subscribe({
+    this.groupsService.getGroup(this.id).subscribe({
       next: (data) => {
         this.form.patchValue(data);
       },
@@ -84,26 +84,26 @@ export class CreateUpdateComponent {
       return;
     }
 
-    const problemSet = {
+    const group = {
       name: this.f.name.value,
       description: this.f.description.value,
     };
 
     this.status = XStatus.Sent;
     if (this.isAdd) {
-      this.createProblemSet(problemSet);
+      this.createGroup(group);
     } else {
-      this.updateProblemSet(problemSet);
+      this.updateGroup(group);
     }
 
   }
 
-  createProblemSet(problemSet: any) {
-    this.problemSetsService.createProblemSet(problemSet).subscribe({
+  createGroup(group: any) {
+    this.groupsService.createGroup(group).subscribe({
       next: (data) => {
         this.status = XStatus.Succeed;
         this.alertService.success('alerts.createSucceed');
-        this.router.navigate(['/problem-set', data.id]);
+        this.router.navigate(['/group', data.id]);
       },
       error: (err) => {
         this.status = XStatus.Failed;
@@ -112,12 +112,12 @@ export class CreateUpdateComponent {
     });
   }
 
-  updateProblemSet(problemSet: any) {
-    this.problemSetsService.updateProblemSet(this.id, problemSet).subscribe({
+  updateGroup(group: any) {
+    this.groupsService.updateGroup(this.id, group).subscribe({
       next: (data) => {
         this.status = XStatus.Succeed;
         this.alertService.success('alerts.updateSucceed');
-        this.router.navigate(['/problem-set', data.id]);
+        this.router.navigate(['/group', data.id]);
       },
       error: (err) => {
         this.status = XStatus.Failed;
