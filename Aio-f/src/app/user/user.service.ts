@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, filter } from 'rxjs';
+import { BehaviorSubject, Observable, filter, take } from 'rxjs';
 import { AuthService } from '../auth';
 
 @Injectable({
@@ -12,74 +12,62 @@ export class UserService {
   problems$: BehaviorSubject<any> = new BehaviorSubject(null);
   groups$: BehaviorSubject<any> = new BehaviorSubject(null);
   friends$: BehaviorSubject<any> = new BehaviorSubject(null);
+  photo$: BehaviorSubject<any> = new BehaviorSubject(null);
+  error$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   isSelf: boolean;
 
   constructor(private authService: AuthService) {}
 
-  getUser(id: string): void {
+  private get(subject$: BehaviorSubject<any>, url: string): void {
+    subject$.pipe(take(1)).subscribe({
+      next: (data) => {
+        if (data === null) {
+          this.authService.get(`/users/${this.id}/${url}`).subscribe({
+            next: (data) => {
+              subject$.next(data);
+            },
+            error: (err) => {
+              this.error$.next(err);
+            },
+          });
+        }
+      },
+    });
+  }
+
+  getInfo(id: string = null): void {
     if (id) {
       this.id = id;
       this.isSelf = false;
-      let url = `/users/${id}/get_info`;
-      this.authService.get(url).subscribe(info => {
-        this.homeInfo$.next(info);
-      });
+      this.get(this.homeInfo$, 'get_info');
+      this.photo$.next(`${this.authService.baseUrl}/users/${id}/get_photo`);
     } else {
       this.isSelf = true;
-      this.authService.user$.pipe(filter(x => x != null)).subscribe(user => {
-        let url = `/users/${user.id}/get_info`;
-        this.id = user.id;
-        this.authService.get(url).subscribe(info => {
-          this.homeInfo$.next(info);
+      this.authService.user$
+        .pipe(filter((x) => x != null))
+        .subscribe((user) => {
+          this.id = user.id;
+          this.photo$.next(`${this.authService.baseUrl}/users/${user.id}/get_photo`);
+          this.get(this.homeInfo$, 'get_info');
         });
-      });
     }
   }
 
   getContests(): void {
-    this.contests$.subscribe(contests => {
-      if (contests === null) {
-        let url = `/users/${this.id}/get_contests`;
-        this.authService.get(url).subscribe(contests => {
-          console.log(contests);
-          this.contests$.next(contests);
-        });
-      }
-    });
+    this.get(this.contests$, 'get_contests');
   }
 
   getProblems(): void {
-    this.problems$.subscribe(problems => {
-      if (problems === null) {
-        let url = `/users/${this.id}/get_problems`;
-        this.authService
-          .get(url)
-          .subscribe(problems => this.problems$.next(problems));
-      }
-    });
+    this.get(this.problems$, 'get_problems');
   }
 
   getGroups(): void {
-    this.groups$.subscribe(groups => {
-      if (groups === null) {
-        let url = `/users/${this.id}/get_groups`;
-        this.authService
-          .get(url)
-          .subscribe(groups => this.groups$.next(groups));
-      }
-    });
+    this.get(this.groups$, 'get_groups');
   }
 
   getFriends(): void {
-    this.friends$.subscribe(friends => {
-      if (friends === null) {
-        let url = `/users/${this.id}/get_friends`;
-        this.authService
-          .get(url)
-          .subscribe(friends => this.friends$.next(friends));
-      }
-    });
+    this.get(this.friends$, 'get_friends');
   }
 
   updateUserName(): void {
@@ -91,8 +79,7 @@ export class UserService {
   }
 
   changeGeneral(data: any): any {
-    let url = `/users/${this.id}`;
-    return this.authService.put(url, data);
+    return this.authService.put(`/users/${this.id}`, data);
   }
 
   changePassword(data: any): Observable<any> {

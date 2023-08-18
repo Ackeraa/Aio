@@ -1,22 +1,19 @@
-<div class="row">
-  <div class="col-md-12">
-    <div id="content" class="content content-full-width">
-      <div class="profile">
-        <div class="profile-header">
-          <div class="profile-header-cover"></div>
-          <div class="profile-header-content">
-            <div *ngIf="photo" class="profile-header-img">
-              <img [src]="photo" alt="" />
-            </div>
-            <div class="profile-header-info">
-              <h4 class="m-t-10 m-b-5">Sean Ngu</h4>
-              <p class="m-b-10">Happy coder</p>
-              <button class="btn btn-primary">Follow</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<div *ngIf="photo" class="row mt-4 mb-2">
+  <div class="col-2">
+    <img
+      src="{{ photo }}"
+      alt="Profile Photo"
+      class="img-fluid rounded-circle"
+      style="width: 150px; height: 150px"
+    />
+  </div>
+  <div class="col">
+    <h2>User Name</h2>
+    <p>
+      Introduction text goes here. Lorem ipsum dolor sit amet, consectetur
+      adipiscing elit.
+    </p>
+    <button class="btn btn-outline-primary mt-2">Follow</button>
   </div>
 </div>
 

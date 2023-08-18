@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     query = params[:query]
     total = User.where('name ilike(?)',  "%#{query}%").count
     @users = User.where('name ilike(?)',  "%#{query}%").limit(20).offset(@page * 20)
-    render json: { total: total, users: @users.to_json }
+    render json: { total: total, users: @users }
   end
 
   # GET /users/1/photo

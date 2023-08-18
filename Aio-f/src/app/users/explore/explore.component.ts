@@ -31,12 +31,12 @@ export class ExploreComponent {
       .getUsers(params)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
-        next: data => {
+        next: (data) => {
           console.log(data);
           this.users = data.users;
           this.total = data.total;
         },
-        error: err => {
+        error: (err) => {
           this.alertService.error(err);
         },
       });
@@ -47,7 +47,7 @@ export class ExploreComponent {
       next: () => {
         this.alertService.success('success');
       },
-      error: err => {
+      error: (err) => {
         this.alertService.error(err);
       },
     });

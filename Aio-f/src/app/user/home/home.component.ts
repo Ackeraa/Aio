@@ -9,17 +9,17 @@ import { UserService } from '../user.service';
 })
 export class HomeComponent {
   data: any;
-  loading: boolean = true;
+  loading: boolean;
 
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
     this.loading = true;
-    this.userService.homeInfo$
-      .pipe(filter((x) => x != null))
-      .subscribe((data) => {
+    this.userService.homeInfo$.pipe(filter((x) => x != null)).subscribe({
+      next: (data) => {
         this.loading = false;
         this.data = data;
-      });
+      },
+    });
   }
 }

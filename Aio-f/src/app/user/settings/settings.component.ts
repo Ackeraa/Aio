@@ -20,8 +20,8 @@ export class SettingsComponent implements OnInit {
   baseUrl = environment.token_auth_config.apiBase;
 
   photo: FileUploader;
+  maxFileSize = 5 * 1024 * 1024;
   photoPath: any;
-  user: number;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -66,6 +66,10 @@ export class SettingsComponent implements OnInit {
 
   imagePreview(e: any): void {
     const file = (e.target as HTMLInputElement).files[0];
+    if (file.size > this.maxFileSize) {
+      this.alertService.error('File size is too large, max size is 5MB');
+      return;
+    }
 
     const reader = new FileReader();
     reader.onload = () => {
@@ -91,7 +95,7 @@ export class SettingsComponent implements OnInit {
       next: () => {
         this.status = XStatus.Succeed;
         this.alertService.success('Information changed successfully');
-        this.userService.getUser('');
+        this.userService.getInfo();
         this.userService.updateUserName();
       },
       error: err => {
