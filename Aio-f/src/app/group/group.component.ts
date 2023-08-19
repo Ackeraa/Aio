@@ -1,32 +1,34 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { GroupService } from './group.service';
 
 @Component({
-	selector: 'app-group',
-	templateUrl: './group.component.html',
-	styleUrls: ['./group.component.scss']
+  selector: 'app-group',
+  templateUrl: './group.component.html',
+  styleUrls: ['./group.component.scss'],
 })
 export class GroupComponent {
+  photo: string = "ad";
 
-	constructor(private route: ActivatedRoute,
-			   	private groupService: GroupService){
-	}
+  constructor(
+    private route: ActivatedRoute,
+    private groupService: GroupService
+  ) {}
 
-	ngOnInit(): void {
-		let id = +this.route.snapshot.paramMap.get('id') || null;
-		this.groupService.getInfo(id);
-	}
+  ngOnInit(): void {
+    let id = +this.route.snapshot.paramMap.get('id') || null;
+    this.groupService.getInfo(id);
+  }
 
-	getMembers(): void {
-		this.groupService.getMembers();
-	}
+  getMembers(): void {
+    this.groupService.getMembers();
+  }
 
-	getContests(): void {
-		this.groupService.getContests();
-	}
+  getContests(): void {
+    this.groupService.getContests();
+  }
 
-	getProblemSets(): void {
-		this.groupService.getProblemSets();
-	}
+  getProblemSets(): void {
+    this.groupService.getProblemSets();
+  }
 }

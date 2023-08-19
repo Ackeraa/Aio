@@ -28,9 +28,8 @@ export class ProblemSetService {
     return { page: this.problemSearchService.getPage() };
   }
 
-  addProblem(problem_id: string): Observable<any> {
-    let url = '/problem_sets/' + this.id + '/add_problem/' + problem_id;
-    return this.authService.get(url);
+  addProblem(problem_id: number): Observable<any> {
+    return this.authService.get(`/problem_sets/${this.id}/add_problem/${problem_id}`);
   }
 
   deleteProblem(problem_id: string): Observable<any> {

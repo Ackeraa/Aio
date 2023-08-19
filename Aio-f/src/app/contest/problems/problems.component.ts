@@ -79,7 +79,8 @@ export class ProblemsComponent {
     return this.problems.filter(x => x.id === id).length > 0;
   }
 
-  addProblem(id: string): void {
+  addProblem(id: number): void {
+
     this.contestService.addProblem(id);
   }
 

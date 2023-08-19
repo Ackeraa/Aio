@@ -1,6 +1,22 @@
-<div class="d-grid d-flex justify-content-end mt-3">
-  <button class="btn btn-outline-primary">Join</button>
+<div *ngIf="photo" class="row mt-5 mb-2">
+  <div class="col-2">
+    <img
+      src="{{ photo }}"
+      alt="Profile Photo"
+      class="img-fluid rounded-circle"
+      style="width: 150px; height: 150px"
+    />
+  </div>
+  <div class="col">
+    <h2>Group name</h2>
+    <p>
+      Introduction text goes here. Lorem ipsum dolor sit amet, consectetur
+      adipiscing elit.
+    </p>
+    <button class="btn btn-outline-primary mt-2">Join</button>
+  </div>
 </div>
+
 
 <div class="p-5 bg-white rounded shadow mt-3">
   <nav>
@@ -34,9 +50,9 @@
         ></ng-template>
       </li>
       <li [ngbNavItem]="5" class="nav-item flex-sm-fill">
-        <a ngbNavLink>Settings</a>
+        <a ngbNavLink>Invite</a>
         <ng-template ngbNavContent
-          ><app-group-settings></app-group-settings
+          ><app-group-invite></app-group-invite
         ></ng-template>
       </li>
     </ul>

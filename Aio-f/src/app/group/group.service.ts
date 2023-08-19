@@ -28,6 +28,7 @@ export class GroupService {
         if (data === null) {
           this.authService.get(`/groups/${this.id}/${url}`).subscribe({
             next: (data) => {
+              console.log(data);
               subject$.next(data);
             },
             error: (err) => {

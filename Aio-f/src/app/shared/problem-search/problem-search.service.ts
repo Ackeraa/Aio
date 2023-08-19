@@ -14,7 +14,7 @@ export interface ProblemSearchParams {
 })
 export class ProblemSearchService {
   private params: ProblemSearchParams = {
-    source: environment.vproblemsSources[0],
+    source: environment.problemsSources[0],
     query: '',
     page: 1,
   };
@@ -29,7 +29,7 @@ export class ProblemSearchService {
     };
     console.log(this.params, params);
     const url =
-      this.params.source === 'aio' ? '/problems/search' : '/vproblems/search';
+      this.params.source === 'Aio' ? '/problems/search' : '/vproblems/search';
 
     return this.authService.get(url, this.params);
   }

@@ -11,18 +11,16 @@ import { ProblemsRoutingModule } from './problems-routing.module';
 import { SearchModule, ProblemSearchModule, HoldButtonModule } from '../shared';
 
 import {
-  UploadComponent,
-  PublicComponent,
-  PrivateComponent,
   CreateUpdateComponent,
+  UploadComponent,
+  ShowComponent
 } from '.';
 
 @NgModule({
   declarations: [
     UploadComponent,
-    PublicComponent,
-    PrivateComponent,
     CreateUpdateComponent,
+    ShowComponent,
   ],
   imports: [
     CommonModule,
@@ -39,6 +37,8 @@ import {
     ProblemSearchModule,
     HoldButtonModule,
   ],
-  exports: [],
+  exports: [
+    ShowComponent,
+  ],
 })
 export class ProblemsModule {}

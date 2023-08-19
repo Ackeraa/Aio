@@ -42,7 +42,7 @@ import { ContestComponent } from './contest';
 import { ProblemsComponent } from './problems';
 import { ProblemComponent } from './problem';
 import { ProblemSetsComponent } from './problem-sets';
-import { ProblemSetComponent } from './problem-set';
+import { ProblemSetModule } from './problem-set';
 import { SubmissionsComponent } from './submissions';
 import { DiscussionComponent } from './discussion';
 import { UsersComponent } from './users';
@@ -102,6 +102,7 @@ import { ErrorComponent } from './error/error.component';
     GroupsModule,
     UserModule,
     HoldButtonModule,
+    ProblemSetModule,
   ],
   declarations: [
     AppComponent,
@@ -117,7 +118,6 @@ import { ErrorComponent } from './error/error.component';
     HeaderComponent,
     FooterComponent,
     ProblemSetsComponent,
-    ProblemSetComponent,
     DiscussionComponent,
     GroupsComponent,
     ErrorComponent,

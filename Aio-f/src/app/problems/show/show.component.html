@@ -3,12 +3,10 @@
     <app-problem-search
       (searchEvent)="getProblems($event)"
       (spideEvent)="spide($event)"
+      [which]="which"
     >
     </app-problem-search>
     <br />
-    <div *ngIf="loading">
-      <app-loading></app-loading>
-    </div>
     <table class="table">
       <thead>
         <tr>
@@ -16,10 +14,11 @@
           <th scope="col">TITLE</th>
           <th scope="col">SOURCE</th>
           <th scope="col">STATUS</th>
-          <th scope="col"></th>
+          <th scope="col" *ngIf="which !== 'problems'" ></th>
+          <th scope="col" *ngIf="which === 'problems'"></th>
         </tr>
       </thead>
-      <tbody *ngIf="!loading">
+      <tbody *ngIf="user && problems">
         <tr
           class="align-middle"
           *ngFor="
@@ -43,32 +42,45 @@
           <td class="col">
             &nbsp;{{ problem.accepts }}/{{ problem.submissions }}
           </td>
-          <td *ngIf="user.name != problem.creater && user.role != 'admin'"></td>
-          <td
-            *ngIf="user.name == problem.creater || user.role == 'admin'"
-            class="col d-grid gap-2 d-flex"
-          >
-            <button
-              type="button"
-              class="btn btn-outline-info"
-              routerLink="../update/{{ problem.id }}"
-              ngbTooltip="Edit"
-            >
-              <fa-icon [icon]="['fas', 'pen-to-square']"></fa-icon>
-            </button>
+          <td *ngIf="which !== 'problems'">
             <button
               type="button"
               class="btn btn-outline-success"
-              (click)="shareProblem(problem.id)"
-              ngbTooltip="Make it pubilc"
+              (click)="addTo(problem.id)"
             >
-              <fa-icon [icon]="['fas', 'share-from-square']"></fa-icon>
+            <fa-icon [icon]="['fas', 'plus']"></fa-icon>
             </button>
-            <app-hold-button
-              (holdEvent)="deleteProblem(problem.id)"
-              ngbTooltip="Hold to delete"
-            ></app-hold-button>
           </td>
+          <div *ngIf="which === 'problems'">
+            <td
+              *ngIf="user.name != problem.creater && user.role != 'admin'"
+            ></td>
+            <td
+              *ngIf="user.name == problem.creater || user.role == 'admin'"
+              class="col d-grid gap-2 d-flex"
+            >
+              <button
+                type="button"
+                class="btn btn-outline-info"
+                routerLink="../update/{{ problem.id }}"
+                ngbTooltip="Edit"
+              >
+                <fa-icon [icon]="['fas', 'pen-to-square']"></fa-icon>
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-success"
+                (click)="shareProblem(problem.id)"
+                ngbTooltip="Make it pubilc"
+              >
+                <fa-icon [icon]="['fas', 'share-from-square']"></fa-icon>
+              </button>
+              <app-hold-button
+                (holdEvent)="deleteProblem(problem.id)"
+                ngbTooltip="Hold to delete"
+              ></app-hold-button>
+            </td>
+          </div>
         </tr>
       </tbody>
     </table>

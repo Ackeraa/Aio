@@ -2,6 +2,7 @@ import {
   Component,
   ViewChild,
   ElementRef,
+  Input,
   Output,
   EventEmitter,
   AfterViewInit,
@@ -19,6 +20,7 @@ import { environment } from 'src/environments/environment';
 export class ProblemSearchComponent implements AfterViewInit {
   sources: Array<string>;
 
+  @Input() which: string;
   @Output() searchEvent = new EventEmitter<any>();
   @Output() spideEvent = new EventEmitter<any>();
   @ViewChild('query', { static: true }) query: ElementRef;
@@ -35,7 +37,7 @@ export class ProblemSearchComponent implements AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.sources = environment.vproblemsSources;
+    this.sources = environment.problemsSources;
 
     //Observer of source change.
     this.source$ = fromEvent(this.source.nativeElement, 'change').subscribe({

@@ -37,62 +37,9 @@
   </div>
 </div>
 
-<div class="card shadow-sm mt-5">
-  <div class="card-body">
-    <app-problem-search
-      (searchEvent)="getAllProblems($event)"
-      (spideEvent)="spideAllProblems($event)"
-    >
-    </app-problem-search>
-    <br />
-    <div *ngIf="loading" class="row">Loading...</div>
-    <table *ngIf="!loading" class="table table-hover">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>NAME</th>
-          <th>PASS RATE</th>
-          <th>DIFFICULTY</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          *ngFor="
-            let problem of allProblems
-              | paginate
-                : { itemsPerPage: 20, currentPage: p, totalItems: total }
-          "
-        >
-          <td (click)="viewProblem(problem.source, problem.id)">
-            {{ problem.vid }}
-          </td>
-          <td>{{ problem.name }}</td>
-          <td>1/100</td>
-          <td>Hard</td>
-          <td>
-            <button
-              type="button"
-              class="btn btn-outline-success"
-              (click)="addProblem(problem.id)"
-              [disabled]="isAdded(problem.id)"
-            >
-            <fa-icon [icon]="['fas', 'plus']"></fa-icon>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-<br />
-<div class="row justify-content-center">
-  <pagination-controls
-    class="paginator"
-    (pageChange)="getAllProblems($event)"
-    auotHide="true"
-    previousLabel=""
-    nextLabel=""
-  >
-  </pagination-controls>
+<div class="mt-5">
+  <app-problems-show
+    [which]="'contests'"
+    (addToEvent)="addProblem($event)"
+  ></app-problems-show>
 </div>

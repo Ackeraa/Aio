@@ -65,7 +65,7 @@ export class ProblemSetComponent {
     return this.problems.filter((x) => x.id === id).length > 0;
   }
 
-  addProblem(id: string): void {
+  addProblem(id: number): void {
     this.problemSetService
       .addProblem(id)
       .subscribe((problems) => (this.problems = problems));

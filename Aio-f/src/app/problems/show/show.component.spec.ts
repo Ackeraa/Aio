@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PrivateComponent } from './private.component';
+import { ShowComponent } from './show.component';
 
-describe('PrivateComponent', () => {
-  let component: PrivateComponent;
-  let fixture: ComponentFixture<PrivateComponent>;
+describe('ShowComponent', () => {
+  let component: ShowComponent;
+  let fixture: ComponentFixture<ShowComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PrivateComponent]
+      declarations: [ShowComponent]
     });
-    fixture = TestBed.createComponent(PrivateComponent);
+    fixture = TestBed.createComponent(ShowComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

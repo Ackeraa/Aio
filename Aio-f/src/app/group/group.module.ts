@@ -5,32 +5,30 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
-	GroupComponent,
-	HomeComponent,
-	ContestsComponent,
-	ProblemSetsComponent,
-	MembersComponent,
-	SettingsComponent
+  GroupComponent,
+  HomeComponent,
+  ContestsComponent,
+  ProblemSetsComponent,
+  MembersComponent,
+  InviteComponent,
 } from '.';
 
 @NgModule({
-	declarations: [
-		GroupComponent,
-		HomeComponent,
-		ContestsComponent,
-		ProblemSetsComponent,
-		MembersComponent,
-		SettingsComponent
-	],
-	imports: [
-		CommonModule,
+  declarations: [
+    GroupComponent,
+    HomeComponent,
+    ContestsComponent,
+    ProblemSetsComponent,
+    MembersComponent,
+    InviteComponent,
+  ],
+  imports: [
+    CommonModule,
     NgbModule,
     FontAwesomeModule,
     FormsModule,
-    ReactiveFormsModule
-	],
-	exports: [
-		GroupComponent
-	]
+    ReactiveFormsModule,
+  ],
+  exports: [GroupComponent],
 })
-export class GroupModule { }
+export class GroupModule {}

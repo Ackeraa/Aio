@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProblemsService } from '../problems.service';
 import { AlertService, ProblemBasic, ProblemSearchParams } from '../../shared/';
@@ -10,11 +10,14 @@ interface ProblemsData {
 }
 
 @Component({
-  selector: 'app-problems-public',
-  templateUrl: './public.component.html',
-  styleUrls: ['./public.component.scss'],
+  selector: 'app-problems-show',
+  templateUrl: './show.component.html',
+  styleUrls: ['./show.component.scss'],
 })
-export class PublicComponent {
+export class ShowComponent {
+  @Input() which = 'problems';
+  @Output() addToEvent = new EventEmitter<any>();
+
   loading: boolean;
   problems: ProblemBasic[];
   p: number;
@@ -29,7 +32,7 @@ export class PublicComponent {
 
   ngOnInit(): void {
     this.problemsService.getUser().subscribe({
-      next: user => (this.user = user),
+      next: (user) => (this.user = user),
     });
 
     this.getProblems(this.problemsService.getPublicPage());
@@ -37,17 +40,15 @@ export class PublicComponent {
 
   getProblems(params: ProblemSearchParams): void {
     this.p = params.page;
-    this.loading = true;
     this.problemsService
       .getPublicProblems(params)
-      .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: (data: ProblemsData) => {
           this.problems = data.problems;
           this.total = data.total;
           this.alertService.clear();
         },
-        error: err => {
+        error: (err) => {
           this.alertService.error(err);
         },
       });
@@ -66,14 +67,21 @@ export class PublicComponent {
           this.p = 1;
           this.alertService.clear();
         },
-        error: err => {
+        error: (err) => {
           this.alertService.error(err);
         },
       });
   }
 
   viewProblem(source: string, id: string): void {
+    console.log(source, id);
     const url = source === 'aio' ? `/problem/l/${id}` : `/problem/v/${id}`;
     this.router.navigate([url]);
   }
+
+  // Add problem to problem set or contest, emit event to parent component
+  addTo(id: number): void {
+    this.addToEvent.emit(id);
+  }
+
 }
