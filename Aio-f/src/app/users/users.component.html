@@ -23,7 +23,7 @@
         >
           <th scope="row">{{ user.id }}</th>
           <td class="col">
-            <a class="link link-content" routerLink="/user/{{ user.id }}">
+            <a class="link link-content" (click)="navigateToUser(user.id)" >
               &nbsp;{{ user.name }}
             </a>
           </td>

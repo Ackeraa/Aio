@@ -32,6 +32,7 @@ import { HomeModule } from './home';
 import { GroupModule } from './group/group.module';
 import { GroupsModule } from './groups/groups.module';
 import { UsersModule } from './users/users.module';
+import { UserComponent } from './user';
 import { UserModule } from './user/user.module';
 
 import { AppRoutingModule } from './app-routing.module';

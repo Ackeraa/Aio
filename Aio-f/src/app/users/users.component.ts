@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { finalize } from 'rxjs';
+import { Router } from '@angular/router';
 import { UsersService } from './users.service';
 import { SearchParams, AlertService } from '../shared';
 
@@ -16,6 +17,7 @@ export class UsersComponent {
   total: number;
 
   constructor(
+    private router: Router,
     private usersService: UsersService,
     private alertService: AlertService
   ) {}
@@ -52,4 +54,9 @@ export class UsersComponent {
       },
     });
   }
+
+  navigateToUser(id: number) {
+    this.router.navigate(['/user', id]);
+  }
+
 }
