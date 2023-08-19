@@ -17,7 +17,7 @@
           (click)="isCollapsed = true"
         >
           <fa-icon [icon]="['fas', 'home']"></fa-icon>
-          {{ 'keywords.home' | translate }}
+          {{ "keywords.home" | translate }}
         </a>
         <a
           class="nav-item nav-link"
@@ -26,7 +26,7 @@
           (click)="isCollapsed = true"
         >
           <fa-icon [icon]="['fas', 'trophy']"></fa-icon>
-          {{ 'keywords.contests' | translate }}
+          {{ "keywords.contests" | translate }}
         </a>
         <a
           class="nav-item nav-link"
@@ -35,7 +35,7 @@
           (click)="isCollapsed = true"
         >
           <fa-icon [icon]="['fas', 'book']"></fa-icon>
-          {{ 'keywords.problems' | translate }}
+          {{ "keywords.problems" | translate }}
         </a>
         <a
           class="nav-item nav-link"
@@ -44,7 +44,7 @@
           (click)="isCollapsed = true"
         >
           <fa-icon [icon]="['fas', 'book-journal-whills']"></fa-icon>
-          {{ 'keywords.problemSets' | translate }}
+          {{ "keywords.problemSets" | translate }}
         </a>
         <a
           class="nav-item nav-link"
@@ -53,7 +53,7 @@
           (click)="isCollapsed = true"
         >
           <fa-icon [icon]="['fas', 'list-ul']"></fa-icon>
-          {{ 'keywords.submissions' | translate }}
+          {{ "keywords.submissions" | translate }}
         </a>
         <a
           class="nav-item nav-link"
@@ -62,7 +62,7 @@
           (click)="isCollapsed = true"
         >
           <fa-icon [icon]="['fas', 'comments']"></fa-icon>
-          {{ 'keywords.discussion' | translate }}
+          {{ "keywords.discussion" | translate }}
         </a>
         <a
           class="nav-item nav-link"
@@ -71,7 +71,7 @@
           (click)="isCollapsed = true"
         >
           <fa-icon [icon]="['fas', 'users']"></fa-icon>
-          {{ 'keywords.groups' | translate }}
+          {{ "keywords.groups" | translate }}
         </a>
         <a
           class="nav-item nav-link"
@@ -80,15 +80,16 @@
           (click)="isCollapsed = true"
         >
           <fa-icon [icon]="['fas', 'address-card']"></fa-icon>
-          {{ 'keywords.users' | translate }}
+          {{ "keywords.users" | translate }}
         </a>
         <a
           class="nav-item nav-link"
           [routerLinkActive]="['active']"
-          routerLink="../wiki"
+          routerLink="../messages"
           (click)="isCollapsed = true"
         >
-          <fa-icon [icon]="['fas', 'book-open']"></fa-icon> Wiki
+          <fa-icon [icon]="['fas', 'book-open']"></fa-icon>
+          {{ "keywords.messages" | translate }}
         </a>
       </div>
       <div class="navbar-nav ml-auto">
@@ -112,14 +113,14 @@
           *ngIf="!currentUser"
           [routerLinkActive]="['active']"
           routerLink="/auth/login"
-          >{{ 'keywords.login' | translate }}</a
+          >{{ "keywords.login" | translate }}</a
         >
         <a
           class="nav-item nav-link"
           *ngIf="!currentUser"
           [routerLinkActive]="['active']"
           routerLink="/auth/register"
-          >{{ 'keywords.register' | translate }}</a
+          >{{ "keywords.register" | translate }}</a
         >
 
         <div ngbDropdown *ngIf="currentUser">
@@ -135,7 +136,7 @@
             <a class="dropdown-item" href="#">Another Action</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#" (click)="logout()">{{
-              'keywords.logout' | translate
+              "keywords.logout" | translate
             }}</a>
           </div>
         </div>

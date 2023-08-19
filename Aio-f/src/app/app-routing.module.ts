@@ -6,8 +6,9 @@ import { DiscussionComponent } from './discussion';
 import { ProblemSetComponent } from './problem-set';
 import { GroupComponent } from './group';
 import { UserComponent } from './user';
+import { UsersComponent } from './users';
 import { AuthGuard } from './auth';
-import { WikiComponent } from './wiki';
+import { MessagesComponent } from './messages';
 
 const routes: Routes = [
   //{ path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -75,16 +76,15 @@ const routes: Routes = [
   },
   {
     path: 'users',
-    data: { preload: true },
-    loadChildren: () => import('./users/users.module').then(m => m.UsersModule),
+    component: UsersComponent,
   },
   {
     path: 'user/:id',
     component: UserComponent,
   },
   {
-    path: 'wiki',
-    component: WikiComponent,
+    path: 'messages',
+    component: MessagesComponent,
   },
 
   //{ path: '**', redirectTo: '' }

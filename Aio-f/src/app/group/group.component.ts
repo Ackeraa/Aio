@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GroupService } from './group.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-group',
@@ -9,6 +10,7 @@ import { GroupService } from './group.service';
 })
 export class GroupComponent {
   photo: string = "ad";
+  baseUrl = environment.token_auth_config.apiBase;
 
   constructor(
     private route: ActivatedRoute,
@@ -16,7 +18,9 @@ export class GroupComponent {
   ) {}
 
   ngOnInit(): void {
-    let id = +this.route.snapshot.paramMap.get('id') || null;
+    let id = +this.route.snapshot.paramMap.get('id');
+    this.photo = `${this.baseUrl}/groups/${id}/get_photo`;
+
     this.groupService.getInfo(id);
   }
 

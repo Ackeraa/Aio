@@ -1,23 +1,52 @@
-<nav class="navbar navbar-expand-lg navbar-light">
-  <a class="navbar-brand" href="#"> </a>
-  <div class="collapse navbar-collapse">
-    <div class="navbar-nav mr-auto">
-      <a
-        class="nav-item nav-link"
-        routerLinkActive="active"
-        routerLink="./my-info"
-      >
-        <fa-icon [icon]="myInfoIcon"></fa-icon> {{ 'users.myInfo' | translate }}
-      </a>
-      <a
-        class="nav-item nav-link"
-        routerLinkActive="active"
-        routerLink="./explore"
-      >
-        <fa-icon [icon]="exploreIcon"></fa-icon>
-        {{ 'users.explore' | translate }}
-      </a>
-    </div>
+<div class="card shadow-sm">
+  <div class="card-body">
+    <app-search (searchEvent)="getUsers($event)"> </app-search>
+    <br />
+    <div *ngIf="loading" class="row">Loading...</div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">USER NAME</th>
+          <th scope="col">REAL NAME</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody *ngIf="!loading">
+        <tr
+          class="align-middle"
+          *ngFor="
+            let user of users
+              | paginate
+                : { itemsPerPage: 20, currentPage: p, totalItems: total }
+          "
+        >
+          <th scope="row">{{ user.id }}</th>
+          <td class="col">
+            <a class="link link-content" routerLink="/user/{{ user.id }}">
+              &nbsp;{{ user.name }}
+            </a>
+          </td>
+          <td class="col">&nbsp;{{ user.real_name }}</td>
+          <td>
+            <app-hold-button
+              (holdEvent)="deleteUser(user.id)"
+              ngbTooltip="Hold to delete"
+            ></app-hold-button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-</nav>
-<router-outlet></router-outlet>
+</div>
+<br />
+<div class="row justify-content-center">
+  <pagination-controls
+    class="paginator"
+    (pageChange)="getUsers($event)"
+    auotHide="true"
+    previousLabel=""
+    nextLabel=""
+  >
+  </pagination-controls>
+</div>

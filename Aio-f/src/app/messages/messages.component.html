@@ -1,0 +1,28 @@
+<div class="card shadow-sm">
+  <div class="card-body">
+    <app-search (searchEvent)="getMessages($event)"> </app-search>
+    <div *ngIf="!loading">
+      <div
+        class="mb-3 mt-4"
+        *ngFor="
+          let message of messages
+            | paginate : { itemsPerPage: 20, currentPage: p, totalItems: total }
+        "
+      >
+        <div class="alert alert-primary" role="alert">
+          {{ message.category }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row justify-content-center mt-4">
+  <pagination-controls
+    class="paginator"
+    (pageChange)="getMessages($event)"
+    auotHide="true"
+    previousLabel=""
+    nextLabel=""
+  >
+  </pagination-controls>
+</div>

@@ -3,28 +3,19 @@ import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { UsersRoutingModule } from './users-routing.module';
 import { SearchModule, HoldButtonModule } from '../shared';
-import { UserModule } from '../user/user.module';
-
-import { MyInfoComponent, ExploreComponent } from '.';
+import { UsersComponent } from './users.component';
 
 @NgModule({
-  declarations: [MyInfoComponent, ExploreComponent],
+  declarations: [UsersComponent],
   imports: [
     CommonModule,
     FormsModule,
-    UsersRoutingModule,
     SearchModule,
-    UserModule,
     NgxPaginationModule,
     NgbModule,
     HoldButtonModule,
   ],
-  exports: [
-    MyInfoComponent,
-    ExploreComponent,
-    //UsersComponent,
-  ],
+  exports: [UsersComponent],
 })
 export class UsersModule {}

@@ -31,6 +31,7 @@ import {
 import { HomeModule } from './home';
 import { GroupModule } from './group/group.module';
 import { GroupsModule } from './groups/groups.module';
+import { UsersModule } from './users/users.module';
 import { UserModule } from './user/user.module';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -45,9 +46,9 @@ import { ProblemSetsComponent } from './problem-sets';
 import { ProblemSetModule } from './problem-set';
 import { SubmissionsComponent } from './submissions';
 import { DiscussionComponent } from './discussion';
-import { UsersComponent } from './users';
 import { GroupsComponent } from './groups';
 import { WikiComponent } from './wiki';
+import { MessagesComponent } from './messages';
 
 //import { AngularTokenService } from 'angular-token';
 import { AngularTokenModule } from 'angular-token';
@@ -101,6 +102,7 @@ import { ErrorComponent } from './error/error.component';
     GroupModule,
     GroupsModule,
     UserModule,
+    UsersModule,
     HoldButtonModule,
     ProblemSetModule,
   ],
@@ -111,7 +113,6 @@ import { ErrorComponent } from './error/error.component';
     SubmissionsComponent,
     ProblemsComponent,
     ProblemComponent,
-    UsersComponent,
     WikiComponent,
     ContestComponent,
     AlertComponent,
@@ -122,6 +123,7 @@ import { ErrorComponent } from './error/error.component';
     GroupsComponent,
     ErrorComponent,
     LoadingComponent,
+    MessagesComponent,
   ],
   providers: [
     //{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

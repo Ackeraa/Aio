@@ -5,6 +5,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContestsModule } from '../contests';
 import { ProblemSetsModule } from '../problem-sets';
+import { UsersModule } from '../users';
 
 import {
   GroupComponent,
@@ -32,6 +33,7 @@ import {
     ReactiveFormsModule,
     ContestsModule,
     ProblemSetsModule,
+    UsersModule,
   ],
   exports: [GroupComponent],
 })

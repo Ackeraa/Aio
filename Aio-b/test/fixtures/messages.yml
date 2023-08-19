@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 
+  from: 1
+  to: 1
+  arg1: MyString
+
+two:
+  type: 
+  from: 1
+  to: 1
+  arg1: MyString
