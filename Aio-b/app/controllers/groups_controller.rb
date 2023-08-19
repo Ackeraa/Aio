@@ -12,7 +12,6 @@ class GroupsController < ApplicationController
   # GET /groups/search
   def search
     query = params[:query]
-    puts "asdsada", query
     total = Group.where('name ilike(?)',  "%#{query}%").count
     @groups = Group.where('name ilike(?)',  "%#{query}%").limit(20).offset(@page * 20)
     render json: { total: total, groups: @groups }
@@ -20,7 +19,8 @@ class GroupsController < ApplicationController
 
   # GET /groups/1/get_info
   def get_info
-    leader = GroupUser.find_by(group_id: params[:id], role: 'leader').user
+    #leader = GroupUser.find_by(group_id: params[:id], role: 'leader').user
+    leader = "adas"
     total_members = @group.users.count
     total_contests = @group.contests.count
     total_problem_sets = @group.problem_sets.count
@@ -33,17 +33,17 @@ class GroupsController < ApplicationController
     }
   end
 
-  # GET /groups/1/members
+  # GET /groups/1/get_members
   def get_members
     render json: @group.users 
   end
 
-  # GET /groups/1/contests
+  # GET /groups/1/get_contests
   def get_contests
     render json: @group.contests
   end
 
-  # GET /groups/1/problem_sets
+  # GET /groups/1/get_problem_sets
   def get_problem_sets
     render json: @group.problem_sets
   end

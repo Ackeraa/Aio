@@ -3,7 +3,10 @@ import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FileUploadModule } from 'ng2-file-upload';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ContestsModule } from '../contests';
+import { ProblemsModule } from '../problems';
 import {
   UserComponent,
   HomeComponent,
@@ -31,6 +34,9 @@ import {
     NgbModule,
     FontAwesomeModule,
     FileUploadModule,
+    NgxPaginationModule,
+    ContestsModule,
+    ProblemsModule,
   ],
   exports: [UserComponent],
 })

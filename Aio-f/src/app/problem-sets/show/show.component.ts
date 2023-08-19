@@ -1,16 +1,15 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { AlertService, SearchParams } from '../../shared';
 import { ProblemSetsService } from '../problem-sets.service';
 
 @Component({
-  selector: 'app-show',
+  selector: 'app-groups-show',
   templateUrl: './show.component.html',
   styleUrls: ['./show.component.scss'],
 })
 export class ShowComponent {
-  which: string;
+  @Input() which: string;
   loading: boolean;
   problemSets: Array<any>;
   total: number;
@@ -18,17 +17,11 @@ export class ShowComponent {
   user: any;
 
   constructor(
-    private route: ActivatedRoute,
     private problemSetsService: ProblemSetsService,
     private AlertService: AlertService
   ) {}
 
   ngOnInit(): void {
-    this.route.url.subscribe({
-      next: url => {
-        this.which = url[0].path;
-      },
-    });
     this.problemSetsService.getUser().subscribe({
       next: user => (this.user = user),
     });

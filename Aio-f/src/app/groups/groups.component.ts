@@ -1,8 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { 
-  faUser,
-  faSearch
-} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
 	selector: 'app-groups',
@@ -12,8 +8,6 @@ import {
 
 export class GroupsComponent implements OnInit {
 
-  myGroupsIcon = faUser;
-  exploreIcon = faSearch;
 
 	constructor (){
 	}

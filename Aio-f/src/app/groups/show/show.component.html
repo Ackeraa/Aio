@@ -1,0 +1,60 @@
+<div class="card shadow-sm">
+  <div class="card-body">
+    <app-search (searchEvent)="getGroups($event)"> </app-search>
+    <br />
+    <div *ngIf="loading" class="row">Loading...</div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">group NAME</th>
+          <th scope="col">REAL NAME</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody *ngIf="groups">
+        <tr
+          class="align-middle"
+          *ngFor="
+            let group of groups
+              | paginate
+                : { itemsPerPage: 20, currentPage: p, totalItems: total }
+          "
+        >
+          <th scope="row">{{ group.id }}</th>
+          <td class="col">
+            <a class="link link-content" routerLink="/group/{{ group.id }}">
+              &nbsp;{{ group.name }}
+            </a>
+          </td>
+          <td class="col">&nbsp;{{ group.name }}</td>
+          <td>
+          <button
+            type="button"
+            class="btn btn-outline-info"
+            routerLink="../update/{{ group.id }}"
+            ngbTooltip="Edit"
+          >
+            <fa-icon [icon]="['fas', 'pen-to-square']"></fa-icon>
+          </button>
+            <app-hold-button
+              (holdEvent)="deleteGroup(group.id)"
+              ngbTooltip="Hold to delete"
+            ></app-hold-button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<br />
+<div class="row justify-content-center">
+  <pagination-controls
+    class="paginator"
+    (pageChange)="getGroups($event)"
+    auotHide="true"
+    previousLabel=""
+    nextLabel=""
+  >
+  </pagination-controls>
+</div>

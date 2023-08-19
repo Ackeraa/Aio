@@ -7,10 +7,20 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GroupsRoutingModule } from './groups-routing.module';
 import { GroupModule } from '../group/group.module';
 import { SearchModule, HoldButtonModule } from '../shared';
-import { ExploreComponent, MyGroupsComponent, CreateUpdateComponent } from '.';
+import {
+  ExploreComponent,
+  MyGroupsComponent,
+  CreateUpdateComponent,
+  ShowComponent,
+} from '.';
 
 @NgModule({
-  declarations: [ExploreComponent, MyGroupsComponent, CreateUpdateComponent],
+  declarations: [
+    ExploreComponent,
+    MyGroupsComponent,
+    CreateUpdateComponent,
+    ShowComponent,
+  ],
   imports: [
     CommonModule,
     GroupsRoutingModule,
@@ -23,6 +33,6 @@ import { ExploreComponent, MyGroupsComponent, CreateUpdateComponent } from '.';
     HoldButtonModule,
     NgxPaginationModule,
   ],
-  exports: [ExploreComponent, MyGroupsComponent],
+  exports: [ShowComponent],
 })
 export class GroupsModule {}

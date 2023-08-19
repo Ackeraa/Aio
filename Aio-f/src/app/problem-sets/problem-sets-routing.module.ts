@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ProblemSetsComponent, CreateUpdateComponent, ShowComponent } from '.';
+import { ProblemSetsComponent, CreateUpdateComponent, PublicComponent, GroupComponent, PrivateComponent } from '.';
 
 const routes: Routes = [
   {
@@ -8,9 +8,9 @@ const routes: Routes = [
     component: ProblemSetsComponent,
     children: [
       { path: '', redirectTo: 'public', pathMatch: 'full' },
-      { path: 'public', component: ShowComponent },
-      { path: 'group', component: ShowComponent },
-      { path: 'private', component: ShowComponent },
+      { path: 'public', component: PublicComponent },
+      { path: 'group', component: GroupComponent },
+      { path: 'private', component: PrivateComponent },
       { path: 'create', component: CreateUpdateComponent },
       { path: 'edit/:id', component: CreateUpdateComponent },
     ],

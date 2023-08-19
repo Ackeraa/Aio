@@ -6,10 +6,22 @@ import { ProblemSetsRoutingModule } from './problem-sets-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SearchModule, HoldButtonModule } from '../shared';
-import { CreateUpdateComponent, ShowComponent } from '.';
+import {
+  CreateUpdateComponent,
+  ShowComponent,
+  PublicComponent,
+  GroupComponent,
+  PrivateComponent,
+} from '.';
 
 @NgModule({
-  declarations: [CreateUpdateComponent, ShowComponent],
+  declarations: [
+    CreateUpdateComponent,
+    ShowComponent,
+    PublicComponent,
+    GroupComponent,
+    PrivateComponent,
+  ],
   imports: [
     CommonModule,
     FontAwesomeModule,
@@ -21,6 +33,6 @@ import { CreateUpdateComponent, ShowComponent } from '.';
     NgxPaginationModule,
     HoldButtonModule,
   ],
-  exports: [],
+  exports: [ShowComponent],
 })
 export class ProblemSetsModule {}

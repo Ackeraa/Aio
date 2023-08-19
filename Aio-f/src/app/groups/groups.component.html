@@ -7,7 +7,7 @@
         routerLinkActive="active"
         routerLink="./my-groups"
       >
-        <fa-icon [icon]="myGroupsIcon"></fa-icon>
+        <fa-icon [icon]="['fas', 'user']"></fa-icon>
         {{ 'groups.myGroups' | translate }}
       </a>
       <a
@@ -15,15 +15,15 @@
         routerLinkActive="active"
         routerLink="./explore"
       >
-        <fa-icon [icon]="exploreIcon"></fa-icon
-        >{{ 'groups.explore' | translate }}
+        <fa-icon [icon]="['fas', 'user']"></fa-icon>
+        {{ 'groups.explore' | translate }}
       </a>
       <a
         class="nav-item nav-link"
         routerLinkActive="active"
         routerLink="./create"
       >
-        <fa-icon [icon]="myGroupsIcon"></fa-icon>
+        <fa-icon [icon]="['fas', 'user']"></fa-icon>
         {{ 'keywords.create' | translate }}
       </a>
     </div>

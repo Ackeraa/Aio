@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input } from '@angular/core';
 import { finalize } from 'rxjs';
 import { AlertService, SearchParams } from '../../shared';
 import { ContestsService } from '../contests.service';
@@ -10,7 +9,7 @@ import { ContestsService } from '../contests.service';
   styleUrls: ['./show.component.scss'],
 })
 export class ShowComponent {
-  which: string;
+  @Input() which: string;
   loading: boolean;
   contests: any;
   total: number;
@@ -18,19 +17,11 @@ export class ShowComponent {
   user: any;
 
   constructor(
-    private route: ActivatedRoute,
     private contestsService: ContestsService,
     private alertService: AlertService
   ) {}
 
   ngOnInit(): void {
-    this.route.url.subscribe({
-      next: url => {
-        this.which = url[0].path;
-        console.log(this.which);
-      },
-    });
-
     this.contestsService.getUser().subscribe({
       next: user => (this.user = user),
     });
