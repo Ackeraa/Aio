@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ContestsModule } from '../contests';
+import { ProblemSetsModule } from '../problem-sets';
 
 import {
   GroupComponent,
@@ -28,6 +30,8 @@ import {
     FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
+    ContestsModule,
+    ProblemSetsModule,
   ],
   exports: [GroupComponent],
 })

@@ -4,7 +4,7 @@ import { AlertService, SearchParams } from '../../shared';
 import { ProblemSetsService } from '../problem-sets.service';
 
 @Component({
-  selector: 'app-groups-show',
+  selector: 'app-problem-sets-show',
   templateUrl: './show.component.html',
   styleUrls: ['./show.component.scss'],
 })

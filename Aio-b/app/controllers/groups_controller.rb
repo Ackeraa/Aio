@@ -1,6 +1,7 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :update, :destroy, :get_info,
-                                   :get_members, :get_contests, :get_problem_sets]
+                                   :get_members, :get_contests, :get_problem_sets,
+                                   :get_photo, :upload_photo]
   before_action :set_page, only: [:search]
 
   # GET /groups
@@ -33,6 +34,11 @@ class GroupsController < ApplicationController
     }
   end
 
+  # GET /groups/1/get_photo
+  def get_photo
+    send_file @group.photo.file.file, disposition: 'inline'
+  end
+
   # GET /groups/1/get_members
   def get_members
     render json: @group.users 
@@ -63,6 +69,17 @@ class GroupsController < ApplicationController
       render json: @group.errors, status: :unprocessable_entity
     end
   end
+
+  # POST /groups/upload_photo
+  def upload_photo
+    @group.update(photo: params[:photo])
+    if @group.save
+      render json: @group.photo, status: :ok
+    else
+      render json: @group.errors, status: :unprocessable_entity
+    end
+  end
+
 
   # PATCH/PUT /groups/1
   def update

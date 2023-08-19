@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FileUploader } from 'ng2-file-upload';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { GroupsService } from '../groups.service';
@@ -18,7 +19,11 @@ export class CreateUpdateComponent {
 
   status: XStatus = XStatus.Ready;
   XStatus = XStatus;
-  envs = environment;
+  baseUrl = environment.token_auth_config.apiBase;
+
+  photo: FileUploader;
+  maxFileSize = 5 * 1024 * 1024;
+  photoPath: any;
 
   constructor(
     private router: Router,
@@ -32,6 +37,18 @@ export class CreateUpdateComponent {
   ngOnInit(): void {
     this.id = +this.route.snapshot.paramMap.get('id');
     this.isAdd = !this.id;
+
+    this.photoPath = `${this.baseUrl}/groups/${this.id}/get_photo`;
+    this.photo = new FileUploader({
+      url: `${this.baseUrl}/groups/upload_photo`,
+      itemAlias: 'photo',
+    });
+    this.photo.onBeforeUploadItem = item => {
+      item.withCredentials = false;
+    };
+    this.photo.onBuildItemForm = (fileItem: any, form: any) => {
+      form.append('id', this.id);
+    };
 
     this.createForm();
 
@@ -74,6 +91,20 @@ export class CreateUpdateComponent {
 
   get f() {
     return this.form.controls;
+  }
+
+  imagePreview(e: any): void {
+    const file = (e.target as HTMLInputElement).files[0];
+    if (file.size > this.maxFileSize) {
+      this.alertService.error('File size is too large, max size is 5MB');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.photoPath = reader.result as string;
+    };
+    reader.readAsDataURL(file);
   }
 
   onSubmit() {

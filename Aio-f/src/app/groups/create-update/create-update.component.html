@@ -1,4 +1,37 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="card-body media align-items-center">
+    <div class="d-grid gap-2 d-flex justify-content-center mt-4">
+      <img
+        [src]="photoPath"
+        class="d-block ui-w-80"
+        style="max-width: 100px; max-height: 100px"
+      />
+    </div>
+    <div class="media-body mt-2">
+      <div class="d-grid gap-2 d-flex justify-content-center">
+        <label class="btn btn-outline-primary">
+          <i class="fas fa-folder-open"></i> Browse
+          <input
+            type="file"
+            hidden
+            ng2FileSelect
+            [uploader]="photo"
+            (change)="imagePreview($event)"
+          />
+        </label>
+        <div *ngIf="photo.queue[0] as item">
+          <button
+            type="button"
+            class="btn btn-outline-success btn-xs"
+            (click)="item.upload()"
+            [disabled]="item.isReady || item.isUploading || item.isSuccess"
+          >
+            <fa-icon [icon]="['fas', 'cloud-upload-alt']"></fa-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="row mt-4">
     <div class="col-md-4">
       <label class="form-label" for="name"><h5>Title</h5></label>
@@ -13,9 +46,7 @@
         }"
       />
       <small
-        *ngIf="
-          f.name.invalid && (f.name.touched || status === XStatus.Clicked)
-        "
+        *ngIf="f.name.invalid && (f.name.touched || status === XStatus.Clicked)"
         class="text-danger"
       >
         {{ f.name.errors.error }}

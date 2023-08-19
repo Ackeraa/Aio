@@ -24,7 +24,7 @@ class UsersController < ApplicationController
     render json: { total: total, users: @users }
   end
 
-  # GET /users/1/photo
+  # GET /users/1/get_photo
   def get_photo
     send_file @user.photo.file.file, disposition: 'inline'
   end

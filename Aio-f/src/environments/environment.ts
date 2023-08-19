@@ -16,7 +16,7 @@ export const environment = {
   contentMaxLen: 3000,
   memoryMax: 512,
   timeMax: 10000,
-  problemsSources: ['Aio', 'Private', 'Atcoder', 'Codeforces', 'UVA', 'POJ'],
+  problemsSources: ['All', 'Aio', 'Private', 'Atcoder', 'Codeforces', 'UVA', 'POJ'],
   problemLanguages: ['C', 'Cpp', 'Java', 'Python'],
   problemTags: ['DP', 'Greedy', 'DFS', 'BFS', 'Geometry', 'Brute Force'],
   ruleTypes: ['ACM', 'OI'],

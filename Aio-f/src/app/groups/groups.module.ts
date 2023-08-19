@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FileUploadModule } from 'ng2-file-upload';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GroupsRoutingModule } from './groups-routing.module';
@@ -25,6 +26,7 @@ import {
     CommonModule,
     GroupsRoutingModule,
     FormsModule,
+    FileUploadModule,
     ReactiveFormsModule,
     NgbModule,
     FontAwesomeModule,

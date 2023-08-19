@@ -7,6 +7,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContestsModule } from '../contests';
 import { ProblemsModule } from '../problems';
+import { GroupsModule } from '../groups';
 import {
   UserComponent,
   HomeComponent,
@@ -37,6 +38,7 @@ import {
     NgxPaginationModule,
     ContestsModule,
     ProblemsModule,
+    GroupsModule,
   ],
   exports: [UserComponent],
 })

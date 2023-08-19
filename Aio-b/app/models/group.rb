@@ -8,4 +8,7 @@ class Group < ApplicationRecord
   has_many :problem_sets
 
   has_rich_text :response
+
+  mount_uploader :photo, PhotoUploader
+
 end

@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { filter } from 'rxjs/operators';
-import { GroupService } from '../group.service';
 
 @Component({
 	selector: 'app-group-contests',
@@ -9,17 +7,10 @@ import { GroupService } from '../group.service';
 })
 export class ContestsComponent {
 
-	contests: any;
 
-	constructor(private groupService: GroupService) { }
+	constructor() { }
 
 	ngOnInit(): void {
-		this.groupService.contests$
-			.pipe(filter(x => x != null))
-			.subscribe(contests =>{
-				console.log(contests);
-				this.contests = contests;
-			});
 	}
 
 }
