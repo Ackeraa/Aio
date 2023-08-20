@@ -11,7 +11,7 @@ const routes: Routes = [
 	{
 		path: '', component: GroupsComponent,
 		children: [
-			{ path: '', redirectTo: 'private', pathMatch: 'full' },
+			{ path: '', redirectTo: 'public', pathMatch: 'full' },
 			{ path: 'private', component: PrivateComponent },
 			{ path: 'public', component: PublicComponent},
       { path: 'create', component: CreateUpdateComponent },

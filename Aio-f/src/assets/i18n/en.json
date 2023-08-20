@@ -22,10 +22,10 @@
     "group": "Group",
     "private": "Private",
     "create": "Create",
-
     "rank": "Rank",
     "overview": "Overview",
-    "submit": "Submit"
+    "submit": "Submit",
+    "Browse": "Browse"
   },
   "errors": {
     "tooShort": "{{v1}} is too short (minimum is {{v2}} characters).",

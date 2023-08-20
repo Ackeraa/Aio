@@ -2,6 +2,7 @@ class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :update, :destroy, :get_info,
                                    :get_members, :get_contests, :get_problem_sets,
                                    :get_photo, :upload_photo]
+  before_action :authenticate_user!, only: %i[create]
   before_action :set_page, only: [:search]
 
   # GET /groups
@@ -14,20 +15,23 @@ class GroupsController < ApplicationController
   def search
     query = params[:query]
     total = Group.where('name ilike(?)',  "%#{query}%").count
-    @groups = Group.where('name ilike(?)',  "%#{query}%").limit(20).offset(@page * 20)
+    @groups = Group.includes(:creator)
+                   .where('groups.name ilike(?)',  "%#{query}%")
+                   .select('groups.*, users.name as creator_name')
+                   .joins(:creator)
+                   .limit(20).offset(@page * 20)
     render json: { total: total, groups: @groups }
   end
 
   # GET /groups/1/get_info
   def get_info
-    #leader = GroupUser.find_by(group_id: params[:id], role: 'leader').user
-    leader = "adas"
+    creator = User.find(@group.creator_id).name
     total_members = @group.users.count
     total_contests = @group.contests.count
     total_problem_sets = @group.problem_sets.count
     
     render json: {
-      leader: leader,
+      creator: creator,
       total_members: total_members,
       total_contests: total_contests,
       total_problem_sets: total_problem_sets
@@ -61,7 +65,7 @@ class GroupsController < ApplicationController
 
   # POST /groups
   def create
-    @group = Group.new(group_params)
+    @group = current_user.created_groups.new(group_params)
 
     if @group.save
       render json: @group, status: :created, location: @group

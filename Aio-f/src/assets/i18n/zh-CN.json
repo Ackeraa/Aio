@@ -24,7 +24,8 @@
     "create": "创建",
     "rank": "排名",
     "overview": "概览",
-    "submit": "提交"
+    "submit": "提交",
+    "browse": "浏览"
   },
   "errors": {
     "tooShort": "{{v1}}太短，至少{{v2}}个字符.",
@@ -81,8 +82,8 @@
   "submissions": {},
   "discussion": {},
   "groups": {
-    "name": "小组名称",
-    "description": "小组简介",
+    "name": "名称",
+    "description": "简介",
     "creator": "创建者"
   },
   "users": {

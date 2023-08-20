@@ -10,7 +10,7 @@ import { AlertService, XStatus } from '../../shared';
 @Component({
   selector: 'app-my-groups-create-update',
   templateUrl: './create-update.component.html',
-  styleUrls: ['./create-update.component.scss']
+  styleUrls: ['./create-update.component.scss'],
 })
 export class CreateUpdateComponent {
   form: FormGroup;
@@ -43,10 +43,10 @@ export class CreateUpdateComponent {
       url: `${this.baseUrl}/groups/upload_photo`,
       itemAlias: 'photo',
     });
-    this.photo.onBeforeUploadItem = item => {
+    this.photo.onBeforeUploadItem = (item) => {
       item.withCredentials = false;
     };
-    this.photo.onBuildItemForm = (fileItem: any, form: any) => {
+    this.photo.onBuildItemForm = (_, form: any) => {
       form.append('id', this.id);
     };
 
@@ -61,20 +61,9 @@ export class CreateUpdateComponent {
     this.form = this.fb.group({
       name: [
         '',
-        this.validator.checkTitle.bind(
-          this.validator,
-          'groups.name',
-          true
-        ),
+        this.validator.checkTitle.bind(this.validator, 'groups.name', true),
       ],
-      description: [
-        '',
-        this.validator.checkContent.bind(
-          this.validator,
-          'groups.description',
-          true
-        ),
-      ],
+      description: [''],
     });
   }
 
@@ -126,7 +115,6 @@ export class CreateUpdateComponent {
     } else {
       this.updateGroup(group);
     }
-
   }
 
   createGroup(group: any) {
@@ -156,6 +144,4 @@ export class CreateUpdateComponent {
       },
     });
   }
-
-
 }

@@ -10,7 +10,8 @@
     <div class="media-body mt-2">
       <div class="d-grid gap-2 d-flex justify-content-center">
         <label class="btn btn-outline-primary">
-          <i class="fas fa-folder-open"></i> Browse
+          <i class="fas fa-folder-open"></i>
+          {{ 'keywords.browse' | translate }}
           <input
             type="file"
             hidden
@@ -34,7 +35,9 @@
   </div>
   <div class="row mt-4">
     <div class="col-md-4">
-      <label class="form-label" for="name"><h5>Title</h5></label>
+      <label class="form-label" for="name"><h5>
+          {{ 'groups.name' | translate }}
+        </h5></label>
       <input
         type="text"
         id="name"
@@ -55,7 +58,9 @@
   </div>
   <div class="row mt-4">
     <div class="col-md-12">
-      <h5>Description</h5>
+      <h5>
+        {{ 'groups.description' | translate }}
+      </h5>
       <textarea
         id="description"
         style="overflow-y: auto; height: 30vh"
@@ -88,7 +93,8 @@
         *ngIf="status === XStatus.Sent"
         class="spinner-border spinner-border-sm mr-1"
       ></span>
-      <fa-icon [icon]="['fas', 'upload']"></fa-icon> Submit
+      <fa-icon [icon]="['fas', 'upload']"></fa-icon>
+      {{ 'keywords.submit' | translate }}
     </button>
   </div>
 </form>

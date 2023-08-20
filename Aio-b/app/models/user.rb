@@ -7,8 +7,9 @@ class User < ActiveRecord::Base
   has_many :user_problems
   has_many :problems, through: :user_problems
 
+  has_many :created_groups, class_name: "Group", foreign_key: "creator_id"
   has_many :group_users
-  has_many :groups, through: :group_users
+  has_many :joined_groups, through: :group_users, source: :group
 
   has_many :acm_contest_ranks
   has_many :contests, through: :acm_contest_ranks

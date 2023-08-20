@@ -1,6 +1,7 @@
 class Group < ApplicationRecord
+  belongs_to :creator, :class_name => 'User'
   has_many :group_users, :class_name => 'GroupUser'
-  has_many :users, through: :group_users
+  has_many :members, :through => :group_users, :source => :user
 
   has_many :teams, dependent: :destroy
   has_many :contests

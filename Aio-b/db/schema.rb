@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_19_140040) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_20_080534) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -63,14 +63,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_19_140040) do
   end
 
   create_table "contest_announcements", force: :cascade do |t|
-    t.string "creater"
     t.string "name"
     t.text "description"
     t.boolean "visible"
     t.bigint "contest_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "creator_id"
     t.index ["contest_id"], name: "index_contest_announcements_on_contest_id"
+    t.index ["creator_id"], name: "index_contest_announcements_on_creator_id"
   end
 
   create_table "contest_problems", force: :cascade do |t|
@@ -88,7 +89,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_19_140040) do
   end
 
   create_table "contests", force: :cascade do |t|
-    t.string "creater"
     t.string "name"
     t.text "description"
     t.datetime "start_time"
@@ -99,6 +99,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_19_140040) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "group_id", default: 0, null: false
+    t.integer "creator_id"
+    t.index ["creator_id"], name: "index_contests_on_creator_id"
     t.index ["group_id"], name: "index_contests_on_group_id"
   end
 
@@ -143,12 +145,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_19_140040) do
   end
 
   create_table "groups", force: :cascade do |t|
-    t.string "creater"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "description"
     t.string "photo"
+    t.integer "creator_id"
+    t.index ["creator_id"], name: "index_groups_on_creator_id"
   end
 
   create_table "items", force: :cascade do |t|
@@ -189,12 +192,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_19_140040) do
   end
 
   create_table "problem_sets", force: :cascade do |t|
-    t.string "creater"
     t.string "name"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "group_id", default: 0, null: false
+    t.integer "creator_id"
+    t.index ["creator_id"], name: "index_problem_sets_on_creator_id"
     t.index ["group_id"], name: "index_problem_sets_on_group_id"
   end
 
@@ -207,7 +211,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_19_140040) do
 
   create_table "problems", force: :cascade do |t|
     t.string "token"
-    t.string "creater"
     t.string "name"
     t.text "description"
     t.text "input"
@@ -231,6 +234,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_19_140040) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "vid"
+    t.integer "creator_id"
+    t.index ["creator_id"], name: "index_problems_on_creator_id"
   end
 
   create_table "problems_problem_sets", force: :cascade do |t|
@@ -363,15 +368,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_19_140040) do
   add_foreign_key "auth_permissions_users", "auth_permissions"
   add_foreign_key "auth_permissions_users", "users"
   add_foreign_key "contest_announcements", "contests"
+  add_foreign_key "contest_announcements", "users", column: "creator_id"
   add_foreign_key "contests", "groups"
+  add_foreign_key "contests", "users", column: "creator_id"
   add_foreign_key "contests_problems", "contests"
   add_foreign_key "contests_problems", "problems"
   add_foreign_key "events", "users"
+  add_foreign_key "groups", "users", column: "creator_id"
   add_foreign_key "oi_contest_ranks", "contests"
   add_foreign_key "oi_contest_ranks", "users"
   add_foreign_key "problem_sets", "groups"
+  add_foreign_key "problem_sets", "users", column: "creator_id"
   add_foreign_key "problem_sets_problems", "problem_sets"
   add_foreign_key "problem_sets_problems", "problems"
+  add_foreign_key "problems", "users", column: "creator_id"
   add_foreign_key "problems_problem_sets", "problem_sets"
   add_foreign_key "problems_problem_sets", "problems"
   add_foreign_key "problems_tags", "problems"

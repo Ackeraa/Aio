@@ -49,7 +49,7 @@ export class ShowComponent {
           this.alertService.clear();
         },
         error: (err) => {
-          this.alertService.error(err);
+          this.alertService.error(`${err.status} ${err.statusText}`);
         },
       });
   }
