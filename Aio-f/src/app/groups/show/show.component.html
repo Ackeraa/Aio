@@ -52,7 +52,9 @@
               <app-hold-button
                 (holdEvent)="leaveGroup(group.id)"
                 ngbTooltip="Hold to Leave"
-              ></app-hold-button>
+              >
+                <fa-icon [icon]="['fas', 'arrow-right-from-bracket']"></fa-icon>
+              </app-hold-button>
             </div>
             <div
               *ngIf="getPermission(group.creator) === Permission.JOIN"
@@ -64,7 +66,7 @@
                 (click)="joinGroup(group.id)"
                 ngbTooltip="Join"
               >
-                <fa-icon [icon]="['fas', 'pen-to-square']"></fa-icon>
+                <fa-icon [icon]="['fas', 'arrow-right-to-bracket']"></fa-icon>
               </button>
             </div>
           </td>

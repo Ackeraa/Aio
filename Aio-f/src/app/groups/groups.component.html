@@ -5,25 +5,25 @@
       <a
         class="nav-item nav-link"
         routerLinkActive="active"
-        routerLink="./private"
+        routerLink="./public"
       >
-        <fa-icon [icon]="['fas', 'user']"></fa-icon>
-        {{ 'keywords.private' | translate }}
+        <fa-icon [icon]="['fas', 'users']"></fa-icon>
+        {{ 'keywords.public' | translate }}
       </a>
       <a
         class="nav-item nav-link"
         routerLinkActive="active"
-        routerLink="./public"
+        routerLink="./private"
       >
-        <fa-icon [icon]="['fas', 'user']"></fa-icon>
-        {{ 'keywords.public' | translate }}
+        <fa-icon [icon]="['fas', 'user-lock']"></fa-icon>
+        {{ 'keywords.private' | translate }}
       </a>
       <a
         class="nav-item nav-link"
         routerLinkActive="active"
         routerLink="./create"
       >
-        <fa-icon [icon]="['fas', 'user']"></fa-icon>
+        <fa-icon [icon]="['fas', 'folder-plus']"></fa-icon>
         {{ 'keywords.create' | translate }}
       </a>
     </div>
