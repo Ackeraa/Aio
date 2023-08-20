@@ -1,6 +1,7 @@
 class Problem < ActiveRecord::Base
-  has_many :user_problems, :class_name => 'UserProblem'
-  has_many :users, through: :user_problems
+  belongs_to :creator, class_name: 'User'
+  has_many :user_problems, class_name: 'UserProblem'
+  has_many :submitters, through: :user_problems, source: :user
 
   has_many :contest_problems
   has_many :contests, through: :contest_problems

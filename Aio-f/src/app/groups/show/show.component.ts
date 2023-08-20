@@ -43,7 +43,6 @@ export class ShowComponent {
       .getGroups(params)
       .subscribe({
         next: (data) => {
-          console.log(data);
           this.groups = data.groups;
           this.total = data.total;
         },

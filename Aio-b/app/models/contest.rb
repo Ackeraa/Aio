@@ -1,4 +1,6 @@
 class Contest < ApplicationRecord
+  belongs_to :creator, class_name: 'User'
+
   has_many :contest_problems
   has_many :problems, through: :contest_problems
 

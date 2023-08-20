@@ -4,8 +4,16 @@ class User < ActiveRecord::Base
   extend Devise::Models
   include DeviseTokenAuth::Concerns::User
 
+  has_many :created_problems, class_name: "Problem", foreign_key: "creator_id"
   has_many :user_problems
-  has_many :problems, through: :user_problems
+  has_many :submtted_problems, through: :user_problems, source: :problem
+
+  has_many :created_contests, class_name: "Contest", foreign_key: "creator_id"
+  has_many :user_contests
+  has_many :joined_contests, through: :user_contests, source: :contest
+
+  has_many :created_problem_sets, class_name: "ProblemSet", foreign_key: "creator_id"
+  has_many :user_problem_sets
 
   has_many :created_groups, class_name: "Group", foreign_key: "creator_id"
   has_many :group_users
