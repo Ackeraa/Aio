@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  Subject,
-  BehaviorSubject,
-  filter,
-  take,
-} from 'rxjs';
+import { Subject, BehaviorSubject, filter, take } from 'rxjs';
 import { AuthService } from '../auth';
 
 @Injectable({
@@ -47,12 +42,9 @@ export class GroupService {
       this.get(this.homeInfo$, 'get_info');
     } else {
       this.isSelf = true;
-      this.authService.user$
-        .pipe(filter((x) => x != null))
-        .subscribe((user) => {
-          this.id = user.id;
-          this.get(this.homeInfo$, 'get_info');
-        });
+      const user = JSON.parse(localStorage.getItem('user'));
+      this.id = user.id;
+      this.get(this.homeInfo$, 'get_info');
     }
   }
 

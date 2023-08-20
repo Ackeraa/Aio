@@ -22,10 +22,7 @@ export class ShowComponent {
   ) {}
 
   ngOnInit(): void {
-    this.contestsService.getUser().subscribe({
-      next: user => (this.user = user),
-    });
-
+    this.user = JSON.parse(localStorage.getItem('user'));
     this.getContests(this.contestsService.getContestsPage());
   }
 

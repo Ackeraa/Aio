@@ -28,11 +28,7 @@ export class ShowComponent {
   ) {}
 
   ngOnInit(): void {
-    this.groupsService.getUser().subscribe({
-      next: (user) => {
-        this.user = user;
-      },
-    });
+    this.user = JSON.parse(localStorage.getItem('user'));
     this.getGroups(this.groupsService.getGroupsPage());
   }
 

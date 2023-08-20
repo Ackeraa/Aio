@@ -1,63 +1,27 @@
 import { Injectable, OnInit } from '@angular/core';
 import { AngularTokenService } from 'angular-token';
-import {
-  BehaviorSubject,
-  Observable,
-  throwError,
-  skipWhile,
-  catchError,
-  tap,
-  finalize,
-} from 'rxjs';
+import { Observable, throwError, catchError, tap, finalize } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-
-interface User {
-  id: number;
-  role: string;
-  name: string;
-}
 
 @Injectable()
 export class AuthService implements OnInit {
   baseUrl = environment.token_auth_config.apiBase;
-  user: User | null = null;
-
-  private user_$: BehaviorSubject<User | null | undefined> =
-    new BehaviorSubject(undefined);
-
-  user$ = this.user_$.pipe(
-    skipWhile((val) => val === undefined)
-  ) as Observable<User | null>;
 
   constructor(
     public tokenService: AngularTokenService,
     private http: HttpClient
-  ) {
+  ) {}
+
+  setUser() {
     this.tokenService.validateToken().subscribe({
       next: (res) => {
-        let user = res.data;
-        this.user = {
-          id: user.id,
-          role: user.role,
-          name: user.name,
-        }
-        this.user_$.next({
-          id: user.id,
-          role: user.role,
-          name: user.name,
-        });
+        localStorage.setItem('user', JSON.stringify(res.data));
       },
       error: () => {
-        this.user_$.next(null);
-        this.user = null;
+        localStorage.removeItem('user');
       },
     });
-  }
-
-  getUser(): User | null {
-    console.log('getUser', this.user);
-    return this.user;
   }
 
   getHeaders(): HttpHeaders {
@@ -103,10 +67,6 @@ export class AuthService implements OnInit {
     });
   }
 
-  isLoggedIn(): boolean {
-    return this.user_$.getValue() !== null;
-  }
-
   register(data: {
     name: string;
     login: string;
@@ -124,23 +84,11 @@ export class AuthService implements OnInit {
   login(data: { login: string; password: string }): Observable<any> {
     return this.tokenService.signIn(data).pipe(
       tap((res) => {
-        let user = res.body.data;
-        this.user = {
-          id: user.id,
-          role: user.role,
-          name: user.name,
-        };
-
-        this.user_$.next({
-          id: user.id,
-          role: user.role,
-          name: user.name,
-        });
+        localStorage.setItem('user', JSON.stringify(res.data));
       }),
       catchError((err) => {
-        this.user_$.next(null);
-        this.user = null;
-        let errors = err.error.errors;
+        localStorage.removeItem('user');
+        const errors = err.error.errors;
         return throwError(() => errors);
       })
     );
@@ -149,11 +97,10 @@ export class AuthService implements OnInit {
   logout() {
     return this.tokenService.signOut().pipe(
       finalize(() => {
-        this.user_$.next(null);
-        this.user = null;
+        localStorage.removeItem('user');
       }),
       catchError((err) => {
-        let errors = err.error.errors;
+        const errors = err.error.errors;
         return throwError(() => errors);
       })
     );
@@ -168,7 +115,7 @@ export class AuthService implements OnInit {
     };
     return this.post(url, newData).pipe(
       catchError((err) => {
-        let errors = err.error.errors;
+        const errors = err.error.errors;
         return throwError(() => errors);
       })
     );

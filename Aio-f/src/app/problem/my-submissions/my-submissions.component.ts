@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { combineLatest, filter } from 'rxjs';
+import { filter } from 'rxjs';
 import { ProblemService } from '../problem.service';
 import { AuthService } from '../../auth';
 
@@ -17,10 +17,11 @@ export class MySubmissionsComponent {
   ) {}
 
   ngOnInit(): void {
-    combineLatest([this.problemService.problem$, this.authService.user$])
-      .pipe(filter(([x, y]) => x != null && y != null))
-      .subscribe(z => {
-        this.addition = { problem_id: z[0].id, user_id: z[1].id };
-      });
+    this.problemService.problem$.pipe(filter((x) => !!x)).subscribe({
+      next: (problem) => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        this.addition = { problem_id: problem.id, user_id: user.id };
+      },
+    });
   }
 }

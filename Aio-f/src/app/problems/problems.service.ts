@@ -18,10 +18,6 @@ export class ProblemsService {
     private authService: AuthService
   ) {}
 
-  getUser(): Observable<any> {
-    return this.authService.user$;
-  }
-
   getPublicProblems(params: ProblemSearchParams): Observable<any> {
     return this.problemSearchService.get(params);
   }

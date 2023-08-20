@@ -8,12 +8,11 @@ import { AlertService } from '../shared'
 export class AuthGuard implements CanActivate {
   constructor(
     private router: Router,
-    private authService: AuthService,
     private alertService: AlertService
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (this.authService.isLoggedIn()) {
+    if (localStorage.getItem('user')) {
       return true;
     }
     this.alertService.error('You must be logged in to view this page.', true);

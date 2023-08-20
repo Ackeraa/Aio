@@ -13,10 +13,6 @@ export class GroupsService {
     private authService: AuthService
   ) {}
 
-  getUser(): Observable<any> {
-    return this.authService.user$;
-  }
-
   getGroups(params: SearchParams): Observable<any> {
     return this.searchService.get('/groups/search', params);
   }

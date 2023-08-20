@@ -44,13 +44,12 @@ export class UserService {
       this.photo$.next(`${this.authService.baseUrl}/users/${id}/get_photo`);
     } else {
       this.isSelf = true;
-      this.authService.user$
-        .pipe(filter((x) => x != null))
-        .subscribe((user) => {
-          this.id = user.id;
-          this.photo$.next(`${this.authService.baseUrl}/users/${user.id}/get_photo`);
-          this.get(this.homeInfo$, 'get_info');
-        });
+      const user = JSON.parse(localStorage.getItem('user'));
+      this.id = user.id;
+      this.photo$.next(
+        `${this.authService.baseUrl}/users/${user.id}/get_photo`
+      );
+      this.get(this.homeInfo$, 'get_info');
     }
   }
 

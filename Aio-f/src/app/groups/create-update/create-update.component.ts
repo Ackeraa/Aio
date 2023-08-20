@@ -61,9 +61,16 @@ export class CreateUpdateComponent {
     this.form = this.fb.group({
       name: [
         '',
-        this.validator.checkTitle.bind(this.validator, 'groups.name', true),
+        this.validator.checkContent.bind(this.validator, 'groups.name', true),
       ],
-      description: [''],
+      description: [
+        '',
+        this.validator.checkContent.bind(
+          this.validator,
+          'groups.description',
+          true
+        ),
+      ],
     });
   }
 

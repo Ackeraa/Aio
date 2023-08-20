@@ -13,10 +13,6 @@ export class MessagesService {
     private authService: AuthService
   ) { }
 
-  getUser(): Observable<any> {
-    return this.authService.user$;
-  }
-
   getMessages(url: string, params: SearchParams): Observable<any> {
     return this.searchService.get(url, params);
   }

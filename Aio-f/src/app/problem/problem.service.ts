@@ -1,9 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
-import { ActionCableService } from 'angular2-actioncable';
 import { AuthService } from '../auth';
-import { SearchService } from '../shared';
 
 @Injectable({
   providedIn: 'root',
@@ -39,9 +37,10 @@ export class ProblemService implements OnInit {
   }
 
   submitProblem(language: any, code: string): Observable<any> {
-    return combineLatest(this.problem$, this.authService.user$).pipe(
-      filter(([x, y]) => x != null && y != null),
-      switchMap(([problem, user]) => {
+    return this.problem$.pipe(
+      filter(problem => problem != null),
+      switchMap(problem => {
+        const user = JSON.parse(localStorage.getItem('user'));
         let url, body;
         if (problem.source == 'aio') {
           url = '/problems/' + problem.id + '/submit';

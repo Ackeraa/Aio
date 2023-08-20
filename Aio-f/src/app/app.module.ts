@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -17,7 +18,11 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { MarkdownModule } from 'ngx-markdown';
 import { FileUploadModule } from 'ng2-file-upload';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import {
+  TranslateModule,
+  TranslateLoader,
+  TranslateService,
+} from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import {
@@ -32,7 +37,6 @@ import { HomeModule } from './home';
 import { GroupModule } from './group/group.module';
 import { GroupsModule } from './groups/groups.module';
 import { UsersModule } from './users/users.module';
-import { UserComponent } from './user';
 import { UserModule } from './user/user.module';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -51,7 +55,6 @@ import { GroupsComponent } from './groups';
 import { WikiComponent } from './wiki';
 import { MessagesComponent } from './messages';
 
-//import { AngularTokenService } from 'angular-token';
 import { AngularTokenModule } from 'angular-token';
 import { AuthService } from './auth';
 import { ActionCableService } from 'angular2-actioncable';
@@ -66,6 +69,18 @@ import {
 } from './shared';
 import { ErrorComponent } from './error/error.component';
 
+export function appInitializerFactory(
+  translate: TranslateService,
+  auth: AuthService
+) {
+  return () => {
+    const translateInit = firstValueFrom(translate.getTranslation('en'));
+    console.log(auth);
+    const userInit = auth.setUser();
+    return Promise.all([translateInit, userInit]);
+  };
+}
+
 @NgModule({
   imports: [
     MarkdownModule.forRoot(),
@@ -73,8 +88,9 @@ import { ErrorComponent } from './error/error.component';
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (http: HttpClient) =>
-          new TranslateHttpLoader(http, './assets/i18n/', '.json'),
+        useFactory: (http: HttpClient) => {
+          return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+        },
         deps: [HttpClient],
       },
       defaultLanguage: environment.defaultLang,
@@ -133,6 +149,13 @@ import { ErrorComponent } from './error/error.component';
     AngularTokenModule,
     AuthService,
     ActionCableService,
+
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appInitializerFactory,
+      deps: [TranslateService, AuthService],
+      multi: true,
+    },
   ],
   exports: [],
   bootstrap: [AppComponent],

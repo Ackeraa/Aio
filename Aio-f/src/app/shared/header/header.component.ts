@@ -19,7 +19,7 @@ export class HeaderComponent {
     private translate: TranslateService
   ) {}
 
-  changeLanguage(lang) {
+  changeLanguage(lang: string) {
     this.currentLanguage = lang;
     this.translate.use(lang);
   }
@@ -31,9 +31,7 @@ export class HeaderComponent {
   }
 
   ngOnInit(): void {
-    this.authService.user$.subscribe(data => {
-      this.currentUser = data ? data.name : null;
-    });
+    this.currentUser = JSON.parse(localStorage.getItem('user'))?.name;
   }
 
   ngOnDestroy(): void {}

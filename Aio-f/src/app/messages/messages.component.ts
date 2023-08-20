@@ -22,11 +22,8 @@ export class MessagesComponent {
   ) {}
 
   ngOnInit(): void {
-    this.messagesService.getUser().subscribe({
-      next: user => (this.user = user),
-    });
-
-      this.getMessages(this.messagesService.getMessagesPage());
+    this.user = JSON.parse(localStorage.getItem('user'));
+    this.getMessages(this.messagesService.getMessagesPage());
   }
 
   getMessages(params: SearchParams): void {

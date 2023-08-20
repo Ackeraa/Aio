@@ -13,10 +13,6 @@ export class ContestsService {
     private authService: AuthService
   ) {}
 
-  getUser(): Observable<any> {
-    return this.authService.user$;
-  }
-
   getContests(url: string, params: SearchParams): Observable<any> {
     return this.searchService.get(url, params);
   }
