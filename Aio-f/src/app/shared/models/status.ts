@@ -1,8 +1,8 @@
 export enum XStatus {
-  Ready = 'ready',
-  Clicked = 'clicked',
-  Sent = 'sent',
-  Received = 'received',
-  Succeed = 'succeed',
-  Failed = 'failed',
+  Ready = 'READY',
+  Clicked = 'CLICKED',
+  Sent = 'SENT',
+  Received = 'RECEIVED',
+  Succeed = 'SUCCEED',
+  Failed = 'FAILED',
 }

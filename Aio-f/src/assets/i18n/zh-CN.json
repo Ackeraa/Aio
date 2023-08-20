@@ -55,8 +55,7 @@
     "endTime": "结束时间",
     "tooEarly": "结束时间太早",
     "rule": "规则",
-    "isVisible": "是否可见",
-    "submit": "提交"
+    "isVisible": "是否可见"
   },
   "problems": {
     "name": "题目名称",
@@ -73,19 +72,18 @@
     "tags": "标签",
     "isVisible": "是否可见",
     "allowedLanguages": "可用语言",
-    "rule": "规则",
-    "submit": "提交"
+    "rule": "规则"
   },
   "problemSets": {
     "name": "标题",
-    "description": "描述",
-    "submit": "提交"
+    "description": "描述"
   },
   "submissions": {},
   "discussion": {},
   "groups": {
-    "myGroups": "我的小组",
-    "explore": "搜索"
+    "name": "小组名称",
+    "description": "小组简介",
+    "creator": "创建者"
   },
   "users": {
     "myInfo": "个人信息",
@@ -93,7 +91,6 @@
   },
   "comments": {
     "comment": "评论",
-    "submit": "提交",
     "cancel": "取消",
     "show": "显示",
     "hide": "隐藏",

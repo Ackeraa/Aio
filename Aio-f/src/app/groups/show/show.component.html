@@ -2,17 +2,16 @@
   <div class="card-body">
     <app-search (searchEvent)="getGroups($event)"> </app-search>
     <br />
-    <div *ngIf="loading" class="row">Loading...</div>
     <table class="table">
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">group NAME</th>
-          <th scope="col">REAL NAME</th>
+          <th scope="col">{{ "groups.name" | translate }}</th>
+          <th scope="col">{{ "groups.creator" | translate }}</th>
           <th scope="col"></th>
         </tr>
       </thead>
-      <tbody *ngIf="groups">
+      <tbody *ngIf="groups && user">
         <tr
           class="align-middle"
           *ngFor="
@@ -27,20 +26,47 @@
               &nbsp;{{ group.name }}
             </a>
           </td>
-          <td class="col">&nbsp;{{ group.name }}</td>
+          <td class="col">{{ group.creator }}</td>
           <td>
-          <button
-            type="button"
-            class="btn btn-outline-info"
-            routerLink="../update/{{ group.id }}"
-            ngbTooltip="Edit"
-          >
-            <fa-icon [icon]="['fas', 'pen-to-square']"></fa-icon>
-          </button>
-            <app-hold-button
-              (holdEvent)="deleteGroup(group.id)"
-              ngbTooltip="Hold to delete"
-            ></app-hold-button>
+            <div
+              *ngIf="getPermission(group.creator) === Permission.MODIFY"
+              class="d-grid gap-2 d-flex mt-1 justify-content-end"
+            >
+              <button
+                type="button"
+                class="btn btn-outline-info"
+                routerLink="../update/{{ group.id }}"
+                ngbTooltip="Edit"
+              >
+                <fa-icon [icon]="['fas', 'pen-to-square']"></fa-icon>
+              </button>
+              <app-hold-button
+                (holdEvent)="deleteGroup(group.id)"
+                ngbTooltip="Hold to delete"
+              ></app-hold-button>
+            </div>
+            <div
+              *ngIf="getPermission(group.creator) === Permission.LEAVE"
+              class="d-grid gap-2 d-flex mt-1 justify-content-end"
+            >
+              <app-hold-button
+                (holdEvent)="leaveGroup(group.id)"
+                ngbTooltip="Hold to Leave"
+              ></app-hold-button>
+            </div>
+            <div
+              *ngIf="getPermission(group.creator) === Permission.JOIN"
+              class="d-grid gap-2 d-flex mt-1 justify-content-end"
+            >
+              <button
+                type="button"
+                class="btn btn-outline-info"
+                (click)="joinGroup(group.id)"
+                ngbTooltip="Join"
+              >
+                <fa-icon [icon]="['fas', 'pen-to-square']"></fa-icon>
+              </button>
+            </div>
           </td>
         </tr>
       </tbody>

@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { GroupsComponent } from './groups.component';
 import {
-	ExploreComponent,
-	MyGroupsComponent,
+  PublicComponent,
+  PrivateComponent,
   CreateUpdateComponent
 } from '.';
 
@@ -11,9 +11,9 @@ const routes: Routes = [
 	{
 		path: '', component: GroupsComponent,
 		children: [
-			{ path: '', redirectTo: 'my-groups', pathMatch: 'full' },
-			{ path: 'my-groups', component: MyGroupsComponent },
-			{ path: 'explore', component: ExploreComponent },
+			{ path: '', redirectTo: 'private', pathMatch: 'full' },
+			{ path: 'private', component: PrivateComponent },
+			{ path: 'public', component: PublicComponent},
       { path: 'create', component: CreateUpdateComponent },
       { path: 'update/:id', component: CreateUpdateComponent },
 		]

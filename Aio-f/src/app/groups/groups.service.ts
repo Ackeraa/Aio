@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject, BehaviorSubject, Observable, combineLatest } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AuthService } from '../auth';
 import { SearchService, SearchParams } from '../shared';
 
@@ -7,7 +7,6 @@ import { SearchService, SearchParams } from '../shared';
   providedIn: 'root',
 })
 export class GroupsService {
-  query: string;
 
   constructor(
     private searchService: SearchService,

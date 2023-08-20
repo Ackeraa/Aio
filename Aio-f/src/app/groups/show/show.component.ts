@@ -1,7 +1,13 @@
 import { Component, Input } from '@angular/core';
-import { finalize } from 'rxjs/operators';
 import { GroupsService } from '../groups.service';
 import { AlertService, SearchParams } from '../../shared';
+
+enum Permission {
+  MODIFY = 'MODIFY',
+  JOIN = 'JOIN',
+  LEAVE = 'LEAVE',
+  NONE = 'NONE',
+}
 
 @Component({
   selector: 'app-groups-show',
@@ -11,9 +17,10 @@ import { AlertService, SearchParams } from '../../shared';
 export class ShowComponent {
   @Input() which: string;
   groups: Array<any>;
-  loading: boolean;
   p: number;
   total: number;
+  user: any;
+  Permission = Permission;
 
   constructor(
     private groupsService: GroupsService,
@@ -21,16 +28,19 @@ export class ShowComponent {
   ) {}
 
   ngOnInit(): void {
+    this.groupsService.getUser().subscribe({
+      next: (user) => {
+        this.user = user;
+      },
+    });
     this.getGroups(this.groupsService.getGroupsPage());
   }
 
   getGroups(params: SearchParams): void {
     this.p = params.page;
     params.addition = { which: this.which };
-    this.loading = true;
     this.groupsService
       .getGroups(params)
-      .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: (data) => {
           this.groups = data.groups;
@@ -40,5 +50,23 @@ export class ShowComponent {
           this.alertService.error(err);
         },
       });
+  }
+
+  JoinGroup(id: number): void {
+  }
+
+  LeaveGroup(id: number): void {
+  }
+
+  getPermission(creator: string): Permission {
+    if (this.user.role === 'admin' || this.user.name === creator) {
+      return Permission.MODIFY;
+    } else if (this.which === 'public') {
+      return Permission.JOIN;  // FIXME: maybe already joined
+    } else if (this.which === 'private') {
+      return Permission.LEAVE;
+    } else {
+      return Permission.NONE;
+    }
   }
 }

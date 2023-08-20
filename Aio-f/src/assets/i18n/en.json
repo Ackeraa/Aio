@@ -56,8 +56,7 @@
     "endTime": "End time",
     "tooEarly": "End time is too early",
     "rule": "Rule",
-    "isVisible": "visible",
-    "submit": "Submit"
+    "isVisible": "visible"
   },
   "problems": {
     "name": "Title",
@@ -74,19 +73,18 @@
     "tags": "Tags",
     "isVisible": "Visible",
     "allowedLanguages": "Allowed languages",
-    "rule": "Rule",
-    "submit": "Submit"
+    "rule": "Rule"
   },
   "problemSets": {
     "name": "Title",
-    "description": "Description",
-    "submit": "Submit"
+    "description": "Description"
   },
   "submissions": {},
   "discussion": {},
   "groups": {
-    "myGroups": "My Groups",
-    "explore": "Explore"
+    "name": "Name",
+    "description": "Introduction",
+    "creator": "Creator"
   },
   "users": {
     "myInfo": "My Info",
@@ -94,7 +92,6 @@
   },
   "comments": {
     "comment": "Comment",
-    "submit": "Submit",
     "cancel": "Cancel",
     "show": "Show",
     "hide": "Hide",

@@ -21,6 +21,7 @@ interface User {
 @Injectable()
 export class AuthService implements OnInit {
   baseUrl = environment.token_auth_config.apiBase;
+  user: User | null = null;
 
   private user_$: BehaviorSubject<User | null | undefined> =
     new BehaviorSubject(undefined);
@@ -36,6 +37,11 @@ export class AuthService implements OnInit {
     this.tokenService.validateToken().subscribe({
       next: (res) => {
         let user = res.data;
+        this.user = {
+          id: user.id,
+          role: user.role,
+          name: user.name,
+        }
         this.user_$.next({
           id: user.id,
           role: user.role,
@@ -44,8 +50,14 @@ export class AuthService implements OnInit {
       },
       error: () => {
         this.user_$.next(null);
+        this.user = null;
       },
     });
+  }
+
+  getUser(): User | null {
+    console.log('getUser', this.user);
+    return this.user;
   }
 
   getHeaders(): HttpHeaders {
@@ -113,6 +125,12 @@ export class AuthService implements OnInit {
     return this.tokenService.signIn(data).pipe(
       tap((res) => {
         let user = res.body.data;
+        this.user = {
+          id: user.id,
+          role: user.role,
+          name: user.name,
+        };
+
         this.user_$.next({
           id: user.id,
           role: user.role,
@@ -121,6 +139,7 @@ export class AuthService implements OnInit {
       }),
       catchError((err) => {
         this.user_$.next(null);
+        this.user = null;
         let errors = err.error.errors;
         return throwError(() => errors);
       })
@@ -131,6 +150,7 @@ export class AuthService implements OnInit {
     return this.tokenService.signOut().pipe(
       finalize(() => {
         this.user_$.next(null);
+        this.user = null;
       }),
       catchError((err) => {
         let errors = err.error.errors;
