@@ -59,27 +59,32 @@ Rails.application.routes.draw do
   resources :groups do
     collection do
       get  'search',                            :action => 'search'
-      get ':id/add_group/:group_id',            :action => 'add_group'     
-      get ':id/delete_group/:group_id',         :action => 'delete_group'     
-      get ':id/get_info',                       :action => 'get_info'
-      get ':id/get_photo',                      :action => 'get_photo'
-      get ':id/get_members',                    :action => 'get_members'
-      get ':id/get_contests',                   :action => 'get_contests'
-      get ':id/get_problem_sets',               :action => 'get_problem_sets'
+      get  ':id/add_group/:group_id',           :action => 'add_group'     
+      get  ':id/delete_group/:group_id',        :action => 'delete_group'     
+      get  ':id/get_info',                      :action => 'get_info'
+      get  ':id/get_photo',                     :action => 'get_photo'
+      get  ':id/get_members',                   :action => 'get_members'
+      get  ':id/get_contests',                  :action => 'get_contests'
+      get  ':id/get_problem_sets',              :action => 'get_problem_sets'
       post 'upload_photo',                      :action => 'upload_photo'
+      post ':id/join',                          :action => 'join'
+      post ':id/quit',                          :action => 'quit'
     end
   end
 
   resources :acm_contest_ranks do
     collection do
       get  'search',                            :action => 'search'
-      get 'get_contest_rank',                   :action => 'get_contest_rank'
+      get  'get_contest_rank',                  :action => 'get_contest_rank'
     end
   end
 
   resources :messages do
     collection do
       get  'search',                            :action => 'search'
+      post ':id/agree',                         :action => 'agree'
+      post ':id/disagree',                      :action => 'disagree'
+      post ':id/read',                          :action => 'read'
     end
   end
 
@@ -112,6 +117,7 @@ Rails.application.routes.draw do
   resources :homes
   resources :discussions
   resources :contest
+  resources :messages
 
   mount_devise_token_auth_for 'User', at: 'auth'
   mount ActionCable.server => '/cable'

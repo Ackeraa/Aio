@@ -1,8 +1,8 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: [:show, :update, :destroy, :get_info,
-                                   :get_members, :get_contests, :get_problem_sets,
-                                   :get_photo, :upload_photo]
-  before_action :authenticate_user!, only: %i[create]
+  before_action :set_group, only: %i[show update destroy get_info
+                                     get_members get_contests get_problem_sets
+                                     get_photo upload_photo join leave]
+  before_action :authenticate_user!, only: %i[create join leave]
   before_action :set_page, only: [:search]
 
   # GET /groups
@@ -84,6 +84,28 @@ class GroupsController < ApplicationController
     end
   end
 
+  # POST /groups/1/join
+  def join
+    if @group.members.include?(current_user)
+      render json: { error: 'Already joined' }, status: :unprocessable_entity
+    else
+      # FIXME: send notification to group admin
+      Message.create(from: current_user.id, to: [@group.creator_id],
+                     category: 'join_group', arg1: @group.id)
+      render json: @group, status: :ok
+    end
+  end
+
+  # POST /groups/1/leave
+  def leave
+    @group = Group.find(params[:id])
+    if @group.members.include?(current_user)
+      @group.members.delete(current_user)
+      render json: @group, status: :ok
+    else
+      render json: { error: 'Not a member' }, status: :unprocessable_entity
+    end
+  end
 
   # PATCH/PUT /groups/1
   def update

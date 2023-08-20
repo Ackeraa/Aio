@@ -48,10 +48,26 @@ export class ShowComponent {
       });
   }
 
-  JoinGroup(id: number): void {
+  joinGroup(id: number): void {
+    this.groupsService.joinGroup(id).subscribe({
+      next: () => {
+        this.alertService.success('Joined successfully');
+      },
+      error: (err) => {
+        this.alertService.error(`${err.status} ${err.statusText}`);
+      }
+    });
   }
 
-  LeaveGroup(id: number): void {
+  leaveGroup(id: number): void {
+    this.groupsService.leaveGroup(id).subscribe({
+      next: () => {
+        this.alertService.success('Left successfully');
+      },
+      error: (err) => {
+        this.alertService.error(`${err.status} ${err.statusText}`);
+      }
+    });
   }
 
   getPermission(creator: string): Permission {

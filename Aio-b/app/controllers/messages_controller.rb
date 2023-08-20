@@ -1,6 +1,7 @@
 class MessagesController < ApplicationController
-  before_action :set_message, only: %i[ show update destroy ]
+  before_action :set_message, only: %i[ show update destroy agree disagree agree]
   before_action :set_page, only: %i[search]
+  before_action :authenticate_user!, only: %i[create update destroy agree disagree agree]
 
   # GET /messages
   # GET /messages.json
@@ -17,7 +18,6 @@ class MessagesController < ApplicationController
   # GET /messages/search.json
   def search
     query = params[:query]
-    puts "asdad", query
     total = Message.where('category ilike(?)',  "%#{query}%").count
     @messages = Message.where('category ilike(?)',  "%#{query}%").limit(20).offset(@page * 20)
     render json: { total: total, messages: @messages }
@@ -34,6 +34,40 @@ class MessagesController < ApplicationController
     else
       render json: @message.errors, status: :unprocessable_entity
     end
+  end
+
+  # POST /messages/1/agree
+  # POST /messages/1/agree.json
+  def agree
+    return render_error(:already_handled) if @message.is_handled
+
+    unless @message.to.include? current_user.id
+      return render json: { status: :forbidden }
+    end
+
+    group = Group.find(@message.arg1)
+
+    ActiveRecord::Base.transaction do
+      @message.update!(is_handled: true)
+      group.members << current_user
+      puts "adasda", group.members
+      group.save!
+    rescue ActiveRecord::RecordInvalid => e
+      return render json: e, status: :unprocessable_entity
+    else
+      render json: { status: :ok }
+    end
+
+  end
+
+  # POST /messages/1/disagree
+  # POST /messages/1/disagree.json
+  def disagree
+  end
+
+  # POST /messages/1/read
+  # POST /messages/1/read.json
+  def read
   end
 
   # PATCH/PUT /messages/1

@@ -20,7 +20,6 @@ export class GroupComponent {
   ngOnInit(): void {
     let id = +this.route.snapshot.paramMap.get('id');
     this.photo = `${this.baseUrl}/groups/${id}/get_photo`;
-
     this.groupService.getInfo(id);
   }
 

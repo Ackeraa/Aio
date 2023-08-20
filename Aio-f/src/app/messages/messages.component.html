@@ -9,13 +9,48 @@
             | paginate : { itemsPerPage: 20, currentPage: p, totalItems: total }
         "
       >
-        <div class="alert alert-primary" role="alert">
-          {{ message.category }}
+        <div
+          class="alert alert-primary d-grid d-flex justify-content-between align-items-center"
+          role="alert"
+        >
+          <div>
+            {{ message.category }}
+          </div>
+          <div class="d-grid gap-2 d-flex justify-content-end">
+            <button *ngIf="message.category === 'notify'"
+              class="btn btn-outline-primary"
+              ngbTooltip="Mark as read"
+              (click)="read(message.id)"
+            >
+              <fa-icon [icon]="['fas', 'check-circle']"></fa-icon>
+            </button>
+            <button *ngIf="message.category !== 'notify'"
+              class="btn btn-outline-success"
+              ngbTooltip="Agree"
+              (click)="agree(message.id)"
+            >
+              <fa-icon [icon]="['fas', 'check']"></fa-icon>
+            </button>
+            <button *ngIf="message.category !== 'notify'"
+              class="btn btn-outline-secondary"
+              ngbTooltip="Disagree"
+              (click)="disagree(message.id)"
+            >
+              <fa-icon [icon]="['fas', 'xmark']"></fa-icon>
+            </button>
+            <app-hold-button
+              (holdEvent)="delete(message.id)"
+              ngbTooltip="Hold to delete"
+            >
+              <fa-icon [icon]="['fas', 'trash-alt']"></fa-icon>
+            </app-hold-button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 <div class="row justify-content-center mt-4">
   <pagination-controls
     class="paginator"

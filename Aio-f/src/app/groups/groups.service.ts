@@ -37,4 +37,12 @@ export class GroupsService {
     return this.authService.delete(`/groups/${id}`);
   }
 
+  joinGroup(id: number): Observable<any> {
+    return this.authService.post(`/groups/${id}/join`, {});
+  }
+
+  leaveGroup(id: number): Observable<any> {
+    return this.authService.post(`/groups/${id}/leave`, {});
+  }
+
 }

@@ -42,5 +42,54 @@ export class MessagesComponent {
         },
       });
   }
+
+  agree(id: number): void {
+    this.messagesService.agree(id).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.alertService.success('Agreed successfully');
+      },
+      error: err => {
+        this.alertService.error(err);
+      },
+    });
+  }
+
+  disagree(id: number): void {
+    this.messagesService.disagree(id).subscribe({
+      next: () => {
+        this.alertService.success('Disagreed successfully');
+      },
+      error: err => {
+        this.alertService.error(err);
+      },
+    });
+  }
+
+  read(id: number): void {
+    this.messagesService.read(id).subscribe({
+      next: () => {
+        this.alertService.success('Read successfully');
+      },
+      error: err => {
+        this.alertService.error(err);
+      },
+    });
+  }
+
+  delete(id: number): void {
+    this.messagesService.delete(id).subscribe({
+      next: () => {
+        this.alertService.success('Deleted successfully');
+      },
+      error: err => {
+        this.alertService.error(err);
+      },
+    });
+  }
+
+
+  ngOnDestroy(): void {}
+
 }
 

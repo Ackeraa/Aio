@@ -21,4 +21,19 @@ export class MessagesService {
     return { page: this.searchService.getPage() };
   }
 
+  agree(id: number): Observable<any> {
+    return this.authService.post(`/messages/${id}/agree`, {});
+  }
+
+  disagree(id: number): Observable<any> {
+    return this.authService.post(`/messages/${id}/disagree`, {});
+  }
+
+  delete(id: number): Observable<any> {
+    return this.authService.delete(`/messages/${id}`);
+  }
+
+  read(id: number): Observable<any> {
+    return this.authService.post(`/messages/${id}/read`, {});
+  }
 }

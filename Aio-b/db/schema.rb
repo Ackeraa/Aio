@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_20_080534) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_20_154331) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -69,7 +69,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_20_080534) do
     t.bigint "contest_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "creator_id"
+    t.bigint "creator_id"
     t.index ["contest_id"], name: "index_contest_announcements_on_contest_id"
     t.index ["creator_id"], name: "index_contest_announcements_on_creator_id"
   end
@@ -99,7 +99,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_20_080534) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "group_id", default: 0, null: false
-    t.integer "creator_id"
+    t.bigint "creator_id"
     t.index ["creator_id"], name: "index_contests_on_creator_id"
     t.index ["group_id"], name: "index_contests_on_group_id"
   end
@@ -150,7 +150,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_20_080534) do
     t.datetime "updated_at", null: false
     t.string "description"
     t.string "photo"
-    t.integer "creator_id"
+    t.bigint "creator_id"
     t.index ["creator_id"], name: "index_groups_on_creator_id"
   end
 
@@ -172,10 +172,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_20_080534) do
   create_table "messages", force: :cascade do |t|
     t.string "category"
     t.integer "from"
-    t.integer "to"
     t.string "arg1"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_handled", default: false
+    t.bigint "to", default: [], array: true
   end
 
   create_table "oi_contest_ranks", force: :cascade do |t|
@@ -197,7 +198,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_20_080534) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "group_id", default: 0, null: false
-    t.integer "creator_id"
+    t.bigint "creator_id"
     t.index ["creator_id"], name: "index_problem_sets_on_creator_id"
     t.index ["group_id"], name: "index_problem_sets_on_group_id"
   end
@@ -234,7 +235,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_20_080534) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "vid"
-    t.integer "creator_id"
+    t.bigint "creator_id"
     t.index ["creator_id"], name: "index_problems_on_creator_id"
   end
 
