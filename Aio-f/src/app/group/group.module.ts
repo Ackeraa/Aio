@@ -14,6 +14,7 @@ import {
   ProblemSetsComponent,
   MembersComponent,
   InviteComponent,
+  SettingsComponent,
 } from '.';
 
 @NgModule({
@@ -24,6 +25,7 @@ import {
     ProblemSetsComponent,
     MembersComponent,
     InviteComponent,
+    SettingsComponent,
   ],
   imports: [
     CommonModule,
