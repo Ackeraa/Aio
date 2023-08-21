@@ -11,7 +11,6 @@ Rails.application.routes.draw do
 
   resources :problems do
     collection do
-      get  'search',                            :action => 'search'
       post 'upload_template',                   :action => 'upload_template'
       post 'delete_template',                   :action => 'delete_template'
       post 'upload_spj',                        :action => 'upload_spj'

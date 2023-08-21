@@ -30,6 +30,7 @@ export class ProblemsService {
     return this.searchService.get('/problems/search', params);
   }
 
+  // FIXME: page
   getPrivatePage(): SearchParams {
     return { page: this.searchService.getPage() };
   }

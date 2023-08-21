@@ -28,10 +28,8 @@ export class ProblemSearchService {
       page: params.page || this.params.page,
     };
     console.log(this.params, params);
-    const url =
-      this.params.source === 'Aio' ? '/problems/search' : '/vproblems/search';
 
-    return this.authService.get(url, this.params);
+    return this.authService.get('/problems', this.params);
   }
 
   spide(source: string): Observable<any> {

@@ -5,11 +5,28 @@ class ProblemsController < ApplicationController
                                      :delete_spj, :delete_data, :submit, :upload_template,
                                      :upload_spj, :upload_data]
   before_action :authenticate_user!, only: [:submit]
-  before_action :set_page, only: [:index]
+  before_action :set_page, only: [:search]
 
-  # GET /problems?source=source&query=query
+  # GET /problems
   def index
-    render json: Problem.search(params[:source], params[:query], @page)
+    #@user = current_user
+    #UserMailer.with(user: @user).welcome_email.deliver
+    @problems = Problem.first(10)
+
+    render json: @problems
+  end
+
+  # GET /problems/search?source=source&query=query
+  def search
+    #Need to be fixed if source is empty.
+    source = params[:source]
+    query = params[:query]
+    total = Problem.where('source=? and lower(name) like (?)',
+                          source.downcase, "%#{query.downcase}%").count
+
+    @problems = Problem.where('source=? and lower(name) like (?)',
+                              source.downcase, "%#{query.downcase}%").offset(@page * 10)
+    render json: { total: total, problems: @problems }
   end
 
   # GET /problems/1

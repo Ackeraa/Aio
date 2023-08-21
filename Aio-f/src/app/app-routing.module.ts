@@ -38,7 +38,7 @@ const routes: Routes = [
       import('./problems/problems.module').then(m => m.ProblemsModule),
   },
   {
-    path: 'problem/:source/:id',
+    path: 'problem/:id',
     data: { preload: true },
     loadChildren: () =>
       import('./problem/problem.module').then(m => m.ProblemModule),

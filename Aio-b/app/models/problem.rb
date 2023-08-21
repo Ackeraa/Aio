@@ -15,4 +15,31 @@ class Problem < ActiveRecord::Base
   mount_uploader :template, TemplateUploader
   mount_uploader :spj, SpjUploader
   mount_uploader :data, DataUploader
+
+  def self.search(source, query, page)
+    source = source.downcase if source
+    statement = []
+    
+    if source.present? && source != 'all'
+      statement << "source = '#{source}'"
+    end
+
+    if query.present?
+      statement << "name ilike '%#{query}%'"
+    end
+
+    conditions = statement.join(' and ')
+
+    total = Problem.where(conditions).count
+    problems = Problem.where(conditions).select(
+      :id,
+      :vid,
+      :name,
+      :source,
+      :submissions,
+      :accepts
+    ).order(:id).limit(20).offset(page * 20)
+
+    { total: total, problems: problems }
+  end
 end

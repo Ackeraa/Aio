@@ -70,12 +70,6 @@ export class ShowComponent {
       });
   }
 
-  viewProblem(source: string, id: string): void {
-    console.log(source, id);
-    const url = source === 'aio' ? `/problem/l/${id}` : `/problem/v/${id}`;
-    this.router.navigate([url]);
-  }
-
   // Add problem to problem set or contest, emit event to parent component
   addTo(id: number): void {
     this.addToEvent.emit(id);

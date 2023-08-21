@@ -14,7 +14,7 @@
           <th scope="col">TITLE</th>
           <th scope="col">SOURCE</th>
           <th scope="col">STATUS</th>
-          <th scope="col" *ngIf="which !== 'problems'" ></th>
+          <th scope="col" *ngIf="which !== 'problems'"></th>
           <th scope="col" *ngIf="which === 'problems'"></th>
         </tr>
       </thead>
@@ -29,10 +29,7 @@
         >
           <td scope="row">{{ problem.id }}</td>
           <td class="col">
-            <a
-              class="link link-content"
-              routerLink="/problem/l/{{ problem.id }}"
-            >
+            <a class="link link-content" routerLink="/problem/{{ problem.id }}">
               &nbsp;{{ problem.name }}
             </a>
           </td>
@@ -48,7 +45,7 @@
               class="btn btn-outline-success"
               (click)="addTo(problem.id)"
             >
-            <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+              <fa-icon [icon]="['fas', 'plus']"></fa-icon>
             </button>
           </td>
           <div *ngIf="which === 'problems'">

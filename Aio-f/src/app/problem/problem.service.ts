@@ -42,7 +42,7 @@ export class ProblemService implements OnInit {
       switchMap(problem => {
         const user = JSON.parse(localStorage.getItem('user'));
         let url, body;
-        if (problem.source == 'aio') {
+        if (problem.source == 'Aio') {
           url = '/problems/' + problem.id + '/submit';
         } else {
           url = '/vproblems/' + problem.id + '/submit';
