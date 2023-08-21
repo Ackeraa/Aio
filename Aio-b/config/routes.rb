@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-
+  resources :contest_ranks
   resources :contests do
     collection do
       get 'search',                             :action => 'search'

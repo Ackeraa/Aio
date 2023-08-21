@@ -9,8 +9,9 @@ class User < ActiveRecord::Base
   has_many :submtted_problems, through: :user_problems, source: :problem
 
   has_many :created_contests, class_name: "Contest", foreign_key: "creator_id"
-  has_many :user_contests
-  has_many :joined_contests, through: :user_contests, source: :contest
+
+  has_many :contest_users
+  has_many :joined_contests, through: :contest_users, source: :contest
 
   has_many :created_problem_sets, class_name: "ProblemSet", foreign_key: "creator_id"
   has_many :user_problem_sets
@@ -24,6 +25,7 @@ class User < ActiveRecord::Base
 
   has_many :oi_contest_ranks
   has_many :contests, through: :oi_contest_ranks
+
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

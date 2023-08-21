@@ -48,18 +48,18 @@ class Judger
           user_output = "out/#{i}.out"
           system "isolate -b #{@box} --full-env --time=#{time_limit} --mem=#{memory_limit} \
                   --dir=#{@data_path} --run -- #{spj_command} #{std_input} #{std_output} #{user_output}>/dev/null"
-          result = $?.exitstatus == 0 ? :AC : :WA
+          status = $?.exitstatus == 0 ? :AC : :WA
         else
-          result = `diff #{std_output} #{user_output}`.empty? ? :AC : :WA
+          status = `diff #{std_output} #{user_output}`.empty? ? :AC : :WA
         end
       elsif meta_data['message'] == 'Time limit exceeded'
-        result = :TLE
+        status = :TLE
       elsif meta_data['message'] == 'Caught fatal signal 11'
-        result = :MLE
+        status = :MLE
       else
-        result = :RE
+        status = :RE
       end
-      results << { result: result, time_usage: time_usage, memory_usage: memory_usage }
+      results << { status: status, time_usage: time_usage, memory_usage: memory_usage }
     end
     results
   end

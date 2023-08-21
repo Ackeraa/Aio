@@ -42,4 +42,5 @@ class Problem < ActiveRecord::Base
 
     { total: total, problems: problems }
   end
+
 end
