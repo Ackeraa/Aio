@@ -49,4 +49,22 @@ class User < ActiveRecord::Base
          #:confirmable,
          :omniauthable,
          :authentication_keys => [:email, :name]
+
+  
+  def self.search(source, group_id, query, page)
+    source = source.downcase if source
+    group_id ||= 0
+
+    statements = []
+    statements << "group_id = #{group_id}"
+    statements << "name ilike '%#{query}%'" if query.present?
+
+    conditions = statements.join(' and ')
+
+    total = User.where(conditions).count
+    users = User.where(conditions).order('created_at desc')
+                .offset(page * 20).limit(20)
+
+    { total: total, users: users }
+  end
 end
