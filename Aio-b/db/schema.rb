@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_21_152415) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_22_093941) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -52,14 +52,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_21_152415) do
 
   create_table "comments", force: :cascade do |t|
     t.integer "parent_id"
-    t.string "creator"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_visible", default: false
     t.jsonb "likes", default: {"votes"=>0, "voters"=>[]}
     t.jsonb "dislikes", default: {"votes"=>0, "voters"=>[]}
-    t.string "which"
+    t.string "source"
+    t.bigint "creator_id"
+    t.index ["creator_id"], name: "index_comments_on_creator_id"
   end
 
   create_table "contest_announcements", force: :cascade do |t|
@@ -181,12 +182,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_21_152415) do
 
   create_table "messages", force: :cascade do |t|
     t.string "category"
-    t.integer "from"
+    t.integer "sender_id"
     t.string "arg1"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_handled", default: false
-    t.bigint "to", default: [], array: true
+    t.bigint "receiver_ids", default: [], array: true
   end
 
   create_table "oi_contest_ranks", force: :cascade do |t|
@@ -377,6 +378,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_21_152415) do
   add_foreign_key "acm_contest_ranks", "users"
   add_foreign_key "auth_permissions_users", "auth_permissions"
   add_foreign_key "auth_permissions_users", "users"
+  add_foreign_key "comments", "users", column: "creator_id"
   add_foreign_key "contest_announcements", "contests"
   add_foreign_key "contest_announcements", "users", column: "creator_id"
   add_foreign_key "contest_users", "contests"

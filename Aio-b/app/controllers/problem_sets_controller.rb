@@ -1,33 +1,11 @@
 class ProblemSetsController < ApplicationController
   before_action :set_problem_set, only: [:show, :update, :destroy,
                                      :problems, :add_problem, :delete_problem]
-  before_action :set_page, only: [:search]
+  before_action :set_page, only: [:index]
 
   # GET /problem_sets
   def index
-    @problem_sets = ProblemSet.all
-
-    render json: @problem_sets
-  end
-
-  # GET /problem_sets/search
-  def search
-    which = params[:addition]
-    query = params[:query]
-    if which == 'public'
-      if query.nil?
-        total = ProblemSet.count
-        @problem_sets = ProblemSet.limit(20).offset(@page * 20)
-      else
-        total = ProblemSet.where('name ilike(?)',  "%#{query}%").count
-        @problem_sets = ProblemSet.where('name ilike(?)',  "%#{query}%").limit(20).offset(@page * 20)
-      end
-    else
-      # Need to be fixed.
-      total = ProblemSet.count
-      @problem_sets = ProblemSet.limit(20).offset(@page * 20)
-    end
-    render json: { total: total, problem_sets: @problem_sets }
+    render json: ProblemSet.search(params[:source], params[:query], @page, current_user)
   end
 
   # GET /problem_sets/1/problems

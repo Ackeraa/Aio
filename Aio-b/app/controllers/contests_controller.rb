@@ -1,27 +1,11 @@
 class ContestsController < ApplicationController
   before_action :set_contest, only: [:show, :update, :destroy,
                                      :problems, :add_problem, :delete_problem]
-  before_action :set_page, only: [:search]
+  before_action :set_page, only: [:index]
 
-  # GET /contests
+  # GET /contests?source=public&query=abc&page=1
   def index
-    @contests = Contest.all
-
-    render json: @contests
-  end
-
-  # GET /contests/search
-  def search
-    query = params[:query]
-    which = params[:which]
-    if which == 'public'
-      total = Contest.where('name ilike(?)',  "%#{query}%").count
-      @contests = Contest.where('name ilike(?)',  "%#{query}%").limit(20).offset(@page * 20)
-    elsif which == 'group'
-      total = Contest.where('name ilike(?)',  "%#{query}%").count
-      @contests = Contest.where('name ilike(?)',  "%#{query}%").limit(20).offset(@page * 20)
-    end
-    render json: { total: total, contests: @contests }
+    render json: Contest.search(params[:source], params[:query], @page, current_user)
   end
 
   # GET /contests/1

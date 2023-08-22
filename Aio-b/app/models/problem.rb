@@ -18,15 +18,10 @@ class Problem < ActiveRecord::Base
 
   def self.search(source, query, page)
     source = source.downcase if source
-    statement = []
-    
-    if source.present? && source != 'all'
-      statement << "source = '#{source}'"
-    end
 
-    if query.present?
-      statement << "name ilike '%#{query}%'"
-    end
+    statement = []
+    statement << "source = '#{source}'" if source.present? && source != 'all'
+    statement << "name ilike '%#{query}%'" if query.present?
 
     conditions = statement.join(' and ')
 

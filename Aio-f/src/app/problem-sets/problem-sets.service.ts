@@ -12,8 +12,8 @@ export class ProblemSetsService {
     private searchService: SearchService
   ) {}
 
-  getProblemSets(url: string, params: SearchParams): Observable<any> {
-    return this.searchService.get(url, params);
+  getProblemSets(params: SearchParams): Observable<any> {
+    return this.searchService.get('/problem_sets', params);
   }
 
   getProblemSetsPage(): SearchParams {

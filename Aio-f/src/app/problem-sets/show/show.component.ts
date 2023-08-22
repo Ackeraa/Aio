@@ -9,7 +9,7 @@ import { ProblemSetsService } from '../problem-sets.service';
   styleUrls: ['./show.component.scss'],
 })
 export class ShowComponent {
-  @Input() which: string;
+  @Input() source: string;
   loading: boolean;
   problemSets: Array<any>;
   total: number;
@@ -29,9 +29,9 @@ export class ShowComponent {
   getProblemSets(params: SearchParams): void {
     this.loading = true;
     this.p = params.page;
-    params.addition = { which: this.which };
+    params.addition = { source: this.source };
     this.problemSetsService
-      .getProblemSets('/problem_sets/search', params)
+      .getProblemSets(params)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: data => {

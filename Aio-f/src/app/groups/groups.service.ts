@@ -7,14 +7,13 @@ import { SearchService, SearchParams } from '../shared';
   providedIn: 'root',
 })
 export class GroupsService {
-
   constructor(
     private searchService: SearchService,
     private authService: AuthService
   ) {}
 
   getGroups(params: SearchParams): Observable<any> {
-    return this.searchService.get('/groups/search', params);
+    return this.searchService.get('/groups', params);
   }
 
   getGroupsPage(): SearchParams {
@@ -44,5 +43,4 @@ export class GroupsService {
   leaveGroup(id: number): Observable<any> {
     return this.authService.post(`/groups/${id}/leave`, {});
   }
-
 }

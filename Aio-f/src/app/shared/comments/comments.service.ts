@@ -12,8 +12,8 @@ export class CommentsService {
     private authService: AuthService
   ) {}
 
-  getComments(url: string, params: SearchParams): Observable<any> {
-    return this.searchService.get(url, params);
+  getComments(params: SearchParams): Observable<any> {
+    return this.searchService.get('/comments', params);
   }
 
   getCommentsPage(): SearchParams {
@@ -30,12 +30,12 @@ export class CommentsService {
 
   createComment(
     parent_id: number,
-    which: string,
+    source: string,
     description: string
   ): Observable<any> {
     return this.authService.post('/comments', {
       parent_id: parent_id,
-      which: which,
+      source: source,
       description: description,
     });
   }

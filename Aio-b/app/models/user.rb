@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
   has_many :oi_contest_ranks
   has_many :contests, through: :oi_contest_ranks
 
+  has_many :comments, foreign_key: "creator_id"
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

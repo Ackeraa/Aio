@@ -1,17 +1,12 @@
 import { Component } from '@angular/core';
 
 @Component({
-	selector: 'app-discussion',
-	templateUrl: './discussion.component.html',
-	styleUrls: ['./discussion.component.scss']
+  selector: 'app-discussion',
+  templateUrl: './discussion.component.html',
+  styleUrls: ['./discussion.component.scss'],
 })
 export class DiscussionComponent {
+  constructor() {}
 
-	which: string = 'home';
-
-	constructor() { }
-
-	ngOnInit(): void {
-	}
-
+  ngOnInit(): void {}
 }

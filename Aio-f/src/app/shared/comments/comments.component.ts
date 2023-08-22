@@ -9,7 +9,7 @@ import { AlertService, CommentsService, SearchParams } from '../';
   styleUrls: ['./comments.component.scss'],
 })
 export class CommentsComponent {
-  @Input() which: string;
+  @Input() source: string;
 
   loading: boolean;
   comments: Array<any>;
@@ -34,9 +34,9 @@ export class CommentsComponent {
   getComments(params: SearchParams): void {
     this.loading = true;
     this.p = params.page;
-    params.addition = { which: this.which };
+    params.addition = { source: this.source };
     this.commentsService
-      .getComments('/comments/search', params)
+      .getComments(params)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: data => {
@@ -96,7 +96,7 @@ export class CommentsComponent {
       return;
     }
     this.commentsService
-      .createComment(id, this.which, this.descriptions[id])
+      .createComment(id, this.source, this.descriptions[id])
       .pipe(finalize(() => (this.loading = true)))
       .subscribe({
         next: () => {
