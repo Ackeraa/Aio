@@ -8,6 +8,7 @@ import { ProblemSetsModule } from '../problem-sets';
 import { UsersModule } from '../users';
 
 import {
+  GroupRoutingModule,
   GroupComponent,
   HomeComponent,
   ContestsComponent,
@@ -30,6 +31,7 @@ import {
   imports: [
     CommonModule,
     NgbModule,
+    GroupRoutingModule,
     FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
