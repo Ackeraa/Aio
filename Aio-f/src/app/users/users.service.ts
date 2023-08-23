@@ -7,11 +7,13 @@ import { SearchService, SearchParams } from '../shared';
   providedIn: 'root',
 })
 export class UsersService {
-  constructor(private searchService: SearchService,
-    private authService: AuthService) {}
+  constructor(
+    private searchService: SearchService,
+    private authService: AuthService
+  ) {}
 
   getUsers(params: SearchParams): Observable<any> {
-    return this.searchService.get('/users/search', params);
+    return this.searchService.get('/users', params);
   }
 
   getUsersPage(): SearchParams {

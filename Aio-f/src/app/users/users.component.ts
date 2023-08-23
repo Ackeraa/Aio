@@ -10,7 +10,7 @@ import { SearchParams, AlertService } from '../shared';
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent {
-  @Input() which = 'all';
+  @Input() source = 'all';
   users: Array<any>;
   loading: boolean;
   p: number;
@@ -28,17 +28,18 @@ export class UsersComponent {
 
   getUsers(params: SearchParams): void {
     this.p = params.page;
-    params.addition = { which: this.which };
+    params.addition = { source: this.source };
     this.loading = true;
     this.usersService
       .getUsers(params)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
-        next: (data) => {
+        next: data => {
           this.users = data.users;
+          console.log(data.users);
           this.total = data.total;
         },
-        error: (err) => {
+        error: err => {
           this.alertService.error(err);
         },
       });
@@ -49,7 +50,7 @@ export class UsersComponent {
       next: () => {
         this.alertService.success('success');
       },
-      error: (err) => {
+      error: err => {
         this.alertService.error(err);
       },
     });
@@ -58,5 +59,4 @@ export class UsersComponent {
   navigateToUser(id: number) {
     this.router.navigate(['/user', id]);
   }
-
 }

@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy, :get_info, :get_contests,
                                   :get_problems, :get_groups, :get_friends, :upload_photo,
                                   :get_photo, :connect]
-  before_action :set_page, only: []
+  before_action :set_page, only: [:index]
 
   # GET /users
   def index

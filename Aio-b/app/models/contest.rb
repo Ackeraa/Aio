@@ -18,33 +18,63 @@ class Contest < ApplicationRecord
 
   def self.search(source, query, page, user)
     source = source.downcase if source
-    source = 'public' if source.nil? or user.nil?
 
     # all, public, group, private, joined
     # group_id: 0 means public, -1 means private, 
-    statements = []
-    if source == 'all' and user.role != 'admin'
-      group_ids = user.joined_groups.pluck(:id) + [0]
-      statements << "group_id in (#{group_ids.join(',')}) or creator_id = #{user.id}"
-    elsif source == 'public'
-      statements << "group_id = 0"
-    elsif source == 'group'
-      group_ids = user.joined_groups.pluck(:id) + [-2] # -2 means no group
-      statements << "group_id in (#{group_ids.join(',')})" 
-    elsif source == 'private'
-      statements << "creator_id = #{user.id}"
-    elsif source == 'joined'
-      # FIXME: maybe joined contests table will be deleted later
-      statements << "id in (#{user.joined_contests.pluck(:id).join(',')})"
+    case source
+    when 'all'
+      return all_search(query, page, user)
+    when 'public'
+      return public_search(query, page)
+    when 'group'
+      return group_search(query, page, user)
+    when 'private'
+      return private_search(query, page, user)
+    when 'joined'
+      return joined_search(query, page, user)
     end
-    statements << "name ilike '%#{query}%'" if query.present?
 
-    conditions = statements.join(' and ')
+    null_result
+  end
 
-    total = Contest.where(conditions).count
-    contests = Contest.where(conditions).order('start_time desc')
-                      .offset(page * 20).limit(20)
+
+  private_class_method def self.all_search(query, page, user)
+    if user.role == 'admin'
+      conditions = query.present? ? "name ILIKE '%#{query}%'" : nil
+      return base_search(Contest, conditions, page)
+    end
+    null_result
+  end
+
+  private_class_method def self.public_search(query, page)
+    conditions = query.present? ? "name ILIKE '%#{query}%'" : nil
+    group = Group.find_by(id: 0)
+    base_search(group.contests, conditions, page)
+  end
+
+  private_class_method def self.private_search(query, page, user)
+    conditions = query.present? ? "name ILIKE '%#{query}%'" : nil
+    base_search(user.contests, conditions, page)
+  end
+
+  private_class_method def self.group_search(group_id, query, page, user)
+    conditions = query.present? ? "name ILIKE '%#{query}%'" : nil
+    group = Group.find_by(id: group_id)
+    base_search(group.contests, conditions, page)
+  end
+
+  private_class_method def self.null_result
+    { total: 0, contests: [] }
+  end
+
+  private_class_method def self.base_search(scope, conditions, page, per_page=20)
+    total = scope.where(conditions).count
+    contests = scope.where(conditions)
+                .order("start_time desc")
+                .offset(page * per_page).limit(per_page)
 
     { total: total, contests: contests }
   end
+
+
 end

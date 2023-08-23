@@ -50,21 +50,43 @@ class User < ActiveRecord::Base
          :omniauthable,
          :authentication_keys => [:email, :name]
 
-  
+
   def self.search(source, group_id, query, page)
     source = source.downcase if source
-    group_id ||= 0
 
-    statements = []
-    statements << "group_id = #{group_id}"
-    statements << "name ilike '%#{query}%'" if query.present?
+    case source
+    when 'all'
+      return all_search(query, page)
+    when 'group'
+      return group_search(group_id, query, page) if group_id.present?
+    end
 
-    conditions = statements.join(' and ')
-
-    total = User.where(conditions).count
-    users = User.where(conditions).order('created_at desc')
-                .offset(page * 20).limit(20)
-
-    { total: total, users: users }
+    null_result
   end
+
+  private_class_method def self.null_result
+    { total: 0, users: [] }
+  end
+
+  private_class_method def self.base_search(scope, conditions, page)
+    total = scope.where(conditions).count
+    users = scope.where(conditions)
+                 .order("created_at DESC")
+                 .offset(page * 20).limit(20)
+
+    { total: total, users: users}
+  end
+
+  private_class_method def self.all_search(query, page)
+    conditions = query.present? ? ["name ILIKE ?", "%#{query}%"] : nil
+    base_search(User.all, conditions, page)
+  end
+
+  private_class_method def self.group_search(group_id, query, page)
+    group = Group.find_by(id: group_id)
+    return null_result unless group
+
+    conditions = query.present? ? ["name ILIKE ?", "%#{query}%"] : nil
+    base_search(group.members, conditions, page)
+  end      
 end

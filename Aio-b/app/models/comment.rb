@@ -1,4 +1,5 @@
 class Comment < ApplicationRecord
+
   belongs_to :creator, class_name: 'User'
   acts_as_tree order: 'created_at DESC'
 
@@ -7,20 +8,23 @@ class Comment < ApplicationRecord
 
     statements = []
     statements << "source = '#{source}'" if source.present? && source != 'all'
-    statements << "description ilike '%#{query}%'" if query.present?
+    statements << "description ILIKE '%#{query}%'" if query.present?
 
-    condition = [statements.join(' and ')]
+    conditions = [statements.join(' AND ')]
   
-    total = Comment.where(condition).count
-    comments = Comment.where(condition)
-                      .limit(20).offset(page * 20).hash_tree(limit_depth: 5)
-                      
+    base_search(self, conditions, page)
+  end
+
+  private_class_method def self.base_search(scope, conditions, page, per_page=20)
+    total = scope.where(conditions).count
+    comments = scope.where(conditions)
+                 .order("updated_at DESC")
+                 .offset(page * per_page).limit(per_page).hash_tree(limit_depth: 5)
+
     { total: total, comments: comments_tree_for(comments) }
   end
 
-  private
-
-  def self.comments_tree_for(comments)
+  private_class_method def self.comments_tree_for(comments)
     comments.map do |comment, nested_comments|
       {
         comment: comment,
