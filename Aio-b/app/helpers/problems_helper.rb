@@ -50,7 +50,7 @@ module ProblemsHelper
 
     # Judge in another thread.
     Thread.new do
-      if source.downcase == 'aio':
+      if source.downcase == 'aio'
         spider = get_spider(source)
         results = spider.submit(vid, language, code)
       else

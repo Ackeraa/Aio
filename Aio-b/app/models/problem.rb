@@ -16,15 +16,42 @@ class Problem < ActiveRecord::Base
   mount_uploader :spj, SpjUploader
   mount_uploader :data, DataUploader
 
-  def self.search(source, query, page)
+  def self.search(source, query, page, user)
     source = source.downcase if source
-    
+
     return null_result unless source
-    return base_search(Problem.all, query, page) if source == 'all'
-    base_search(Problem.where(source: source), query, page)
+    
+    case source
+    when 'all'
+      return all_search(query, page, user)
+    when 'public'
+      return public_search(query, page)
+    when 'private'
+      return private_search(query, page, user)
+    else
+      return other_search(source, query, page)
+    end
   end
 
   private_class_method 
+
+  def self.all_search(query, page, user)
+    return null_result unless user and user.role == 'admin'
+    base_search(Problem.all, query, page)
+  end
+
+  def self.public_search(source, query, page)
+    base_search(Problem.where(is_visible: true), query, page)
+  end
+
+  def self.private_search(query, page, user)
+    return null_result unless user
+    base_search(user.created_problems, query, page)
+  end
+
+  def self.other_search(source, query, page)
+    base_search(Problem.where(source: source, is_visible: true), query, page)
+  end
 
   def self.null_result
     { total: 0, problems: [] }
@@ -40,7 +67,7 @@ class Problem < ActiveRecord::Base
       :source,
       :submissions,
       :accepts
-    ).order(:id).limit(per_pagge).offset(page * per_page)
+    ).order(:id).limit(per_page).offset(page * per_page)
 
     { total: total, problems: problems }
   end

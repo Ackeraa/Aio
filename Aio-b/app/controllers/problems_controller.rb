@@ -9,7 +9,7 @@ class ProblemsController < ApplicationController
 
   # GET /problems?source=source&query=query
   def index
-    render json: Problem.search(params[:source], params[:query], @page)
+    render json: Problem.search(params[:source], params[:query], @page, current_user)
   end
 
   # GET /problems/1
