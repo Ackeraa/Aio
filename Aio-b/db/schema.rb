@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_22_093941) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_24_043310) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -162,6 +162,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_093941) do
     t.string "description"
     t.string "photo"
     t.bigint "creator_id"
+    t.boolean "is_visible", default: false
     t.index ["creator_id"], name: "index_groups_on_creator_id"
   end
 

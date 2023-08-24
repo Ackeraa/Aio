@@ -6,16 +6,20 @@ class Comment < ApplicationRecord
   def self.search(source, query, page)
     source = source.downcase if source
 
-    statements = []
-    statements << "source = '#{source}'" if source.present? && source != 'all'
-    statements << "description ILIKE '%#{query}%'" if query.present?
-
-    conditions = [statements.join(' AND ')]
-  
-    base_search(self, conditions, page)
+    return null_result unless source
+    return base_search(Comment.all, query, page) if source == 'all'
+    base_search(Comment.where(source: source), query, page)
   end
 
-  private_class_method def self.base_search(scope, conditions, page, per_page=20)
+  private_class_method
+  
+  def self.null_result
+    { total: 0, comments: [] }
+  end
+
+  def self.base_search(scope, query, page, per_page=20)
+    conditions = "description ILIKE '%#{query}%'" if query.present?
+
     total = scope.where(conditions).count
     comments = scope.where(conditions)
                  .order("updated_at DESC")
@@ -24,7 +28,7 @@ class Comment < ApplicationRecord
     { total: total, comments: comments_tree_for(comments) }
   end
 
-  private_class_method def self.comments_tree_for(comments)
+  def self.comments_tree_for(comments)
     comments.map do |comment, nested_comments|
       {
         comment: comment,

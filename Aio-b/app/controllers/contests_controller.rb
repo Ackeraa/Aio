@@ -5,7 +5,7 @@ class ContestsController < ApplicationController
 
   # GET /contests?source=public&query=abc&page=1
   def index
-    render json: Contest.search(params[:source], params[:query], @page, current_user)
+    render json: Contest.search(params[:group_id], params[:source], params[:query], @page, current_user)
   end
 
   # GET /contests/1

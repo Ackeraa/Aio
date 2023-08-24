@@ -4,28 +4,57 @@ class ProblemSet < ApplicationRecord
 
   def self.search(source, query, page, user)
     source = source.downcase if source
-    source = 'public' if source.nil? or user.nil?
 
     # all, public, private, joined
-    statements = []
-    if source == 'all' and user.role != 'admin'
-      group_ids = user.joined_groups.pluck(:id) + [0]
-      statements << "group_id in (#{group_ids.join(',')}) or creator_id = #{user.id}"
-    elsif source == 'public'
-      statements << "group_id = 0"
-    elsif source == 'private'
-      statements << "creator_id = #{user.id}"
-    elsif source == 'joined'
-      group_ids = user.joined_groups.pluck(:id) + [-2] # -2 means no group
-      statements << "group_id in (#{group_ids.join(',')})"
+    case source
+    when 'all'
+      return all_search(query, page, user)
+    when 'public'
+      return public_search(query, page)
+    when 'private'
+      return private_search(query, page, user)
+    when 'joined'
+      return joined_search(query, page, user)
     end
-    statements << "name ilike '%#{query}%'" if query.present?
+  end
 
-    conditions = statements.join(' and ')
+  private_class_method
 
-    total = ProblemSet.where(conditions).count
-    problem_sets = ProblemSet.where(conditions).order('created_at desc')
-                      .offset(page * 20).limit(20)
+  # All ProblemSets, only can be accessed by admin
+  def self.all_search(query, page, user)
+    return null_result unless user and user.role == 'admin'
+    base_search(ProblemSet.all, query, page) 
+  end
+
+  # ProblemSets visible to all users
+  def self.public_search(query, page)
+    # group 0 is the big group that contains all public problem sets
+    group = Group.find_by(id: 0)
+    return null_result unless group
+    base_search(group.problem_sets, query, page)
+  end
+
+  # ProblemSets created by user
+  def self.private_search(query, page, user)
+    return null_result unless user
+    base_search(user.created_problem_sets, query, page)
+  end
+
+  # ProblemSets joined by user
+  def self.joined_search(query, page, user)
+    return null_result unless user
+    base_search(user.joined_problem_sets, query, page)
+  end
+
+  def self.null_result
+    { total: 0, problem_sets: [] }
+  end
+
+  def self.base_search(scope, query, page, per_page=20)
+    conditions = "name ILIKE '%#{query}%'" if query.present?
+    total = scope.where(conditions).count
+    problem_sets = scope.where(conditions).order('created_at DESC')
+                      .offset(page * per_page).limit(per_page)
 
     { total: total, problem_sets: problem_sets }
   end

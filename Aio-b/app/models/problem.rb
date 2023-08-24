@@ -18,22 +18,29 @@ class Problem < ActiveRecord::Base
 
   def self.search(source, query, page)
     source = source.downcase if source
+    
+    return null_result unless source
+    return base_search(Problem.all, query, page) if source == 'all'
+    base_search(Problem.where(source: source), query, page)
+  end
 
-    statement = []
-    statement << "source = '#{source}'" if source.present? && source != 'all'
-    statement << "name ilike '%#{query}%'" if query.present?
+  private_class_method 
 
-    conditions = statement.join(' and ')
+  def self.null_result
+    { total: 0, problems: [] }
+  end
 
-    total = Problem.where(conditions).count
-    problems = Problem.where(conditions).select(
+  def self.base_search(scope, query, page, per_page=20)
+    conditions = "name ILIKE '%#{query}%'" if query.present?
+    total = scope.where(conditions).count
+    problems = scope.where(conditions).select(
       :id,
       :vid,
       :name,
       :source,
       :submissions,
       :accepts
-    ).order(:id).limit(20).offset(page * 20)
+    ).order(:id).limit(per_pagge).offset(page * per_page)
 
     { total: total, problems: problems }
   end

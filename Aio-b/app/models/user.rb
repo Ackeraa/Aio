@@ -64,29 +64,32 @@ class User < ActiveRecord::Base
     null_result
   end
 
-  private_class_method def self.null_result
+
+  private_class_method 
+
+  # All Users
+  def self.all_search(query, page)
+    base_search(User.all, query, page)
+  end
+
+  # Users in group
+  def self.group_search(group_id, query, page)
+    group = Group.find_by(id: group_id)
+    return null_result unless group
+    base_search(group.members, query, page)
+  end   
+  
+  def self.null_result
     { total: 0, users: [] }
   end
 
-  private_class_method def self.base_search(scope, conditions, page)
+  def self.base_search(scope, query, page, per_page=20)
+    conditions = query.present? ? ["name ILIKE ?", "%#{query}%"] : nil
     total = scope.where(conditions).count
     users = scope.where(conditions)
-                 .order("created_at DESC")
-                 .offset(page * 20).limit(20)
+                .order("created_at DESC")
+                .offset(page * per_page).limit(per_page)
 
     { total: total, users: users}
   end
-
-  private_class_method def self.all_search(query, page)
-    conditions = query.present? ? ["name ILIKE ?", "%#{query}%"] : nil
-    base_search(User.all, conditions, page)
-  end
-
-  private_class_method def self.group_search(group_id, query, page)
-    group = Group.find_by(id: group_id)
-    return null_result unless group
-
-    conditions = query.present? ? ["name ILIKE ?", "%#{query}%"] : nil
-    base_search(group.members, conditions, page)
-  end      
 end
