@@ -40,7 +40,7 @@ class Problem < ActiveRecord::Base
     base_search(Problem.all, query, page)
   end
 
-  def self.public_search(source, query, page)
+  def self.public_search(query, page)
     base_search(Problem.where(is_visible: true), query, page)
   end
 

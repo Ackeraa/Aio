@@ -14,7 +14,7 @@ import { AlertService, XStatus } from '../../shared';
 export class CreateUpdateComponent {
   form: FormGroup;
   id: number;
-  isAdd: boolean;
+  isCreate: boolean;
 
   status: XStatus = XStatus.Ready;
   XStatus = XStatus;
@@ -31,11 +31,11 @@ export class CreateUpdateComponent {
 
   ngOnInit(): void {
     this.id = +this.route.snapshot.paramMap.get('id');
-    this.isAdd = !this.id;
+    this.isCreate = !this.id;
 
     this.createForm();
 
-    if (!this.isAdd) {
+    if (!this.isCreate) {
       this.updateForm();
     }
   }
@@ -63,10 +63,10 @@ export class CreateUpdateComponent {
 
   updateForm(): void {
     this.problemSetsService.getProblemSet(this.id).subscribe({
-      next: (data) => {
+      next: data => {
         this.form.patchValue(data);
       },
-      error: (err) => {
+      error: err => {
         this.alertService.error(err);
       },
     });
@@ -90,22 +90,21 @@ export class CreateUpdateComponent {
     };
 
     this.status = XStatus.Sent;
-    if (this.isAdd) {
+    if (this.isCreate) {
       this.createProblemSet(problemSet);
     } else {
       this.updateProblemSet(problemSet);
     }
-
   }
 
   createProblemSet(problemSet: any) {
     this.problemSetsService.createProblemSet(problemSet).subscribe({
-      next: (data) => {
+      next: data => {
         this.status = XStatus.Succeed;
         this.alertService.success('alerts.createSucceed');
         this.router.navigate(['/problem-set', data.id]);
       },
-      error: (err) => {
+      error: err => {
         this.status = XStatus.Failed;
         this.alertService.error(err);
       },
@@ -114,17 +113,15 @@ export class CreateUpdateComponent {
 
   updateProblemSet(problemSet: any) {
     this.problemSetsService.updateProblemSet(this.id, problemSet).subscribe({
-      next: (data) => {
+      next: data => {
         this.status = XStatus.Succeed;
         this.alertService.success('alerts.updateSucceed');
         this.router.navigate(['/problem-set', data.id]);
       },
-      error: (err) => {
+      error: err => {
         this.status = XStatus.Failed;
         this.alertService.error(err);
       },
     });
   }
-
-
 }

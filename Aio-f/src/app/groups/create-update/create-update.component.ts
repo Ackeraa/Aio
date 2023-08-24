@@ -15,7 +15,7 @@ import { AlertService, XStatus } from '../../shared';
 export class CreateUpdateComponent {
   form: FormGroup;
   id: number;
-  isAdd: boolean;
+  isCreate: boolean;
 
   status: XStatus = XStatus.Ready;
   XStatus = XStatus;
@@ -36,14 +36,14 @@ export class CreateUpdateComponent {
 
   ngOnInit(): void {
     this.id = +this.route.snapshot.paramMap.get('id');
-    this.isAdd = !this.id;
+    this.isCreate = !this.id;
 
     this.photoPath = `${this.baseUrl}/groups/${this.id}/get_photo`;
     this.photo = new FileUploader({
       url: `${this.baseUrl}/groups/upload_photo`,
       itemAlias: 'photo',
     });
-    this.photo.onBeforeUploadItem = (item) => {
+    this.photo.onBeforeUploadItem = item => {
       item.withCredentials = false;
     };
     this.photo.onBuildItemForm = (_, form: any) => {
@@ -52,7 +52,7 @@ export class CreateUpdateComponent {
 
     this.createForm();
 
-    if (!this.isAdd) {
+    if (!this.isCreate) {
       this.updateForm();
     }
   }
@@ -76,10 +76,10 @@ export class CreateUpdateComponent {
 
   updateForm(): void {
     this.groupsService.getGroup(this.id).subscribe({
-      next: (data) => {
+      next: data => {
         this.form.patchValue(data);
       },
-      error: (err) => {
+      error: err => {
         this.alertService.error(err);
       },
     });
@@ -117,7 +117,7 @@ export class CreateUpdateComponent {
     };
 
     this.status = XStatus.Sent;
-    if (this.isAdd) {
+    if (this.isCreate) {
       this.createGroup(group);
     } else {
       this.updateGroup(group);
@@ -126,12 +126,12 @@ export class CreateUpdateComponent {
 
   createGroup(group: any) {
     this.groupsService.createGroup(group).subscribe({
-      next: (data) => {
+      next: data => {
         this.status = XStatus.Succeed;
         this.alertService.success('alerts.createSucceed');
         this.router.navigate(['/group', data.id]);
       },
-      error: (err) => {
+      error: err => {
         this.status = XStatus.Failed;
         this.alertService.error(err);
       },
@@ -140,12 +140,12 @@ export class CreateUpdateComponent {
 
   updateGroup(group: any) {
     this.groupsService.updateGroup(this.id, group).subscribe({
-      next: (data) => {
+      next: data => {
         this.status = XStatus.Succeed;
         this.alertService.success('alerts.updateSucceed');
         this.router.navigate(['/group', data.id]);
       },
-      error: (err) => {
+      error: err => {
         this.status = XStatus.Failed;
         this.alertService.error(err);
       },

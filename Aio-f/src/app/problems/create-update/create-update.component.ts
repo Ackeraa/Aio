@@ -16,7 +16,7 @@ import { Problem } from '../';
 export class CreateUpdateComponent {
   form: FormGroup;
   id: string;
-  isAdd: boolean;
+  isCreate: boolean;
 
   tags: Array<string>;
   languages: Array<any>;
@@ -41,11 +41,11 @@ export class CreateUpdateComponent {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
-    this.isAdd = !this.id;
+    this.isCreate = !this.id;
 
     this.createForm();
 
-    if (!this.isAdd) {
+    if (!this.isCreate) {
       this.updateForm();
     }
   }
@@ -192,7 +192,7 @@ export class CreateUpdateComponent {
     };
 
     this.status = XStatus.Sent;
-    if (this.isAdd) {
+    if (this.isCreate) {
       this.createProblem(problem);
     } else {
       this.updateProblem(problem);

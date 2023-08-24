@@ -1,5 +1,5 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <div class="card-body media align-items-center">
+  <div *ngIf="!isCreate" class="card-body media align-items-center">
     <div class="d-grid gap-2 d-flex justify-content-center mt-4">
       <img
         [src]="photoPath"
@@ -35,9 +35,11 @@
   </div>
   <div class="row mt-4">
     <div class="col-md-4">
-      <label class="form-label" for="name"><h5>
+      <label class="form-label" for="name"
+        ><h5>
           {{ 'groups.name' | translate }}
-        </h5></label>
+        </h5></label
+      >
       <input
         type="text"
         id="name"

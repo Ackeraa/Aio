@@ -19,7 +19,7 @@ import { XStatus, AlertService } from '../../shared';
 export class CreateUpdateComponent {
   form: FormGroup;
   id: string;
-  isAdd: boolean;
+  isCreate: boolean;
   errors: any;
   status: XStatus = XStatus.Ready;
   XStatus = XStatus;
@@ -41,11 +41,11 @@ export class CreateUpdateComponent {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
-    this.isAdd = !this.id;
+    this.isCreate = !this.id;
 
     this.createForm();
 
-    if (!this.isAdd) {
+    if (!this.isCreate) {
       this.updateForm();
     }
   }
@@ -188,7 +188,7 @@ export class CreateUpdateComponent {
     };
 
     this.status = XStatus.Sent;
-    if (this.isAdd) {
+    if (this.isCreate) {
       this.createContest(contest);
     } else {
       this.updateContest(contest);
