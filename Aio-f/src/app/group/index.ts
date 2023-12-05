@@ -5,3 +5,6 @@ export * from './members/members.component';
 export * from './problem-sets/problem-sets.component';
 export * from './invite/invite.component';
 export * from './settings/settings.component';
+export * from './group-routing.module';
+export * from './group.module';
+export * from './group.service';

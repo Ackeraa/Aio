@@ -17,9 +17,9 @@ export const environment = {
   memoryMax: 512,
   timeMax: 10000,
   problemsSources: [
-    'All',
-    'Aio',
+    'Public',
     'Private',
+    'Aio',
     'Atcoder',
     'Codeforces',
     'UVA',

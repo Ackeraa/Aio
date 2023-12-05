@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
   has_many :oi_contest_ranks
   has_many :contests, through: :oi_contest_ranks
 
+  has_many :comments, foreign_key: "creator_id"
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -48,4 +49,47 @@ class User < ActiveRecord::Base
          #:confirmable,
          :omniauthable,
          :authentication_keys => [:email, :name]
+
+
+  def self.search(source, group_id, query, page)
+    source = source.downcase if source
+
+    case source
+    when 'all'
+      return all_search(query, page)
+    when 'group'
+      return group_search(group_id, query, page) if group_id.present?
+    end
+
+    null_result
+  end
+
+
+  private_class_method 
+
+  # All Users
+  def self.all_search(query, page)
+    base_search(User.all, query, page)
+  end
+
+  # Users in group
+  def self.group_search(group_id, query, page)
+    group = Group.find_by(id: group_id)
+    return null_result unless group
+    base_search(group.members, query, page)
+  end   
+  
+  def self.null_result
+    { total: 0, users: [] }
+  end
+
+  def self.base_search(scope, query, page, per_page=20)
+    conditions = query.present? ? ["name ILIKE ?", "%#{query}%"] : nil
+    total = scope.where(conditions).count
+    users = scope.where(conditions)
+                .order("created_at DESC")
+                .offset(page * per_page).limit(per_page)
+
+    { total: total, users: users}
+  end
 end

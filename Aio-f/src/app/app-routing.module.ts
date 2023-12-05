@@ -50,8 +50,14 @@ const routes: Routes = [
       import('./groups/groups.module').then(m => m.GroupsModule),
   },
   {
+    path: 'user/:id',
+    data: { preload: true },
+    loadChildren: () => import('./user').then(m => m.UserModule),
+  },
+  {
     path: 'group/:id',
-    component: GroupComponent,
+    data: { preload: true },
+    loadChildren: () => import('./group').then(m => m.GroupModule),
   },
   {
     path: 'problem-sets',
@@ -77,10 +83,6 @@ const routes: Routes = [
   {
     path: 'users',
     component: UsersComponent,
-  },
-  {
-    path: 'user/:id',
-    component: UserComponent,
   },
   {
     path: 'messages',

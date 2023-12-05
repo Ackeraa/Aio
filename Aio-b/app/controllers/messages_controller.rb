@@ -1,28 +1,18 @@
 class MessagesController < ApplicationController
   before_action :set_message, only: %i[ show update destroy agree disagree agree]
-  before_action :set_page, only: %i[search]
+  before_action :set_page, only: %i[index]
   before_action :authenticate_user!, only: %i[create update destroy agree disagree agree]
 
   # GET /messages
   # GET /messages.json
   def index
-    @messages = Message.all
+    render json: Message.search(params[:query], @page, current_user)
   end
 
   # GET /messages/1
   # GET /messages/1.json
   def show
   end
-
-  # GET /messages/search
-  # GET /messages/search.json
-  def search
-    query = params[:query]
-    total = Message.where('category ilike(?)',  "%#{query}%").count
-    @messages = Message.where('category ilike(?)',  "%#{query}%").limit(20).offset(@page * 20)
-    render json: { total: total, messages: @messages }
-  end
-
 
   # POST /messages
   # POST /messages.json

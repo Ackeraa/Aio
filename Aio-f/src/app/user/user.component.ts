@@ -19,25 +19,9 @@ export class UserComponent {
     let id = +this.route.snapshot.paramMap.get('id') || null;
     this.userService.getInfo(id);
     this.userService.photo$.subscribe({
-      next: (photo) => {
+      next: photo => {
         this.photo = photo;
       },
     });
-  }
-
-  getContests(): void {
-    this.userService.getContests();
-  }
-
-  getProblems(): void {
-    this.userService.getProblems();
-  }
-
-  getGroups(): void {
-    this.userService.getGroups();
-  }
-
-  getFriends(): void {
-    this.userService.getFriends();
   }
 }

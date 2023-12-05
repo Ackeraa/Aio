@@ -16,29 +16,58 @@ class Problem < ActiveRecord::Base
   mount_uploader :spj, SpjUploader
   mount_uploader :data, DataUploader
 
-  def self.search(source, query, page)
+  def self.search(source, query, page, user)
     source = source.downcase if source
-    statement = []
+
+    return null_result unless source
     
-    if source.present? && source != 'all'
-      statement << "source = '#{source}'"
+    case source
+    when 'all'
+      return all_search(query, page, user)
+    when 'public'
+      return public_search(query, page)
+    when 'private'
+      return private_search(query, page, user)
+    else
+      return other_search(source, query, page)
     end
+  end
 
-    if query.present?
-      statement << "name ilike '%#{query}%'"
-    end
+  private_class_method 
 
-    conditions = statement.join(' and ')
+  def self.all_search(query, page, user)
+    return null_result unless user and user.role == 'admin'
+    base_search(Problem.all, query, page)
+  end
 
-    total = Problem.where(conditions).count
-    problems = Problem.where(conditions).select(
+  def self.public_search(query, page)
+    base_search(Problem.where(is_visible: true), query, page)
+  end
+
+  def self.private_search(query, page, user)
+    return null_result unless user
+    base_search(user.created_problems, query, page)
+  end
+
+  def self.other_search(source, query, page)
+    base_search(Problem.where(source: source, is_visible: true), query, page)
+  end
+
+  def self.null_result
+    { total: 0, problems: [] }
+  end
+
+  def self.base_search(scope, query, page, per_page=20)
+    conditions = "name ILIKE '%#{query}%'" if query.present?
+    total = scope.where(conditions).count
+    problems = scope.where(conditions).select(
       :id,
       :vid,
       :name,
       :source,
       :submissions,
       :accepts
-    ).order(:id).limit(20).offset(page * 20)
+    ).order(:id).limit(per_page).offset(page * per_page)
 
     { total: total, problems: problems }
   end

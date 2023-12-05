@@ -9,7 +9,7 @@ import { ContestsService } from '../contests.service';
   styleUrls: ['./show.component.scss'],
 })
 export class ShowComponent {
-  @Input() which: string;
+  @Input() source: string;
   loading: boolean;
   contests: any;
   total: number;
@@ -29,9 +29,9 @@ export class ShowComponent {
   getContests(params: SearchParams): void {
     this.loading = true;
     this.p = params.page;
-    params.addition = { which: this.which };
+    params.addition = { source: this.source };
     this.contestsService
-      .getContests('/contests/search', params)
+      .getContests(params)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: data => {

@@ -7,14 +7,13 @@ import { SearchService, SearchParams } from '../shared';
   providedIn: 'root',
 })
 export class ContestsService {
-
   constructor(
     private searchService: SearchService,
     private authService: AuthService
   ) {}
 
-  getContests(url: string, params: SearchParams): Observable<any> {
-    return this.searchService.get(url, params);
+  getContests(params: SearchParams): Observable<any> {
+    return this.searchService.get('/contests', params);
   }
 
   getContestsPage(): SearchParams {

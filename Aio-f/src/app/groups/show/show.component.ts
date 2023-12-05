@@ -12,10 +12,10 @@ enum Permission {
 @Component({
   selector: 'app-groups-show',
   templateUrl: './show.component.html',
-  styleUrls: ['./show.component.scss']
+  styleUrls: ['./show.component.scss'],
 })
 export class ShowComponent {
-  @Input() which: string;
+  @Input() source: string;
   groups: Array<any>;
   p: number;
   total: number;
@@ -34,18 +34,16 @@ export class ShowComponent {
 
   getGroups(params: SearchParams): void {
     this.p = params.page;
-    params.addition = { which: this.which };
-    this.groupsService
-      .getGroups(params)
-      .subscribe({
-        next: (data) => {
-          this.groups = data.groups;
-          this.total = data.total;
-        },
-        error: (err) => {
-          this.alertService.error(`${err.status} ${err.statusText}`);
-        },
-      });
+    params.addition = { source: this.source };
+    this.groupsService.getGroups(params).subscribe({
+      next: data => {
+        this.groups = data.groups;
+        this.total = data.total;
+      },
+      error: err => {
+        this.alertService.error(`${err.status} ${err.statusText}`);
+      },
+    });
   }
 
   joinGroup(id: number): void {
@@ -53,9 +51,9 @@ export class ShowComponent {
       next: () => {
         this.alertService.success('Joined successfully');
       },
-      error: (err) => {
+      error: err => {
         this.alertService.error(`${err.status} ${err.statusText}`);
-      }
+      },
     });
   }
 
@@ -64,18 +62,18 @@ export class ShowComponent {
       next: () => {
         this.alertService.success('Left successfully');
       },
-      error: (err) => {
+      error: err => {
         this.alertService.error(`${err.status} ${err.statusText}`);
-      }
+      },
     });
   }
 
   getPermission(creator: string): Permission {
     if (this.user.role === 'admin' || this.user.name === creator) {
       return Permission.MODIFY;
-    } else if (this.which === 'public') {
-      return Permission.JOIN;  // FIXME: maybe already joined
-    } else if (this.which === 'private') {
+    } else if (this.source === 'public') {
+      return Permission.JOIN; // FIXME: maybe already joined
+    } else if (this.source === 'private') {
       return Permission.LEAVE;
     } else {
       return Permission.NONE;

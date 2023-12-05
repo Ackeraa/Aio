@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./group.component.scss'],
 })
 export class GroupComponent {
-  photo: string = "ad";
+  photo: string = 'ad';
   baseUrl = environment.token_auth_config.apiBase;
 
   constructor(
@@ -21,17 +21,5 @@ export class GroupComponent {
     let id = +this.route.snapshot.paramMap.get('id');
     this.photo = `${this.baseUrl}/groups/${id}/get_photo`;
     this.groupService.getInfo(id);
-  }
-
-  getMembers(): void {
-    this.groupService.getMembers();
-  }
-
-  getContests(): void {
-    this.groupService.getContests();
-  }
-
-  getProblemSets(): void {
-    this.groupService.getProblemSets();
   }
 }

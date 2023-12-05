@@ -3,24 +3,11 @@ class GroupsController < ApplicationController
                                      get_members get_contests get_problem_sets
                                      get_photo upload_photo join leave]
   before_action :authenticate_user!, only: %i[create join leave]
-  before_action :set_page, only: [:search]
+  before_action :set_page, only: [:index]
 
   # GET /groups
   def index
-    @groups = Group.all
-    render json: @groups
-  end
-
-  # GET /groups/search
-  def search
-    query = params[:query]
-    total = Group.where('name ilike(?)',  "%#{query}%").count
-    @groups = Group.includes(:creator)
-                   .where('groups.name ilike(?)',  "%#{query}%")
-                   .select('groups.*, users.name as creator_name')
-                   .joins(:creator)
-                   .limit(20).offset(@page * 20)
-    render json: { total: total, groups: @groups }
+    render json: Group.search(params[:source], params[:query], @page, current_user)
   end
 
   # GET /groups/1/get_info

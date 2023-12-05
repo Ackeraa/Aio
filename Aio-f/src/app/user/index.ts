@@ -5,3 +5,5 @@ export * from './problems/problems.component';
 export * from './groups/groups.component';
 export * from './friends/friends.component';
 export * from './settings/settings.component';
+export * from './user-routing.module';
+export * from './user.module';

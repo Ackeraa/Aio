@@ -2,26 +2,17 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy, :get_info, :get_contests,
                                   :get_problems, :get_groups, :get_friends, :upload_photo,
                                   :get_photo, :connect]
-  before_action :set_page, only: [:search]
+  before_action :set_page, only: [:index]
 
   # GET /users
   def index
-    #@users = User.all
-
-    send_file '/root/Aio-b/public/uploads/user/photo/27/QQ20191001-0.jpg'
+    render json: User.search(params[:source], params[:group_id], 
+          params[:query], @page)
   end
 
   # GET /users/1
   def show
     render json: @user
-  end
-
-  # GET /users/search
-  def search
-    query = params[:query]
-    total = User.where('name ilike(?)',  "%#{query}%").count
-    @users = User.where('name ilike(?)',  "%#{query}%").limit(20).offset(@page * 20)
-    render json: { total: total, users: @users }
   end
 
   # GET /users/1/get_photo

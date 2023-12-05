@@ -9,6 +9,7 @@ import { ContestsModule } from '../contests';
 import { ProblemsModule } from '../problems';
 import { GroupsModule } from '../groups';
 import {
+  UserRoutingModule,
   UserComponent,
   HomeComponent,
   ContestsComponent,
@@ -32,6 +33,7 @@ import {
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    UserRoutingModule,
     NgbModule,
     FontAwesomeModule,
     FileUploadModule,

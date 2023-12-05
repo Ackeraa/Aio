@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   resources :contest_ranks
   resources :contests do
     collection do
-      get 'search',                             :action => 'search'
       get ':id/problems',                       :action => 'problems'     
       get ':id/add_problem/:problem_id',        :action => 'add_problem'     
       get ':id/delete_problem/:problem_id',     :action => 'delete_problem'  
@@ -23,7 +22,6 @@ Rails.application.routes.draw do
 
   resources :vproblems do
     collection do
-      get  'search',                            :action => 'search'
       get  ':id/respide',                       :action => 'respide'
       get  'respides',                          :action => 'respides'
       post ':id/submit',                        :action => 'submit'     
@@ -33,7 +31,6 @@ Rails.application.routes.draw do
 
   resources :problem_sets do
     collection do
-      get  'search',                            :action => 'search'
       get ':id/problems',                       :action => 'problems'     
       get ':id/add_problem/:problem_id',        :action => 'add_problem'     
       get ':id/delete_problem/:problem_id',     :action => 'delete_problem'     
@@ -42,7 +39,6 @@ Rails.application.routes.draw do
 
   resources :users do
     collection do
-      get  'search',                            :action => 'search'
       get  ':id/get_info',                      :action => 'get_info'
       get  ':id/get_contests',                  :action => 'get_contests'
       get  ':id/get_problems',                  :action => 'get_problems'
@@ -57,7 +53,6 @@ Rails.application.routes.draw do
 
   resources :groups do
     collection do
-      get  'search',                            :action => 'search'
       get  ':id/add_group/:group_id',           :action => 'add_group'     
       get  ':id/delete_group/:group_id',        :action => 'delete_group'     
       get  ':id/get_info',                      :action => 'get_info'
@@ -73,14 +68,12 @@ Rails.application.routes.draw do
 
   resources :acm_contest_ranks do
     collection do
-      get  'search',                            :action => 'search'
       get  'get_contest_rank',                  :action => 'get_contest_rank'
     end
   end
 
   resources :messages do
     collection do
-      get  'search',                            :action => 'search'
       post ':id/agree',                         :action => 'agree'
       post ':id/disagree',                      :action => 'disagree'
       post ':id/read',                          :action => 'read'
@@ -103,7 +96,6 @@ Rails.application.routes.draw do
 
   resources :comments do
     collection do
-      get  'search',                            :action => 'search'
       post 'vote_up',                           :action => 'vote_up'
       post 'vote_down',                         :action => 'vote_down'
     end

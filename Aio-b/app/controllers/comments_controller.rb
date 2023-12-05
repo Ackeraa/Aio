@@ -1,22 +1,11 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :update, :destroy, :vote_up, :vote_down]
   before_action :authenticate_user!, only: [:create, :vote_up, :vote_down]
-  before_action :set_page, only: [:search]
+  before_action :set_page, only: [:index]
 
-  # GET /comments
+  # GET /comments?which=1&query=1
   def index
-    @comments = Comment.hash_tree(limit_depth: 5)
-    render json: comments_tree_for(@comments)
-  end
-
-  # GET /comments/search
-  def search
-    query = params[:query]
-    which = params[:which]
-    total = Comment.where('which=? and creator ilike(?)', which, "%#{query}%").count
-    @comments = Comment.where('which=? and creator ilike(?)',  which, "%#{query}%")
-                       .limit(10).offset(@page * 10).hash_tree(limit_depth: 5)
-    render json: { total: total, comments: comments_tree_for(@comments) }
+    render json: Comment.search(params[:source], params[:query], @page)
   end
 
   # GET /comments/1
@@ -103,15 +92,6 @@ class CommentsController < ApplicationController
 
     def set_page
       @page = (params[:page] || 1).to_i - 1
-    end
-
-    def comments_tree_for(comments)
-      comments.map do |comment, nested_comments|
-        {
-          comment: comment,
-          children: comments_tree_for(nested_comments) 
-        }
-      end
     end
 
     # Use callbacks to share common setup or constraints between actions.
