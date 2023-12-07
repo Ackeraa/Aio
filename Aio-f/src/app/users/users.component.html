@@ -32,7 +32,9 @@
             <app-hold-button
               (holdEvent)="deleteUser(user.id)"
               ngbTooltip="Hold to delete"
-            ></app-hold-button>
+            >
+              <fa-icon [icon]="['fas', 'trash-alt']"></fa-icon>
+            </app-hold-button>
           </td>
         </tr>
       </tbody>

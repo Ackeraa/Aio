@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SearchModule, HoldButtonModule } from '../shared';
 import { UsersComponent } from './users.component';
 
@@ -15,6 +16,7 @@ import { UsersComponent } from './users.component';
     NgxPaginationModule,
     NgbModule,
     HoldButtonModule,
+    FontAwesomeModule,
   ],
   exports: [UsersComponent],
 })
