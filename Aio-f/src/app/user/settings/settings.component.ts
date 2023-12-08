@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 import { UserService } from '../user.service';
-import { filter, map } from 'rxjs/operators';
+import { filter, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { XStatus, AlertService } from '../../shared';
 
@@ -23,6 +23,8 @@ export class SettingsComponent implements OnInit {
   maxFileSize = 5 * 1024 * 1024;
   photoPath: any;
 
+  loading: boolean;
+
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
@@ -43,12 +45,14 @@ export class SettingsComponent implements OnInit {
       form.append('id', this.userService.id);
     };
 
+    this.loading = true;
     this.userService.homeInfo$
       .pipe(
         filter(x => x != null),
-        map(data => data.user)
+        map(data => data.user),
       )
       .subscribe(user => {
+        this.loading = false;
         this.form = this.formBuilder.group({
           name: [user.name],
           github: [user.github],

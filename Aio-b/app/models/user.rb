@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
 
   has_many :created_problems, class_name: "Problem", foreign_key: "creator_id"
   has_many :user_problems
-  has_many :submtted_problems, through: :user_problems, source: :problem
+  has_many :submitted_problems, through: :user_problems, source: :problem
 
   has_many :created_contests, class_name: "Contest", foreign_key: "creator_id"
 

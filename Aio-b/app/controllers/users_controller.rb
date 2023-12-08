@@ -22,9 +22,9 @@ class UsersController < ApplicationController
 
   # GET /users/1/get_info
   def get_info
-    total_contests = @user.contests.count
-    total_problems = @user.problems.count
-    total_groups = @user.groups.count
+    total_contests = @user.joined_contests.count
+    total_problems = @user.submitted_problems.count
+    total_groups = @user.joined_groups.count
     total_followers = @user.followers.size
     total_following = @user.following.size
     render json: {
