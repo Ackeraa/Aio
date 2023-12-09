@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_24_043310) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_09_170020) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -23,7 +23,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_24_043310) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "user_name"
     t.index ["contest_id"], name: "index_acm_contest_ranks_on_contest_id"
     t.index ["user_id"], name: "index_acm_contest_ranks_on_user_id"
   end
@@ -60,6 +59,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_24_043310) do
     t.jsonb "dislikes", default: {"votes"=>0, "voters"=>[]}
     t.string "source"
     t.bigint "creator_id"
+    t.string "commentable_type"
+    t.integer "commentable_id"
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
     t.index ["creator_id"], name: "index_comments_on_creator_id"
   end
 
@@ -159,7 +161,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_24_043310) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "description"
+    t.text "description"
     t.string "photo"
     t.bigint "creator_id"
     t.boolean "is_visible", default: false
@@ -270,25 +272,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_24_043310) do
     t.jsonb "subdescription"
     t.integer "likes"
     t.bigint "problem_id", null: false
-    t.bigint "user_id", null: false
+    t.bigint "creator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_solutions_on_creator_id"
     t.index ["problem_id"], name: "index_solutions_on_problem_id"
-    t.index ["user_id"], name: "index_solutions_on_user_id"
   end
 
   create_table "submissions", force: :cascade do |t|
     t.text "code"
-    t.integer "solution_size"
     t.bigint "problem_id", null: false
     t.bigint "contest_id", null: false
-    t.bigint "user_id", null: false
+    t.bigint "submitter_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "results", default: {}
     t.index ["contest_id"], name: "index_submissions_on_contest_id"
     t.index ["problem_id"], name: "index_submissions_on_problem_id"
-    t.index ["user_id"], name: "index_submissions_on_user_id"
+    t.index ["submitter_id"], name: "index_submissions_on_submitter_id"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -352,7 +353,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_24_043310) do
     t.string "sno"
     t.string "major"
     t.string "motto"
-    t.string "image"
     t.string "email"
     t.text "tokens"
     t.integer "sign_in_count", default: 0, null: false
@@ -402,10 +402,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_24_043310) do
   add_foreign_key "problems_tags", "problems"
   add_foreign_key "problems_tags", "tags"
   add_foreign_key "solutions", "problems"
-  add_foreign_key "solutions", "users"
+  add_foreign_key "solutions", "users", column: "creator_id"
   add_foreign_key "submissions", "contests"
   add_foreign_key "submissions", "problems"
-  add_foreign_key "submissions", "users"
+  add_foreign_key "submissions", "users", column: "submitter_id"
   add_foreign_key "team_contest_ranks", "contests"
   add_foreign_key "team_contest_ranks", "teams"
   add_foreign_key "teams", "groups"

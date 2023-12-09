@@ -1,6 +1,7 @@
 class Comment < ApplicationRecord
-
   belongs_to :creator, class_name: 'User'
+  belongs_to :commentable, polymorphic: true
+
   acts_as_tree order: 'created_at DESC'
 
   def self.search(source, query, page)

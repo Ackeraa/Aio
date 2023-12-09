@@ -14,7 +14,9 @@ class Contest < ApplicationRecord
   has_many :participants, through: :contest_users, source: :user
 
   has_many :contest_announcements, dependent: :destroy
-  has_many :submission_records, dependent: :destroy
+  has_many :submissions, dependent: :destroy
+
+  has_many :comments, as: :commentable, dependent: :destroy
 
   def self.search(group_id, source, query, page, user)
     source = source.downcase if source

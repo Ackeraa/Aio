@@ -17,7 +17,7 @@ class Group < ApplicationRecord
 
     # all, public, private, joined
     case source
-    when 'all'
+    when 'all我有一个contests表，由user表的'
       return all_search(query, page, user)
     when 'public'
       return public_search(query, page)

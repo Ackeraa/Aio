@@ -1,5 +1,5 @@
 class Problem < ActiveRecord::Base
-  belongs_to :creator, class_name: 'User'
+  belongs_to :creator, class_name: 'User', foreign_key: 'creator_id'
   has_many :user_problems, class_name: 'UserProblem'
   has_many :submitters, through: :user_problems, source: :user
 
@@ -7,10 +7,12 @@ class Problem < ActiveRecord::Base
   has_many :contests, through: :contest_problems
 
   has_many :comments, dependent: :destroy
-  has_many :submission_records, dependent: :destroy
+  has_many :submissios, dependent: :destroy
   has_many :solutions, dependent: :destroy
   has_and_belongs_to_many :problem_sets
   has_and_belongs_to_many :contests
+
+  has_many :comments, as: :commentable, dependent: :destroy
 
   mount_uploader :template, TemplateUploader
   mount_uploader :spj, SpjUploader

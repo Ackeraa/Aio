@@ -1,6 +1,10 @@
 class ProblemSet < ApplicationRecord
-  has_and_belongs_to_many :problems
+  belongs_to :creator, class_name: 'User'
   belongs_to :group
+
+  has_and_belongs_to_many :problems
+
+  has_many :comments, as: :commentable, dependent: :destroy
 
   def self.search(source, query, page, user)
     source = source.downcase if source

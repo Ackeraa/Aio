@@ -9,7 +9,6 @@ class User < ActiveRecord::Base
   has_many :submitted_problems, through: :user_problems, source: :problem
 
   has_many :created_contests, class_name: "Contest", foreign_key: "creator_id"
-
   has_many :contest_users
   has_many :joined_contests, through: :contest_users, source: :contest
 
