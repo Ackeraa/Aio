@@ -27,6 +27,7 @@
 * [ ] Fork 
 * [ ] Add AI
 * [ ] cache joined group..
+* [ ] Thread pool
 
 ## Design
 
@@ -509,6 +510,7 @@ end
     * solutions
     * problem_sets
     * comments
+    * announcements
 * Group
   * belongs to:
     * creator
@@ -529,6 +531,7 @@ end
   * has and belongs to many
     * contests
     * problem_sets
+    * tags
 * Contest
   * belongs to:
     * creator
@@ -536,7 +539,7 @@ end
   * has many:
     * participants
     * submissions
-    * contest_announcements
+    * announcements
     * comments
   * has and belongs to many
     * problems
@@ -553,10 +556,40 @@ end
     * submitter
     * contest
     * problem
-* Comments
+* Comment
   * belongs to:
     * creator
     * commentable
+* Solution
+  * belongs to:
+    * creator
+    * problem
+    * contest
+
+* Announcement
+  * belongs to:
+    * creator
+    * contest
+
+* GroupMember
+  * belongs to:
+    * user
+    * group
+
+* ProblemRecord
+  * belongs to:
+    * user
+    * problem
+
+* ContestRecord
+  * belongs to:
+    * user
+    * contest
+* Language
+* Tag
+  * has and belongs to many:
+  * problems
+
 * 
 
 #### User
@@ -767,16 +800,6 @@ end
 |       created_at       | datetime |                  |
 |       updated_at       | datetime |                  |
 
-#### auth_permissions
-
-| Attribute  |   Type   | Description |
-| :--------: | :------: | :---------: |
-|     id     |  bigint  | primary key |
-|    name    |  string  |             |
-|  type_id   | integer  |             |
-| created_at | datetime |             |
-| updated_at | datetime |             |
-
 #### groups
 
 |  Attribute  |   Type   |  Description   |
@@ -789,32 +812,6 @@ end
 | is_visible  | boolean  | default: false |
 | created_at  | datetime |                |
 | updated_at  | datetime |                |
-
-#### teams
-
-| Attribute  |   Type   | Description |
-| :--------: | :------: | :---------: |
-|     id     |  bigint  | primary key |
-|  group_id  |  bigint  | foreign key |
-|    name    |  string  |             |
-|  password  |  string  |             |
-|    type    |  string  |             |
-|  member1   |  jsonb   |             |
-|  member2   |  jsonb   |             |
-|  member3   |  jsonb   |             |
-| created_at | datetime |             |
-| updated_at | datetime |             |
-
-#### events
-
-|  Attribute  |   Type   | Description |
-| :---------: | :------: | :---------: |
-|     id      |  bigint  | primary key |
-|   user_id   |  bigint  | foreign key |
-|    name     |  string  |             |
-| description |   text   |             |
-| created_at  | datetime |             |
-| updated_at  | datetime |             |
 
 #### contests
 
@@ -832,60 +829,6 @@ end
 | is_visible  | boolean  |             |
 | created_at  | datetime |             |
 | updated_at  | datetime |             |
-
-#### team_contest_ranks(joined)
-
-|    Attribute    |  Type   | Description |
-| :-------------: | :-----: | :---------: |
-|       id        | bigint  | primary key |
-|   contest_id    | integer | foreign key |
-|     team_id     | integer | foreign key |
-|   submissions   | integer |             |
-|     accepts     | integer |             |
-|      time       | integer |             |
-| submission_info |  jsonb  |             |
-|   created_at    |  date   |             |
-|   updated_at    |  date   |             |
-
-#### acm_contest_ranks(joined)
-
-|    Attribute    |   Type   | Description |
-| :-------------: | :------: | :---------: |
-|       id        | integer  | primary key |
-|   contest_id    | integer  | foreign key |
-|     user_id     | integer  | foreign key |
-|   submissions   | integer  |             |
-|     accepts     | integer  |             |
-|      time       | integer  |             |
-| submission_info |  jsonb   |             |
-|   created_at    | datetime |             |
-|   updated_at    | datetime |             |
-
-#### oi_contest_ranks(joined)
-
-|    Attribute    |   Type   | Description |
-| :-------------: | :------: | :---------: |
-|       id        | integer  | primary key |
-|   contest_id    | integer  | foreign key |
-|     user_id     | integer  | foreign key |
-|   submissions   | integer  |             |
-|     scores      | integer  |             |
-| submission_info |  jsonb   |             |
-|   created_at    | datetime |             |
-|   updated_at    | datetime |             |
-
-#### contest_announcements
-
-|  Attribute  |   Type   |  Description   |
-| :---------: | :------: | :------------: |
-|     id      |  bigint  |  primary key   |
-| contest_id  |  bigint  |  foreign key   |
-|   creater   |  string  |                |
-|    name     |  string  |                |
-| description |   text   |                |
-|   visible   | boolean  | default: false |
-| created_at  | datetime |                |
-| updated_at  | datetime |                |
 
 #### problem_sets
 
@@ -930,15 +873,80 @@ end
 |    created_at     | datetime |             |
 |    updated_at     | datetime |             |
 
-#### languages
+#### group_members
 
-|     Attribute     |   Type   | Description |
-| :---------------: | :------: | :---------: |
-|        id         |  bigint  | primary key |
-|      source       |  string  |             |
-| allowed_languages |  jsonb   |             |
-|    created_at     | datetime |             |
-|    updated_at     | datetime |             |
+| Attribute  |   Type   | Description |
+| :--------: | :------: | :---------: |
+|     id     |  bigint  | primary key |
+|  user_id   | integer  | foreign key |
+|  group_id  | integer  | foreign key |
+|    role    |  string  |             |
+| created_at | datetime |             |
+| updated_at | datetime |             |
+
+#### problem_records
+
+| Attribute  |   Type   | Description |
+| :--------: | :------: | :---------: |
+|     id     |  bigint  | primary key |
+|  user_id   | integer  | foreign key |
+| problem_id | integer  | foreign key |
+|   score    | integer  |             |
+|   result   |  string  |             |
+| created_at | datetime |             |
+| updated_at | datetime |             |
+
+#### contest_records
+
+|    Attribute    |   Type   | Description |
+| :-------------: | :------: | :---------: |
+|       id        |  bigint  | primary key |
+|   contest_id    | integer  | foreign key |
+|     user_id     | integer  | foreign key |
+| submission_info |  jsonb   |             |
+|   created_at    | datetime |             |
+|   updated_at    | datetime |             |
+
+#### submission
+
+|  Attribute   |   Type   | Description |
+| :----------: | :------: | :---------: |
+|      id      |  bigint  | primary key |
+|  contest_id  |  bigint  | foreign key |
+|  problem_id  |  bigint  | foreign key |
+| submitter_id |  bigint  | foreign key |
+|   results    |  jsonb   |             |
+|     code     |   text   |             |
+|  created_at  | datetime |             |
+|  updated_at  | datetime |             |
+
+#### announcements
+
+|  Attribute  |   Type   |  Description   |
+| :---------: | :------: | :------------: |
+|     id      |  bigint  |  primary key   |
+| contest_id  |  bigint  |  foreign key   |
+| creater_id  |  bigint  |  foreign key   |
+|    name     |  string  |                |
+| description |   text   |                |
+|   visible   | boolean  | default: false |
+| created_at  | datetime |                |
+| updated_at  | datetime |                |
+
+#### teams
+
+| Attribute  |   Type   | Description |
+| :--------: | :------: | :---------: |
+|     id     |  bigint  | primary key |
+|  group_id  |  bigint  | foreign key |
+|    name    |  string  |             |
+|  password  |  string  |             |
+|    type    |  string  |             |
+|  member1   |  jsonb   |             |
+|  member2   |  jsonb   |             |
+|  member3   |  jsonb   |             |
+| created_at | datetime |             |
+| updated_at | datetime |             |
 
 #### comments
 
@@ -970,6 +978,16 @@ end
 |   created_at   | datetime |             |
 |   updated_at   | datetime |             |
 
+#### languages
+
+|     Attribute     |   Type   | Description |
+| :---------------: | :------: | :---------: |
+|        id         |  bigint  | primary key |
+|      source       |  string  |             |
+| allowed_languages |  jsonb   |             |
+|    created_at     | datetime |             |
+|    updated_at     | datetime |             |
+
 #### tags
 
 | Attribute  |   Type   | Description |
@@ -979,18 +997,16 @@ end
 | created_at | datetime |             |
 | updated_at | datetime |             |
 
-#### submission
+#### events
 
-|  Attribute   |   Type   | Description |
-| :----------: | :------: | :---------: |
-|      id      |  bigint  | primary key |
-|  contest_id  |  bigint  | foreign key |
-|  problem_id  |  bigint  | foreign key |
-| submitter_id |  bigint  | foreign key |
-|   results    |  jsonb   |             |
-|     code     |   text   |             |
-|  created_at  | datetime |             |
-|  updated_at  | datetime |             |
+|  Attribute  |   Type   | Description |
+| :---------: | :------: | :---------: |
+|     id      |  bigint  | primary key |
+|   user_id   |  bigint  | foreign key |
+|    name     |  string  |             |
+| description |   text   |             |
+| created_at  | datetime |             |
+| updated_at  | datetime |             |
 
 #### contribute_scores
 
@@ -1012,6 +1028,16 @@ end
 | created_at | datetime |             |
 | updated_at | datetime |             |
 
+#### auth_permissions
+
+| Attribute  |   Type   | Description |
+| :--------: | :------: | :---------: |
+|     id     |  bigint  | primary key |
+|    name    |  string  |             |
+|  type_id   | integer  |             |
+| created_at | datetime |             |
+| updated_at | datetime |             |
+
 #### auth_permissions_users(joined)
 
 |     Attribute      |   Type   | Description |
@@ -1021,29 +1047,6 @@ end
 | auth_permission_id | integer  | foreign key |
 |     created_at     | datetime |             |
 |     updated_at     | datetime |             |
-
-#### group_users(joined)
-
-| Attribute  |   Type   | Description |
-| :--------: | :------: | :---------: |
-|     id     |  bigint  | primary key |
-|  user_id   | integer  | foreign key |
-|  group_id  | integer  | foreign key |
-|    role    |  string  |             |
-| created_at | datetime |             |
-| updated_at | datetime |             |
-
-#### user_problems(joined)
-
-| Attribute  |   Type   | Description |
-| :--------: | :------: | :---------: |
-|     id     |  bigint  | primary key |
-|  user_id   | integer  | foreign key |
-| problem_id | integer  | foreign key |
-|   score    | integer  |             |
-|   result   |  string  |             |
-| created_at | datetime |             |
-| updated_at | datetime |             |
 
 #### contests_problems(joined)
 

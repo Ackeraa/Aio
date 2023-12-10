@@ -1,10 +1,8 @@
 class Problem < ActiveRecord::Base
   belongs_to :creator, class_name: 'User', foreign_key: 'creator_id'
-  has_many :user_problems, class_name: 'UserProblem'
-  has_many :submitters, through: :user_problems, source: :user
 
-  has_many :contest_problems
-  has_many :contests, through: :contest_problems
+  has_many :problem_records
+  has_many :submitters, through: :problem_records, source: :user
 
   has_many :comments, dependent: :destroy
   has_many :submissios, dependent: :destroy

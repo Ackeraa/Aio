@@ -10,21 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_09_170020) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_10_045329) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "acm_contest_ranks", force: :cascade do |t|
-    t.integer "submissions"
-    t.integer "accepts"
-    t.integer "time"
-    t.jsonb "submission_info"
+  create_table "announcements", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.boolean "visible"
     t.bigint "contest_id", null: false
-    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["contest_id"], name: "index_acm_contest_ranks_on_contest_id"
-    t.index ["user_id"], name: "index_acm_contest_ranks_on_user_id"
+    t.bigint "creator_id"
+    t.index ["contest_id"], name: "index_announcements_on_contest_id"
+    t.index ["creator_id"], name: "index_announcements_on_creator_id"
   end
 
   create_table "auth_permissions", force: :cascade do |t|
@@ -65,40 +64,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_09_170020) do
     t.index ["creator_id"], name: "index_comments_on_creator_id"
   end
 
-  create_table "contest_announcements", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.boolean "visible"
-    t.bigint "contest_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "creator_id"
-    t.index ["contest_id"], name: "index_contest_announcements_on_contest_id"
-    t.index ["creator_id"], name: "index_contest_announcements_on_creator_id"
-  end
-
-  create_table "contest_problems", force: :cascade do |t|
-    t.bigint "contest_id"
-    t.bigint "problem_id"
-    t.text "description"
-    t.text "input"
-    t.text "output"
-    t.text "hint"
-    t.jsonb "samples"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["contest_id"], name: "index_contest_problems_on_contest_id"
-    t.index ["problem_id"], name: "index_contest_problems_on_problem_id"
-  end
-
-  create_table "contest_users", force: :cascade do |t|
+  create_table "contest_records", force: :cascade do |t|
     t.jsonb "submission_info"
     t.bigint "user_id", null: false
     t.bigint "contest_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["contest_id"], name: "index_contest_users_on_contest_id"
-    t.index ["user_id"], name: "index_contest_users_on_user_id"
+    t.index ["contest_id"], name: "index_contest_records_on_contest_id"
+    t.index ["user_id"], name: "index_contest_records_on_user_id"
   end
 
   create_table "contests", force: :cascade do |t|
@@ -147,14 +120,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_09_170020) do
     t.index ["user_id"], name: "index_events_on_user_id"
   end
 
-  create_table "group_users", force: :cascade do |t|
+  create_table "group_members", force: :cascade do |t|
     t.bigint "group_id"
     t.bigint "user_id"
     t.string "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["group_id"], name: "index_group_users_on_group_id"
-    t.index ["user_id"], name: "index_group_users_on_user_id"
+    t.index ["group_id"], name: "index_group_members_on_group_id"
+    t.index ["user_id"], name: "index_group_members_on_user_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -166,14 +139,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_09_170020) do
     t.bigint "creator_id"
     t.boolean "is_visible", default: false
     t.index ["creator_id"], name: "index_groups_on_creator_id"
-  end
-
-  create_table "items", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "picture"
   end
 
   create_table "languages", force: :cascade do |t|
@@ -193,17 +158,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_09_170020) do
     t.bigint "receiver_ids", default: [], array: true
   end
 
-  create_table "oi_contest_ranks", force: :cascade do |t|
-    t.integer "submissions"
-    t.integer "accepts"
-    t.integer "time"
-    t.jsonb "submission_info"
-    t.bigint "contest_id", null: false
-    t.bigint "user_id", null: false
+  create_table "problem_records", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "problem_id"
+    t.string "result"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["contest_id"], name: "index_oi_contest_ranks_on_contest_id"
-    t.index ["user_id"], name: "index_oi_contest_ranks_on_user_id"
+    t.integer "score", default: 0
+    t.index ["problem_id"], name: "index_problem_records_on_problem_id"
+    t.index ["user_id"], name: "index_problem_records_on_user_id"
   end
 
   create_table "problem_sets", force: :cascade do |t|
@@ -275,6 +238,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_09_170020) do
     t.bigint "creator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "contest_id"
+    t.index ["contest_id"], name: "index_solutions_on_contest_id"
     t.index ["creator_id"], name: "index_solutions_on_creator_id"
     t.index ["problem_id"], name: "index_solutions_on_problem_id"
   end
@@ -324,17 +289,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_09_170020) do
     t.index ["group_id"], name: "index_teams_on_group_id"
   end
 
-  create_table "user_problems", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "problem_id"
-    t.string "result"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "score", default: 0
-    t.index ["problem_id"], name: "index_user_problems_on_problem_id"
-    t.index ["user_id"], name: "index_user_problems_on_user_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
@@ -375,23 +329,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_09_170020) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
-  add_foreign_key "acm_contest_ranks", "contests"
-  add_foreign_key "acm_contest_ranks", "users"
+  add_foreign_key "announcements", "contests"
+  add_foreign_key "announcements", "users", column: "creator_id"
   add_foreign_key "auth_permissions_users", "auth_permissions"
   add_foreign_key "auth_permissions_users", "users"
   add_foreign_key "comments", "users", column: "creator_id"
-  add_foreign_key "contest_announcements", "contests"
-  add_foreign_key "contest_announcements", "users", column: "creator_id"
-  add_foreign_key "contest_users", "contests"
-  add_foreign_key "contest_users", "users"
+  add_foreign_key "contest_records", "contests"
+  add_foreign_key "contest_records", "users"
   add_foreign_key "contests", "groups"
   add_foreign_key "contests", "users", column: "creator_id"
   add_foreign_key "contests_problems", "contests"
   add_foreign_key "contests_problems", "problems"
   add_foreign_key "events", "users"
   add_foreign_key "groups", "users", column: "creator_id"
-  add_foreign_key "oi_contest_ranks", "contests"
-  add_foreign_key "oi_contest_ranks", "users"
   add_foreign_key "problem_sets", "groups"
   add_foreign_key "problem_sets", "users", column: "creator_id"
   add_foreign_key "problem_sets_problems", "problem_sets"
@@ -401,6 +351,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_09_170020) do
   add_foreign_key "problems_problem_sets", "problems"
   add_foreign_key "problems_tags", "problems"
   add_foreign_key "problems_tags", "tags"
+  add_foreign_key "solutions", "contests"
   add_foreign_key "solutions", "problems"
   add_foreign_key "solutions", "users", column: "creator_id"
   add_foreign_key "submissions", "contests"
