@@ -1,4 +1,4 @@
-require('./judger.rb')
+#require('./judger.rb')
 
 class PyJudger < Judger
 

@@ -1,5 +1,3 @@
-require('./judger.rb')
-
 class JavaJudger < Judger
 
   def initialize
