@@ -13,6 +13,8 @@
 *  2020.12.24-2023.12.8 Busy
 *  2023.12.9 修复user setting，将数据库表结构复制到readme，重新梳理数据库
 *  2023.12.10 继续优化数据库表结构
+*  2023.12.11-12.18 摆
+*  2023.12.19 绘制关系图
 
 ## TODO
 * [ ] delete source of comments
@@ -585,12 +587,18 @@ end
   * belongs to:
     * user
     * contest
-* Language
 * Tag
   * has and belongs to many:
-  * problems
+    * problems
 
-* 
+* Team
+  * belongs to:
+    * group
+
+* Language
+* ContributeScore
+* CostScore
+* Event
 
 #### User
 
