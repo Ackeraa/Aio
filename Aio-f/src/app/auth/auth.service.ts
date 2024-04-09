@@ -84,7 +84,7 @@ export class AuthService implements OnInit {
   login(data: { login: string; password: string }): Observable<any> {
     return this.tokenService.signIn(data).pipe(
       tap((res) => {
-        localStorage.setItem('user', JSON.stringify(res.data));
+        localStorage.setItem('user', JSON.stringify(res.body.data));
       }),
       catchError((err) => {
         localStorage.removeItem('user');

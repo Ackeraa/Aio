@@ -8,7 +8,8 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">USER NAME</th>
-          <th scope="col">REAL NAME</th>
+          <th scope="col" >SOLVED PROBLEMS</th>
+          <th scope="col">JOINED CONTESTS</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -24,10 +25,11 @@
           <th scope="row">{{ user.id }}</th>
           <td class="col">
             <a class="link link-content" (click)="navigateToUser(user.id)" >
-              &nbsp;{{ user.name }}
+              {{ user.name }}
             </a>
           </td>
-          <td class="col">&nbsp;{{ user.real_name }}</td>
+          <td class="col">1</td>
+          <td class="col">1</td>
           <td>
             <app-hold-button
               (holdEvent)="deleteUser(user.id)"
