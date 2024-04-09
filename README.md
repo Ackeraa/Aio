@@ -30,6 +30,13 @@
 * [ ] Add AI
 * [ ] cache joined group..
 * [ ] Thread pool
+* [ ] 前端完成：完善user部分、完善group部分、完善contest部分、完善discuss部分、完善message部分、完善problem部分
+* [ ] 后端完成
+* [ ] 爬虫服务
+* [ ] 评测服务
+* [ ] 监控服务
+* [ ] k8s
+* [ ] 
 
 ## Design
 
